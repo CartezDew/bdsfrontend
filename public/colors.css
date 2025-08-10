@@ -1,0 +1,39 @@
+/* BDS Website Color Palette - CSS Variables */
+:root {
+  /* Primary Colors */
+  --timberwolf: #D8CBC7;    /* Light grey/beige - backgrounds, borders */
+  --sinopia: #CC3F0C;       /* Orange/red - call-to-action, highlights */
+  --golden-brown: #9A6D38;   /* Golden brown - secondary elements */
+  --hunter-green: #33673B;   /* Dark green - primary brand color */
+  --eerie-black: #19231A;    /* Very dark grey - text, contrast */
+  
+  /* Semantic Color Mappings */
+  --primary: var(--hunter-green);
+  --secondary: var(--golden-brown);
+  --accent: var(--sinopia);
+  --background: var(--timberwolf);
+  --text: var(--eerie-black);
+  
+  /* Additional Variations */
+  --timberwolf-light: #E8DCD8;
+  --timberwolf-dark: #C8BBB7;
+  --hunter-green-light: #4A7A4F;
+  --hunter-green-dark: #2A5A2F;
+  --sinopia-light: #DC5F2C;
+  --sinopia-dark: #B62F0A;
+}
+
+/* Usage Examples */
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-accent { background-color: var(--accent); }
+.bg-background { background-color: var(--background); }
+
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-accent { color: var(--accent); }
+.text-background { color: var(--text); }
+
+.border-primary { border-color: var(--primary); }
+.border-secondary { border-color: var(--secondary); }
+.border-accent { border-color: var(--accent); }
