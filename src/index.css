@@ -1,7 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+:root {
+  /* BDS Website Color Palette */
+  --color-timberwolf: #D8CBC7;
+  --color-sinopia: #CC3F0C;
+  --color-golden-brown: #9A6D38;
+  --color-hunter-green: #33673B;
+  --color-eerie-black: #19231A;
+  
+  /* Semantic color mappings */
+  --color-primary: var(--color-hunter-green);
+  --color-secondary: var(--color-golden-brown);
+  --color-accent: var(--color-sinopia);
+  --color-background: var(--color-timberwolf);
+  --color-text: var(--color-eerie-black);
+  
+  /* Utility variables */
+  --gap: 1rem;
 }
 
 body {
