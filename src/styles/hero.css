@@ -1,98 +1,219 @@
+/* --- CONTAINER --- */
 .hero-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 2rem;
-    min-height: 100vh;
-    background-color: #D8CBC7;
-    box-sizing: border-box;
+  position: relative;            /* so ticker can pin to bottom */
+  display: flex;
+  align-items: stretch;          /* columns fill height */
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;             /* full viewport */
+  background-color: #D8CBC7;
+  box-sizing: border-box;
+  overflow: hidden;              /* no spill past 100vh */
 }
 
+/* --- 60/40 SPLIT --- */
 .hero-content {
-    flex: 1;
-    text-align: left;
+  flex: 0 0 60%;
+  max-width: 60%;
+  min-width: 0;
+  text-align: left;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  background: linear-gradient(
+    135deg,
+    #D8CBC7 0%,
+    #E8D8D4 25%,
+    #F0E6E2 50%,
+    rgba(204, 63, 12, 0.1) 70%,
+    rgba(204, 63, 12, 0.15) 85%,
+    rgba(204, 63, 12, 0.2) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Accent word in headline */
+.hero-content .accent {
+  color: #33673B;
+  font-weight: 800;
+}
+
+/* Left-side mini nav */
+.hero-left-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin-bottom: 0.25rem;
+}
+.hero-left-link {
+  font-weight: 600;
+  text-decoration: none;
+  color: #19231A;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+.hero-left-link:hover {
+  border-color: #33673B;
+  opacity: 0.9;
 }
 
 .hero-image-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #D8CBC7;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  flex: 0 0 40%;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: var(--color-hunter-green, #33673B);
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border: 2px solid #ad2901;
+  position: relative; /* for top-right buttons */
+  min-height: 0; /* allow inner to size */
 }
 
-.hero-image-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+.hero-nav-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
 }
 
+.hero-nav-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.375rem;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.hero-nav-btn:hover {
+  background: #fff;
+  color: var(--color-hunter-green, #33673B);
+}
+.hero-nav-btn.primary {
+  background: #fff;
+  color: var(--color-hunter-green, #33673B);
+}
+
+.hero-image-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.5rem; /* clear nav buttons */
+}
+.hero-image-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Headline/Body */
 .hero-content h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 2rem !important;
+  font-size: clamp(2rem, 3.8vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0.5rem 0 0.5rem;
 }
-
 .hero-content p {
-    margin-bottom: 2rem !important;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #1b1b1b;
 }
 
+/* CTAs */
 .cta-buttons {
-    display: flex;
-    justify-content: left;
-    gap: 1rem;
-    margin-top: 2rem;
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 0.75rem;
 }
+.cta-button-primary,
+.cta-button-secondary {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.375rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+  border: none;
+}
+.cta-button-primary {
+  background: #33673B;
+  color: #fff;
+}
+.cta-button-primary:hover { transform: translateY(-1px) scale(1.02); }
 
 .cta-button-secondary {
-    background-color: var(--color-sinopia);
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    border: none;
+  background-color: var(--color-sinopia, #CC3F0C);
+  color: #fff;
 }
-
 .cta-button-secondary:hover {
-    background-color: #9A6D38;
-    transform: scale(1.05);
+  background-color: #9A6D38;
+  transform: translateY(-1px) scale(1.02);
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .hero-section {
-        flex-direction: column;
-        text-align: center;
-        padding: 1rem;
-        gap: 1rem;
-        overflow-x: hidden;
-    }
-    
-    .hero-content {
-        order: 2;
-        padding: 0 1rem;
-    }
-    
-    .hero-image-container {
-        order: 1;
-        margin-bottom: 2rem;
-        padding: 0 1rem;
-    }
+/* --- SERVICES TICKER (inside hero, bottom) --- */
+.services-ticker {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(25,35,26,0.12), rgba(25,35,26,0.06));
+  border-top: 1px solid rgba(0,0,0,0.08);
+  backdrop-filter: blur(2px);
+}
+.ticker-track {
+  display: flex;
+  gap: 2rem;
+  white-space: nowrap;
+  will-change: transform;
+  animation: ticker var(--ticker-duration, 30s) linear infinite;
+}
+.services-ticker[data-pause="1"]:hover .ticker-track {
+  animation-play-state: paused;
+}
+.ticker-item {
+  padding: 0 0.25rem;
+  font-weight: 700;
+  color: #19231A;
+  opacity: 0.9;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-/* Prevent horizontal overflow on all screen sizes */
-.hero-section {
-    overflow-x: hidden;
+/* --- MOBILE STACK --- */
+@media (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem 1rem 3.25rem; /* space for ticker */
+    min-height: 100vh;
+  }
+  .hero-content, .hero-image-container {
+    flex: 0 0 auto;
+    max-width: 100%;
     width: 100%;
+  }
+  .hero-left-nav { justify-content: center; }
+  .hero-nav-buttons { position: static; justify-content: center; margin-bottom: 0.75rem; }
+  .hero-image-wrapper { margin-top: 0; }
 }
 
 
