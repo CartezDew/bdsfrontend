@@ -79,7 +79,7 @@
   }
   
   
-  .schedule-appointment-button {
+  .schedule-consultation-button {
     background-color: #33673B; /* hunter-green */
     color: white;
     padding: 0.5rem 0.75rem;
@@ -90,7 +90,7 @@
     transition: background-color 0.2s ease;
   }
   
-  .schedule-appointment-button:hover {
+  .schedule-consultation-button:hover {
     background-color: #059669; /* green-700 */
   }
   

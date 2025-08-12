@@ -17,7 +17,7 @@ const Navbar = () => {
                             alt="BDS Accounting Logo" 
                             className="logo-image"
                         />
-                        <h1 className="logo-text">BDS Talent Group</h1>
+                        <h1 className="logo-text">Talent Group</h1>
                     </Link>
                 </div>
 
@@ -56,8 +56,8 @@ const Navbar = () => {
 
                 {/* icon section */}
                 <div className="icon-section">
-                    <button className="schedule-appointment-button">
-                        Schedule Appointment
+                    <button className="schedule-consultation-button">
+                        Schedule a Consultation
                     </button>
                 </div>
 
