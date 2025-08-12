@@ -6,7 +6,7 @@ import '../styles/hero.css';
 const Hero = () => {
   // Duplicate ticker items to create a seamless loop
   const tickerItems = [
-    'Bookkeeping', 'Small Businesses', 'Individuals', 'Payroll', 'Audits', 'Tax Extensions', 'Consulting'
+    'Taxes', 'Bookkeeping', 'Compliance', 'Reporting', 'Audits', 'Tax Extensions', 'Advisory'
   ];
   const duplicatedTickerItems = [...tickerItems, ...tickerItems];
 
@@ -16,9 +16,21 @@ const Hero = () => {
       <div className="hero-content">
         {/* Left-side mini nav */}
         <nav className="hero-left-nav">
-          <Link to="/services" className="hero-left-link">Services</Link>
-          <Link to="/about" className="hero-left-link">About Us</Link>
-          <Link to="/contact" className="hero-left-link">Contact Us</Link>
+          <div className="logo-section">
+            <Link to="/" className="logo-link">
+              <img 
+                src="/favicon.svg" 
+                alt="BDS Accounting Logo" 
+                className="logo-image"
+              />
+              <h1 className="logo-text">Talent Group</h1>
+            </Link>
+          </div>
+          <div className="hero-nav-links">
+            <Link to="/services" className="hero-left-link">Services</Link>
+            <Link to="/about" className="hero-left-link">About Us</Link>
+            <Link to="/contact" className="hero-left-link">Contact Us</Link>
+          </div>
         </nav>
 
         {/* Headline + subhead */}
@@ -35,6 +47,22 @@ const Hero = () => {
         <div className="cta-buttons">
           <button className="cta-button-primary">Schedule a Consultation</button>
           <button className="cta-button-secondary">Get Started</button>
+        </div>
+
+        {/* Social Proof */}
+        <div className="social-proof">
+          <div className="proof-item">
+            <span className="proof-number">10+</span>
+            <span className="proof-label">years experience</span>
+          </div>
+          <div className="proof-item">
+            <span className="proof-number">2</span>
+            <span className="proof-label">locations</span>
+          </div>
+          <div className="proof-item">
+            <span className="proof-number">200+</span>
+            <span className="proof-label">happy clients</span>
+          </div>
         </div>
       </div>
 
