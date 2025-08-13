@@ -7,7 +7,7 @@
   gap: 1rem;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 2rem 1rem 2rem; /* bottom padding for ticker */
   min-height: 100vh;             /* full viewport */
   background-color: #D8CBC7;
   box-sizing: border-box;
@@ -33,12 +33,19 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
+  overflow-y: auto; /* allow scrolling if content is too tall */
 }
 
 /* Accent word in headline */
 .hero-content .accent {
   color: #33673B;
   font-weight: 800;
+}
+
+.services-ticker {
+    height: var(--ticker-h);
+    z-index: 10;
 }
 
 /* Left-side mini nav */
@@ -65,34 +72,36 @@
 }
 
 .logo-image {
-  width: 2rem;
-  height: 2rem;
-  margin-right: 0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.3rem;
 }
 
 .logo-text {
-  font-size: 1.125rem;
+  font-size: 1.3rem !important;
   font-weight: 700;
-  color: #33673B; /* hunter-green */
+  color: var(--color-eerie-black); /* hunter-green */
 }
 
 .hero-nav-links {
   display: flex;
-  gap: 1rem 1.25rem;
+  gap: 1rem;
   align-items: center;
 }
 
 .hero-left-link {
-  font-weight: 600;
+  font-weight: 400;
+  font-size: .7rem !important;
   text-decoration: none;
-  color: #19231A;
+  color: var(--color-eerie-black);
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
   transition: border-color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.7;
 }
 .hero-left-link:hover {
   border-color: #33673B;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .hero-image-container {
@@ -107,6 +116,8 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   position: relative; /* for top-right buttons */
   min-height: 0; /* allow inner to size */
+  max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
+  overflow-y: auto; /* allow scrolling if content is too tall */
 }
 
 .hero-nav-buttons {
@@ -228,17 +239,51 @@
   text-transform: lowercase;
 }
 
+/* Social Proof - Right Side */
+.social-proof-right {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(216, 203, 199, 0.3);
+}
+
+.proof-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25rem;
+}
+
+.proof-number-right {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #D8CBC7;
+  line-height: 1;
+}
+
+.proof-label-right {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #D8CBC7;
+  opacity: 0.8;
+  text-transform: lowercase;
+}
+
 /* --- SERVICES TICKER (inside hero, bottom) --- */
 .services-ticker {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 48px;
+  height: 45px; /* increased height to accommodate padding */
   display: flex;
   align-items: center;
   overflow: hidden;
   background: linear-gradient(90deg, rgba(25,35,26,0.12), rgba(25,35,26,0.06));
   border-top: 1px solid rgba(0,0,0,0.08);
   backdrop-filter: blur(2px);
+  padding: 1rem 2rem 0.5rem 2rem; /* top, right, bottom, left padding */
+  box-sizing: border-box;
 }
 .ticker-track {
   display: flex;
@@ -262,11 +307,11 @@
 }
 
 /* --- MOBILE STACK --- */
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
   .hero-section {
     flex-direction: column;
     gap: 1rem;
-    padding: 1.25rem 1rem 3.25rem; /* space for ticker */
+    padding: 1.25rem 1rem 3.25rem; 
     min-height: 100vh;
   }
   .hero-content, .hero-image-container {
@@ -278,5 +323,5 @@
   .hero-nav-buttons { position: static; justify-content: center; margin-bottom: 0.75rem; }
   .hero-image-wrapper { margin-top: 0; }
 }
-
+ */
 

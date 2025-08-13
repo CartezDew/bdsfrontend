@@ -41,28 +41,12 @@ const Hero = () => {
           <span className="accent">accounted</span>
           {' '}for!
         </h1>
-        <p>Clear process, practical strategies, and reliable filings — grounded in organized records and strategic advice</p>
+        <p>Clear process, practical strategies, and reliable filings — grounded in organized records and strategic advice.</p>
 
         {/* CTAs */}
         <div className="cta-buttons">
           <button className="cta-button-primary">Schedule a Consultation</button>
           <button className="cta-button-secondary">Get Started</button>
-        </div>
-
-        {/* Social Proof */}
-        <div className="social-proof">
-          <div className="proof-item">
-            <span className="proof-number">10+</span>
-            <span className="proof-label">years experience</span>
-          </div>
-          <div className="proof-item">
-            <span className="proof-number">2</span>
-            <span className="proof-label">locations</span>
-          </div>
-          <div className="proof-item">
-            <span className="proof-number">200+</span>
-            <span className="proof-label">happy clients</span>
-          </div>
         </div>
       </div>
 
@@ -78,6 +62,24 @@ const Hero = () => {
         <div className="hero-image-wrapper">
           <img src="/hero_images/Young-clients.jpg" alt="Young clients consulting with BDS" />
         </div>
+
+        {/* Social Proof - Right Side */}
+        <div className="social-proof-right">
+          <div className="proof-item-right">
+            <span className="proof-number-right">10+</span>
+            <span className="proof-label-right">years experience</span>
+          </div>
+          <div className="proof-item-right">
+            <span className="proof-number-right">2</span>
+            <span className="proof-label-right">locations</span>
+          </div>
+          <div className="proof-item-right">
+            <span className="proof-number-right">200+</span>
+            <span className="proof-label-right">happy clients</span>
+          </div>
+        </div>
+
+        <div className="hero-image-wrapper"></div>
       </div>
 
       {/* Bottom services ticker; stays inside 100vh */}
