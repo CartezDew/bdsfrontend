@@ -66,16 +66,16 @@ const Hero = () => {
         {/* Social Proof - Right Side */}
         <div className="social-proof-right">
           <div className="proof-item-right">
+            <span className="proof-number-right">200+</span>
+            <span className="proof-label-right">happy clients</span>
+          </div>
+          <div className="proof-item-right">
             <span className="proof-number-right">10+</span>
             <span className="proof-label-right">years experience</span>
           </div>
           <div className="proof-item-right">
             <span className="proof-number-right">2</span>
             <span className="proof-label-right">locations</span>
-          </div>
-          <div className="proof-item-right">
-            <span className="proof-number-right">200+</span>
-            <span className="proof-label-right">happy clients</span>
           </div>
         </div>
 

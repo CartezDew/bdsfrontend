@@ -26,12 +26,13 @@
     #D8CBC7 0%,
     #E8D8D4 25%,
     #F0E6E2 50%,
-    rgba(204, 63, 12, 0.1) 70%,
+    rgba(226, 75, 20, 0.1) 70%,
     rgba(204, 63, 12, 0.15) 85%,
     rgba(204, 63, 12, 0.2) 100%
   );
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
   gap: 1.25rem;
   max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
   overflow-y: auto; /* allow scrolling if content is too tall */
@@ -78,9 +79,10 @@
 }
 
 .logo-text {
-  font-size: 1.3rem !important;
+  font-size: 1.2rem !important;
   font-weight: 700;
   color: var(--color-eerie-black); /* hunter-green */
+  padding-top: 0rem !important;
 }
 
 .hero-nav-links {
@@ -97,7 +99,7 @@
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
   transition: border-color 0.2s ease, opacity 0.2s ease;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 .hero-left-link:hover {
   border-color: #33673B;
@@ -113,6 +115,7 @@
   align-items: stretch;
   background-color: var(--color-hunter-green, #33673B);
   padding: 2rem;
+  padding-bottom: 0rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   position: relative; /* for top-right buttons */
   min-height: 0; /* allow inner to size */
@@ -123,20 +126,19 @@
 .hero-nav-buttons {
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  right: 2rem;
   display: flex;
   gap: 0.75rem;
   z-index: 10;
 }
 
 .hero-nav-btn {
-  padding: 0.5rem 0.9rem;
-  border-radius: 0.375rem;
+  padding: 0.5rem 0.5rem;
   border: 2px solid #fff;
   background: transparent;
   color: #fff;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
@@ -155,12 +157,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2.5rem; /* clear nav buttons */
+  padding-top: 2.5rem; /* clear nav buttons */
 }
 .hero-image-wrapper img {
   width: 100%;
   height: auto;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  margin-top: 2rem;
 }
 
 /* Headline/Body */
@@ -169,6 +172,7 @@
   font-weight: 800;
   line-height: 1.15;
   margin: 0.5rem 0 0.5rem;
+  padding-top: .5rem;
 }
 .hero-content p {
   margin: 0;
@@ -186,7 +190,6 @@
 .cta-button-primary,
 .cta-button-secondary {
   padding: 0.6rem 0.9rem;
-  border-radius: 0.375rem;
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
@@ -207,69 +210,46 @@
   transform: translateY(-1px) scale(1.02);
 }
 
-/* Social Proof */
-.social-proof {
-  display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(51, 103, 59, 0.2);
-}
-
-.proof-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.25rem;
-}
-
-.proof-number {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #33673B;
-  line-height: 1;
-}
-
-.proof-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #19231A;
-  opacity: 0.8;
-  text-transform: lowercase;
-}
 
 /* Social Proof - Right Side */
 .social-proof-right {
   display: flex;
-  gap: 2rem;
+  gap: 1.3rem;
   margin-top: 2rem;
-  padding-top: 1.5rem;
+  padding-top: 1rem;
+  margin-bottom: -3rem;
   border-top: 1px solid rgba(216, 203, 199, 0.3);
+  justify-content: center;
 }
 
 .proof-item-right {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   text-align: center;
   gap: 0.25rem;
 }
 
 .proof-number-right {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #D8CBC7;
   line-height: 1;
+  text-align: center !important;
 }
 
 .proof-label-right {
-  font-size: 0.875rem;
+  display: block;
+  align-self: stretch;
+  text-align: left;
+  font-size: 0.7rem;
   font-weight: 500;
   color: #D8CBC7;
   opacity: 0.8;
   text-transform: lowercase;
 }
+
+
 
 /* --- SERVICES TICKER (inside hero, bottom) --- */
 .services-ticker {
