@@ -1,14 +1,25 @@
 // src/components/Hero.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import '../styles/hero.css';
 
 const Hero = () => {
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
+  
   // Duplicate ticker items to create a seamless loop
   const tickerItems = [
     'Taxes', 'Bookkeeping', 'Compliance', 'Reporting', 'Audits', 'Tax Extensions', 'Advisory'
   ];
-  const duplicatedTickerItems = [...tickerItems, ...tickerItems];
+
+  // Infinite animation cycle through services
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHighlightedIndex((prev) => (prev + 1) % tickerItems.length);
+    }, 3000); // 2 seconds per service
+
+    return () => clearInterval(interval);
+  }, [tickerItems.length]);
 
   return (
     <section className="hero-section" style={{ minHeight: '100vh' }}>
@@ -83,16 +94,23 @@ const Hero = () => {
       </div>
 
       {/* Bottom services ticker; stays inside 100vh */}
-      <div
-        className="services-ticker"
-        data-pause="1"
-        style={{ '--ticker-duration': '30s' }}
-      >
+      <div className="services-ticker">
         <div className="ticker-track">
-          {duplicatedTickerItems.map((label, i) => (
-            <div key={`${label}-${i}`} className="ticker-item">
+          {tickerItems.map((label, i) => (
+            <motion.div 
+              key={`${label}-${i}`} 
+              className="ticker-item"
+              animate={{
+                color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
+                scale: highlightedIndex === i ? 1.1 : 1,
+              }}
+              transition={{
+                duration: 0.5,
+                ease: "easeInOut"
+              }}
+            >
               {label}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
