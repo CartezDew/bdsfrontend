@@ -11,7 +11,7 @@ const Hero = () => {
   
   // Duplicate ticker items to create a seamless loop
   const tickerItems = [
-    'Taxes', 'Bookkeeping', 'Compliance', 'Reporting', 'Audits', 'Tax Extensions', 'Advisory'
+    'Tax Returns', 'Bookkeeping', 'Compliance', 'Reporting', 'Audits', 'Tax Extensions', 'Advisory'
   ];
 
   // Infinite animation cycle through services
