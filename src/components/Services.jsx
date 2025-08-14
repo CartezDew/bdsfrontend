@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
+import EntitySelectorWidget from './EntitySelectorWidget';
 
 // Custom navbar configuration for Services page
 const servicesNavbarConfig = [
@@ -94,6 +95,11 @@ const Services = () => {
             )}
           </AnimatePresence>
         </div>
+      </section>
+      
+      {/* Entity Selector Widget */}
+      <section className="widget-section">
+        <EntitySelectorWidget />
       </section>
     </>
   );
