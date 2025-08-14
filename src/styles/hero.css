@@ -143,12 +143,18 @@
   text-decoration: none;
 }
 .hero-nav-btn:hover {
-  background: #fff;
-  color: var(--color-hunter-green, #33673B);
+  background: var(--color-sinopia, #CC3F0C);
+  transform: scale(1.05);
+  border: 2px solid var(--color-sinopia);
 }
 .hero-nav-btn.primary {
   background: #fff;
-  color: var(--color-hunter-green, #33673B);
+  color: var(--color-hunter-green);
+}
+.hero-nav-btn.primary:hover {
+  background: var(--color-golden-brown);
+  color: #fff;
+  border: 2px solid var(--color-golden-brown);
 }
 
 .hero-image-wrapper {
