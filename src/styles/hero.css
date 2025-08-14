@@ -83,6 +83,7 @@
   font-weight: 700;
   color: var(--color-eerie-black); /* hunter-green */
   padding-top: 0rem !important;
+  opacity: 0.8;
 }
 
 .hero-nav-links {
@@ -93,7 +94,7 @@
 
 .hero-left-link {
   font-weight: 400;
-  font-size: .7rem !important;
+  font-size: .75rem !important;
   text-decoration: none;
   color: var(--color-eerie-black);
   border-bottom: 2px solid transparent;
@@ -312,6 +313,7 @@
   opacity: 0.8;
   text-align: center;
   white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 /* Grid overlay positioning */

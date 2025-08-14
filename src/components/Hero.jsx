@@ -95,8 +95,8 @@ const Hero = () => {
       <div className="services-ticker">
         <div className="ticker-track">
           {tickerItems.map((label, i) => (
-            <motion.div 
-              key={`${label}-${i}`} 
+            <motion.div
+              key={`${label}-${i}`}
               className="ticker-item"
               animate={{
                 color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
