@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const businessServicePriceText = {
+  1: "Starting at $525",      // Tax Returns (1065/1120S/1120 - simple)
+  2: "Starting at $199 (mo)", // Bookkeeping
+  3: "Starting at $129 (mo)", // Compliance (sales tax/payroll filings, annual regs)
+  4: "Starting at $149 (mo)", // Reporting (P&L, BS, cash flow)
+  5: "Starting at $400",      // Audits (IRS/GA exam support; flat start)
+  6: "Starting at $50",       // Tax Extensions (Form 7004/IT-303 admin)
+  7: "Starting at $175 (hr)"  // Advisory (tax/financial strategy)
+};
+
 const businessServicesData = [
   {
     id: 1,
@@ -94,6 +104,11 @@ const BusinessServiceCard = ({ service, isExpanded, onToggle }) => {
         {isExpanded ? 'Show Less' : 'Learn More'}
         <span className="arrow">{isExpanded ? '↑' : '→'}</span>
       </motion.button>
+      
+      {/* Price Display */}
+      <div className="service-price">
+        {businessServicePriceText[service.id]}
+      </div>
     </motion.div>
   );
 };

@@ -14,7 +14,7 @@ const servicesNavbarConfig = [
 const Services = () => {
   const [expandedService, setExpandedService] = useState(null);
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
-  const [serviceType, setServiceType] = useState('business'); // 'business' or 'individual'
+  const [serviceType, setServiceType] = useState('individual'); // 'business' or 'individual'
   const servicesRef = useRef(null);
 
   const handleToggleService = (serviceId) => {
@@ -63,16 +63,16 @@ const Services = () => {
             {/* Service Type Toggle */}
             <div className="service-type-toggle">
               <button
-                className={`toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
-                onClick={() => handleServiceTypeChange('business')}
-              >
-                Business Services
-              </button>
-              <button
                 className={`toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('individual')}
               >
                 Individual Services
+              </button>
+              <button
+                className={`toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
+                onClick={() => handleServiceTypeChange('business')}
+              >
+                Business Services
               </button>
             </div>
             
