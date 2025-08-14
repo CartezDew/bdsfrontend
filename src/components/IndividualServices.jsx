@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const individualServicePriceText = {
+  1: "Starting at $175",       // Personal Tax Returns (flat)
+  2: "Starting at $99 (mo)",   // Personal Bookkeeping
+  3: "Starting at $175 (hr)",  // Tax Planning
+  4: "Starting at $300",       // Audit Support (flat start)
+  5: "Starting at $35",        // Tax Deadline Extensions (flat)
+  6: "Starting at $150 (hr)"   // Financial Advisory
+};
+
 const individualServicesData = [
   {
     id: 1,
@@ -87,6 +96,11 @@ const IndividualServiceCard = ({ service, isExpanded, onToggle }) => {
         {isExpanded ? 'Show Less' : 'Learn More'}
         <span className="arrow">{isExpanded ? '↑' : '→'}</span>
       </motion.button>
+      
+      {/* Price Display */}
+      <div className="service-price">
+        {individualServicePriceText[service.id]}
+      </div>
     </motion.div>
   );
 };
