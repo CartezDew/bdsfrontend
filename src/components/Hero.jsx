@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import '../styles/hero.css';
+import HeroImageShowcase from './HeroImageShowcase.jsx';
+import heroImages from './data/heroImages.js';
 
 const Hero = () => {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -16,7 +18,7 @@ const Hero = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setHighlightedIndex((prev) => (prev + 1) % tickerItems.length);
-    }, 3000); // 2 seconds per service
+    }, 3000); // 3 seconds per service
 
     return () => clearInterval(interval);
   }, [tickerItems.length]);
@@ -69,10 +71,8 @@ const Hero = () => {
           <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
         </div>
 
-        {/* Main Image */}
-        <div className="hero-image-wrapper">
-          <img src="/hero_images/Young-clients.jpg" alt="Young clients consulting with BDS" />
-        </div>
+        {/* ANIMATION COMPONENT */}
+        <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
 
         {/* Social Proof - Right Side */}
         <div className="social-proof-right">
@@ -89,8 +89,6 @@ const Hero = () => {
             <span className="proof-label-right">locations</span>
           </div>
         </div>
-
-        <div className="hero-image-wrapper"></div>
       </div>
 
       {/* Bottom services ticker; stays inside 100vh */}
