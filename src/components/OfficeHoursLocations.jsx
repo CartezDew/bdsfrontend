@@ -50,7 +50,13 @@ const OfficeHoursLocations = () => {
 
         {/* Office Hours */}
         <div className="office-hours-section">
-          <h3>Business Hours</h3>
+          <div className="office-hours-header">
+            <h3>Business Hours</h3>
+            <div className="main-email">
+              <span className="email-icon">✉️</span>
+              info@bdstalentgroup.com
+            </div>
+          </div>
           <div className="hours-grid">
             <div className="hours-row">
               <span className="day">Mon</span>
@@ -81,55 +87,32 @@ const OfficeHoursLocations = () => {
 
         {/* Locations */}
         <div className="locations-section">
-          <h3>Our Locations</h3>
-          <div className="locations-grid">
-            {locations.map((location, index) => (
-              <div key={index} className="location-card">
-                <div className="location-header">
-                  <h4>{location.name}</h4>
-                  <div className="location-phone">
-                    <span className="phone-icon">📞</span>
-                    {location.phone}
-                  </div>
-                </div>
-                
-                <div className="location-address">
-                  <span className="address-icon">📍</span>
-                  <p>{location.address}</p>
-                </div>
-
-                <div className="location-map">
-                  <iframe
-                    title={`${location.name} Map`}
-                    width="100%"
-                    height="200"
-                    frameBorder="0"
-                    style={{ border: 0 }}
-                    src={`https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${encodeURIComponent(location.address)}`}
-                    allowFullScreen
-                  />
-                </div>
-
-                <div className="location-actions">
-                  <a
-                    href={getGoogleMapsUrl(location.address)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="map-link-btn"
-                  >
-                    <span className="map-icon">🗺️</span>
-                    View on Google Maps
-                  </a>
-                  <a
-                    href={`tel:${location.phone}`}
-                    className="call-btn"
-                  >
-                    <span className="phone-icon">📞</span>
-                    Call Now
-                  </a>
-                </div>
+          <div className="location-card">
+            <div className="locations-header">
+              <h4>Our Office Locations</h4>
+              <div className="main-phone">
+                <span className="phone-icon">📞</span>
+                770-202-0098
               </div>
-            ))}
+            </div>
+            
+            <div className="locations-grid-simple">
+              <div className="location-item">
+                <div className="location-name">
+                  <span className="office-icon">🏢</span>
+                  <h5>Marietta Office</h5>
+                </div>
+                <p className="location-address">{locations[0].address}</p>
+              </div>
+              
+              <div className="location-item">
+                <div className="location-name">
+                  <span className="office-icon">🏬</span>
+                  <h5>Decatur Office</h5>
+                </div>
+                <p className="location-address">{locations[1].address}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
