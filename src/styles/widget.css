@@ -12,7 +12,7 @@
 /* Background section behind the widget */
 .widget-section {
   background: var(--color-timberwolf);
-  padding: 2rem 0;
+  padding: 3rem;
   margin: 0;
 }
 
