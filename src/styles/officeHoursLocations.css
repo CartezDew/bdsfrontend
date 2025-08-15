@@ -1,0 +1,298 @@
+/* Office Hours & Locations Section */
+.office-hours-locations {
+  background: var(--color-timberwolf);
+  padding: 4rem 2rem;
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  color: var(--color-hunter-green);
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.section-header p {
+  font-size: 1.2rem;
+  color: var(--color-eerie-black);
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* Office Hours Section */
+.office-hours-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.office-hours-section h3 {
+  font-size: 1.8rem;
+  color: var(--color-hunter-green);
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(51, 103, 59, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--color-hunter-green);
+}
+
+.hours-row.weekend {
+  background: rgba(204, 63, 12, 0.05);
+  border-left: 4px solid var(--color-sinopia);
+}
+
+.day {
+  font-weight: 700;
+  color: var(--color-hunter-green);
+  font-size: 1rem;
+}
+
+.hours-row.weekend .day {
+  color: var(--color-sinopia);
+}
+
+.time {
+  color: var(--color-eerie-black);
+  font-weight: 500;
+}
+
+.time.closed {
+  color: var(--color-sinopia);
+  font-weight: 600;
+}
+
+/* Locations Section */
+.locations-section {
+  margin-top: 3rem;
+}
+
+.locations-section h3 {
+  font-size: 1.8rem;
+  color: var(--color-hunter-green);
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.location-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s ease;
+}
+
+.location-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.location-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.location-header h4 {
+  font-size: 1.4rem;
+  color: var(--color-hunter-green);
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+}
+
+.location-phone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-sinopia);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.phone-icon {
+  font-size: 1.2rem;
+}
+
+.location-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.address-icon {
+  font-size: 1.2rem;
+  color: var(--color-sinopia);
+  margin-top: 0.2rem;
+}
+
+.location-address p {
+  color: var(--color-eerie-black);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.location-map {
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.location-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.map-link-btn,
+.call-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.map-link-btn {
+  background: var(--color-hunter-green);
+  color: white;
+  border: 2px solid var(--color-hunter-green);
+}
+
+.map-link-btn:hover {
+  background: transparent;
+  color: var(--color-hunter-green);
+  transform: translateY(-2px);
+}
+
+.call-btn {
+  background: var(--color-sinopia);
+  color: white;
+  border: 2px solid var(--color-sinopia);
+}
+
+.call-btn:hover {
+  background: transparent;
+  color: var(--color-sinopia);
+  transform: translateY(-2px);
+}
+
+.map-icon {
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .office-hours-locations {
+    padding: 3rem 1rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .office-hours-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .hours-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .locations-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .location-card {
+    padding: 1.5rem;
+  }
+  
+  .location-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .location-actions {
+    flex-direction: column;
+  }
+  
+  .map-link-btn,
+  .call-btn {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .office-hours-locations {
+    padding: 2rem 1rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .office-hours-section h3,
+  .locations-section h3 {
+    font-size: 1.5rem;
+  }
+  
+  .hours-row {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}

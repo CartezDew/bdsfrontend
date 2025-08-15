@@ -3,6 +3,7 @@ import React from 'react'
 import PageTitle from './components/PageTitle'
 import Hero from './components/Hero'
 import Services from './components/Services'
+import OfficeHoursLocations from './components/OfficeHoursLocations'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <PageTitle />
       <Hero />
       <Services />
+      <OfficeHoursLocations />
     </div>
   )
 }
