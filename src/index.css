@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&display=swap');
 @import './styles/services.css';
 @import './styles/widget.css';
+@import './styles/socialProof.css';
 
 * {
   margin: 0;

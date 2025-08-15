@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
 import EntitySelectorWidget from './EntitySelectorWidget';
+import SocialProof from './SocialProof';
 
 // Custom navbar configuration for Services page
 const servicesNavbarConfig = [
@@ -96,6 +97,9 @@ const Services = () => {
           </AnimatePresence>
         </div>
       </section>
+      
+      {/* Social Proof Section */}
+      <SocialProof />
       
       {/* Entity Selector Widget */}
       <section className="widget-section">
