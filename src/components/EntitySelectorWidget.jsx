@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const questions = [
@@ -108,6 +108,61 @@ const EntitySelectorWidget = () => {
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState({ llc: 0, scorp: 0, ccorp: 0 });
+  const [animationsTriggered, setAnimationsTriggered] = useState({
+    widget: false,
+    header: false,
+    title: false,
+    subtitle: false,
+    progressBar: false,
+    questionSection: false,
+    questionTitle: false,
+    options: false,
+    footer: false
+  });
+
+  // Refs for animation triggers
+  const widgetRef = useRef(null);
+  const headerRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const progressBarRef = useRef(null);
+  const questionSectionRef = useRef(null);
+  const questionTitleRef = useRef(null);
+  const optionsRef = useRef(null);
+  const footerRef = useRef(null);
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.05, // 5% visibility
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const elementId = entry.target.dataset.animate;
+          setAnimationsTriggered(prev => ({
+            ...prev,
+            [elementId]: true
+          }));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animation elements individually
+    if (widgetRef.current) observer.observe(widgetRef.current);
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (titleRef.current) observer.observe(titleRef.current);
+    if (subtitleRef.current) observer.observe(subtitleRef.current);
+    if (progressBarRef.current) observer.observe(progressBarRef.current);
+    if (questionSectionRef.current) observer.observe(questionSectionRef.current);
+    if (questionTitleRef.current) observer.observe(questionTitleRef.current);
+    if (optionsRef.current) observer.observe(optionsRef.current);
+    if (footerRef.current) observer.observe(footerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleAnswer = (questionId, option) => {
     const newAnswers = { ...answers, [questionId]: option };
@@ -222,23 +277,25 @@ const EntitySelectorWidget = () => {
 
   return (
     <motion.div 
-      className="entity-selector-widget"
+      className={`entity-selector-widget ${animationsTriggered.widget ? 'animate-widget' : ''}`}
+      ref={widgetRef}
+      data-animate="widget"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="widget-header">
-        <h3>🏢 Business Entity Selector</h3>
-        <p>Answer 5 quick questions to understand which business structure fits your needs best</p>
-        <div className="progress-bar">
+      <div className={`widget-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
+        <h3 className={`widget-title ${animationsTriggered.title ? 'animate-title' : ''}`} ref={titleRef} data-animate="title">🏢 Business Entity Selector</h3>
+        <p className={`widget-subtitle ${animationsTriggered.subtitle ? 'animate-subtitle' : ''}`} ref={subtitleRef} data-animate="subtitle">Answer 5 quick questions to understand which business structure fits your needs best</p>
+        <div className={`progress-bar ${animationsTriggered.progressBar ? 'animate-progress-bar' : ''}`} ref={progressBarRef} data-animate="progressBar">
           <div className="progress-fill" style={{ width: `${progress}%` }}></div>
         </div>
         <span className="progress-text">Question {currentQuestion + 1} of {questions.length}</span>
       </div>
 
-      <div className="question-section">
-        <h4>{question.question}</h4>
-        <div className="options">
+      <div className={`question-section ${animationsTriggered.questionSection ? 'animate-question-section' : ''}`} ref={questionSectionRef} data-animate="questionSection">
+        <h4 className={`question-title ${animationsTriggered.questionTitle ? 'animate-question-title' : ''}`} ref={questionTitleRef} data-animate="questionTitle">{question.question}</h4>
+        <div className={`options ${animationsTriggered.options ? 'animate-options' : ''}`} ref={optionsRef} data-animate="options">
           {question.options.map((option, index) => (
             <motion.button
               key={option.value}
@@ -256,7 +313,7 @@ const EntitySelectorWidget = () => {
         </div>
       </div>
 
-      <div className="widget-footer">
+      <div className={`widget-footer ${animationsTriggered.footer ? 'animate-footer' : ''}`} ref={footerRef} data-animate="footer">
         <p className="disclaimer">
           *This tool is for educational purposes only and does not constitute legal advice. 
           Results are based on general business principles and may not apply to your specific situation.

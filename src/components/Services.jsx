@@ -85,6 +85,41 @@ const Services = () => {
     }));
   };
 
+  // Function to trigger sequential card animations
+  const triggerSequentialAnimations = (serviceType) => {
+    const cardCount = serviceType === 'individual' ? 6 : 7;
+    
+    // Reset all animations first
+    setCardAnimations(prev => ({
+      ...prev,
+      [serviceType]: Array(cardCount).fill(false)
+    }));
+    
+    // Trigger animations sequentially with proper delays
+    for (let i = 0; i < cardCount; i++) {
+      setTimeout(() => {
+        setCardAnimations(prev => ({
+          ...prev,
+          [serviceType]: prev[serviceType].map((_, index) => 
+            index === i ? true : prev[serviceType][index]
+          )
+        }));
+      }, i * 400); // 400ms delay between each card for smoother flow
+    }
+  };
+
+  // Effect to trigger animations when service type changes
+  useEffect(() => {
+    // Trigger animations for the current service type
+    triggerSequentialAnimations(serviceType);
+  }, [serviceType]);
+
+  // Effect to trigger initial animations when component mounts
+  useEffect(() => {
+    // Trigger initial animations for the default service type
+    triggerSequentialAnimations(serviceType);
+  }, []); // Empty dependency array for initial load only
+
   const handleToggleService = (serviceId) => {
     setExpandedService(expandedService === serviceId ? null : serviceId);
   };

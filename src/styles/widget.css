@@ -343,3 +343,103 @@
     margin: 0.5rem 0;
   }
 }
+
+/* Animation Classes for Entity Selector Widget */
+.entity-selector-widget {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.entity-selector-widget.animate-widget {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.widget-header {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.8s ease-out;
+}
+
+.widget-header.animate-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.widget-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.widget-title.animate-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.widget-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.widget-subtitle.animate-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.progress-bar {
+  opacity: 0;
+  transform: scaleX(0.8);
+  transition: all 0.8s ease-out;
+}
+
+.progress-bar.animate-progress-bar {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.question-section {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.8s ease-out;
+}
+
+.question-section.animate-question-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.question-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.question-title.animate-question-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.options {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.options.animate-options {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.widget-footer {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.widget-footer.animate-footer {
+  opacity: 1;
+  transform: translateY(0);
+}

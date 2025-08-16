@@ -56,38 +56,19 @@ const individualServicesData = [
 ];
 
 const IndividualServiceCard = ({ service, isExpanded, onToggle, isAnimated, onAnimationTrigger, cardIndex }) => {
-  const cardRef = useRef(null);
-
-  // Intersection Observer for individual card
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.05, // 5% visibility
-      rootMargin: '0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !isAnimated) {
-          onAnimationTrigger(cardIndex);
-        }
-      });
-    }, observerOptions);
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isAnimated, onAnimationTrigger, cardIndex]);
-
   return (
     <motion.div
-      ref={cardRef}
       className="service-card"
       layout
-      initial={{ opacity: 0, x: -100 }}
-      animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      initial={{ opacity: 0, x: -150 }}
+      animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -150 }}
+      transition={{ 
+        duration: 1.2, 
+        ease: "easeOut",
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }}
     >
       <div className="service-card-content">
         <div className="service-header">

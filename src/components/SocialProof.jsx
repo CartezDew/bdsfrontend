@@ -110,14 +110,18 @@ export default function SocialProof() {
             // Trigger staggered card animations
             setAnimationsTriggered(prev => ({ ...prev, cards: true }));
             
-            // Animate each card with a delay
-            for (let i = 0; i < cardsPerPage; i++) {
-              setTimeout(() => {
-                setCardAnimations(prev => 
-                  prev.map((_, index) => index === i ? true : prev[index])
-                );
-              }, i * 200); // 200ms delay between each card
-            }
+            // Reset and then animate each card with a delay for staggered effect
+            setCardAnimations(Array(3).fill(false));
+            
+            setTimeout(() => {
+              for (let i = 0; i < cardsPerPage; i++) {
+                setTimeout(() => {
+                  setCardAnimations(prev => 
+                    prev.map((_, index) => index === i ? true : prev[index])
+                  );
+                }, i * 300); // 300ms delay between each card
+              }
+            }, 100);
           } else {
             setAnimationsTriggered(prev => ({
               ...prev,
@@ -142,7 +146,7 @@ export default function SocialProof() {
           setCardAnimations(prev => 
             prev.map((_, index) => index === i ? true : prev[index])
           );
-        }, i * 200); // 200ms delay between each card
+        }, i * 300); // 300ms delay between each card
       }
     }, 500);
 
@@ -163,7 +167,7 @@ export default function SocialProof() {
           setCardAnimations(prev => 
             prev.map((_, index) => index === i ? true : prev[index])
           );
-        }, i * 200); // 200ms delay between each card
+        }, i * 300); // 300ms delay between each card
       }
     }, 100);
   };
@@ -182,7 +186,7 @@ export default function SocialProof() {
           setCardAnimations(prev => 
             prev.map((_, index) => index === i ? true : prev[index])
           );
-        }, i * 200); // 200ms delay between each card
+        }, i * 300); // 300ms delay between each card
       }
     }, 100);
   };
@@ -201,7 +205,7 @@ export default function SocialProof() {
           setCardAnimations(prev => 
             prev.map((_, index) => index === i ? true : prev[index])
           );
-        }, i * 200); // 200ms delay between each card
+        }, i * 300); // 300ms delay between each card
       }
     }, 100);
   };

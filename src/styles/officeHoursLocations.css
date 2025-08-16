@@ -272,3 +272,125 @@
     text-align: center;
   }
 }
+
+/* Animation Classes for Office Hours & Locations Section */
+.section-header {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.section-header.animate-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.section-title.animate-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.section-subtitle.animate-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.office-hours-section {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.8s ease-out;
+}
+
+.office-hours-section.animate-office-hours {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.office-hours-header {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.office-hours-header.animate-business-hours {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.main-email {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.8s ease-out;
+}
+
+.main-email.animate-email {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hours-grid {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.hours-grid.animate-hours-grid {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.locations-section {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.8s ease-out;
+}
+
+.locations-section.animate-locations {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.location-card {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.8s ease-out;
+}
+
+.location-card.animate-location-card {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.main-phone {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.8s ease-out;
+}
+
+.main-phone.animate-phone {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.locations-grid-simple {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.locations-grid-simple.animate-location-items {
+  opacity: 1;
+  transform: translateY(0);
+}
