@@ -19,6 +19,8 @@ const Services = () => {
   const [animationsTriggered, setAnimationsTriggered] = useState({
     header: false, title: false, subtitle: false, toggle: false, note: false, services: false
   });
+  
+  const [cardsVisible, setCardsVisible] = useState(false);
 
   const servicesRef = useRef(null);
   const headerRef = useRef(null);
@@ -28,23 +30,29 @@ const Services = () => {
   const noteRef = useRef(null);
   const servicesRef2 = useRef(null);
 
-  // Intersection Observer for header animations only
+  // Intersection Observer for animations
   useEffect(() => {
     const observerOptions = { 
-      threshold: 0.1,
-      rootMargin: '50px'
+      threshold: 0.05, // 5% visibility
+      rootMargin: '0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const elementId = entry.target.dataset.animate;
-          setAnimationsTriggered(prev => ({ ...prev, [elementId]: true }));
+          
+          if (elementId === 'services') {
+            setAnimationsTriggered(prev => ({ ...prev, services: true }));
+            setCardsVisible(true); // Trigger card animations
+          } else {
+            setAnimationsTriggered(prev => ({ ...prev, [elementId]: true }));
+          }
         }
       });
     }, observerOptions);
 
-    // Observe header elements only
+    // Observe elements
     if (headerRef.current) observer.observe(headerRef.current);
     if (titleRef.current) observer.observe(titleRef.current);
     if (subtitleRef.current) observer.observe(subtitleRef.current);
@@ -54,6 +62,15 @@ const Services = () => {
     
     return () => observer.disconnect();
   }, []);
+
+  // Reset card animations when service type changes
+  useEffect(() => {
+    setCardsVisible(false);
+    // Small delay to ensure reset is complete, then trigger animations
+    setTimeout(() => {
+      setCardsVisible(true);
+    }, 100);
+  }, [serviceType]);
 
   const handleToggleService = (serviceId) => {
     setExpandedService(expandedService === serviceId ? null : serviceId);
@@ -126,11 +143,9 @@ const Services = () => {
           {/* Render appropriate services based on toggle */}
           <div className={`services-content ${animationsTriggered.services ? 'animate-services' : ''}`} ref={servicesRef2} data-animate="services">
             {serviceType === 'business' ? (
-              <BusinessServices 
-              />
+              <BusinessServices />
             ) : (
-              <IndividualServices 
-              />
+              <IndividualServices />
             )}
           </div>
         </div>
