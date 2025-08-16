@@ -1,0 +1,167 @@
+/* Navbar Container */
+.navbar {
+    background-color:  #D8CBC7;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Logo Section */
+  .logo-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .logo-image {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.75rem;
+  }
+  
+  .logo-text {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #33673B; /* hunter-green */
+  }
+  
+  /* Menu Section */
+  .menu-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #374151; /* gray-700 */
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .menu-link:hover {
+    color: #33673B; /* hunter-green */
+  }
+  
+  .menu-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .menu-text {
+    font-size: 0.875rem;
+  }
+  
+  /* Icon Section */
+  .icon-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+  
+  
+  .schedule-consultation-button {
+    background-color: #33673B; /* hunter-green */
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .schedule-consultation-button:hover {
+    background-color: #059669; /* green-700 */
+  }
+  
+  /* Mobile Menu Section */
+  .mobile-menu-section {
+    display: none;
+    flex-shrink: 0;
+  }
+  
+  .mobile-menu-button {
+    padding: 0.5rem;
+    color: #374151; /* gray-700 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .mobile-menu-button:hover {
+    color: #33673B; /* hunter-green */
+  }
+  
+  .mobile-menu-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  /* Mobile Menu Dropdown */
+  .mobile-dropdown {
+    display: none;
+    background-color: white;
+    border-top: 1px solid #e5e7eb; /* gray-200 */
+  }
+  
+  .mobile-dropdown.open {
+    display: block;
+  }
+  
+  .mobile-dropdown-content {
+    padding: 0.5rem 1rem;
+  }
+  
+  .mobile-dropdown-link {
+    display: block;
+    padding: 0.5rem 0;
+    color: #374151; /* gray-700 */
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .mobile-dropdown-link:hover {
+    color: #33673B; /* hunter-green */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .menu-section {
+      display: none;
+    }
+    
+    .mobile-menu-section {
+      display: block;
+    }
+    
+    .icon-section {
+      gap: 0.75rem;
+    }
+    
+    .schedule-appointment-button {
+      padding: 0.5rem 0.625rem;
+      font-size: 0.75rem;
+    }
+  }
+  

@@ -1,11 +1,17 @@
 import React from 'react'
-import Home from './components/Home'
-
+// import Home from './components/Home'
+import PageTitle from './components/PageTitle'
+import Hero from './components/Hero'
+import Services from './components/Services'
+import OfficeHoursLocations from './components/OfficeHoursLocations'
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <PageTitle />
+      <Hero />
+      <Services />
+      <OfficeHoursLocations />
     </div>
   )
 }

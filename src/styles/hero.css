@@ -1,0 +1,355 @@
+/* --- CONTAINER --- */
+.hero-section {
+  position: relative;            /* so ticker can pin to bottom */
+  display: flex;
+  align-items: stretch;          /* columns fill height */
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 2rem 1rem 2rem; /* bottom padding for ticker */
+  min-height: 100vh;             /* full viewport */
+  background-color: #D8CBC7;
+  box-sizing: border-box;
+  overflow: hidden;              /* no spill past 100vh */
+}
+
+/* --- 60/40 SPLIT --- */
+.hero-content {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  background: linear-gradient(
+    135deg,
+    #D8CBC7 0%,
+    #E8D8D4 25%,
+    #F0E6E2 50%,
+    rgba(226, 75, 20, 0.1) 70%,
+    rgba(204, 63, 12, 0.15) 85%,
+    rgba(204, 63, 12, 0.2) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  padding-top: .5rem;
+  gap: 1.25rem;
+  max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
+  overflow-y: auto; /* allow scrolling if content is too tall */
+}
+
+/* Accent word in headline */
+.hero-content .accent {
+  color: #33673B;
+  font-weight: 800;
+}
+
+.services-ticker {
+    height: var(--ticker-h);
+    z-index: 10;
+}
+
+/* Left-side mini nav */
+.hero-left-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin-bottom: 0.25rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo Section - Exact copy from navbar */
+.logo-section {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.3rem;
+}
+
+.logo-text {
+  font-size: 1.2rem !important;
+  font-weight: 700;
+  color: var(--color-eerie-black); /* hunter-green */
+  padding-top: 0rem !important;
+  opacity: 0.8;
+}
+
+.hero-nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.hero-left-link {
+  font-weight: 400;
+  font-size: .75rem !important;
+  text-decoration: none;
+  color: var(--color-eerie-black);
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.8;
+}
+.hero-left-link:hover {
+  border-color: #33673B;
+  opacity: 1;
+}
+
+.hero-image-container {
+  flex: 0 0 40%;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: var(--color-hunter-green, #33673B);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  position: relative; /* for top-right buttons */
+  min-height: 0; /* allow inner to size */
+  max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
+  overflow-y: auto; /* allow scrolling if content is too tall */
+}
+
+.hero-nav-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.hero-nav-btn {
+  padding: 0.2rem 0.4rem;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.hero-nav-btn:hover {
+  background: var(--color-sinopia, #CC3F0C);
+  transform: scale(1.05);
+  border: 2px solid var(--color-sinopia);
+}
+.hero-nav-btn.primary {
+  background: #fff;
+  color: var(--color-hunter-green);
+}
+.hero-nav-btn.primary:hover {
+  background: var(--color-golden-brown);
+  color: #fff;
+  border: 2px solid var(--color-golden-brown);
+}
+
+.hero-image-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.hero-image-wrapper img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Headline/Body */
+.hero-content h1 {
+  font-size: clamp(2rem, 3.8vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0.5rem 0 0.5rem;
+  padding-top: .5rem;
+}
+.hero-content p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #1b1b1b;
+}
+
+/* CTAs */
+.cta-buttons {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 0.75rem;
+}
+.cta-button-primary,
+.cta-button-secondary {
+  padding: 0.6rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+  border: none;
+}
+.cta-button-primary {
+  background: #33673B;
+  color: #fff;
+}
+.cta-button-primary:hover { transform: translateY(-1px) scale(1.02); }
+
+.cta-button-secondary {
+  background-color: var(--color-sinopia, #CC3F0C);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.cta-button-secondary:hover {
+  background-color: #9A6D38;
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* Get Started button animation - moving sharpness effect */
+.cta-button-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: movingSharpness 3s infinite;
+}
+
+@keyframes movingSharpness {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+
+/* Social Proof - Right Side */
+.social-proof-right {
+  display: flex;
+  gap: 1.3rem;
+  margin-top: 0rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(216, 203, 199, 0.3);
+  justify-content: center;
+}
+
+.proof-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+  gap: 0.25rem;
+}
+
+.proof-number-right {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #D8CBC7;
+  line-height: 1;
+  text-align: center !important;
+}
+
+.proof-label-right {
+  display: block;
+  align-self: stretch;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #D8CBC7;
+  opacity: 0.8;
+  text-transform: lowercase;
+}
+
+
+
+/* --- SERVICES TICKER (inside hero, bottom) --- */
+.services-ticker {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 45px; /* increased height to accommodate padding */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  /* background: linear-gradient(90deg, rgba(25,35,26,0.12), rgba(25,35,26,0.06));
+  border-top: 1px solid rgba(0,0,0,0.08); */
+  backdrop-filter: blur(2px);
+  padding: 1rem 2rem 0.5rem 2rem; /* top, right, bottom, left padding */
+  box-sizing: border-box;
+}
+.ticker-track {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.ticker-item {
+  padding: 0;
+  font-weight: 700;
+  color: #19231A;
+  opacity: 0.8;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* Grid overlay positioning */
+.hero-grid-overlay {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.3rem;
+  opacity: 0;
+}
+
+/* Grid items with tasteful overlap */
+.hero-grid-item {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.05);
+  transform-origin: center;
+}
+
+.hero-grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-grid-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Base image positioning */
+.hero-base-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.8s ease-in-out;
+}
+

@@ -9,13 +9,12 @@ function Home() {
         <p>Professional accounting services for your business</p>
       </header>
       
-      <main className="home-main">
+      <main className="home-main ">
         <section className="hero-section">
           <h2>Your Trusted Financial Partner</h2>
           <p>We provide comprehensive accounting, bookkeeping, and financial consulting services to help your business thrive.</p>
           <button className="cta-button">Get Started</button>
         </section>
-        
         <section className="services-section">
           <h3>Our Services</h3>
           <div className="services-grid">
