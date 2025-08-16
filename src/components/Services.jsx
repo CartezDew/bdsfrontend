@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
@@ -18,19 +17,9 @@ const Services = () => {
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
   const [serviceType, setServiceType] = useState('individual'); // 'business' or 'individual'
   const [animationsTriggered, setAnimationsTriggered] = useState({
-    header: false,
-    title: false,
-    subtitle: false,
-    toggle: false,
-    note: false,
-    services: false
+    header: false, title: false, subtitle: false, toggle: false, note: false, services: false
   });
-  
-  const [cardAnimations, setCardAnimations] = useState({
-    individual: Array(6).fill(false), // 6 individual services
-    business: Array(7).fill(false)     // 7 business services
-  });
-  
+
   const servicesRef = useRef(null);
   const headerRef = useRef(null);
   const titleRef = useRef(null);
@@ -39,86 +28,32 @@ const Services = () => {
   const noteRef = useRef(null);
   const servicesRef2 = useRef(null);
 
-  // Intersection Observer for animations
+  // Intersection Observer for header animations only
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.05, // 5% visibility
-      rootMargin: '0px'
+    const observerOptions = { 
+      threshold: 0.1,
+      rootMargin: '50px'
     };
-
+    
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const elementId = entry.target.dataset.animate;
-          
-          if (elementId === 'services') {
-            // Just mark services container as animated, individual cards will be handled separately
-            setAnimationsTriggered(prev => ({ ...prev, services: true }));
-          } else {
-            setAnimationsTriggered(prev => ({
-              ...prev,
-              [elementId]: true
-            }));
-          }
+          setAnimationsTriggered(prev => ({ ...prev, [elementId]: true }));
         }
       });
     }, observerOptions);
 
-    // Observe all animation elements individually
+    // Observe header elements only
     if (headerRef.current) observer.observe(headerRef.current);
     if (titleRef.current) observer.observe(titleRef.current);
     if (subtitleRef.current) observer.observe(subtitleRef.current);
     if (toggleRef.current) observer.observe(toggleRef.current);
     if (noteRef.current) observer.observe(noteRef.current);
     if (servicesRef2.current) observer.observe(servicesRef2.current);
-
+    
     return () => observer.disconnect();
   }, []);
-
-  // Function to handle individual card animations
-  const handleCardAnimation = (serviceType, cardIndex) => {
-    setCardAnimations(prev => ({
-      ...prev,
-      [serviceType]: prev[serviceType].map((_, index) => 
-        index === cardIndex ? true : prev[serviceType][index]
-      )
-    }));
-  };
-
-  // Function to trigger sequential card animations
-  const triggerSequentialAnimations = (serviceType) => {
-    const cardCount = serviceType === 'individual' ? 6 : 7;
-    
-    // Reset all animations first
-    setCardAnimations(prev => ({
-      ...prev,
-      [serviceType]: Array(cardCount).fill(false)
-    }));
-    
-    // Trigger animations sequentially with proper delays
-    for (let i = 0; i < cardCount; i++) {
-      setTimeout(() => {
-        setCardAnimations(prev => ({
-          ...prev,
-          [serviceType]: prev[serviceType].map((_, index) => 
-            index === i ? true : prev[serviceType][index]
-          )
-        }));
-      }, i * 400); // 400ms delay between each card for smoother flow
-    }
-  };
-
-  // Effect to trigger animations when service type changes
-  useEffect(() => {
-    // Trigger animations for the current service type
-    triggerSequentialAnimations(serviceType);
-  }, [serviceType]);
-
-  // Effect to trigger initial animations when component mounts
-  useEffect(() => {
-    // Trigger initial animations for the default service type
-    triggerSequentialAnimations(serviceType);
-  }, []); // Empty dependency array for initial load only
 
   const handleToggleService = (serviceId) => {
     setExpandedService(expandedService === serviceId ? null : serviceId);
@@ -126,7 +61,7 @@ const Services = () => {
 
   const handleServiceTypeChange = (type) => {
     setServiceType(type);
-    setExpandedService(null); // Reset expanded service when switching types
+    setExpandedService(null);
   };
 
   // Scroll detection for sticky navbar
@@ -189,21 +124,15 @@ const Services = () => {
           </div>
           
           {/* Render appropriate services based on toggle */}
-          <AnimatePresence mode="wait">
-            <div className={`services-content ${animationsTriggered.services ? 'animate-services' : ''}`} ref={servicesRef2} data-animate="services">
-              {serviceType === 'business' ? (
-                <BusinessServices 
-                  cardAnimations={cardAnimations.business} 
-                  onCardAnimation={(index) => handleCardAnimation('business', index)}
-                />
-              ) : (
-                <IndividualServices 
-                  cardAnimations={cardAnimations.individual} 
-                  onCardAnimation={(index) => handleCardAnimation('individual', index)}
-                />
-              )}
-            </div>
-          </AnimatePresence>
+          <div className={`services-content ${animationsTriggered.services ? 'animate-services' : ''}`} ref={servicesRef2} data-animate="services">
+            {serviceType === 'business' ? (
+              <BusinessServices 
+              />
+            ) : (
+              <IndividualServices 
+              />
+            )}
+          </div>
         </div>
       </section>
       

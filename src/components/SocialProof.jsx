@@ -110,18 +110,17 @@ export default function SocialProof() {
             // Trigger staggered card animations
             setAnimationsTriggered(prev => ({ ...prev, cards: true }));
             
-            // Reset and then animate each card with a delay for staggered effect
+            // Use the same smooth animation logic as page changes
             setCardAnimations(Array(3).fill(false));
             
-            setTimeout(() => {
-              for (let i = 0; i < cardsPerPage; i++) {
-                setTimeout(() => {
-                  setCardAnimations(prev => 
-                    prev.map((_, index) => index === i ? true : prev[index])
-                  );
-                }, i * 300); // 300ms delay between each card
-              }
-            }, 100);
+            // Stagger the animations with the same timing as page changes
+            for (let i = 0; i < cardsPerPage; i++) {
+              setTimeout(() => {
+                setCardAnimations(prev => 
+                  prev.map((_, index) => index === i ? true : prev[index])
+                );
+              }, i * 300); // 300ms delay between each card
+            }
           } else {
             setAnimationsTriggered(prev => ({
               ...prev,
@@ -138,17 +137,6 @@ export default function SocialProof() {
     if (rightImageRef.current) observer.observe(rightImageRef.current);
     if (navRef.current) observer.observe(navRef.current);
     if (cardsRef.current) observer.observe(cardsRef.current);
-
-    // Trigger initial card animations after a brief delay
-    setTimeout(() => {
-      for (let i = 0; i < cardsPerPage; i++) {
-        setTimeout(() => {
-          setCardAnimations(prev => 
-            prev.map((_, index) => index === i ? true : prev[index])
-          );
-        }, i * 300); // 300ms delay between each card
-      }
-    }, 500);
 
     return () => observer.disconnect();
   }, []);

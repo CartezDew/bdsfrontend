@@ -2,74 +2,62 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const individualServicePriceText = {
-  1: "Starting at $175",       // Personal Tax Returns (flat)
-  2: "Starting at $99 (mo)",   // Personal Bookkeeping
-  3: "Starting at $175 (hr)",  // Tax Planning
-  4: "Starting at $300",       // Audit Support (flat start)
-  5: "Starting at $35",        // Tax Deadline Extensions (flat)
-  6: "Starting at $150 (hr)"   // Financial Advisory
+  1: "Starting at $175",
+  2: "Starting at $99 (mo)",
+  3: "Starting at $175 (hr)",
+  4: "Starting at $300",
+  5: "Starting at $35",
+  6: "Starting at $150 (hr)"
 };
 
 const individualServicesData = [
   {
     id: 1,
-    title: 'Personal Tax Returns',
-    description: 'Comprehensive tax preparation and filing services for individuals and families.',
-    details: 'Our expert team handles all types of personal tax returns including W-2 income, investment income, rental properties, and self-employment. We ensure maximum deductions and credits while maintaining full compliance with current tax laws.',
-    icon: '📊'
+    icon: "📊",
+    title: "Tax Returns",
+    description: "Complete personal tax return preparation and filing services.",
+    details: "We handle all types of personal tax returns including W-2s, 1099s, investment income, rental properties, and more. Our experts ensure maximum deductions and credits while maintaining full compliance with IRS regulations."
   },
   {
     id: 2,
-    title: 'Personal Bookkeeping',
-    description: 'Professional personal financial record keeping and organization services.',
-    details: 'We provide complete personal bookkeeping services including expense tracking, income documentation, receipt organization, and financial statement preparation. Our systems help you stay organized for tax time and financial planning.',
-    icon: '📚'
+    icon: "📈",
+    title: "Bookkeeping",
+    description: "Monthly bookkeeping and financial record maintenance.",
+    details: "Professional bookkeeping services to keep your personal finances organized. We track income, expenses, categorize transactions, and provide monthly reports to help you understand your financial position."
   },
   {
     id: 3,
-    title: 'Tax Planning',
-    description: 'Strategic tax planning to minimize your personal tax liability.',
-    details: 'Our tax planning services cover retirement contributions, investment strategies, charitable giving, and timing of income and deductions. We help you make informed decisions throughout the year to optimize your tax situation.',
-    icon: '✅'
+    icon: "⚖️",
+    title: "Compliance",
+    description: "Ensure your personal finances meet all regulatory requirements.",
+    details: "Stay compliant with tax laws and regulations. We help you understand your obligations, maintain proper documentation, and avoid penalties through proactive compliance management."
   },
   {
     id: 4,
-    title: 'Audit Support',
-    description: 'Professional support and representation during IRS examinations.',
-    details: 'Our audit support services include preparation assistance, representation during IRS meetings, documentation help, and strategic guidance. We ensure you have the best possible outcome for your personal tax audit.',
-    icon: '🔍'
+    icon: "📋",
+    title: "Reporting",
+    description: "Comprehensive financial reporting and analysis.",
+    details: "Get clear insights into your financial situation with detailed reports. We analyze your income, expenses, and financial trends to help you make informed decisions about your money."
   },
   {
     id: 5,
-    title: 'Tax Deadline Extensions',
-    description: 'Timely filing of personal tax extensions to avoid penalties.',
-    details: 'We handle all personal tax extension filings including individual and trust extensions. Our team ensures proper documentation and timely submission to give you the time needed for accurate tax preparation.',
-    icon: '⏰'
+    icon: "🔍",
+    title: "Audits",
+    description: "Professional representation during IRS audits and reviews.",
+    details: "If you're facing an IRS audit, we provide expert representation and guidance. Our team handles all communication with the IRS and works to resolve issues efficiently and favorably."
   },
   {
     id: 6,
-    title: 'Financial Advisory',
-    description: 'Personal financial planning and investment advice.',
-    details: 'Our personal advisory services include retirement planning, investment strategy, debt management, and estate planning. We help you build wealth and achieve your long-term financial goals.',
-    icon: '💡'
+    title: "Tax Extensions",
+    icon: "⏰",
+    description: "File extensions and ensure timely tax compliance.",
+    details: "Need more time to file your taxes? We can file extensions for you and ensure you meet all deadlines. This gives you extra time to gather documents while avoiding late filing penalties."
   }
 ];
 
-const IndividualServiceCard = ({ service, isExpanded, onToggle, isAnimated, onAnimationTrigger, cardIndex }) => {
+const IndividualServiceCard = ({ service, isExpanded, onToggle }) => {
   return (
-    <motion.div
-      className="service-card"
-      layout
-      initial={{ opacity: 0, x: -150 }}
-      animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -150 }}
-      transition={{ 
-        duration: 1.2, 
-        ease: "easeOut",
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }}
-    >
+    <div className="service-card">
       <div className="service-card-content">
         <div className="service-header">
           <div className="service-icon">{service.icon}</div>
@@ -78,40 +66,30 @@ const IndividualServiceCard = ({ service, isExpanded, onToggle, isAnimated, onAn
         <div className="service-separator"></div>
         <p className="service-description">{service.description}</p>
         
-        <AnimatePresence mode="wait">
-          {isExpanded && (
-            <motion.div
-              className="service-details"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <p>{service.details}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isExpanded && (
+          <div className="service-details">
+            <p>{service.details}</p>
+          </div>
+        )}
       </div>
       
-      <motion.button
+      <button
         className="learn-more-btn"
         onClick={onToggle}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
       >
         {isExpanded ? 'Show Less' : 'Learn More'}
         <span className="arrow">{isExpanded ? '↑' : '→'}</span>
-      </motion.button>
+      </button>
       
       {/* Price Display */}
       <div className="service-price">
         {individualServicePriceText[service.id]}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-const IndividualServices = ({ cardAnimations = [], onCardAnimation }) => {
+const IndividualServices = () => {
   const [expandedService, setExpandedService] = useState(null);
 
   const handleToggleService = (serviceId) => {
@@ -126,9 +104,6 @@ const IndividualServices = ({ cardAnimations = [], onCardAnimation }) => {
           service={service}
           isExpanded={expandedService === service.id}
           onToggle={() => handleToggleService(service.id)}
-          isAnimated={cardAnimations[index] || false}
-          onAnimationTrigger={onCardAnimation}
-          cardIndex={index}
         />
       ))}
     </div>

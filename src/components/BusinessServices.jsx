@@ -2,82 +2,70 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const businessServicePriceText = {
-  1: "Starting at $525",      // Tax Returns (1065/1120S/1120 - simple)
-  2: "Starting at $199 (mo)", // Bookkeeping
-  3: "Starting at $129 (mo)", // Compliance (sales tax/payroll filings, annual regs)
-  4: "Starting at $149 (mo)", // Reporting (P&L, BS, cash flow)
-  5: "Starting at $400",      // Audits (IRS/GA exam support; flat start)
-  6: "Starting at $50",       // Tax Extensions (Form 7004/IT-303 admin)
-  7: "Starting at $175 (hr)"  // Advisory (tax/financial strategy)
+  1: "Starting at $525",
+  2: "Starting at $199 (mo)",
+  3: "Starting at $129 (mo)",
+  4: "Starting at $149 (mo)",
+  5: "Starting at $400",
+  6: "Starting at $50",
+  7: "Starting at $175 (hr)"
 };
 
 const businessServicesData = [
   {
     id: 1,
-    title: 'Tax Returns',
-    description: 'Comprehensive tax preparation and filing services for individuals and businesses.',
-    details: 'Our expert team handles all types of tax returns including personal, corporate, partnership, and trust returns. We ensure maximum deductions and credits while maintaining full compliance with current tax laws.',
-    icon: '📊'
+    icon: "📊",
+    title: "Tax Returns",
+    description: "Complete business tax return preparation and filing services.",
+    details: "We handle all types of business tax returns including corporate, partnership, and LLC filings. Our experts ensure maximum deductions and credits while maintaining full compliance with IRS regulations and business tax laws."
   },
   {
     id: 2,
-    title: 'Bookkeeping',
-    description: 'Professional bookkeeping services to keep your financial records organized and accurate.',
-    details: 'We provide complete bookkeeping services including accounts payable/receivable, payroll processing, bank reconciliations, and financial statement preparation. Our cloud-based solutions give you real-time access to your financial data.',
-    icon: '📚'
+    icon: "📈",
+    title: "Bookkeeping",
+    description: "Monthly bookkeeping and financial record maintenance.",
+    details: "Professional bookkeeping services to keep your business finances organized. We track income, expenses, categorize transactions, and provide monthly reports to help you understand your business financial position."
   },
   {
     id: 3,
-    title: 'Compliance',
-    description: 'Stay compliant with all regulatory requirements and tax obligations.',
-    details: 'Our compliance services cover tax filing deadlines, regulatory reporting, state and local tax compliance, and ongoing monitoring to ensure you never miss important deadlines or requirements.',
-    icon: '✅'
+    icon: "⚖️",
+    title: "Compliance",
+    description: "Ensure your business meets all regulatory requirements.",
+    details: "Stay compliant with business tax laws and regulations. We help you understand your obligations, maintain proper documentation, and avoid penalties through proactive compliance management."
   },
   {
     id: 4,
-    title: 'Reporting',
-    description: 'Comprehensive financial reporting and analysis for informed decision-making.',
-    details: 'We provide detailed financial reports including profit & loss statements, balance sheets, cash flow analysis, and custom reports tailored to your specific business needs and industry requirements.',
-    icon: '📈'
+    icon: "📋",
+    title: "Reporting",
+    description: "Comprehensive financial reporting and analysis.",
+    details: "Get clear insights into your business financial situation with detailed reports. We analyze your income, expenses, and financial trends to help you make informed decisions about your business."
   },
   {
     id: 5,
-    title: 'Audits',
-    description: 'Professional audit support and representation during IRS examinations.',
-    details: 'Our audit services include preparation support, representation during IRS meetings, documentation assistance, and strategic guidance to ensure the best possible outcome for your audit.',
-    icon: '🔍'
+    icon: "🔍",
+    title: "Audits",
+    description: "Professional representation during IRS audits and reviews.",
+    details: "If your business is facing an IRS audit, we provide expert representation and guidance. Our team handles all communication with the IRS and works to resolve issues efficiently and favorably."
   },
   {
     id: 6,
-    title: 'Tax Extensions',
-    description: 'Timely filing of tax extensions to avoid penalties and interest.',
-    details: 'We handle all tax extension filings including individual, business, and trust extensions. Our team ensures proper documentation and timely submission to give you the time needed for accurate tax preparation.',
-    icon: '⏰'
+    icon: "⏰",
+    title: "Tax Extensions",
+    description: "File extensions and ensure timely tax compliance.",
+    details: "Need more time to file your business taxes? We can file extensions for you and ensure you meet all deadlines. This gives you extra time to gather documents while avoiding late filing penalties."
   },
   {
     id: 7,
-    title: 'Advisory',
-    description: 'Strategic tax and financial planning advice for your business growth.',
-    details: 'Our advisory services include tax planning strategies, business structure optimization, succession planning, and ongoing consultation to help you make informed financial decisions and minimize tax liability.',
-    icon: '💡'
+    icon: "💡",
+    title: "Advisory",
+    description: "Strategic business financial planning and consulting.",
+    details: "Our business advisory services include tax planning, financial strategy, growth planning, and business structure optimization. We help you build wealth and achieve your long-term business goals."
   }
 ];
 
-const BusinessServiceCard = ({ service, isExpanded, onToggle, isAnimated, onAnimationTrigger, cardIndex }) => {
+const BusinessServiceCard = ({ service, isExpanded, onToggle }) => {
   return (
-    <motion.div
-      className="service-card"
-      layout
-      initial={{ opacity: 0, x: -150 }}
-      animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -150 }}
-      transition={{ 
-        duration: 1.2, 
-        ease: "easeOut",
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }}
-    >
+    <div className="service-card">
       <div className="service-card-content">
         <div className="service-header">
           <div className="service-icon">{service.icon}</div>
@@ -86,39 +74,30 @@ const BusinessServiceCard = ({ service, isExpanded, onToggle, isAnimated, onAnim
         <div className="service-separator"></div>
         <p className="service-description">{service.description}</p>
         
-        <AnimatePresence mode="wait">
-          {isExpanded && (
-            <motion.div
-              className="service-details"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              transition={{ duration: 0.3 }}
-            >
-              <p>{service.details}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isExpanded && (
+          <div className="service-details">
+            <p>{service.details}</p>
+          </div>
+        )}
       </div>
       
-      <motion.button
+      <button
         className="learn-more-btn"
         onClick={onToggle}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
       >
         {isExpanded ? 'Show Less' : 'Learn More'}
         <span className="arrow">{isExpanded ? '↑' : '→'}</span>
-      </motion.button>
+      </button>
       
       {/* Price Display */}
       <div className="service-price">
         {businessServicePriceText[service.id]}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-const BusinessServices = ({ cardAnimations = [], onCardAnimation }) => {
+const BusinessServices = () => {
   const [expandedService, setExpandedService] = useState(null);
 
   const handleToggleService = (serviceId) => {
@@ -133,9 +112,6 @@ const BusinessServices = ({ cardAnimations = [], onCardAnimation }) => {
           service={service}
           isExpanded={expandedService === service.id}
           onToggle={() => handleToggleService(service.id)}
-          isAnimated={cardAnimations[index] || false}
-          onAnimationTrigger={onCardAnimation}
-          cardIndex={index}
         />
       ))}
     </div>
