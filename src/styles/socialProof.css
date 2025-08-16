@@ -208,6 +208,52 @@
   display: block;
 }
 
+/* Navigation and Images Container */
+.nav-images-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* left | center | right */
+    align-items: center;
+    column-gap: 4rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto 2rem;
+    padding: 0; /* ensure no inner padding here */
+  }
+  
+  /* IMPORTANT: stop centering inside the wrappers */
+  .left-image,
+  .right-image {
+    display: flex;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .left-image  { justify-content: flex-start; } /* hugs left edge of its column */
+  .right-image { justify-content: flex-end;   } /* hugs right edge of its column */
+  
+  /* Keep nav dead center */
+  .nav-controls-section {
+    justify-self: center;
+    display: grid;
+    place-items: center;
+    row-gap: rem;
+  }
+  
+  /* Clean image defaults */
+  .business-meeting-image {
+    display: block;
+    max-width: 90%;
+    height: auto;
+    margin: 0;      /* no auto margins */
+    border: 0;      /* if you add borders elsewhere, fine to remove this */
+  }
+  
+
+
+
+
+
 /* Pagination controls */
 .pagination-controls {
   display: flex;
@@ -367,3 +413,5 @@
     gap: 1rem;
   }
 }
+
+

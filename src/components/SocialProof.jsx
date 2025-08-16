@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import "../styles/socialProof.css";
+import businessHandshake from "../assets/Images/business-people-shaking-hands-together.png";
+import image_1 from "../assets/Images/Frame_1.png";
+import image_2 from "../assets/Images/Frame_2.png";
+
 
 const testimonials = [
   {
@@ -109,41 +113,72 @@ export default function SocialProof() {
         <p>Real success stories from clients who trusted BDS Talent Group with their financial needs.</p>
       </div>
 
-      {/* Pagination controls */}
-      <div className="pagination-controls">
-        <button
-          onClick={prevPage}
-          className="nav-button"
-          aria-label="Previous page"
-          title="Previous page"
-        >
-          ←
-        </button>
-        
-        <div className="page-indicator">
-          {currentPage + 1} of {totalPages}
-        </div>
-        
-        <button
-          onClick={nextPage}
-          className="nav-button"
-          aria-label="Next page"
-          title="Next page"
-        >
-          →
-        </button>
-      </div>
-
-      {/* Page dots */}
-      <div className="page-dots">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            onClick={() => goToPage(index)}
-            className={`page-dot ${index === currentPage ? "active" : ""}`}
-            aria-label={`Go to page ${index + 1}`}
+      {/* Navigation and Images Container */}
+      <div className="nav-images-container">
+        {/* Left Image */}
+        <div className="left-image">
+          <img 
+            src={image_1} 
+            alt="Professional business team collaboration"
+            className="business-meeting-image"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
           />
-        ))}
+        </div>
+
+        {/* Navigation Controls */}
+        <div className="nav-controls-section">
+          <div className="pagination-controls">
+            <button
+              onClick={prevPage}
+              className="nav-button"
+              aria-label="Previous page"
+              title="Previous page"
+            >
+              ←
+            </button>
+            
+            <div className="page-indicator">
+              {currentPage + 1} of {totalPages}
+            </div>
+            
+            <button
+              onClick={nextPage}
+              className="nav-button"
+              aria-label="Next page"
+              title="Next page"
+            >
+              →
+            </button>
+          </div>
+
+          {/* Page dots */}
+          <div className="page-dots">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => goToPage(index)}
+                className={`page-dot ${index === currentPage ? "active" : ""}`}
+                aria-label={`Go to page ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Right Image */}
+        <div className="right-image">
+          <img 
+            src={image_2} 
+            alt="Small business owners collaboration"
+            className="business-meeting-image"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
+          />
+        </div>
       </div>
 
       {/* Testimonials grid - 3 cards per page */}
