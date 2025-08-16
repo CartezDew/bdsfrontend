@@ -633,3 +633,70 @@
     margin: 0.5rem 0;
   }
 }
+
+/* Animation Classes for Services Section */
+.services-header {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.services-header.animate-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.services-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.services-title.animate-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.services-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+.services-subtitle.animate-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-type-toggle {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.8s ease-out;
+}
+
+.service-type-toggle.animate-toggle {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.service-type-note {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.8s ease-out;
+}
+
+.service-type-note.animate-note {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.services-content {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.8s ease-out;
+}
+
+.services-content.animate-services {
+  opacity: 1;
+  transform: translateY(0);
+}

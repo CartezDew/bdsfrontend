@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const individualServicePriceText = {
@@ -55,14 +55,39 @@ const individualServicesData = [
   }
 ];
 
-const IndividualServiceCard = ({ service, isExpanded, onToggle }) => {
+const IndividualServiceCard = ({ service, isExpanded, onToggle, isAnimated, onAnimationTrigger, cardIndex }) => {
+  const cardRef = useRef(null);
+
+  // Intersection Observer for individual card
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.05, // 5% visibility
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isAnimated) {
+          onAnimationTrigger(cardIndex);
+        }
+      });
+    }, observerOptions);
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isAnimated, onAnimationTrigger, cardIndex]);
+
   return (
     <motion.div
+      ref={cardRef}
       className="service-card"
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, x: -100 }}
+      animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <div className="service-card-content">
         <div className="service-header">
@@ -105,7 +130,7 @@ const IndividualServiceCard = ({ service, isExpanded, onToggle }) => {
   );
 };
 
-const IndividualServices = () => {
+const IndividualServices = ({ cardAnimations = [], onCardAnimation }) => {
   const [expandedService, setExpandedService] = useState(null);
 
   const handleToggleService = (serviceId) => {
@@ -114,12 +139,15 @@ const IndividualServices = () => {
 
   return (
     <div className="services-grid">
-      {individualServicesData.map((service) => (
+      {individualServicesData.map((service, index) => (
         <IndividualServiceCard
           key={service.id}
           service={service}
           isExpanded={expandedService === service.id}
           onToggle={() => handleToggleService(service.id)}
+          isAnimated={cardAnimations[index] || false}
+          onAnimationTrigger={onCardAnimation}
+          cardIndex={index}
         />
       ))}
     </div>

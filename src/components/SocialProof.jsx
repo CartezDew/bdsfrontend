@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/socialProof.css";
 import businessHandshake from "../assets/Images/business-people-shaking-hands-together.png";
 import image_1 from "../assets/Images/Frame_1.png";
@@ -74,25 +74,136 @@ const testimonials = [
 export default function SocialProof() {
   const [currentPage, setCurrentPage] = useState(0);
   const [allCardsExpanded, setAllCardsExpanded] = useState(false);
+  const [animationsTriggered, setAnimationsTriggered] = useState({
+    header: false,
+    leftImage: false,
+    rightImage: false,
+    nav: false,
+    cards: false
+  });
+  
+  const [cardAnimations, setCardAnimations] = useState(Array(3).fill(false)); // 3 cards per page
+  
   const cardsPerPage = 3;
   const totalPages = Math.ceil(testimonials.length / cardsPerPage);
+
+  // Refs for animation triggers
+  const headerRef = useRef(null);
+  const leftImageRef = useRef(null);
+  const rightImageRef = useRef(null);
+  const navRef = useRef(null);
+  const cardsRef = useRef(null);
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.05, // 5% visibility
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const elementId = entry.target.dataset.animate;
+          
+          if (elementId === 'cards') {
+            // Trigger staggered card animations
+            setAnimationsTriggered(prev => ({ ...prev, cards: true }));
+            
+            // Animate each card with a delay
+            for (let i = 0; i < cardsPerPage; i++) {
+              setTimeout(() => {
+                setCardAnimations(prev => 
+                  prev.map((_, index) => index === i ? true : prev[index])
+                );
+              }, i * 200); // 200ms delay between each card
+            }
+          } else {
+            setAnimationsTriggered(prev => ({
+              ...prev,
+              [elementId]: true
+            }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animation elements individually
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (leftImageRef.current) observer.observe(leftImageRef.current);
+    if (rightImageRef.current) observer.observe(rightImageRef.current);
+    if (navRef.current) observer.observe(navRef.current);
+    if (cardsRef.current) observer.observe(cardsRef.current);
+
+    // Trigger initial card animations after a brief delay
+    setTimeout(() => {
+      for (let i = 0; i < cardsPerPage; i++) {
+        setTimeout(() => {
+          setCardAnimations(prev => 
+            prev.map((_, index) => index === i ? true : prev[index])
+          );
+        }, i * 200); // 200ms delay between each card
+      }
+    }, 500);
+
+    return () => observer.disconnect();
+  }, []);
 
   const nextPage = () => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
     // Reset expanded state when changing pages
     setAllCardsExpanded(false);
+    // Reset card animations for new page and trigger them immediately
+    setCardAnimations(Array(3).fill(false));
+    
+    // Trigger card animations for the new page after a brief delay
+    setTimeout(() => {
+      for (let i = 0; i < cardsPerPage; i++) {
+        setTimeout(() => {
+          setCardAnimations(prev => 
+            prev.map((_, index) => index === i ? true : prev[index])
+          );
+        }, i * 200); // 200ms delay between each card
+      }
+    }, 100);
   };
 
   const prevPage = () => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
     // Reset expanded state when changing pages
     setAllCardsExpanded(false);
+    // Reset card animations for new page and trigger them immediately
+    setCardAnimations(Array(3).fill(false));
+    
+    // Trigger card animations for the new page after a brief delay
+    setTimeout(() => {
+      for (let i = 0; i < cardsPerPage; i++) {
+        setTimeout(() => {
+          setCardAnimations(prev => 
+            prev.map((_, index) => index === i ? true : prev[index])
+          );
+        }, i * 200); // 200ms delay between each card
+      }
+    }, 100);
   };
 
   const goToPage = (pageIndex) => {
     setCurrentPage(pageIndex);
     // Reset expanded state when changing pages
     setAllCardsExpanded(false);
+    // Reset card animations for new page and trigger them immediately
+    setCardAnimations(Array(3).fill(false));
+    
+    // Trigger card animations for the new page after a brief delay
+    setTimeout(() => {
+      for (let i = 0; i < cardsPerPage; i++) {
+        setTimeout(() => {
+          setCardAnimations(prev => 
+            prev.map((_, index) => index === i ? true : prev[index])
+          );
+        }, i * 200); // 200ms delay between each card
+      }
+    }, 100);
   };
 
   const toggleAllCardsExpansion = () => {
@@ -108,7 +219,7 @@ export default function SocialProof() {
   return (
     <section className="testimonial-grid">
       {/* Section header */}
-      <div className="grid-header">
+      <div className={`grid-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
         <h2>What our clients say</h2>
         <p>Real success stories from clients who trusted BDS Talent Group with their financial needs.</p>
       </div>
@@ -116,7 +227,7 @@ export default function SocialProof() {
       {/* Navigation and Images Container */}
       <div className="nav-images-container">
         {/* Left Image */}
-        <div className="left-image">
+        <div className={`left-image ${animationsTriggered.leftImage ? 'animate-left-image' : ''}`} ref={leftImageRef} data-animate="leftImage">
           <img 
             src={image_1} 
             alt="Professional business team collaboration"
@@ -129,7 +240,7 @@ export default function SocialProof() {
         </div>
 
         {/* Navigation Controls */}
-        <div className="nav-controls-section">
+        <div className={`nav-controls-section ${animationsTriggered.nav ? 'animate-nav' : ''}`} ref={navRef} data-animate="nav">
           <div className="pagination-controls">
             <button
               onClick={prevPage}
@@ -168,7 +279,7 @@ export default function SocialProof() {
         </div>
 
         {/* Right Image */}
-        <div className="right-image">
+        <div className={`right-image ${animationsTriggered.rightImage ? 'animate-right-image' : ''}`} ref={rightImageRef} data-animate="rightImage">
           <img 
             src={image_2} 
             alt="Small business owners collaboration"
@@ -182,12 +293,20 @@ export default function SocialProof() {
       </div>
 
       {/* Testimonials grid - 3 cards per page */}
-      <div className="testimonials-grid">
+      <div className={`testimonials-grid ${animationsTriggered.cards ? 'animate-cards' : ''}`} ref={cardsRef} data-animate="cards">
         {currentTestimonials.map((testimonial, index) => {
           const globalIndex = currentPage * cardsPerPage + index;
           
           return (
-            <article key={globalIndex} className={`testimonial-card ${allCardsExpanded ? 'expanded' : ''}`}>
+            <article 
+              key={globalIndex} 
+              className={`testimonial-card ${allCardsExpanded ? 'expanded' : ''}`}
+              style={{
+                opacity: cardAnimations[index] ? 1 : 0,
+                transform: cardAnimations[index] ? 'translateY(0)' : 'translateY(30px)',
+                transition: `all 0.6s ease-out ${index * 0.2}s`
+              }}
+            >
               <div className="card-header">
                 <div className="author-info">
                   <h3 className="author-name">{testimonial.author}</h3>

@@ -414,4 +414,62 @@
   }
 }
 
+/* Animation Classes */
+.grid-header {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.grid-header.animate-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.left-image {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.8s ease-out;
+}
+
+.left-image.animate-left-image {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.right-image {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.8s ease-out;
+}
+
+.right-image.animate-right-image {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav-controls-section {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s ease-out;
+}
+
+.nav-controls-section.animate-nav {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.testimonials-grid {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.testimonials-grid.animate-cards {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Remove old card animation styles since we're using inline styles for staggered effect */
+
 
