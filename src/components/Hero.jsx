@@ -184,9 +184,10 @@ const Hero = () => {
           className="services-ticker"
           style={{
             /* keep visible (no translate so it doesn't slip below dvh) */
-            opacity: 1,
-            transform: 'none',
-            transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+            opacity: animationsTriggered.ticker ? 1 : 0,
+            transform: animationsTriggered.ticker ? 'translateY(0)' : 'translateY(24px)', // from below
+            transition: 'transform 500ms cubic-bezier(0.4,0,0.2,1), opacity 500ms cubic-bezier(0.4,0,0.2,1)',
+            willChange: 'transform, opacity'
           }}
         >
           <div className="ticker-track">
