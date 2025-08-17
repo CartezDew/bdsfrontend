@@ -64,8 +64,8 @@ const Navbar = ({ customConfig }) => {
 
                 {/* icon section */}
                 <div className="icon-section">
-                    <button className="schedule-consultation-button">
-                        Schedule a Consultation
+                    <button className="get-started-btn">
+                        Get Started
                     </button>
                 </div>
 

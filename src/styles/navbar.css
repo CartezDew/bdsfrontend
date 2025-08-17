@@ -79,19 +79,47 @@
   }
   
   
-  .schedule-consultation-button {
-    background-color: #33673B; /* hunter-green */
-    color: white;
+  .get-started-btn {
+    background-color: var(--color-hunter-green); /* hunter-green */
+    color: var(--color-timberwolf);
     padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
     border: none;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
   }
   
-  .schedule-consultation-button:hover {
-    background-color: #059669; /* green-700 */
+  .get-started-btn:hover {
+    background-color: var(--color-golden-brown); /* green-700 */
+  }
+
+  /* Get Started button animation - moving sharpness effect */
+  .get-started-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: movingSharpness 3s infinite;
+  }
+
+  @keyframes movingSharpness {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
   }
   
   /* Mobile Menu Section */
