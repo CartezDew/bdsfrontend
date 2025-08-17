@@ -394,3 +394,109 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Social Media Section */
+.social-media-section {
+  text-align: center;
+  margin: 2rem 0 3rem 0;
+  padding: 1.5rem;
+  /* background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); */
+  border-radius: 12px;
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); */
+}
+
+.follow-us-text {
+  color: var(--color-hunter-green);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  text-shadow: 0 1px 2px rgba(51, 103, 59, 0.1);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  color: var(--color-sinopia);
+  text-decoration: none;
+  transition: all 0.3s ease;
+ 
+}
+
+.social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(204, 63, 12, 0.5);
+}
+
+.social-icon svg {
+  width: 30px;
+  height: 30px;
+}
+/* 
+.social-icon.facebook {
+  background: #1877F2;
+}
+
+.social-icon.facebook:hover {
+  background: #166FE5;
+  box-shadow: 0 4px 15px rgba(24, 119, 242, 0.5);
+} */
+
+/* .social-icon.instagram {
+  background: linear-gradient(45deg, #F09433 0%, #E6683C 25%, #DC2743 50%, #CC2366 75%, #BC1888 100%);
+} */
+
+.social-icon.instagram:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(220, 39, 67, 0.5);
+}
+/* 
+.social-icon.linkedin {
+  background: #0077B5;
+} */
+
+.social-icon.linkedin:hover {
+  background: #006097;
+  box-shadow: 0 4px 15px rgba(0, 119, 181, 0.5);
+}
+
+/* Responsive Design for Social Media */
+@media (max-width: 768px) {
+  .social-media-section {
+    margin: 1.5rem 0 2rem 0;
+    padding: 1rem;
+  }
+  
+  .social-icons {
+    gap: 1rem;
+  }
+  
+  .social-icon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .follow-us-text {
+    font-size: 1rem;
+  }
+}

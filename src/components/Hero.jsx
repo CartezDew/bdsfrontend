@@ -163,16 +163,16 @@ const Hero = () => {
             }}
           >
             <div className="proof-item-right">
+              <span className="proof-number-right">100%</span>
+              <span className="proof-label-right">on-time filings</span>
+            </div>
+            <div className="proof-item-right">
               <span className="proof-number-right">200+</span>
               <span className="proof-label-right">happy clients</span>
             </div>
             <div className="proof-item-right">
               <span className="proof-number-right">14+</span>
               <span className="proof-label-right">years experience</span>
-            </div>
-            <div className="proof-item-right">
-              <span className="proof-number-right">2</span>
-              <span className="proof-label-right">locations</span>
             </div>
           </div>
         </div>
@@ -207,7 +207,7 @@ const Hero = () => {
           </div>
         </div>
 
-      </div>{/* /hero-inner */}
+      </div>
     </section>
   );
 };

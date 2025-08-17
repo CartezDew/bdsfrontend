@@ -201,6 +201,7 @@
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  padding-right: 4rem;
 }
 
 /* CTAs */
@@ -265,7 +266,7 @@
 .social-proof-right{
     grid-row: 2;                 /* stays in the bottom row */
     display: flex;               /* simpler than grid for this */
-    justify-content: center;     /* center the whole strip */
+    justify-content: space-around;     /* center the whole strip */
     align-items: center;         /* vertical centering */
     gap: 2rem;                   /* space between items */
     padding-top: .75rem;
@@ -275,7 +276,7 @@
 .proof-item-right{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;     /* left-align the block’s contents */
+    align-items: center;     /* left-align the block’s contents */
     text-align: left;
     inline-size: max-content;    /* shrink to text width so “left” is visible */
   }
@@ -384,7 +385,7 @@
   .hero-content p {
     margin: 0;
     font-size: clamp(1.2rem, 1.7vw, 1.3rem);
-    padding-right: 2rem;
+    padding-right: 3rem;
     line-height: 1.5;
   }
 }
