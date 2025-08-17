@@ -1,6 +1,11 @@
 /* --- CONTAINER --- */
+.hero-section{
+    width: 100%;
+    background: #D8CBC7;
+  }
+
 /* === OUTER FRAME: GRID === */
-.hero-section {
+.hero-inner {
     /* mobile-safe viewport units */
     height: 100vh;      /* fallback */
     height: 100dvh;     /* handles mobile browser chrome */
@@ -15,6 +20,8 @@
     background: #D8CBC7;
     box-sizing: border-box;
     overflow: hidden; /* keep everything inside 100vh */
+    inline-size: min(100%, 1300px);
+    justify-self: center;
   }
   
 
@@ -360,7 +367,7 @@
     
   
   @media (max-width: 768px){
-    .hero-section{
+    .hero-inner{
       grid-template-areas:
         "left"
         "right"
