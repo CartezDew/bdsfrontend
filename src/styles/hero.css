@@ -46,17 +46,13 @@
     /* important with grid: allow to shrink & scroll inside 1fr row */
     min-height: 0;
     overflow: auto;
+    align-items: stretch;
   }
 
 /* Accent word in headline */
 .hero-content .accent {
   color: #33673B;
   font-weight: 800;
-}
-
-.services-ticker {
-    height: var(--ticker-h);
-    z-index: 10;
 }
 
 /* Left-side mini nav */
@@ -198,6 +194,7 @@
   font-size: 1.05rem;
   line-height: 1.6;
   color: #1b1b1b;
+  text-align: left;
 }
 
 /* CTAs */
@@ -364,7 +361,21 @@
 /*@media (max-width: 1024px){
     .hero-section{
       grid-template-columns: minmax(0,1fr) minmax(0,1fr); /* 50/50 ease */
-    
+ 
+
+@media (min-width: 1024px){
+
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+
+  .hero-content p {
+    margin: 0;
+    font-size: 1.3rem;
+    padding-right: 3rem;
+   
+  }
+}
   
   @media (max-width: 768px){
     .hero-inner{

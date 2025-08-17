@@ -22,13 +22,13 @@
   background-clip: text;
 } */
 
-.hero-content p {
+/* .hero-content p {
   font-size: 1.25rem;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
   color: var(--color-eerie-black);
-}
+} */
 
 /* Meet Owner Section Styles */
 .meet-owner-section {
