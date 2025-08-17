@@ -3,6 +3,7 @@
 @import './styles/services.css';
 @import './styles/widget.css';
 @import './styles/socialProof.css';
+@import './styles/meetOwner.css';
 
 * {
   margin: 0;
@@ -24,6 +25,10 @@
   --color-accent: var(--color-sinopia);
   --color-background: var(--color-timberwolf);
   --color-text: var(--color-eerie-black);
+
+  /* --ticker-h: clamp(40px, 6svh, 64px);
+  --gap: clamp(12px, 2vmin, 24px);
+  --pad: clamp(16px, 2vmin, 32px); */
   
   /* Utility variables */
   --gap: 1rem;

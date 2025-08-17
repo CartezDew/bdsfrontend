@@ -86,7 +86,7 @@ const Hero = () => {
   }, [tickerItems.length]);
 
   return (
-    <section className="hero-section" style={{ minHeight: '100vh' }}>
+    <section className="hero-section">
       {/* LEFT (60%) */}
       <div className="hero-content">
         {/* Left-side mini nav */}
@@ -179,7 +179,9 @@ const Hero = () => {
         </div>
 
         {/* ANIMATION COMPONENT */}
-        <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
+        <div className="hero-media">
+          <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
+        </div>
 
         {/* Social Proof - Right Side */}
         <div 
@@ -197,7 +199,7 @@ const Hero = () => {
             <span className="proof-label-right">happy clients</span>
           </div>
           <div className="proof-item-right">
-            <span className="proof-number-right">10+</span>
+            <span className="proof-number-right">14+</span>
             <span className="proof-label-right">years experience</span>
           </div>
           <div className="proof-item-right">
@@ -214,8 +216,9 @@ const Hero = () => {
         className="services-ticker"
         style={{
           opacity: animationsTriggered.ticker ? 1 : 0,
-          transform: animationsTriggered.ticker ? 'translateY(0)' : 'translateY(30px)',
-          transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+          transform: 'none',
+          transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+          opacity: animationsTriggered.ticker ? 1 : 0,
         }}
       >
         <div className="ticker-track">

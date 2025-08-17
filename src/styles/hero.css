@@ -1,42 +1,45 @@
 /* --- CONTAINER --- */
+/* === OUTER FRAME: GRID === */
 .hero-section {
-  position: relative;            /* so ticker can pin to bottom */
-  display: flex;
-  align-items: stretch;          /* columns fill height */
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem 2rem 1rem 2rem; /* bottom padding for ticker */
-  min-height: 100vh;             /* full viewport */
-  background-color: #D8CBC7;
-  box-sizing: border-box;
-  overflow: hidden;              /* no spill past 100vh */
-}
+    /* mobile-safe viewport units */
+    height: 100vh;      /* fallback */
+    height: 100dvh;     /* handles mobile browser chrome */
+    display: grid;
+    grid-template-areas:
+      "left right"
+      "ticker ticker";
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); /* ~60/40 */
+    grid-template-rows: 1fr auto; /* main area + ticker */
+    gap: var(--gap);
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    background: #D8CBC7;
+    box-sizing: border-box;
+    overflow: hidden; /* keep everything inside 100vh */
+  }
+  
 
-/* --- 60/40 SPLIT --- */
+/* === LEFT COLUMN === */
 .hero-content {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  background: linear-gradient(
-    135deg,
-    #D8CBC7 0%,
-    #E8D8D4 25%,
-    #F0E6E2 50%,
-    rgba(226, 75, 20, 0.1) 70%,
-    rgba(204, 63, 12, 0.15) 85%,
-    rgba(204, 63, 12, 0.2) 100%
-  );
-  display: flex;
-  flex-direction: column;
-  padding-top: .5rem;
-  gap: 1.25rem;
-  max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
-  overflow-y: auto; /* allow scrolling if content is too tall */
-}
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: linear-gradient(
+      135deg,
+      #D8CBC7 0%,
+      #E8D8D4 25%,
+      #F0E6E2 50%,
+      rgba(226, 75, 20, 0.1) 70%,
+      rgba(204, 63, 12, 0.15) 85%,
+      rgba(204, 63, 12, 0.2) 100%
+    );
+    /* important with grid: allow to shrink & scroll inside 1fr row */
+    min-height: 0;
+    overflow: auto;
+  }
 
 /* Accent word in headline */
 .hero-content .accent {
@@ -107,20 +110,20 @@
   opacity: 1;
 }
 
+/* === RIGHT COLUMN === */
+/* RIGHT COLUMN becomes a 2-row grid */
 .hero-image-container {
-  flex: 0 0 40%;
-  max-width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  background-color: var(--color-hunter-green, #33673B);
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  position: relative; /* for top-right buttons */
-  min-height: 0; /* allow inner to size */
-  max-height: calc(100vh - 5rem); /* constrain height to leave space for ticker */
-  overflow-y: auto; /* allow scrolling if content is too tall */
+    grid-area: right;
+    display: grid;                 /* was: flex */
+    grid-template-rows: 1fr auto;   /* top ~60% media, bottom ~40% metrics */
+    row-gap: .75rem;
+    align-items: stretch;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    background-color: var(--color-hunter-green, #33673B);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    position: relative;
+    min-height: 0;
+    overflow: hidden;              /* prevents tiny inner scrollbars */
 }
 
 .hero-nav-buttons {
@@ -158,17 +161,21 @@
   border: 2px solid var(--color-golden-brown);
 }
 
-.hero-image-wrapper {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-}
+.hero-media {
+    grid-row: 1;                   /* lives in the top row */
+    min-height: 0;
+    height: 100%;                  /* fill the row */
+    position: relative;            /* for slide fades, etc. */
+    overflow: hidden;
+    padding-top: 4rem;
+    /* keep a consistent box so images don’t change the row height */
+  }
+
 .hero-image-wrapper img {
   width: 100%;
-  height: auto;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* Headline/Body */
@@ -245,66 +252,59 @@
 
 
 /* Social Proof - Right Side */
-.social-proof-right {
-  display: flex;
-  gap: 1.3rem;
-  margin-top: 0rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(216, 203, 199, 0.3);
-  justify-content: center;
+.social-proof-right{
+    grid-row: 2;                 /* stays in the bottom row */
+    display: flex;               /* simpler than grid for this */
+    justify-content: center;     /* center the whole strip */
+    align-items: center;         /* vertical centering */
+    gap: 2rem;                   /* space between items */
+    padding-top: .75rem;
+    border-top: 1px solid rgba(216,203,199,0.3);
 }
+/* One metric: left-align its contents */
+.proof-item-right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;     /* left-align the block’s contents */
+    text-align: left;
+    inline-size: max-content;    /* shrink to text width so “left” is visible */
+  }
+  
+  /* Text styles (left-aligned) */
+  .proof-number-right{
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #D8CBC7;
+    line-height: 1;
+    margin: 0;
+  }
+  
+  .proof-label-right{
+    font-size: .7rem;
+    font-weight: 500;
+    color: #D8CBC7;
+    opacity: .8;
+    line-height: 1.2;
+    margin: 0;
+    text-transform: lowercase;
+  }
 
-.proof-item-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: center;
-  gap: 0.25rem;
-}
-
-.proof-number-right {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #D8CBC7;
-  line-height: 1;
-  text-align: center !important;
-}
-
-.proof-label-right {
-  display: block;
-  align-self: stretch;
-  text-align: left;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #D8CBC7;
-  opacity: 0.8;
-  text-transform: lowercase;
-}
-
-
-
-/* --- SERVICES TICKER (inside hero, bottom) --- */
+/* === BOTTOM TICKER (spans both columns) === */
 .services-ticker {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 45px; /* increased height to accommodate padding */
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  /* background: linear-gradient(90deg, rgba(25,35,26,0.12), rgba(25,35,26,0.06));
-  border-top: 1px solid rgba(0,0,0,0.08); */
-  backdrop-filter: blur(2px);
-  padding: 1rem 2rem 0.5rem 2rem; /* top, right, bottom, left padding */
-  box-sizing: border-box;
-}
-.ticker-track {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
+    grid-area: ticker;
+    display: flex;
+    align-items: center;
+    height: auto;     /* reserves space at bottom */
+    padding: 2px 2px 2px 2px;
+    backdrop-filter: blur(2px);
+    box-sizing: border-box;
+  }
+  .ticker-track {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
 
 .ticker-item {
   padding: 0;
@@ -352,4 +352,21 @@
   object-fit: cover;
   transition: all 0.8s ease-in-out;
 }
+
+/* === RESPONSIVE === */
+/*@media (max-width: 1024px){
+    .hero-section{
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr); /* 50/50 ease */
+    
+  
+  @media (max-width: 768px){
+    .hero-section{
+      grid-template-areas:
+        "left"
+        "right"
+        "ticker";
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(0,1fr) minmax(0,1fr) auto;
+    }
+  }
 
