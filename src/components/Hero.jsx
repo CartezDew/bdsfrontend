@@ -127,7 +127,7 @@ const Hero = () => {
               transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-            <button className="cta-button-primary">Schedule a Consultation</button>
+            <button className="cta-button-primary">Schedule Consultation</button>
             <button className="cta-button-secondary">Get Started</button>
           </div>
         </div>

@@ -4,10 +4,11 @@
   padding: 2rem 2rem;
   padding-top: 2.5rem;
   margin: 0;
+  padding-bottom: 5rem;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -43,7 +44,6 @@
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
   box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
-  text-transform: uppercase;
   letter-spacing: 0.5px;
   animation: subtle-pulse 3s ease-in-out infinite;
 }
