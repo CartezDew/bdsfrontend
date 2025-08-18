@@ -5,7 +5,7 @@
 }
 
 .social-proof-container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -15,7 +15,7 @@
 .testimonial-grid {
   position: relative;
   width: 100%;
-  max-width: 72rem;
+  max-width: 1300px;
   margin: 0 auto;
   background: var(--color-hunter-green);
   padding: 3rem 2rem;
@@ -231,7 +231,7 @@
     grid-template-columns: 1fr auto 1fr; /* left | center | right */
     align-items: center;
     column-gap: 4rem;
-    max-width: 1200px;
+    max-width: 1300px;
     width: 100%;
     margin: 0 auto 2rem;
     padding: 0; /* ensure no inner padding here */
