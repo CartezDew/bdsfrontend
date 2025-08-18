@@ -14,9 +14,10 @@ const AppointmentScheduler = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: ''
+    phone: '___-___-____'
   });
   const [errors, setErrors] = useState({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -49,6 +50,16 @@ const AppointmentScheduler = () => {
   // Validation functions
   const validateEmail = (email) => {
     return email.includes('@') && email.includes('.com');
+  };
+
+  const getEmailErrorMessage = (email) => {
+    if (!email.includes('@')) {
+      return 'Please enter a valid email address';
+    }
+    if (!email.includes('.com')) {
+      return 'Please enter a valid email address';
+    }
+    return '';
   };
 
   const validatePhone = (phone) => {
@@ -184,44 +195,58 @@ const AppointmentScheduler = () => {
     // Format phone number with dashes
     if (field === 'phone') {
       const digits = value.replace(/\D/g, '');
-      if (digits.length <= 3) {
-        formattedValue = digits;
-      } else if (digits.length <= 6) {
-        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3)}`;
-      } else {
+      
+      // Fill in the dashes as the user types
+      if (digits.length === 0) {
+        formattedValue = '___-___-____';
+      } else if (digits.length === 1) {
+        formattedValue = `${digits}__-___-____`;
+      } else if (digits.length === 2) {
+        formattedValue = `${digits}_-___-____`;
+      } else if (digits.length === 3) {
+        formattedValue = `${digits}-___-____`;
+      } else if (digits.length === 4) {
+        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3)}__-____`;
+      } else if (digits.length === 5) {
+        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3)}_-____`;
+      } else if (digits.length === 6) {
+        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3)}-____`;
+      } else if (digits.length === 7) {
+        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}___`;
+      } else if (digits.length === 8) {
+        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}__`;
+      } else if (digits.length === 9) {
+        formattedValue = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}_`;
+      } else if (digits.length >= 10) {
         formattedValue = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
       }
     }
     
     setContactInfo(prev => ({ ...prev, [field]: formattedValue }));
+    
     // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
   };
 
-  // Validate contact information
+    // Validate contact information
   const validateContactInfo = () => {
     const newErrors = {};
     
+    // Check fields in priority order - only show first error
     if (!contactInfo.firstName.trim()) {
       newErrors.firstName = 'First name is required';
-    }
-    
-    if (!contactInfo.lastName.trim()) {
+    } else if (!contactInfo.lastName.trim()) {
       newErrors.lastName = 'Last name is required';
-    }
-    
-    if (!contactInfo.email.trim()) {
+    } else if (!contactInfo.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!validateEmail(contactInfo.email)) {
-      newErrors.email = 'Email must contain @ and .com';
-    }
-    
-    if (!contactInfo.phone.trim()) {
+      newErrors.email = 'Please enter a valid email address';
+    } else if (!contactInfo.phone.trim()) {
       newErrors.phone = 'Phone number is required';
     } else if (!validatePhone(contactInfo.phone)) {
-      newErrors.phone = 'Phone must be 10 digits and not all the same number';
+      newErrors.phone = 'Please enter a valid phone number';
     }
     
     setErrors(newErrors);
@@ -230,24 +255,30 @@ const AppointmentScheduler = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
+    console.log('Form submission started!');
     e.preventDefault();
     
+    console.log('Validating contact info...');
     if (!validateContactInfo()) {
+      console.log('Contact info validation failed');
       return;
     }
 
+    console.log('Setting submitting state...');
     setIsSubmitting(true);
     
+    console.log('Starting simulated API call...');
     // Simulate API call
     setTimeout(() => {
-      alert('Appointment scheduled successfully! We will contact you to confirm.');
+      console.log('API call completed, showing success modal');
       setIsSubmitting(false);
+      setShowSuccessModal(true);
       // Reset form
       setSelectedDate(null);
       setSelectedTime(null);
       setSelectedService('');
       setUploadedFiles([]);
-      setContactInfo({ firstName: '', lastName: '', email: '', phone: '' });
+      setContactInfo({ firstName: '', lastName: '', email: '', phone: '___-___-____' });
       setCurrentStep(1);
       setErrors({});
     }, 2000);
@@ -456,7 +487,6 @@ const AppointmentScheduler = () => {
                   className={errors.firstName ? 'error' : ''}
                   required
                 />
-                {errors.firstName && <span className="error-message">{errors.firstName}</span>}
               </div>
 
               <div className="form-group">
@@ -469,7 +499,6 @@ const AppointmentScheduler = () => {
                   className={errors.lastName ? 'error' : ''}
                   required
                 />
-                {errors.lastName && <span className="error-message">{errors.lastName}</span>}
               </div>
             </div>
 
@@ -484,7 +513,6 @@ const AppointmentScheduler = () => {
                   className={errors.email ? 'error' : ''}
                   required
                 />
-                {errors.email && <span className="error-message">{errors.email}</span>}
               </div>
 
               <div className="form-group">
@@ -495,20 +523,38 @@ const AppointmentScheduler = () => {
                   value={contactInfo.phone}
                   onChange={(e) => handleContactChange('phone', e.target.value)}
                   className={errors.phone ? 'error' : ''}
-                  placeholder="123-456-7890"
+                  placeholder="___-___-____"
                   maxLength="12"
                   required
                 />
-                {errors.phone && <span className="error-message">{errors.phone}</span>}
               </div>
             </div>
 
             <div className="form-actions">
+              {Object.keys(errors).length > 0 && (
+                <div className="single-error-message">
+                  {(() => {
+                    const firstError = Object.entries(errors)[0];
+                    if (firstError) {
+                      const [field, message] = firstError;
+                      return message;
+                    }
+                    return '';
+                  })()}
+                </div>
+              )}
               <button
                 type="button"
-                onClick={() => setCurrentStep(5)}
+                onClick={() => {
+                  console.log('Button clicked!');
+                  console.log('Current contact info:', contactInfo);
+                  const isValid = validateContactInfo();
+                  console.log('Validation result:', isValid);
+                  if (isValid) {
+                    setCurrentStep(5);
+                  }
+                }}
                 className="next-btn"
-                disabled={!contactInfo.firstName || !contactInfo.lastName || !contactInfo.email || !contactInfo.phone}
               >
                 Continue to File Upload
               </button>
@@ -581,12 +627,41 @@ const AppointmentScheduler = () => {
               type="submit"
               className="submit-btn"
               disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService}
+              onClick={() => console.log('Submit button clicked!')}
             >
               {isSubmitting ? 'Scheduling...' : 'Schedule Appointment'}
             </button>
           </div>
         )}
+
       </form>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="success-modal-overlay" onClick={() => setShowSuccessModal(false)}>
+          <div className="success-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close-btn"
+              onClick={() => setShowSuccessModal(false)}
+              aria-label="Close modal"
+            >
+              ×
+            </button>
+            <div className="success-modal-header">
+              <h3>Thank You!</h3>
+            </div>
+            <div className="success-modal-content">
+              <div className="success-icon">✓</div>
+              <p className="confirmation-message">
+                We will contact you shortly to confirm your appointment details.
+              </p>
+              <p className="closing-message">
+                Thank you and have a great day!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@
 @import './styles/meetOwner.css';
 @import './styles/facts.css';
 @import './styles/officeHoursLocations.css';
-@import './styles/appointment_scheduler.css';
+
 
 * {
   margin: 0;
@@ -180,5 +180,5 @@ button, input, textarea, select {
   border: 0;
 }
 
-
-
+/* Import appointment scheduler styles LAST to ensure highest priority */
+@import './styles/appointment_scheduler.css';
