@@ -164,7 +164,7 @@ const Services = () => {
         <div className="container">
           <div className="faq-header">
             <h2>Frequently Asked Questions</h2>
-            <p>Essential information to help you navigate tax deadlines, deductions, and requirements</p>
+            <p>Essential information to help you navigate tax deadlines, deductions, and requirements.</p>
           </div>
           <Facts />
         </div>
