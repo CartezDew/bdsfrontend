@@ -5,6 +5,7 @@
 @import './styles/socialProof.css';
 @import './styles/meetOwner.css';
 @import './styles/facts.css';
+@import './styles/officeHoursLocations.css';
 
 * {
   margin: 0;

@@ -66,8 +66,8 @@ const OfficeHoursLocations = () => {
 
   const locations = [
     {
-      name: "Marietta Office",
-      address: "2661 Windy Hill Rd SE, Marietta, GA 30067",
+      name: "Atlanta Office",
+      address: "2700 Cumberland Pkwy SE Suite 410, Atlanta, GA 30339",
       coordinates: "33.8762,-84.5023", // Marietta coordinates
       phone: "770-202-0098",
       hours: {
@@ -80,21 +80,6 @@ const OfficeHoursLocations = () => {
         sun: "Closed"
       }
     },
-    {
-      name: "Decatur Office",
-      address: "105 E Trinity Pl, Decatur, GA 30030",
-      coordinates: "33.7748,-84.2963", // Decatur coordinates
-      phone: "770-202-0098",
-      hours: {
-        mon: "09:00 AM - 06:00 PM",
-        tue: "09:00 AM - 06:00 PM",
-        wed: "09:00 AM - 06:00 PM",
-        thu: "09:00 AM - 06:00 PM",
-        fri: "09:00 AM - 06:00 PM",
-        sat: "Closed",
-        sun: "Closed"
-      }
-    }
   ];
 
   const getGoogleMapsUrl = (address) => {
@@ -133,8 +118,8 @@ const OfficeHoursLocations = () => {
           </div>
         </div>
 
-        {/* Office Hours */}
-        <div className={`office-hours-section ${animationsTriggered.officeHours ? 'animate-office-hours' : ''}`} ref={officeHoursRef} data-animate="officeHours">
+        {/* Office Hours & Location */}
+        <div className={`office-hours-location-combined ${animationsTriggered.officeHours ? 'animate-office-hours' : ''}`} ref={officeHoursRef} data-animate="officeHours">
           <div className={`office-hours-header ${animationsTriggered.businessHours ? 'animate-business-hours' : ''}`} ref={businessHoursRef} data-animate="businessHours">
             <h3>Business Hours</h3>
             <div className={`main-email ${animationsTriggered.email ? 'animate-email' : ''}`} ref={emailRef} data-animate="email">
@@ -142,6 +127,7 @@ const OfficeHoursLocations = () => {
               info@bdstalentgroup.com
             </div>
           </div>
+          
           <div className={`hours-grid ${animationsTriggered.hoursGrid ? 'animate-hours-grid' : ''}`} ref={hoursGridRef} data-animate="hoursGrid">
             <div className="hours-row">
               <span className="day">Mon</span>
@@ -168,34 +154,24 @@ const OfficeHoursLocations = () => {
               <span className="time closed">Closed</span>
             </div>
           </div>
-        </div>
-
-        {/* Locations */}
-        <div className={`locations-section ${animationsTriggered.locations ? 'animate-locations' : ''}`} ref={locationsRef} data-animate="locations">
-          <div className={`location-card ${animationsTriggered.locationsHeader ? 'animate-location-card' : ''}`} ref={locationsHeaderRef} data-animate="locationsHeader">
-            <div className="locations-header">
-              <h4>Our Office Locations</h4>
+          
+          {/* Location Section Below Office Hours */}
+          <div className={`location-section-below ${animationsTriggered.locations ? 'animate-locations' : ''}`} ref={locationsRef} data-animate="locations">
+            <div className={`location-header ${animationsTriggered.locationsHeader ? 'animate-location-card' : ''}`} ref={locationsHeaderRef} data-animate="locationsHeader">
+              <h4>Office Location</h4>
               <div className={`main-phone ${animationsTriggered.phone ? 'animate-phone' : ''}`} ref={phoneRef} data-animate="phone">
                 <span className="phone-icon">📞</span>
                 770-202-0098
               </div>
             </div>
             
-            <div className={`locations-grid-simple ${animationsTriggered.locationItems ? 'animate-location-items' : ''}`} ref={locationItemsRef} data-animate="locationItems">
-              <div className="location-item">
+            <div className={`location-details ${animationsTriggered.locationItems ? 'animate-location-items' : ''}`} ref={locationItemsRef} data-animate="locationItems">
+              <div className="location-item-combined">
                 <div className="location-name">
                   <span className="office-icon">🏢</span>
-                  <h5>Marietta Office</h5>
+                  <h5>Atlanta Office</h5>
                 </div>
                 <p className="location-address">{locations[0].address}</p>
-              </div>
-              
-              <div className="location-item">
-                <div className="location-name">
-                  <span className="office-icon">🏬</span>
-                  <h5>Decatur Office</h5>
-                </div>
-                <p className="location-address">{locations[1].address}</p>
               </div>
             </div>
           </div>

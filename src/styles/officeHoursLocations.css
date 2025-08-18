@@ -60,11 +60,12 @@
   box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
 }
 
-/* Office Hours Section */
-.office-hours-section {
+/* Office Hours & Location Combined Section */
+.office-hours-location-combined {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
 }
 
 
@@ -142,27 +143,14 @@
   font-weight: 600;
 }
 
-/* Locations Section */
-.locations-section {
-  margin-top: 3rem;
+/* Location Section Below Office Hours */
+.location-section-below {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid rgba(51, 103, 59, 0.1);
 }
 
-.location-card {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  transition: all 0.3s ease;
- 
-}
-
-.location-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.locations-header {
+.location-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -171,7 +159,12 @@
   border-bottom: 2px solid rgba(51, 103, 59, 0.1);
 }
 
-.locations-header h4 {
+.location-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.location-header h4 {
   font-size: 1.6rem;
   color: var(--color-hunter-green);
   font-weight: 700;
@@ -188,11 +181,20 @@
   font-size: 1.1rem;
 }
 
-.locations-grid-simple {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+.location-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 3rem 1rem 3rem;
+}
+
+.location-item-combined {
+  padding: 1.5rem;
+  background: rgba(51, 103, 59, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid var(--color-hunter-green);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
 }
 
 .location-item {
@@ -227,6 +229,7 @@
   line-height: 1.5;
   margin: 0;
   padding-left: 2.25rem;
+  font-weight: 500;
 }
 
 .location-map {
