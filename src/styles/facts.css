@@ -1,0 +1,181 @@
+/* FAQ Section Styles */
+.faq-section {
+  padding: 4rem 2rem;
+  background: var(--color-hunter-green);
+}
+
+.faq-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.faq-header h2 {
+  font-size: 2.8rem;
+  color: var(--color-timberwolf);
+  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  margin: 0 0 1.5rem 0;
+}
+
+.faq-header p {
+  font-size: 1.2rem;
+  color: var(--color-timberwolf);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Container & rows */
+.facts-accordion { 
+  list-style: none; 
+  padding: 0; 
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.fact { 
+  background: transparent; 
+  border-bottom: 1px solid rgba(25, 35, 26, 0.1);
+}
+
+.fact:last-child {
+  border-bottom: none;
+}
+
+/* Trigger */
+.fact-trigger { 
+  position: relative; 
+  background: transparent; 
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.fact-trigger:focus-visible {
+  outline: 2px solid var(--color-hunter-green);
+  outline-offset: 2px;
+}
+
+.fact-trigger:hover {
+  background-color: rgba(51, 103, 59, 0.02);
+}
+
+.fact-trigger .chev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-hunter-green);
+  color: var(--color-timberwolf);
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: auto;
+  order: 2;
+}
+
+.fact.open .fact-trigger .chev {
+  background: var(--color-sinopia);
+}
+
+.fact-trigger .chev::before {
+  content: '+';
+  transition: all 0.3s ease;
+}
+
+.fact.open .fact-trigger .chev::before {
+  content: '-';
+}
+
+/* Question text styling */
+.fact-trigger span:not(.chev) {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-eerie-black);
+  line-height: 1.4;
+  flex: 1;
+  text-align: left;
+  padding-right: 1rem;
+  order: 1;
+}
+
+/* Panel animation */
+.fact-panel {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+  padding: 0 1.25rem 1.5rem 1.25rem;
+}
+
+.fact.open .fact-panel {
+  opacity: 1;
+}
+
+.fact-panel > div {
+  color: rgba(25, 35, 26, 0.8);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  padding-top: 0.125rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .fact-trigger .chev,
+  .fact-panel { transition: none !important; }
+}
+
+
+
+/* Responsive Design for FAQ */
+@media (max-width: 768px) {
+  .faq-section {
+    padding: 3rem 1rem;
+  }
+  
+  .faq-header h2 {
+    font-size: 2rem;
+  }
+  
+  .faq-header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-section {
+    padding: 2rem 1rem;
+  }
+  
+  .faq-header h2 {
+    font-size: 1.8rem;
+  }
+}

@@ -14,5 +14,4 @@ export const NavbarMenu = [
         name: 'Contact Us',
         path: '/contact',
     },
-      
 ]

@@ -4,6 +4,7 @@
 @import './styles/widget.css';
 @import './styles/socialProof.css';
 @import './styles/meetOwner.css';
+@import './styles/facts.css';
 
 * {
   margin: 0;
