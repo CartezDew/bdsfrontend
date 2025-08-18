@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/officeHoursLocations.css";
+import AppointmentScheduler from "./appointment_scheduler";
 
 const OfficeHoursLocations = () => {
   const [animationsTriggered, setAnimationsTriggered] = useState({
@@ -176,6 +177,9 @@ const OfficeHoursLocations = () => {
             </div>
           </div>
         </div>
+
+        {/* Appointment Scheduler */}
+        <AppointmentScheduler />
       </div>
     </section>
   );

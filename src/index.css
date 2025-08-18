@@ -6,6 +6,7 @@
 @import './styles/meetOwner.css';
 @import './styles/facts.css';
 @import './styles/officeHoursLocations.css';
+@import './styles/appointment_scheduler.css';
 
 * {
   margin: 0;
