@@ -85,7 +85,6 @@ const Hero = () => {
             </div>
             <div className="hero-nav-links">
               <Link to="/services" className="hero-left-link">Services</Link>
-              <Link to="/about" className="hero-left-link">About Us</Link>
               <Link to="/contact" className="hero-left-link">Contact Us</Link>
             </div>
           </nav>

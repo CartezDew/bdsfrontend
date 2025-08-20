@@ -1,0 +1,136 @@
+/* src/components/whyus.css */
+.whyus {
+    background: var(--color-timberwolf);
+    padding: 4rem 1.25rem;
+  }
+  
+  .whyus__inner {
+    max-width: 72rem; /* 1152px */
+    margin: 0 auto;
+  }
+  
+  .whyus__header {
+    max-width: 48rem;
+  }
+  
+  .whyus__title {
+    color: var(--color-hunter-green);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.75rem, 2vw + 1.25rem, 2.5rem);
+    margin: 0;
+  }
+  
+  .whyus__kicker {
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    color: color-mix(in oklab, var(--color-hunter-green) 78%, #000 0%);
+  }
+  
+  .whyus__lede {
+    margin-top: 0.9rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-eerie-black);
+  }
+  
+  /* Bullets */
+  .whyus__list {
+    margin-top: 1.25rem;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+    color: var(--color-eerie-black);
+  }
+  
+  .whyus__list li {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .whyus__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--color-hunter-green);
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-hunter-green) 20%, transparent);
+  }
+  
+  /* Owner block */
+  .whyus__owner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 2.25rem;
+  }
+  
+  .whyus__ownerTitle {
+    color: var(--color-hunter-green);
+    font-weight: 800;
+    font-size: clamp(1.25rem, 1vw + 1rem, 1.5rem);
+    margin: 0 0 0.75rem 0;
+  }
+  
+  .whyus__ownerText p {
+    color: var(--color-eerie-black);
+    line-height: 1.65;
+    margin: 0.75rem 0 0 0;
+  }
+  
+  .whyus__ownerBDS em {
+    font-style: italic;
+  }
+  
+  /* Right-side image (mirrors your hero’s visual weight) */
+  .whyus__ownerMedia {
+    width: 100%;
+  }
+  
+  .whyus__ownerImg {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  }
+  
+  /* Responsive: switch to 2 columns on large screens */
+  @media (min-width: 1024px) {
+    .whyus__owner {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+  
+  /* Image placeholder styling */
+  .whyus__ownerImg-placeholder {
+    background: var(--color-hunter-green);
+    color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .whyus__ownerImg-placeholder p {
+    margin: 0.5rem 0;
+    font-weight: 500;
+  }
+  
+  .whyus__ownerImg-placeholder p:first-child {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }

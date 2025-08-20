@@ -4,12 +4,12 @@ import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
 import EntitySelectorWidget from './EntitySelectorWidget';
 import SocialProof from './SocialProof';
+import Why_Us from './Why_Us';
 import Facts from './facts';
 
 // Custom navbar configuration for Services page
 const servicesNavbarConfig = [
-  { id: 1, name: 'About Us', path: '/about' },
-  { id: 2, name: 'Contact Us', path: '/contact' }
+  { id: 1, name: 'Contact Us', path: '/contact' }
 ];
 
 const Services = () => {
@@ -153,6 +153,9 @@ const Services = () => {
       
       {/* Social Proof Section */}
       <SocialProof />
+      
+      {/* Why Us Section */}
+      <Why_Us />
       
       {/* Entity Selector Widget */}
       <section className="widget-section">
