@@ -1,0 +1,97 @@
+/* MeetTheOwner Component Styles */
+.meet-owner-section {
+  background: var(--color-timberwolf);
+  padding: 4rem 1.25rem;
+}
+
+.meet-owner-container {
+  max-width: 72rem; /* 1152px */
+  margin: 0 auto;
+}
+
+.meet-owner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.meet-owner__media {
+  width: 100%;
+  text-align: center;
+}
+
+.meet-owner__img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  margin: 0 auto 1rem auto;
+}
+
+.meet-owner__name {
+  text-align: center;
+}
+
+.meet-owner__nameText {
+  color: var(--color-eerie-black);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.meet-owner__title {
+  color: var(--color-hunter-green);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meet-owner__text {
+  width: 100%;
+}
+
+.meet-owner__header {
+  margin-bottom: 1.5rem;
+}
+
+.meet-owner__roles {
+  color: var(--color-sinopia);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meet-owner__text p {
+  color: var(--color-eerie-black);
+  line-height: 1.65;
+  margin: 0.75rem 0 0 0;
+}
+
+.meet-owner__bds em {
+  font-style: italic;
+}
+
+/* Responsive: switch to 2 columns on large screens */
+@media (min-width: 768px) {
+  .meet-owner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+  
+  .meet-owner__media {
+    flex: 0 0 300px;
+    width: 300px;
+  }
+  
+  .meet-owner__text {
+    flex: 1;
+  }
+}

@@ -10,6 +10,14 @@
   }
   
   .whyus__header {
+    max-width: 100%;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  
+  .whyus__header-content {
+    flex: 1;
     max-width: 48rem;
   }
   
@@ -134,3 +142,116 @@
     font-size: 1.2rem;
     font-weight: 600;
   }
+  
+  /* Grid Section with Business Image */
+  .whyus__grid-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(51, 103, 59, 0.2);
+  }
+  
+  .whyus__grid-content {
+    order: 1;
+  }
+  
+  .whyus__grid-title {
+    color: var(--color-hunter-green);
+    font-weight: 800;
+    font-size: clamp(1.25rem, 1vw + 1rem, 1.5rem);
+    margin: 0 0 1rem 0;
+  }
+  
+  .whyus__grid-text {
+    color: var(--color-eerie-black);
+    line-height: 1.65;
+    margin: 0 0 1.5rem 0;
+    font-size: 1.1rem;
+  }
+  
+  .whyus__grid-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .whyus__grid-features li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-eerie-black);
+  }
+  
+  .whyus__grid-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-hunter-green);
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  .whyus__grid-image {
+    order: 2;
+    width: 100%;
+  }
+  
+  .whyus__business-image {
+    width: 100%;
+    height: auto;
+    display: block;
+
+ 
+    object-fit: cover;
+  }
+  
+  /* Responsive: switch to 2 columns on large screens for grid section */
+  @media (min-width: 1024px) {
+    .whyus__grid-section {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    
+    .whyus__grid-content {
+      order: 1;
+    }
+    
+    .whyus__grid-image {
+      order: 2;
+    }
+  }
+  
+  /* Responsive header layout */
+  @media (min-width: 768px) {
+    .whyus__header {
+      gap: 3rem;
+    }
+    
+    .whyus__grid-image {
+      flex-shrink: 0;
+      width: 300px;
+    }
+    
+    .whyus__business-image {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .whyus__header {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .whyus__grid-image {
+      order: -1;
+      width: 100%;
+    }
+  }
+  
+

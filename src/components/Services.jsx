@@ -5,6 +5,7 @@ import BusinessServices from './BusinessServices';
 import EntitySelectorWidget from './EntitySelectorWidget';
 import SocialProof from './SocialProof';
 import Why_Us from './Why_Us';
+import MeetTheOwner from './MeetTheOwner';
 import Facts from './facts';
 
 // Custom navbar configuration for Services page
@@ -156,6 +157,9 @@ const Services = () => {
       
       {/* Why Us Section */}
       <Why_Us />
+      
+      {/* Meet The Owner Section */}
+      <MeetTheOwner />
       
       {/* Entity Selector Widget */}
       <section className="widget-section">
