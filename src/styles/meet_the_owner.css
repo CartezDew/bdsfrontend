@@ -1,18 +1,18 @@
 /* MeetTheOwner Component Styles */
 .meet-owner-section {
-  background: var(--color-timberwolf);
-  padding: 4rem 1.25rem;
+  background: #2a5a2f;
+  padding: 4rem 3rem 3rem 3rem;
 }
 
 .meet-owner-container {
-  max-width: 72rem; /* 1152px */
+  max-width: 1300px; /* 1152px */
   margin: 0 auto;
 }
 
 .meet-owner {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   align-items: flex-start;
 }
 
@@ -23,11 +23,10 @@
 
 .meet-owner__img {
   width: 100%;
-  max-width: 300px;
+  max-width: 200px;
   height: auto;
   display: block;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 3px solid var(--color-timberwolf);
   object-fit: cover;
   margin: 0 auto 1rem auto;
 }
@@ -37,19 +36,22 @@
 }
 
 .meet-owner__nameText {
-  color: var(--color-eerie-black);
+  color: var(--color-timberwolf);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   margin: 0 0 0.25rem 0;
+  display: none;
 }
 
 .meet-owner__title {
-  color: var(--color-hunter-green);
+  color: var(--color-timberwolf);
   font-weight: 600;
   font-size: 1rem;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  opacity: 0.8;
+  font-style: italic;
 }
 
 .meet-owner__text {
@@ -58,6 +60,10 @@
 
 .meet-owner__header {
   margin-bottom: 1.5rem;
+  color: var(--color-timberwolf);
+  font-weight: 900;
+  font-size: 1.7rem;
+  margin: 0 0 0.25rem 0;
 }
 
 .meet-owner__roles {
@@ -69,9 +75,18 @@
 }
 
 .meet-owner__text p {
-  color: var(--color-eerie-black);
-  line-height: 1.65;
+  color: var(--color-timberwolf);
+  line-height: 1.6;
+  font-family: 'Playfair Display', serif !important;
   margin: 0.75rem 0 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+ 
+}
+
+.meet-owner__text p strong {
+  color: var(--color-golden-brown);
+  font-size: 1.1rem;
 }
 
 .meet-owner__bds em {
@@ -83,11 +98,11 @@
   .meet-owner {
     flex-direction: row;
     align-items: flex-start;
-    gap: 3rem;
+    gap: 2rem;
   }
   
   .meet-owner__media {
-    flex: 0 0 300px;
+    flex: 0 0 200px;
     width: 300px;
   }
   

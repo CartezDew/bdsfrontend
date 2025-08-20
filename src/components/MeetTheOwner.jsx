@@ -1,6 +1,6 @@
 // src/components/MeetTheOwner.jsx
 import React from "react";
-import "../styles/meetTheOwner.css";
+import "../styles/meet_the_owner.css";
 
 export default function MeetTheOwner() {
   return (
@@ -9,7 +9,7 @@ export default function MeetTheOwner() {
         <div className="meet-owner">
           <div className="meet-owner__media">
             <img 
-              src="/src/assets/Images/CEO_Adjusted.png" 
+              src="/src/assets/Images/CEO.jpeg" 
               alt="Brandon Davis, CEO of BDS Talent Group" 
               className="meet-owner__img"
             />
@@ -21,13 +21,11 @@ export default function MeetTheOwner() {
           
           <div className="meet-owner__text">
             <div className="meet-owner__header">
-              <span className="meet-owner__roles">Accountant | U.S. Marine Veteran | Business Owner</span>
+              Meet Brandon
             </div>
             <p>
-              Brandon Davis, CEO of BDS Talent Group, is a seasoned accountant
-              and active member of the Atlanta Accounting &amp; Tax Society and
-              LaunchGSU. Known for meticulous attention to detail and
-              transparent reporting, he helps leaders make confident decisions.
+              Brandon Davis, CEO of BDS Talent Group, is a seasoned accountant. He delivers transparent, accurate financials that enable leaders to make confident decisions. Equally important, he is committed to equity—expanding access to reliable, affordable accounting services for underserved entrepreneurs and the communities they power. 
+
             </p>
             <p className="meet-owner__bds">
               BDS stands for <strong>Business • Development • Solutions</strong>
