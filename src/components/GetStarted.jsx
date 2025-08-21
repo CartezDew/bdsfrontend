@@ -12,12 +12,19 @@ const GetStarted = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [availableSlots, setAvailableSlots] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1); // 1: service, 2: date, 3: time, 4: contact, 5: files
+  const [currentStep, setCurrentStep] = useState(1); // 1: service, 2: contact, 3: files
   const [contactInfo, setContactInfo] = useState({
     firstName: '',
     lastName: '',
-    email: '',
-    phone: '___-___-____'
+    einOrSsn: '',
+    dateOfBirth: '',
+    phone: '___-___-____',
+    streetAddress: '',
+    city: '',
+    state: '',
+    country: '',
+    postalCode: '',
+    occupation: ''
   });
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -326,8 +333,8 @@ const GetStarted = () => {
       <section className="get-started-page">
         <div className="get-started-container">
           <div className="get-started-header">
-            <h1>Get Started with BDS Talent Group</h1>
-            <p>Ready to take control of your financial future? Let's get started on the path to financial clarity and success.</p>
+            <h1>Ready to Start? Upload & Go</h1>
+            <p>No scheduling, no waiting. Upload now and we’ll take it from here.</p>
           </div>
 
           <div className="get-started-content">
@@ -346,18 +353,10 @@ const GetStarted = () => {
                   </div>
                   <div className={`getstarted-progress-step ${currentStep >= 2 ? 'active' : ''}`}>
                     <span className="getstarted-step-number">2</span>
-                    <span className="getstarted-step-label">Date</span>
+                    <span className="getstarted-step-label">Contact</span>
                   </div>
                   <div className={`getstarted-progress-step ${currentStep >= 3 ? 'active' : ''}`}>
                     <span className="getstarted-step-number">3</span>
-                    <span className="getstarted-step-label">Time</span>
-                  </div>
-                  <div className={`getstarted-progress-step ${currentStep >= 4 ? 'active' : ''}`}>
-                    <span className="getstarted-step-number">4</span>
-                    <span className="getstarted-step-label">Contact</span>
-                  </div>
-                  <div className={`getstarted-progress-step ${currentStep >= 5 ? 'active' : ''}`}>
-                    <span className="getstarted-step-number">5</span>
                     <span className="getstarted-step-label">Files</span>
                   </div>
                 </div>
@@ -425,103 +424,24 @@ const GetStarted = () => {
                         }}
                         disabled={!selectedService || !referralSource}
                       >
-                        Continue to Date Selection
+                        Continue to Contact Information
                       </button>
                     </div>
                   </div>
                 )}
 
-                {/* Step 2: Date Selection */}
+                {/* Step 2: Contact Information */}
                 {currentStep === 2 && (
                   <div className="getstarted-form-section">
-                    <h4>Select Date</h4>
-                    
-                    <div className="getstarted-calendar-container">
-                      <div className="getstarted-calendar-header">
-                        <button
-                          type="button"
-                          onClick={goToPreviousMonth}
-                          className="getstarted-calendar-nav-btn"
-                        >
-                          ‹
-                        </button>
-                        <h5>{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</h5>
-                        <button
-                          type="button"
-                          onClick={goToNextMonth}
-                          className="getstarted-calendar-nav-btn"
-                        >
-                          ›
-                        </button>
-                      </div>
-
-                      <div className="getstarted-calendar-grid">
-                        <div className="getstarted-calendar-weekdays">
-                          <div>Sun</div>
-                          <div>Mon</div>
-                          <div>Tue</div>
-                          <div>Wed</div>
-                          <div>Thu</div>
-                          <div>Fri</div>
-                          <div>Sat</div>
-                        </div>
-                        
-                        <div className="getstarted-calendar-days">
-                          {calendarDays.map((day, index) => (
-                            <div
-                              key={index}
-                              className={`getstarted-calendar-day ${
-                                day === null ? 'empty' :
-                                !isDateAvailable(day) ? 'unavailable' :
-                                selectedDate && day.toDateString() === selectedDate.toDateString() ? 'selected' : 'available'
-                              }`}
-                              onClick={() => day && handleDateSelect(day)}
-                            >
-                              {day ? day.getDate() : ''}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Step 3: Time Selection */}
-                {currentStep === 3 && selectedDate && (
-                  <div className="getstarted-form-section">
-                    <h4>Select Time for {formatDate(selectedDate)}</h4>
-                    
-                    <div className="getstarted-time-slots">
-                      <div className="getstarted-time-grid">
-                        {availableSlots.map((slot, index) => (
-                          <button
-                            key={index}
-                            type="button"
-                            className={`getstarted-time-slot ${
-                              selectedTime && selectedTime.getTime() === slot.getTime() ? 'selected' : ''
-                            }`}
-                            onClick={() => handleTimeSelect(slot)}
-                          >
-                            {formatTime(slot)}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Step 4: Contact Information */}
-                {currentStep === 4 && (
-                  <div className="getstarted-form-section">
                     <h4>Contact Information</h4>
-                    <p>Please provide your contact details to confirm your appointment</p>
-                    
+                    <p>Please provide your contact details to help us prepare your documents</p>
                     <div className="getstarted-form-row">
                       <div className="getstarted-form-group">
-                        <label htmlFor="firstName">First Name *</label>
+                        <label htmlFor="firstName" className="required-field">First Name</label>
                         <input
                           type="text"
                           id="firstName"
+                          placeholder="First Name"
                           value={contactInfo.firstName}
                           onChange={(e) => handleContactChange('firstName', e.target.value)}
                           className={errors.firstName ? 'getstarted-error' : ''}
@@ -530,13 +450,14 @@ const GetStarted = () => {
                       </div>
 
                       <div className="getstarted-form-group">
-                        <label htmlFor="lastName">Last Name *</label>
+                        <label htmlFor="lastName" className="required-field">Last Name</label>
                         <input
                           type="text"
                           id="lastName"
+                          placeholder="Last Name"
                           value={contactInfo.lastName}
                           onChange={(e) => handleContactChange('lastName', e.target.value)}
-                          className={errors.firstName ? 'getstarted-error' : ''}
+                          className={errors.lastName ? 'getstarted-error' : ''}
                           required
                         />
                       </div>
@@ -544,19 +465,34 @@ const GetStarted = () => {
 
                     <div className="getstarted-form-row">
                       <div className="getstarted-form-group">
-                        <label htmlFor="email">Email Address *</label>
+                        <label htmlFor="einOrSsn" className="required-field">EIN or SSN</label>
                         <input
-                          type="email"
-                          id="email"
-                          value={contactInfo.email}
-                          onChange={(e) => handleContactChange('email', e.target.value)}
-                          className={errors.email ? 'getstarted-error' : ''}
+                          type="text"
+                          id="einOrSsn"
+                          value={contactInfo.einOrSsn}
+                          onChange={(e) => handleContactChange('einOrSsn', e.target.value)}
+                          className={errors.einOrSsn ? 'getstarted-error' : ''}
                           required
+                          placeholder="must be 9 digits"
                         />
                       </div>
 
                       <div className="getstarted-form-group">
-                        <label htmlFor="phone">Phone Number *</label>
+                        <label htmlFor="dateOfBirth" className="required-field">Date of Birth</label>
+                        <input
+                          type="date"
+                          id="dateOfBirth"
+                          value={contactInfo.dateOfBirth}
+                          onChange={(e) => handleContactChange('dateOfBirth', e.target.value)}
+                          className={errors.dateOfBirth ? 'getstarted-error' : ''}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="getstarted-form-row">
+                      <div className="getstarted-form-group">
+                        <label htmlFor="phone" className="required-field">Phone Number</label>
                         <input
                           type="tel"
                           id="phone"
@@ -566,6 +502,97 @@ const GetStarted = () => {
                           placeholder="___-___-____"
                           maxLength="12"
                           required
+                        />
+                      </div>
+
+                      <div className="getstarted-form-group">
+                        <label htmlFor="occupation" className="required-field">Occupation</label>
+                        <input
+                          type="text"
+                          id="occupation"
+                           placeholder="Occupation"
+                          value={contactInfo.occupation}
+                          onChange={(e) => handleContactChange('occupation', e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="getstarted-form-row">
+                      <div className="getstarted-form-group">
+                        <label htmlFor="streetAddress" className="required-field">Street Address</label>
+                        <input
+                          type="text"
+                          id="streetAddress"
+                          value={contactInfo.streetAddress}
+                          onChange={(e) => handleContactChange('streetAddress', e.target.value)}
+                          className={errors.streetAddress ? 'getstarted-error' : ''}
+                          placeholder="Address"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="getstarted-form-row">
+                      <div className="getstarted-form-group">
+                        <label htmlFor="city">City</label>
+                        <input
+                          type="text"
+                          id="city"
+                          value={contactInfo.city}
+                          onChange={(e) => handleContactChange('city', e.target.value)}
+                          className={errors.city ? 'getstarted-error' : ''}
+                          placeholder="City"
+                        />
+                      </div>
+
+                      <div className="getstarted-form-group">
+                        <label htmlFor="state">State</label>
+                        <input
+                          type="text"
+                          id="state"
+                          value={contactInfo.state}
+                          onChange={(e) => handleContactChange('state', e.target.value)}
+                          className={errors.state ? 'getstarted-error' : ''}
+                          placeholder="State"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="getstarted-form-row">
+                      <div className="getstarted-form-group">
+                        <label htmlFor="country">Country</label>
+                        <select
+                          id="country"
+                          value={contactInfo.country}
+                          onChange={(e) => handleContactChange('country', e.target.value)}
+                          className={errors.country ? 'getstarted-error' : ''}
+                        >
+                          <option value="">Country</option>
+                          <option value="US">United States</option>
+                          <option value="CA">Canada</option>
+                          <option value="MX">Mexico</option>
+                          <option value="UK">United Kingdom</option>
+                          <option value="DE">Germany</option>
+                          <option value="FR">France</option>
+                          <option value="AU">Australia</option>
+                          <option value="JP">Japan</option>
+                          <option value="CN">China</option>
+                          <option value="IN">India</option>
+                          <option value="BR">Brazil</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+
+                      <div className="getstarted-form-group">
+                        <label htmlFor="postalCode">Postal Code</label>
+                        <input
+                          type="text"
+                          id="postalCode"
+                          value={contactInfo.postalCode}
+                          onChange={(e) => handleContactChange('postalCode', e.target.value)}
+                          className={errors.postalCode ? 'getstarted-error' : ''}
+                          placeholder="Postal Code"
                         />
                       </div>
                     </div>
@@ -586,12 +613,9 @@ const GetStarted = () => {
                       <button
                         type="button"
                         onClick={() => {
-                          console.log('Button clicked!');
-                          console.log('Current contact info:', contactInfo);
                           const isValid = validateContactInfo();
-                          console.log('Validation result:', isValid);
                           if (isValid) {
-                            setCurrentStep(5);
+                            setCurrentStep(3);
                           }
                         }}
                         className="getstarted-next-btn"
@@ -602,11 +626,11 @@ const GetStarted = () => {
                   </div>
                 )}
 
-                {/* Step 5: File Upload */}
-                {currentStep === 5 && (
+                {/* Step 3: File Upload */}
+                {currentStep === 3 && (
                   <div className="getstarted-form-section">
-                    <h4>Upload Documents (Optional)</h4>
-                    <p>Upload any relevant documents to help us prepare for your appointment</p>
+                    <h4>Upload Required Documents</h4>
+                    <p>Please upload the following documents to help us prepare your tax documents</p>
                     
                     <div className="getstarted-file-upload-area">
                       <input
@@ -648,6 +672,19 @@ const GetStarted = () => {
                       </div>
                     )}
 
+                    {/* Required Documents List */}
+                    <div className="getstarted-required-docs">
+                      <h5>Required Documents:</h5>
+                      <ul className="getstarted-docs-list">
+                        <li>Social Security Card</li>
+                        <li>EIN Files (if applicable)</li>
+                        <li>Valid Photo ID (State issued, e.g., Driver's License)</li>
+                        <li>W-2 Forms</li>
+                        <li>1099 Forms</li>
+                        <li>Previous Year Tax Returns</li>
+                      </ul>
+                    </div>
+
                     {/* Message Section */}
                     <div className="getstarted-form-group">
                       <label htmlFor="clientMessage">Anything else to share? (Optional)</label>
@@ -673,7 +710,7 @@ const GetStarted = () => {
                     <div className="getstarted-form-actions">
                       <button
                         type="button"
-                        onClick={() => setCurrentStep(4)}
+                        onClick={() => setCurrentStep(2)}
                         className="getstarted-back-btn"
                       >
                         Back to Contact Info
@@ -682,16 +719,20 @@ const GetStarted = () => {
                   </div>
                 )}
 
+
+
+
+
                 {/* Submit Button - Only show on final step */}
-                {currentStep === 5 && (
+                {currentStep === 3 && (
                   <div className="getstarted-form-section">
                     <button
                       type="submit"
                       className="getstarted-submit-btn"
-                      disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService}
+                      disabled={isSubmitting || !selectedService}
                       onClick={() => console.log('Submit button clicked!')}
                     >
-                      {isSubmitting ? 'Scheduling...' : 'Schedule Appointment'}
+                      {isSubmitting ? 'Submitting...' : 'Submit Documents'}
                     </button>
                   </div>
                 )}

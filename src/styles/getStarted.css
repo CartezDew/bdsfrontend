@@ -173,6 +173,16 @@
   font-size: 0.9rem;
 }
 
+/* Required field asterisk styling */
+.getstarted-form-group .required-field::after {
+  content: " *";
+  color: var(--color-sinopia);
+  font-weight: 700;
+  display: inline ;
+  position: relative;
+
+}
+
 .getstarted-form-group input,
 .getstarted-form-group select,
 .getstarted-form-group textarea {
@@ -459,6 +469,48 @@
   color: var(--color-hunter-green);
   margin-bottom: 1rem;
   font-size: 1.1rem;
+}
+
+/* Required Documents Section */
+.getstarted-required-docs {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.getstarted-required-docs h5 {
+  color: var(--color-hunter-green);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.getstarted-docs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.getstarted-docs-list li {
+  color: var(--color-eerie-black);
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(51, 103, 59, 0.1);
+}
+
+.getstarted-docs-list li::before {
+  content: "📄";
+  position: absolute;
+  left: 0;
+  font-size: 1rem;
+}
+
+.getstarted-docs-list li:last-child {
+  border-bottom: none;
 }
 
 .getstarted-file-item {
