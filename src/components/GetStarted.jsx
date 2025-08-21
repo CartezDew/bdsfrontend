@@ -30,6 +30,7 @@ const GetStarted = () => {
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const fileInputRef = useRef(null);
 
@@ -71,6 +72,11 @@ const GetStarted = () => {
     // Check if all digits are the same
     const firstDigit = digits[0];
     return !digits.split('').every(digit => digit === firstDigit);
+  };
+
+  // FAQ toggle function
+  const toggleFaq = (faqId) => {
+    setOpenFaq(openFaq === faqId ? null : faqId);
   };
 
   // Generate available time slots for a given date
@@ -365,6 +371,111 @@ const GetStarted = () => {
           <div className="get-started-header">
             <h1>Ready to Start? Upload & Go</h1>
             <p>No scheduling, no waiting. Upload now and we’ll take it from here.</p>
+          </div>
+
+          {/* Tiny FAQ Section */}
+          <div className="getstarted-faq-section">
+            <ul className="getstarted-facts-accordion">
+              <li className={`getstarted-fact ${openFaq === 1 ? 'open' : ''}`}>
+                <button 
+                  type="button"
+                  className="getstarted-fact-trigger"
+                  aria-expanded={openFaq === 1}
+                  aria-controls="getstarted-fact-panel-1"
+                  id="getstarted-fact-trigger-1"
+                  onClick={() => toggleFaq(1)}
+                >
+                  <span className="getstarted-chev" aria-hidden></span>
+                  <span>Do I need an appointment?</span>
+                </button>
+                <div
+                  id="getstarted-fact-panel-1"
+                  role="region"
+                  aria-labelledby="getstarted-fact-trigger-1"
+                  className="getstarted-fact-panel"
+                  style={{ maxHeight: openFaq === 1 ? '100px' : '0' }}
+                >
+                  <div>
+                    <p>No—upload your documents and we'll start.</p>
+                  </div>
+                </div>
+              </li>
+
+              <li className={`getstarted-fact ${openFaq === 2 ? 'open' : ''}`}>
+                <button 
+                  type="button"
+                  className="getstarted-fact-trigger"
+                  aria-expanded={openFaq === 2}
+                  aria-controls="getstarted-fact-panel-2"
+                  id="getstarted-fact-trigger-2"
+                  onClick={() => toggleFaq(2)}
+                >
+                  <span className="getstarted-chev" aria-hidden></span>
+                  <span>What happens after I upload?</span>
+                </button>
+                <div
+                  id="getstarted-fact-panel-2"
+                  role="region"
+                  aria-labelledby="getstarted-fact-trigger-2"
+                  className="getstarted-fact-panel"
+                  style={{ maxHeight: openFaq === 2 ? '100px' : '0' }}
+                >
+                  <div>
+                    <p>We review your uploaded files and reach out with next steps.</p>
+                  </div>
+                </div>
+              </li>
+
+              <li className={`getstarted-fact ${openFaq === 3 ? 'open' : ''}`}>
+                <button 
+                  type="button"
+                  className="getstarted-fact-trigger"
+                  aria-expanded={openFaq === 3}
+                  aria-controls="getstarted-fact-panel-3"
+                  id="getstarted-fact-trigger-3"
+                  onClick={() => toggleFaq(3)}
+                >
+                  <span className="getstarted-chev" aria-hidden></span>
+                  <span>What if I'm missing a form?</span>
+                </button>
+                <div
+                  id="getstarted-fact-panel-3"
+                  role="region"
+                  aria-labelledby="getstarted-fact-trigger-3"
+                  className="getstarted-fact-panel"
+                  style={{ maxHeight: openFaq === 3 ? '100px' : '0' }}
+                >
+                  <div>
+                    <p>Upload what you have; we'll request anything else.</p>
+                  </div>
+                </div>
+              </li>
+
+              <li className={`getstarted-fact ${openFaq === 4 ? 'open' : ''}`}>
+                <button 
+                  type="button"
+                  className="getstarted-fact-trigger"
+                  aria-expanded={openFaq === 4}
+                  aria-controls="getstarted-fact-panel-4"
+                  id="getstarted-fact-trigger-4"
+                  onClick={() => toggleFaq(4)}
+                >
+                  <span className="getstarted-chev" aria-hidden></span>
+                  <span>Can I add context (additional information)?</span>
+                </button>
+                <div
+                  id="getstarted-fact-panel-4"
+                  role="region"
+                  aria-labelledby="getstarted-fact-trigger-4"
+                  className="getstarted-fact-panel"
+                  style={{ maxHeight: openFaq === 4 ? '100px' : '0' }}
+                >
+                  <div>
+                    <p>Yes—use the <strong>"Anything else to share?"</strong> field (100 characters).</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
 
           <div className="get-started-content">

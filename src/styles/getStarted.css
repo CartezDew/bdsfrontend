@@ -1,11 +1,11 @@
 /* Get Started Page Styles */
 .get-started-page {
   background: var(--color-hunter-green);
-  padding: 2rem 1rem;
+  padding: 2rem 2rem;
 }
 
 .get-started-container {
-  max-width: 72rem;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -43,9 +43,9 @@
 /* GetStarted Scheduler Styles */
 .getstarted-scheduler {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-top: 4rem;
+  padding: 2rem;
   border: 1px solid rgba(51, 103, 59, 0.1);
 }
 
@@ -374,6 +374,131 @@
 
   .getstarted-success-message {
     font-size: 1.1rem;
+  }
+
+  .getstarted-faq-section {
+    padding: 2rem 2rem 0rem 2rem;
+
+    background: var(--color-hunter-green);
+  }
+
+  /* Container & rows */
+  .getstarted-facts-accordion { 
+    list-style: none; 
+    padding: 0; 
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .getstarted-fact { 
+    background: transparent; 
+    border-bottom: 1px solid rgba(25, 35, 26, 0.1);
+  }
+
+  .getstarted-fact:last-child {
+    border-bottom: none;
+  }
+
+  /* Trigger */
+  .getstarted-fact-trigger { 
+    position: relative; 
+    background: transparent; 
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .getstarted-fact-trigger:focus-visible {
+    outline: 2px solid var(--color-hunter-green);
+    outline-offset: 2px;
+  }
+
+  .getstarted-fact-trigger:hover {
+    background-color: rgba(51, 103, 59, 0.02);
+  }
+
+  .getstarted-fact-trigger .getstarted-chev {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-hunter-green);
+    color: var(--color-timberwolf);
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-left: auto;
+    order: 2;
+  }
+
+  .getstarted-fact.open .getstarted-fact-trigger .getstarted-chev {
+    background: var(--color-sinopia);
+  }
+
+  .getstarted-fact-trigger .getstarted-chev::before {
+    content: '+';
+    transition: all 0.3s ease;
+  }
+
+  .getstarted-fact.open .getstarted-fact-trigger .getstarted-chev::before {
+    content: '-';
+  }
+
+  /* Question text styling */
+  .getstarted-fact-trigger span:not(.getstarted-chev) {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-eerie-black);
+    line-height: 1.4;
+    flex: 1;
+    text-align: left;
+    padding-right: 1rem;
+    order: 1;
+  }
+
+  /* Panel animation */
+  .getstarted-fact-panel {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    opacity: 0;
+    /* padding: 0 1.25rem 1.5rem 1.25rem; */
+  }
+
+  .getstarted-fact.open .getstarted-fact-panel {
+    opacity: 1;
+  }
+
+  .getstarted-fact-panel > div {
+    color: rgba(25, 35, 26, 0.8);
+    font-size: 1rem;
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    padding-top: 0.125rem;
+    padding-left: 2rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .getstarted-fact-trigger .getstarted-chev,
+    .getstarted-fact-panel { transition: none !important; }
   }
 
   .getstarted-calendar-nav-btn {
@@ -844,6 +969,20 @@
     padding: 1.5rem;
     margin: 1rem;
   }
+
+  .getstarted-faq-section {
+    padding: 3rem 1rem;
+  }
+  
+  .getstarted-faq-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .getstarted-faq-header p {
+    font-size: 1.1rem;
+    max-width: 600px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -866,5 +1005,19 @@
   .getstarted-calendar-container,
   .getstarted-time-slots {
     padding: 1rem;
+  }
+
+  .getstarted-faq-section {
+    padding: 2rem 1rem;
+  }
+  
+  .getstarted-faq-header h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .getstarted-faq-header p {
+    font-size: 1rem;
+    max-width: 100%;
   }
 }
