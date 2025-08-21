@@ -302,7 +302,7 @@
 
 /* Enhanced tooltip styling for nav buttons */
 .nav-button:hover::after {
-  content: attr(title);
+  content: attr(data-tooltip);
   position: absolute;
   bottom: 100%;
   left: 50%;
