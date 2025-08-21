@@ -21,7 +21,7 @@
   --color-timberwolf: #D8CBC7;
   --color-sinopia: #CC3F0C;
   --color-golden-brown: #9A6D38;
-  --color-hunter-green: #33673B;
+  --color-hunter-green:  #2a5a2f;
   --color-eerie-black: #19231A;
   
   /* Semantic color mappings */
@@ -72,7 +72,7 @@ p {
 }
 
 .cta-button-primary:hover {
-  background-color: #059669;
+  background-color: var(--color-golden-brown);
   transform: scale(1.05);
 }
 

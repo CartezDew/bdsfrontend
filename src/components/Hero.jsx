@@ -77,14 +77,15 @@ const Hero = () => {
               transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-            <div className="logo-section">
-              <Link to="/" className="logo-link">
+            <div className="logo-section-hero">
+              <Link to="/" className="logo-link-hero">
                 <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
-                <h1 className="logo-text">Talent Group</h1>
+                <h1 className="logo-text-hero">Talent Group</h1>
               </Link>
             </div>
-            <div className="hero-nav-links">
+            <div className="hero-nav-links-hero">
               <Link to="/services" className="hero-left-link">Services</Link>
+              <Link to="/why-us" className="hero-left-link">Why Us</Link>
               <Link to="/contact" className="hero-left-link">Contact Us</Link>
             </div>
           </nav>

@@ -1,11 +1,11 @@
 /* src/components/whyus.css */
 .whyus {
     background: var(--color-timberwolf);
-    padding: 4rem 1.25rem;
+    padding: 3rem 2rem 3rem 2rem;
   }
   
   .whyus__inner {
-    max-width: 72rem; /* 1152px */
+    max-width: 1300px; /* 1152px */
     margin: 0 auto;
   }
   
@@ -43,6 +43,8 @@
     line-height: 1.6;
     color: var(--color-eerie-black);
   }
+
+
   
   /* Bullets */
   .whyus__list {
@@ -106,9 +108,7 @@
     width: 100%;
     height: auto;
     display: block;
-    object-fit: cover;
-    border-radius: 16px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    object-fit: cover;;
   }
   
   /* Responsive: switch to 2 columns on large screens */
@@ -204,6 +204,7 @@
     width: 100%;
     height: auto;
     display: block;
+    border: 3px solid var(--color-hunter-green);
 
  
     object-fit: cover;
@@ -252,6 +253,37 @@
       order: -1;
       width: 100%;
     }
+  }
+  
+  /* Schedule Consultation Button */
+  .whyus__cta-container {
+    text-align: center;
+    margin-top: 3rem;
+  }
+  
+  .schedule-consultation-why-us-btn {
+    background: var(--color-hunter-green);
+    color: white;
+    border: none;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+    box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+    letter-spacing: 0.5px;
+    animation: subtle-pulse 3s ease-in-out infinite;
+  }
+  
+  .schedule-consultation-why-us-btn:hover {
+    background: var(--color-golden-brown);
+    transform: translateY(-1px) scale(1.02); 
+    box-shadow: 0 4px 15px rgba(204, 63, 12, 0.4);
+  }
+  
+  .schedule-consultation-why-us-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
   }
   
 

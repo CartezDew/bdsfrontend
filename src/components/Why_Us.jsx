@@ -56,6 +56,13 @@ export default function Why_Us() {
             <strong>Community-first approach</strong> expanding access to reliable, affordable accounting
           </li>
         </ul>
+        
+        {/* Schedule Consultation Button */}
+        <div className="whyus__cta-container">
+          <button className="schedule-consultation-why-us-btn">
+            Schedule Consultation
+          </button>
+        </div>
       </div>
     </section>
   );

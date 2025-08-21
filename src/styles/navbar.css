@@ -36,7 +36,7 @@
   .logo-text {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   /* Menu Section */
@@ -58,7 +58,7 @@
   }
   
   .menu-link:hover {
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   .menu-icon {
@@ -138,7 +138,7 @@
   }
   
   .mobile-menu-button:hover {
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   .mobile-menu-icon {
@@ -170,7 +170,7 @@
   }
   
   .mobile-dropdown-link:hover {
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   /* Responsive Design */
