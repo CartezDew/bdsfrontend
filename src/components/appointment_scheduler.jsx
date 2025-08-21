@@ -5,6 +5,8 @@ const AppointmentScheduler = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedService, setSelectedService] = useState('');
+  const [referralSource, setReferralSource] = useState('');
+  const [clientMessage, setClientMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -370,7 +372,6 @@ const AppointmentScheduler = () => {
                 value={selectedService}
                 onChange={(e) => {
                   setSelectedService(e.target.value);
-                  if (e.target.value) setCurrentStep(2);
                 }}
                 className={selectedService ? 'selected' : ''}
                 required
@@ -387,6 +388,44 @@ const AppointmentScheduler = () => {
                   ))}
                 </optgroup>
               </select>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="referralSource">How did you find us? *</label>
+              <select
+                id="referralSource"
+                value={referralSource}
+                onChange={(e) => setReferralSource(e.target.value)}
+                className={referralSource ? 'selected' : ''}
+                required
+              >
+                <option value="">Select how you found us</option>
+                <option value="Returning Client">Returning Client</option>
+                <option value="Walk-in">Walk-in</option>
+                <option value="Referral">Referral</option>
+                <option value="Word-of-mouth">Word-of-mouth</option>
+                <option value="Google Search">Google Search</option>
+                <option value="Facebook">Facebook</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Networking Event">Networking Event</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+            <div className="form-actions">
+              <button
+                type="button"
+                className="next-btn"
+                onClick={() => {
+                  if (selectedService && referralSource) {
+                    setCurrentStep(2);
+                  }
+                }}
+                disabled={!selectedService || !referralSource}
+              >
+                Continue to Date Selection
+              </button>
             </div>
           </div>
         )}
@@ -607,6 +646,28 @@ const AppointmentScheduler = () => {
                 ))}
               </div>
             )}
+
+            {/* Message Section */}
+            <div className="form-group">
+              <label htmlFor="clientMessage">Anything else to share? (Optional)</label>
+              <textarea
+                id="clientMessage"
+                value={clientMessage}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= 100) {
+                    setClientMessage(value);
+                  }
+                }}
+                placeholder="Share any additional information or questions..."
+                maxLength={100}
+                rows={3}
+                className="message-input"
+              />
+              <div className="character-count">
+                {clientMessage.length}/100 characters
+              </div>
+            </div>
 
             <div className="form-actions">
               <button
