@@ -205,7 +205,7 @@
 }
 .hero-content p {
   margin: 0;
-  font-size: clamp(1.3rem, 1.8vw, 1.4rem);
+  font-size: clamp(1.2rem, 1.8vw, 1.4rem);
   line-height: 1.4;
   color: #1b1b1b;
   text-align: left;
@@ -317,8 +317,8 @@
     grid-area: ticker;
     display: flex;
     align-items: center;
-    height: auto;     /* reserves space at bottom */
-    padding: 2px 2px 6px 2px;
+    min-height: 60px;
+    padding: 2px 2px 2px 2px;
     backdrop-filter: blur(2px);
     box-sizing: border-box;
   }
