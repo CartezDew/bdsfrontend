@@ -216,9 +216,15 @@
 
 /* CTAs */
 .cta-buttons {
-  display: flex;
-  gap: 0.9rem;
-  margin-top: 0.75rem;
+  display: flex !important;
+  gap: 0.9rem !important;
+  margin-top: 0.75rem !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  align-self: flex-start !important;
+  width: 100% !important;
+  text-align: left !important;
+
 }
 .cta-button-primary,
 .cta-button-secondary {
@@ -227,9 +233,10 @@
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
   border: none;
+  height: 100%;
 }
 .cta-button-primary {
-  background:  #2a5a2f;
+  background: var(--color-hunter-green);
   color: #fff;
 }
 .cta-button-primary:hover { transform: translateY(-1px) scale(1.02); 

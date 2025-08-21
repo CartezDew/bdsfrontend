@@ -1,5 +1,6 @@
 // src/components/Why_Us.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Why_Us() {
   return (
@@ -59,9 +60,9 @@ export default function Why_Us() {
         
         {/* Schedule Consultation Button */}
         <div className="whyus__cta-container">
-          <button className="schedule-consultation-why-us-btn">
+          <Link to="/get-started" className="schedule-consultation-why-us-btn">
             Schedule Consultation
-          </button>
+          </Link>
         </div>
       </div>
     </section>

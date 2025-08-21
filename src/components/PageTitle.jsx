@@ -13,6 +13,8 @@ const PageTitle = () => {
           return 'Services'
         case '/contact':
           return 'Contact Us'
+        case '/get-started':
+          return 'Get Started'
         default:
           return 'Home'
       }

@@ -85,9 +85,11 @@ const Services = () => {
   // Scroll detection for sticky navbar
   useEffect(() => {
     const handleScroll = () => {
-      if (servicesRef.current) {
-        const rect = servicesRef.current.getBoundingClientRect();
-        // Only show navbar when services section is fully in view (top of viewport)
+      // Look for the avoid confusion section by its class name
+      const avoidConfusionSection = document.querySelector('.avoid-confusion-section');
+      if (avoidConfusionSection) {
+        const rect = avoidConfusionSection.getBoundingClientRect();
+        // Only show navbar when avoid confusion section is fully in view (top of viewport)
         // This means hero section is completely out of view
         const shouldBeSticky = rect.top <= 0;
         setIsNavbarSticky(shouldBeSticky);

@@ -60,9 +60,9 @@ const Navbar = ({ customConfig }) => {
 
                 {/* icon section */}
                 <div className="icon-section">
-                    <button className="get-started-btn">
+                    <Link to="/get-started" className="get-started-btn">
                         Get Started
-                    </button>
+                    </Link>
                 </div>
 
                 {/* mobile menu section */}

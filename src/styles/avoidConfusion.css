@@ -1,0 +1,294 @@
+/* Avoid Confusion Section Styles */
+.avoid-confusion-section {
+  background: var(--color-hunter-green);
+  padding: 4rem 2rem;
+  margin-top: 0rem;
+  padding-bottom: 4rem;
+}
+
+.avoid-confusion-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.avoid-confusion-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.avoid-confusion-header h2 {
+  color: var(--color-timberwolf);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.avoid-confusion-header p {
+  color: var(--color-timberwolf);
+  font-size: clamp(1.1rem, 1.3vw, 1.2rem);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  opacity: 0.8;
+
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.avoid-confusion-header h2::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-sinopia), #b91c1c);
+  margin: 0 auto;
+
+  margin-top: 1rem;
+}
+
+/* CTA Options Container */
+.cta-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Individual CTA Option */
+.cta-option {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(51, 103, 59, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-hunter-green), var(--color-sinopia));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cta-option:hover::before {
+  opacity: 1;
+}
+
+.cta-option:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* CTA Content */
+.cta-content {
+  text-align: center;
+}
+
+.cta-content h3 {
+  color: var(--color-hunter-green);
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.cta-description {
+  color: var(--color-eerie-black);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+/* Benefits List */
+.cta-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+.cta-benefits li {
+  color: var(--color-eerie-black);
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.cta-benefits li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-sinopia);
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* CTA Buttons */
+.cta-button-primary-avoid-confusion {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  min-width: 200px;
+  background: var(--color-sinopia);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button-primary-avoid-confusion:hover {
+  background: var(--color-golden-brown);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(51, 103, 59, 0.3);
+}
+
+/* Moving sharpness effect for primary button */
+.cta-button-primary-avoid-confusion::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: movingSharpness 3s infinite;
+}
+
+.cta-button-secondary-avoid-confusion {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  min-width: 150px;
+  background: var(--color-hunter-green);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button-secondary-avoid-confusion:hover {
+  background: var(--color-golden-brown);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(204, 63, 12, 0.3);
+}
+
+
+
+/* Alternative Text */
+.cta-alternative {
+  color: var(--color-eerie-black);
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cta-alternative a {
+  color: var(--color-sinopia);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.cta-alternative a:hover {
+  color: var(--color-hunter-green);
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .avoid-confusion-section {
+    padding: 3rem 1.5rem;
+    margin-top: 3rem;
+  }
+  
+  .avoid-confusion-header {
+    margin-bottom: 2rem;
+  }
+  
+  .cta-options {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .cta-option {
+    padding: 2rem;
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .avoid-confusion-section {
+    padding: 2rem 1rem;
+  }
+  
+  .avoid-confusion-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .avoid-confusion-header p {
+    font-size: 1rem;
+  }
+  
+  .cta-option {
+    padding: 1.5rem;
+  }
+  
+  .cta-content h3 {
+    font-size: 1.4rem;
+  }
+  
+  .cta-description {
+    font-size: 1rem;
+  }
+  
+  .cta-benefits li {
+    font-size: 0.9rem;
+  }
+  
+  .cta-button {
+    min-width: 160px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Moving Sharpness Animation Keyframes */
+@keyframes movingSharpness {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
