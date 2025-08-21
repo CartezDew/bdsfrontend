@@ -19,6 +19,7 @@ const GetStarted = () => {
     einOrSsn: '',
     dateOfBirth: '',
     phone: '___-___-____',
+    email: '',
     streetAddress: '',
     city: '',
     state: '',
@@ -28,6 +29,7 @@ const GetStarted = () => {
   });
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -59,7 +61,7 @@ const GetStarted = () => {
 
   // Validation functions
   const validateEmail = (email) => {
-    return email.includes('@') && email.includes('.com');
+    return email.includes('@') && email.includes('.');
   };
 
   const validatePhone = (phone) => {
@@ -234,19 +236,27 @@ const GetStarted = () => {
   const validateContactInfo = () => {
     const newErrors = {};
     
-    // Check fields in priority order - only show first error
-    if (!contactInfo.firstName.trim()) {
+    // Check required fields in priority order - only show first error
+    if (!contactInfo.firstName || !contactInfo.firstName.trim()) {
       newErrors.firstName = 'First name is required';
-    } else if (!contactInfo.lastName.trim()) {
+    } else if (!contactInfo.lastName || !contactInfo.lastName.trim()) {
       newErrors.lastName = 'Last name is required';
-    } else if (!contactInfo.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!validateEmail(contactInfo.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    } else if (!contactInfo.phone.trim()) {
+    } else if (!contactInfo.einOrSsn || !contactInfo.einOrSsn.trim()) {
+      newErrors.einOrSsn = 'EIN or SSN is required';
+    } else if (!contactInfo.dateOfBirth) {
+      newErrors.dateOfBirth = 'Date of birth is required';
+    } else if (!contactInfo.phone || !contactInfo.phone.trim() || contactInfo.phone === '___-___-____') {
       newErrors.phone = 'Phone number is required';
     } else if (!validatePhone(contactInfo.phone)) {
       newErrors.phone = 'Please enter a valid phone number';
+    } else if (!contactInfo.email || !contactInfo.email.trim()) {
+      newErrors.email = 'Email address is required';
+    } else if (!validateEmail(contactInfo.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    } else if (!contactInfo.occupation || !contactInfo.occupation.trim()) {
+      newErrors.occupation = 'Occupation is required';
+    } else if (!contactInfo.streetAddress || !contactInfo.streetAddress.trim()) {
+      newErrors.streetAddress = 'Street address is required';
     }
     
     setErrors(newErrors);
@@ -264,6 +274,12 @@ const GetStarted = () => {
       return;
     }
 
+    console.log('Checking consent...');
+    if (!consentChecked) {
+      console.log('Consent not checked');
+      return;
+    }
+
     console.log('Setting submitting state...');
     setIsSubmitting(true);
     
@@ -278,9 +294,23 @@ const GetStarted = () => {
       setSelectedTime(null);
       setSelectedService('');
       setUploadedFiles([]);
-      setContactInfo({ firstName: '', lastName: '', email: '', phone: '___-___-____' });
+      setContactInfo({
+        firstName: '',
+        lastName: '',
+        einOrSsn: '',
+        dateOfBirth: '',
+        phone: '___-___-____',
+        email: '',
+        streetAddress: '',
+        city: '',
+        state: '',
+        country: '',
+        postalCode: '',
+        occupation: ''
+      });
       setCurrentStep(1);
       setErrors({});
+      setConsentChecked(false);
     }, 2000);
   };
 
@@ -447,6 +477,7 @@ const GetStarted = () => {
                           className={errors.firstName ? 'getstarted-error' : ''}
                           required
                         />
+                        {errors.firstName && <div className="getstarted-field-error">{errors.firstName}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -460,6 +491,7 @@ const GetStarted = () => {
                           className={errors.lastName ? 'getstarted-error' : ''}
                           required
                         />
+                        {errors.lastName && <div className="getstarted-field-error">{errors.lastName}</div>}
                       </div>
                     </div>
 
@@ -475,6 +507,7 @@ const GetStarted = () => {
                           required
                           placeholder="must be 9 digits"
                         />
+                        {errors.einOrSsn && <div className="getstarted-field-error">{errors.einOrSsn}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -487,6 +520,7 @@ const GetStarted = () => {
                           className={errors.dateOfBirth ? 'getstarted-error' : ''}
                           required
                         />
+                        {errors.dateOfBirth && <div className="getstarted-field-error">{errors.dateOfBirth}</div>}
                       </div>
                     </div>
 
@@ -503,6 +537,7 @@ const GetStarted = () => {
                           maxLength="12"
                           required
                         />
+                        {errors.phone && <div className="getstarted-field-error">{errors.phone}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -510,15 +545,31 @@ const GetStarted = () => {
                         <input
                           type="text"
                           id="occupation"
-                           placeholder="Occupation"
+                          placeholder="Occupation"
                           value={contactInfo.occupation}
                           onChange={(e) => handleContactChange('occupation', e.target.value)}
+                          className={errors.occupation ? 'getstarted-error' : ''}
                           required
                         />
+                        {errors.occupation && <div className="getstarted-field-error">{errors.occupation}</div>}
                       </div>
                     </div>
 
                     <div className="getstarted-form-row">
+                      <div className="getstarted-form-group">
+                        <label htmlFor="email" className="required-field">Email Address</label>
+                        <input
+                          type="email"
+                          id="email"
+                          placeholder="Email Address"
+                          value={contactInfo.email}
+                          onChange={(e) => handleContactChange('email', e.target.value)}
+                          className={errors.email ? 'getstarted-error' : ''}
+                          required
+                        />
+                        {errors.email && <div className="getstarted-field-error">{errors.email}</div>}
+                      </div>
+
                       <div className="getstarted-form-group">
                         <label htmlFor="streetAddress" className="required-field">Street Address</label>
                         <input
@@ -530,6 +581,7 @@ const GetStarted = () => {
                           placeholder="Address"
                           required
                         />
+                        {errors.streetAddress && <div className="getstarted-field-error">{errors.streetAddress}</div>}
                       </div>
                     </div>
 
@@ -631,7 +683,8 @@ const GetStarted = () => {
                   <div className="getstarted-form-section">
                     <h4>Upload Required Documents</h4>
                     <p>Please upload the following documents to help us prepare your tax documents</p>
-                    
+                    <p className="getstarted-upload-note"> <strong>To keep your project on schedule:</strong> Upload all requested documents. 
+                    If you’re missing something, upload what you have and <strong>add a note—we’ll follow up.</strong>  </p>
                     <div className="getstarted-file-upload-area">
                       <input
                         type="file"
@@ -707,6 +760,27 @@ const GetStarted = () => {
                       </div>
                     </div>
 
+                    {/* Consent Checkbox */}
+                    <div className="getstarted-consent-section">
+                      <div className="getstarted-consent-checkbox">
+                        <input
+                          type="checkbox"
+                          id="consent"
+                          checked={consentChecked}
+                          onChange={(e) => setConsentChecked(e.target.checked)}
+                          required
+                        />
+                        <label htmlFor="consent" className="getstarted-consent-label">
+                          I authorize BDS Talent Group to collect, use, and process my personal and tax information for the purpose of performing the services requested. I certify that all information supplied is accurate and complete to the best of my knowledge.
+                        </label>
+                      </div>
+                      {!consentChecked && currentStep === 3 && (
+                        <div className="getstarted-consent-error">
+                          You must agree to the consent terms before proceeding.
+                        </div>
+                      )}
+                    </div>
+
                     <div className="getstarted-form-actions">
                       <button
                         type="button"
@@ -756,7 +830,7 @@ const GetStarted = () => {
                     <div className="getstarted-success-modal-content">
                       <div className="getstarted-success-icon">✓</div>
                       <p className="getstarted-confirmation-message">
-                        We will contact you shortly to confirm your appointment details.
+                        We will begin working on your project shortly.
                       </p>
                       <p className="getstarted-closing-message">
                         Thank you and have a great day!

@@ -785,3 +785,41 @@
     font-size: 1rem;
   }
 }
+
+/* Consent section styling */
+.consent-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.consent-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.consent-checkbox input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-sinopia);
+}
+
+.consent-label {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-eerie-black);
+  cursor: pointer;
+  user-select: none;
+}
+
+.consent-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+}

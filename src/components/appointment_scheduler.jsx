@@ -20,6 +20,7 @@ const AppointmentScheduler = () => {
   });
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -51,7 +52,7 @@ const AppointmentScheduler = () => {
 
   // Validation functions
   const validateEmail = (email) => {
-    return email.includes('@') && email.includes('.com');
+    return email.includes('@') && email.includes('.');
   };
 
   const getEmailErrorMessage = (email) => {
@@ -669,6 +670,27 @@ const AppointmentScheduler = () => {
               </div>
             </div>
 
+            {/* Consent Checkbox */}
+            <div className="consent-section">
+              <div className="consent-checkbox">
+                <input
+                  type="checkbox"
+                  id="consent"
+                  checked={consentChecked}
+                  onChange={(e) => setConsentChecked(e.target.checked)}
+                  required
+                />
+                <label htmlFor="consent" className="consent-label">
+                  I authorize BDS Talent Group to collect, use, and process my personal and tax information for the purpose of performing the services requested. I certify that all information supplied is accurate and complete to the best of my knowledge.
+                </label>
+              </div>
+              {!consentChecked && currentStep === 5 && (
+                <div className="consent-error">
+                  You must agree to the consent terms before proceeding.
+                </div>
+              )}
+            </div>
+
             <div className="form-actions">
               <button
                 type="button"
@@ -687,7 +709,7 @@ const AppointmentScheduler = () => {
             <button
               type="submit"
               className="submit-btn"
-              disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService}
+              disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService || !consentChecked}
               onClick={() => console.log('Submit button clicked!')}
             >
               {isSubmitting ? 'Scheduling...' : 'Schedule Appointment'}
