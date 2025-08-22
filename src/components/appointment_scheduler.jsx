@@ -22,6 +22,7 @@ const AppointmentScheduler = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
   const [animationsTriggered, setAnimationsTriggered] = useState(false);
+  const [showDisabledButtonNote, setShowDisabledButtonNote] = useState(false);
 
   const fileInputRef = useRef(null);
   const schedulerRef = useRef(null);
@@ -309,6 +310,18 @@ const AppointmentScheduler = () => {
     }, 2000);
   };
 
+  // Handle disabled button click
+  const handleDisabledButtonClick = () => {
+    console.log('Disabled button clicked!');
+    console.log('showDisabledButtonNote will be set to true');
+    setShowDisabledButtonNote(true);
+    // Hide the note after 3 seconds
+    setTimeout(() => {
+      console.log('Hiding note after timeout');
+      setShowDisabledButtonNote(false);
+    }, 3000);
+  };
+
   // Navigate to previous month
   const goToPreviousMonth = () => {
     setCurrentMonth(prev => {
@@ -440,15 +453,26 @@ const AppointmentScheduler = () => {
             </div>
             
             <div className="form-actions">
+              {showDisabledButtonNote && (!selectedService || !referralSource) && (
+                <div className="disabled-button-note">
+                  Please complete all required fields to continue
+                </div>
+              )}
               <button
                 type="button"
-                className="next-btn"
+                className={`next-btn ${(!selectedService || !referralSource) ? 'disabled' : ''}`}
                 onClick={() => {
+                  console.log('Button clicked!');
+                  console.log('selectedService:', selectedService);
+                  console.log('referralSource:', referralSource);
+                  console.log('showDisabledButtonNote:', showDisabledButtonNote);
+                  
                   if (selectedService && referralSource) {
                     setCurrentStep(2);
+                  } else {
+                    handleDisabledButtonClick();
                   }
                 }}
-                disabled={!selectedService || !referralSource}
               >
                 Continue to Date Selection
               </button>
@@ -596,6 +620,11 @@ const AppointmentScheduler = () => {
             </div>
 
             <div className="form-actions">
+              {showDisabledButtonNote && Object.keys(errors).length > 0 && (
+                <div className="disabled-button-note">
+                  Please complete all required fields to continue
+                </div>
+              )}
               {Object.keys(errors).length > 0 && (
                 <div className="single-error-message">
                   {(() => {
@@ -617,9 +646,11 @@ const AppointmentScheduler = () => {
                   console.log('Validation result:', isValid);
                   if (isValid) {
                     setCurrentStep(5);
+                  } else {
+                    handleDisabledButtonClick();
                   }
                 }}
-                className="next-btn"
+                className={`next-btn ${Object.keys(errors).length > 0 ? 'disabled' : ''}`}
               >
                 Continue to File Upload
               </button>

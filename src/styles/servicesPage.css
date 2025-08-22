@@ -2,7 +2,6 @@
 .servicespage-section {
   padding: 2rem 2rem 4rem 2rem;
   background-color: var(--color-timberwolf);
-  min-height: calc(100vh - 80px);
   margin-top: 0;
   transition: padding-top 0.3s ease;
 }
@@ -19,6 +18,13 @@
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+.servicespage-navbar-container.sticky {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(226, 232, 240, 0.95) 100%);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
 }
 
 .servicespage-navbar-container.sticky {
@@ -450,29 +456,24 @@
 
 .servicespage-detailed-section {
   margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 2px solid var(--color-hunter-green);
+  background: var(--color-hunter-green) !important;
+  width: 100%;
+  padding: 3rem 0;
+  position: relative;
+  z-index: 1;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
-.servicespage-service-page {
-  --bg: var(--color-hunter-green);
-  --card: var(--color-hunter-green);
-  --ink: #ffffff;
-  --muted: rgba(255,255,255,0.8);
-  --accent: var(--color-sinopia);
-  --ring: rgba(0,0,0,0.08);
-
-  display: grid;
-  gap: 3rem;
-  padding: 3rem 1.25rem;
+.servicespage-detailed-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
 }
 
-@media (min-width: 1024px) {
-  .servicespage-service-page {
-    padding: 4rem 2rem;
-    gap: 4rem;
-  }
-}
+
 
 .servicespage-service-section {
   display: block;
@@ -780,23 +781,7 @@
   box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
 }
 
-@keyframes servicespagePricingGlow {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-    box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.02);
-    box-shadow: 0 8px 25px rgba(204, 63, 12, 0.3);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
-  }
-}
+
 
 .servicespage-pricing-note {
   margin: 0;
@@ -806,4 +791,121 @@
   line-height: 1.6;
   text-align: center;
   font-family: 'Playfair Display', serif;
+}
+
+/* ========================================
+   SOCIAL MEDIA SECTION
+   ======================================== */
+
+/* Social Media Section */
+.service-social-media-section {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--color-hunter-green);
+  border-bottom: 1px solid var(--color-timberwolf);
+}
+
+.service-follow-us-text {
+  color: var(--color-timberwolf);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  text-shadow: 0 1px 2px rgba(51, 103, 59, 0.1);
+}
+
+.service-social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.service-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-sinopia);
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+  animation: service-bounce 4s ease-in-out infinite;
+}
+
+.service-social-icon.service-facebook {
+  animation-delay: 0s;
+}
+
+.service-social-icon.service-instagram {
+  animation-delay: 0.7s;
+}
+
+.service-social-icon.service-linkedin {
+  animation-delay: 1s;
+}
+
+.service-social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(204, 63, 12, 0.5);
+}
+
+.service-social-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.service-social-icon.service-instagram:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(220, 39, 67, 0.5);
+}
+
+.service-social-icon.service-linkedin:hover {
+  background: #006097;
+  box-shadow: 0 4px 15px rgba(0, 119, 181, 0.5);
+}
+
+/* Responsive Design for Social Media */
+@media (max-width: 768px) {
+  .service-social-media-section {
+    margin: 1.5rem 0 2rem 0;
+    padding: 1rem;
+  }
+  
+  .service-social-icons {
+    gap: 1rem;
+  }
+  
+  .service-social-icon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .service-social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .service-follow-us-text {
+    font-size: 1rem;
+  }
+}
+
+/* Bounce Animation Keyframes */
+@keyframes service-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }

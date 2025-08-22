@@ -1,13 +1,14 @@
 // src/components/Hero.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/hero.css';
 import HeroImageShowcase from './HeroImageShowcase.jsx';
 import heroImages from './data/heroImages.js';
 
 const Hero = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [animationsTriggered, setAnimationsTriggered] = useState({
     nav: false,
@@ -34,6 +35,18 @@ const Hero = () => {
   // Handle ticker item click - navigate to services
   const handleTickerClick = () => {
     navigate('/services');
+  };
+
+  // Handle logo click - navigate to home and scroll to top
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (location.pathname === '/') {
+      // If already on home page, just scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Navigate to home page
+      navigate('/');
+    }
   };
 
   useEffect(() => {
@@ -83,12 +96,12 @@ const Hero = () => {
               transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-            <div className="logo-section-hero">
-              <Link to="/" className="logo-link-hero">
-                <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
-                <h1 className="logo-text-hero">Talent Group</h1>
-              </Link>
-            </div>
+                          <div className="logo-section-hero">
+                <button className="logo-link-hero" onClick={handleLogoClick}>
+                  <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
+                  <h1 className="logo-text-hero">Talent Group</h1>
+                </button>
+              </div>
             <div className="hero-nav-links-hero">
               <Link to="/services" className="hero-left-link">Services</Link>
               <Link to="/why-us" className="hero-left-link">Why Us</Link>

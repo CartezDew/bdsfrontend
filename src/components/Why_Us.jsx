@@ -16,7 +16,7 @@ export default function Why_Us() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
 
     if (whyUsRef.current) {

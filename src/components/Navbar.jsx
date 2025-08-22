@@ -1,27 +1,41 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { NavbarMenu } from '../mockData/data'
 import '../styles/navbar.css'
 
 const Navbar = ({ customConfig }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const navigate = useNavigate()
+    const location = useLocation()
     
     // Use custom config if provided, otherwise use default NavbarMenu
     const menuItems = customConfig || NavbarMenu
+
+    // Handle logo click - navigate to home and scroll to top
+    const handleLogoClick = (e) => {
+        e.preventDefault()
+        if (location.pathname === '/') {
+            // If already on home page, just scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        } else {
+            // Navigate to home page
+            navigate('/')
+        }
+    }
 
     return (
         <nav className="navbar">
             <div className="navbar-container">
                 {/* logo section */}
                 <div className="logo-section">
-                    <Link to="/" className="logo-link">
+                    <button className="logo-link" onClick={handleLogoClick}>
                         <img 
                             src="/favicon.svg" 
                             alt="BDS Accounting Logo" 
                             className="logo-image"
                         />
                         <h1 className="logo-text">Talent Group</h1>
-                    </Link>
+                    </button>
                 </div>
 
                 {/* menu section */}

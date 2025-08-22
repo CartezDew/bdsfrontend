@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
+import ServicesDetailed from './ServicesDetailed';
+import Footer from './Footer';
 import '../styles/servicesPage.css';
 
 // Custom navbar configuration for Services page
@@ -14,6 +16,7 @@ const servicesNavbarConfig = [
 const ServicesPage = () => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
+  
   const [animationsTriggered, setAnimationsTriggered] = useState({
     header: false, title: false, subtitle: false, toggle: false, note: false, services: false
   });
@@ -77,15 +80,9 @@ const ServicesPage = () => {
   // Scroll detection for sticky navbar
   useEffect(() => {
     const handleScroll = () => {
-      // Look for the avoid confusion section by its class name
-      const avoidConfusionSection = document.querySelector('.avoid-confusion-section');
-      if (avoidConfusionSection) {
-        const rect = avoidConfusionSection.getBoundingClientRect();
-        // Only show navbar when avoid confusion section is fully in view (top of viewport)
-        // This means hero section is completely out of view
-        const shouldBeSticky = rect.top <= 0;
-        setIsNavbarSticky(shouldBeSticky);
-      }
+      // Show navbar when scrolled down from top
+      const shouldBeSticky = window.scrollY > 100;
+      setIsNavbarSticky(shouldBeSticky);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -96,12 +93,10 @@ const ServicesPage = () => {
 
   return (
     <>
-      {/* Only render navbar when it should be sticky (hero section out of view) */}
-      {isNavbarSticky && (
-        <div className={`servicespage-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
-          <Navbar customConfig={servicesNavbarConfig} />
-        </div>
-      )}
+      {/* Services page navbar - always visible but with different styling based on scroll */}
+      <div className={`servicespage-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
+        <Navbar customConfig={servicesNavbarConfig} />
+      </div>
       <section className={`servicespage-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
         <div className="servicespage-container">
           <div className={`servicespage-header ${animationsTriggered.header ? 'servicespage-animate-header' : ''}`} ref={headerRef} data-animate="header">
@@ -146,303 +141,38 @@ const ServicesPage = () => {
             )}
           </div>
 
-          {/* Detailed Individual Services Section */}
-          {serviceType === 'individual' && (
-            <div className="servicespage-detailed-section">
-              <IndividualServiceDetails />
-            </div>
-          )}
+
         </div>
       </section>
+      
+      {/* Detailed Individual Services Section - Same level as other components */}
+      {serviceType === 'individual' && <ServicesDetailed />}
+      
+      {/* Social Media Section */}
+      <div className="service-social-media-section">
+        <p className="service-follow-us-text">Follow us:</p>
+        <div className="service-social-icons">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="service-social-icon service-facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="service-social-icon service-instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/bdavis0890/" target="_blank" rel="noopener noreferrer" className="service-social-icon service-linkedin">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      {/* Footer */}
+      <Footer />
     </>
-  );
-};
-
-// Individual Service Details Component
-const IndividualServiceDetails = () => {
-  const [visibleSections, setVisibleSections] = useState(new Set());
-  
-  // Service pricing text
-  const individualServicePriceText = {
-    1: "Starting at $175",
-    2: "Starting at $99 (mo)",
-    3: "Starting at $175 (hr)",
-    4: "Starting at $300",
-    5: "Starting at $35",
-    6: "Starting at $150 (hr)"
-  };
-
-  // Detailed content per section
-  const individualServiceDetails = [
-    {
-      id: 1,
-      icon: "📊",
-      title: "Tax Returns",
-      longDescription:
-        "Personalized preparation for simple to complex returns, including multi-state, investment activity, and rental properties. We proactively surface deduction opportunities and provide a clean, audit-ready package for your records.",
-      whatsIncluded: [
-        "Full intake review (income sources, life events, deductions/credits)",
-        "Preparation for W-2/1099, Schedule C, E (rentals), capital gains, K-1s",
-        "Multi-state filings and local returns when applicable",
-        "e-File with direct-deposit/refund tracking",
-        "Personalized tax summary with insights for next year"
-      ],
-      idealFor: [
-        "W-2 earners with additional income (1099, gig, rental, investment)",
-        "First-time investors (brokerage/crypto) or new landlords",
-        "Multi-state movers or remote employees"
-      ],
-      process: ["Kickoff & secure document upload", "Preparation & quality review", "e-File, final package, and next-year plan"],
-      deliverables: [
-        "Filed federal/state returns (PDF)",
-        "Year-end tax summary and deductions checklist",
-        "Support for IRS/state notices related to the filed return"
-      ],
-      pricingNote:
-        "Pricing varies by complexity (forms/schedules, multi-state, investments, rentals)."
-    },
-    {
-      id: 2,
-      icon: "📈",
-      title: "Bookkeeping",
-      longDescription:
-        "Month-to-month categorization and reconciliation that turns your bank feeds into clean, tax-ready financials. Get visibility into cash flow, spending trends, and savings goals—without the spreadsheet grind.",
-      whatsIncluded: [
-        "Secure bank/credit card feed connections",
-        "Rules-based categorization & monthly reconciliations",
-        "Monthly statement pack (cash flow, categorized spend, trends)",
-        "Year-end tax package for your preparer",
-        "Quarterly check-ins to adjust categories and goals"
-      ],
-      idealFor: [
-        "Busy professionals who want automated, accurate books",
-        "Side-hustlers who need clean records for taxes",
-        "Households tracking budgets against goals"
-      ],
-      process: ["Onboarding & connections", "Monthly close & report pack", "Quarterly review & optimization"],
-      deliverables: [
-        "Monthly PDF report pack (cash flow, category trends)",
-        "CSV exports for budgeting apps",
-        "Year-end tax package (all statements & category summaries)"
-      ],
-      pricingNote:
-        "Monthly rate depends on account volume and transaction count."
-    },
-    {
-      id: 3,
-      icon: "⚖️",
-      title: "Compliance",
-      longDescription:
-        "Stay ahead of deadlines and avoid penalties. We set up reminders, estimates, and filings so your obligations are handled on time—without guesswork.",
-      whatsIncluded: [
-        "Estimated tax planning & quarterly reminders",
-        "State/local filings (where applicable)",
-        "Guidance for 1099-K/marketplace reporting",
-        "Record-keeping checklists and retention timelines"
-      ],
-      idealFor: [
-        "Taxpayers with quarterly estimates",
-        "People with income in multiple states",
-        "Anyone who's received a notice and wants ongoing guardrails"
-      ],
-      process: ["Compliance review & calendar setup", "Quarterly monitoring", "Year-end wrap-up & next-year plan"],
-      deliverables: [
-        "Personal compliance calendar with reminders",
-        "Documentation checklists",
-        "Notice response templates (as needed)"
-      ],
-      pricingNote:
-        "Hourly or fixed-fee depending on scope (multi-state, notices, special filings)."
-    },
-    {
-      id: 4,
-      icon: "📋",
-      title: "Reporting",
-      longDescription:
-        "Clarity on your personal finances: custom reports that translate transactions into decisions. Understand where money goes and how to optimize taxes and savings.",
-      whatsIncluded: [
-        "Custom category framework aligned to goals",
-        "Budget vs. actual tracking with variance notes",
-        "Net-worth snapshot and trend line (optional)",
-        "Goal tracking (debt payoff, emergency fund, investing)"
-      ],
-      idealFor: [
-        "Households building a plan for savings/debt reduction",
-        "Side-hustlers balancing cash flow and taxes",
-        "Anyone who wants decision-ready financial visuals"
-      ],
-      process: ["Discovery & report design", "Data pull & buildout", "Review session & tuning"],
-      deliverables: [
-        "PDF/CSV reports and dashboard exports",
-        "Quarterly progress summary with recommendations"
-      ],
-      pricingNote:
-        "Fixed packages available; custom dashboards priced by complexity."
-    },
-    {
-      id: 5,
-      icon: "🔍",
-      title: "Audits & Notices",
-      longDescription:
-        "From first notice to final resolution, we manage the paper trail and communication so you don't have to. Our focus: minimize penalties and close the loop quickly.",
-      whatsIncluded: [
-        "Notice decoding and response strategy",
-        "Document request list & secure file handling",
-        "Representation and correspondence with IRS/state",
-        "Penalty abatement request (when warranted)"
-      ],
-      idealFor: [
-        "CP2000/under-reporting notices",
-        "Math/clerical error letters",
-        "State residency and withholding inquiries"
-      ],
-      process: ["Assess & plan", "Assemble evidence", "Respond & follow-through"],
-      deliverables: [
-        "Filed responses and proof of submission",
-        "Status updates until closure",
-        "Post-resolution summary and prevention steps"
-      ],
-      pricingNote:
-        "Priced by notice type and depth of research/representation required."
-    },
-    {
-      id: 6,
-      icon: "⏰",
-      title: "Tax Extensions",
-      longDescription:
-        "No rush filing. We secure your automatic extension and estimate any payment due to avoid unnecessary penalties or interest.",
-      whatsIncluded: [
-        "Federal and state extension submissions",
-        "Estimated payment calculation & vouchers",
-        "Document checklist for post-extension filing",
-        "Deadline reminders and next-steps timeline"
-      ],
-      idealFor: [
-        "Late or missing documents (brokerage, K-1, 1099)",
-        "New life events (home sale, relocation, business start)",
-        "Complex returns needing more prep time"
-      ],
-      process: ["Quick assessment", "Estimate & submit", "File return by extended deadline"],
-      deliverables: [
-        "Extension confirmation",
-        "Payment vouchers/receipts",
-        "Customized filing timeline"
-      ],
-      pricingNote:
-        "Flat fee for extension filing; return preparation priced separately."
-    }
-  ];
-
-  // Single section block with image on the right
-  const Section = ({ detail, index }) => {
-    const sectionRef = useRef(null);
-    const isVisible = visibleSections.has(detail.id);
-    
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setVisibleSections(prev => new Set([...prev, detail.id]));
-            }
-          });
-        },
-        { threshold: 0.05, rootMargin: '0px' }
-      );
-      
-      if (sectionRef.current) {
-        observer.observe(sectionRef.current);
-      }
-      
-      return () => observer.disconnect();
-    }, [detail.id]);
-    
-    return (
-      <section className="servicespage-service-section" id={`service-${detail.id}`} ref={sectionRef}>
-        <div className={`servicespage-content-col ${isVisible ? 'servicespage-animate-in' : ''}`}>
-          <div className="servicespage-section-header">
-            <div className="servicespage-header-main">
-              <span className="servicespage-service-icon" aria-hidden>{detail.icon}</span>
-              <h2 className="servicespage-service-title">{detail.title}</h2>
-            </div>
-            <div className="servicespage-price-chip">{individualServicePriceText[detail.id]}</div>
-          </div>
-
-          <div className="servicespage-description-section">
-            <p className="servicespage-lede">{detail.longDescription}</p>
-          </div>
-
-          <div className="servicespage-highlights-grid">
-            <div className="servicespage-highlight-card">
-              <h4 className="servicespage-highlight-title">
-                <span className="servicespage-highlight-icon">✨</span>
-                What's Included
-              </h4>
-              <ul className="servicespage-highlight-list">
-                {detail.whatsIncluded.map((li, i) => (
-                  <li key={i} className="servicespage-highlight-item">{li}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="servicespage-highlight-card">
-              <h4 className="servicespage-highlight-title">
-                <span className="servicespage-highlight-icon">🎯</span>
-                Ideal For
-              </h4>
-              <ul className="servicespage-highlight-list">
-                {detail.idealFor.map((li, i) => (
-                  <li key={i} className="servicespage-highlight-item">{li}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="servicespage-process-section">
-            <h4 className="servicespage-process-title">
-              <span className="servicespage-process-icon">🔄</span>
-              How It Works
-            </h4>
-            <ol className="servicespage-process-list">
-              {detail.process.map((step, i) => (
-                <li key={i} className="servicespage-process-step">
-                  <span className="servicespage-step-number">{i + 1}</span>
-                  <span className="servicespage-step-text">{step}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="servicespage-deliverables-section">
-            <h4 className="servicespage-deliverables-title">
-              <span className="servicespage-deliverables-icon">📦</span>
-              Deliverables
-            </h4>
-            <ul className="servicespage-deliverables-list">
-              {detail.deliverables.map((li, i) => (
-                <li key={i} className="servicespage-deliverables-item">{li}</li>
-              ))}
-            </ul>
-          </div>
-
-          {detail.pricingNote && (
-            <div className="servicespage-pricing-section">
-              <p className="servicespage-pricing-note">{detail.pricingNote}</p>
-            </div>
-          )}
-        </div>
-
-
-      </section>
-    );
-  };
-
-  return (
-    <div className="servicespage-service-page">
-      {individualServiceDetails.map((detail, idx) => (
-        <Section key={detail.id} detail={detail} index={idx} />
-      ))}
-    </div>
   );
 };
 

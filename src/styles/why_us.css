@@ -301,7 +301,7 @@
 .whyus__inner {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
 }
 
 .whyus__inner-animated {
@@ -312,7 +312,7 @@
 .whyus__header {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
 }
 
 .whyus__header-animated {
@@ -323,7 +323,7 @@
 .whyus__header-content {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s;
+  transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
 }
 
 .whyus__header-content-animated {
@@ -334,7 +334,7 @@
 .whyus__title {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
+  transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
 }
 
 .whyus__title-animated {
@@ -345,7 +345,7 @@
 .whyus__kicker {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 1.0s, transform 0.6s ease 1.0s;
+  transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
 }
 
 .whyus__kicker-animated {
@@ -356,7 +356,7 @@
 .whyus__lede {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 1.2s, transform 0.6s ease 1.2s;
+  transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s;
 }
 
 .whyus__lede-animated {
@@ -367,7 +367,7 @@
 .whyus__grid-image {
   opacity: 0;
   transform: translateX(30px);
-  transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
 }
 
 .whyus__grid-image-animated {
@@ -378,7 +378,7 @@
 .whyus__business-image {
   opacity: 0;
   transform: scale(0.95);
-  transition: opacity 0.8s ease 1.0s, transform 0.8s ease 1.0s;
+  transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
 }
 
 .whyus__business-image-animated {
@@ -389,7 +389,7 @@
 .whyus__list {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease 1.4s, transform 0.6s ease 1.4s;
+  transition: opacity 0.6s ease 0.7s, transform 0.5s ease 0.7s;
 }
 
 .whyus__list-animated {
@@ -400,7 +400,7 @@
 .whyus__cta-container {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 1.6s, transform 0.6s ease 1.6s;
+  transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s;
 }
 
 .whyus__cta-container-animated {
@@ -440,7 +440,7 @@
 .whyus__inner {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
 }
 
 .whyus__inner-animated {
@@ -451,7 +451,7 @@
 .whyus__header {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
 }
 
 .whyus__header-animated {
@@ -462,7 +462,7 @@
 .whyus__header-content {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s;
+  transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
 }
 
 .whyus__header-content-animated {
@@ -473,7 +473,7 @@
 .whyus__title {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
+  transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
 }
 
 .whyus__title-animated {
@@ -484,7 +484,7 @@
 .whyus__kicker {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 1.0s, transform 0.6s ease 1.0s;
+  transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
 }
 
 .whyus__kicker-animated {
@@ -495,7 +495,7 @@
 .whyus__lede {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 1.2s, transform 0.6s ease 1.2s;
+  transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s;
 }
 
 .whyus__lede-animated {
@@ -506,7 +506,7 @@
 .whyus__grid-image {
   opacity: 0;
   transform: translateX(30px);
-  transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
 }
 
 .whyus__grid-image-animated {
@@ -517,7 +517,7 @@
 .whyus__business-image {
   opacity: 0;
   transform: scale(0.95);
-  transition: opacity 0.8s ease 1.0s, transform 0.8s ease 1.0s;
+  transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
 }
 
 .whyus__business-image-animated {
@@ -528,7 +528,7 @@
 .whyus__list {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease 1.4s, transform 0.8s ease 1.4s;
+  transition: opacity 0.6s ease 0.7s, transform 0.5s ease 0.7s;
 }
 
 .whyus__list-animated {
@@ -539,7 +539,7 @@
 .whyus__cta-container {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease 1.6s, transform 0.6s ease 1.6s;
+  transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s;
 }
 
 .whyus__cta-container-animated {
