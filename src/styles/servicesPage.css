@@ -48,7 +48,7 @@
 }
 
 .servicespage-container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -268,39 +268,120 @@
   margin-top: 2rem;
 }
 
-/* Animation Classes */
-.servicespage-animate-header {
-  animation: servicespageFadeInUp 0.8s ease forwards;
+/* Scroll-triggered Animation Classes */
+.servicespage-content-col {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.servicespage-animate-title {
-  animation: servicespageFadeInUp 0.8s ease 0.2s forwards;
+.servicespage-content-col.servicespage-animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.servicespage-animate-subtitle {
-  animation: servicespageFadeInUp 0.8s ease 0.4s forwards;
+/* Staggered animations for child elements */
+.servicespage-content-col.servicespage-animate-in .servicespage-section-header {
+  animation: servicespageSlideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s forwards;
 }
 
-.servicespage-animate-toggle {
-  animation: servicespageFadeInUp 0.8s ease 0.6s forwards;
+.servicespage-content-col.servicespage-animate-in .servicespage-service-title {
+  animation: servicespageScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
 }
 
-.servicespage-animate-note {
-  animation: servicespageFadeInUp 0.8s ease 0.8s forwards;
+.servicespage-content-col.servicespage-animate-in .servicespage-price-chip {
+  animation: servicespageFadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
-.servicespage-animate-services {
-  animation: servicespageFadeInUp 0.8s ease 1s forwards;
+.servicespage-content-col.servicespage-animate-in .servicespage-highlights-grid {
+  animation: servicespageZoomIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s forwards;
 }
 
+.servicespage-content-col.servicespage-animate-in .servicespage-process-section {
+  animation: servicespageSlideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+}
+
+.servicespage-content-col.servicespage-animate-in .servicespage-deliverables-section {
+  animation: servicespageSlideInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
+}
+
+.servicespage-content-col.servicespage-animate-in .servicespage-pricing-section {
+  animation: servicespagePricingGlow 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s forwards;
+}
+
+/* Enhanced Keyframe Animations */
 @keyframes servicespageFadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes servicespageSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes servicespageSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes servicespageScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes servicespageBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes servicespageZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
   }
 }
 
@@ -361,4 +442,368 @@
     padding: 12px 18px;
     font-size: 0.75rem;
   }
+}
+
+/* ========================================
+   DETAILED INDIVIDUAL SERVICES SECTION
+   ======================================== */
+
+.servicespage-detailed-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-hunter-green);
+}
+
+.servicespage-service-page {
+  --bg: var(--color-hunter-green);
+  --card: var(--color-hunter-green);
+  --ink: #ffffff;
+  --muted: rgba(255,255,255,0.8);
+  --accent: var(--color-sinopia);
+  --ring: rgba(0,0,0,0.08);
+
+  display: grid;
+  gap: 3rem;
+  padding: 3rem 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .servicespage-service-page {
+    padding: 4rem 2rem;
+    gap: 4rem;
+  }
+}
+
+.servicespage-service-section {
+  display: block;
+  margin-bottom: 4rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--color-timberwolf) 0%, rgba(216, 203, 199, 0.8) 100%);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(42, 90, 47, 0.1);
+  box-shadow: 0 8px 32px rgba(42, 90, 47, 0.08);
+}
+
+@media (min-width: 960px) {
+  .servicespage-service-section {
+    padding: 3rem;
+  }
+}
+
+
+
+
+
+.servicespage-content-col {
+  background: transparent;
+  color: var(--color-eerie-black);
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .servicespage-content-col { 
+    gap: 2.5rem;
+  }
+}
+
+.servicespage-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-hunter-green);
+}
+
+.servicespage-header-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.servicespage-service-title {
+  font-size: clamp(2rem, 2.5vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--color-hunter-green);
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 2px 4px rgba(42, 90, 47, 0.1);
+}
+
+.servicespage-service-icon {
+  font-size: 1.6rem;
+}
+
+.servicespage-price-chip {
+  background: var(--color-sinopia);
+  color: white;
+  border: 2px solid var(--color-sinopia);
+  padding: 0.75rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(204, 63, 12, 0.3);
+  transition: all 0.3s ease;
+}
+
+.servicespage-price-chip:hover {
+  background: var(--color-golden-brown);
+  border-color: var(--color-golden-brown);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(154, 109, 56, 0.4);
+}
+
+.servicespage-description-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border-left: 4px solid var(--color-hunter-green);
+  box-shadow: 0 4px 16px rgba(42, 90, 47, 0.08);
+}
+
+.servicespage-lede {
+  color: var(--color-eerie-black);
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+}
+
+.servicespage-highlights-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .servicespage-highlights-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+.servicespage-highlight-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(42, 90, 47, 0.1);
+  box-shadow: 0 4px 16px rgba(42, 90, 47, 0.06);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.servicespage-highlight-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(42, 90, 47, 0.15);
+  border-color: var(--color-hunter-green);
+}
+
+
+
+.servicespage-highlight-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-hunter-green);
+  font-family: 'Playfair Display', serif;
+}
+
+.servicespage-highlight-icon {
+  font-size: 1.4rem;
+}
+
+.servicespage-highlight-list {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.servicespage-highlight-item {
+  margin: 0.5rem 0;
+  color: var(--color-eerie-black);
+  line-height: 1.6;
+  position: relative;
+}
+
+.servicespage-highlight-item::before {
+  content: "•";
+  color: var(--color-sinopia);
+  font-weight: bold;
+  position: absolute;
+  left: -1.2rem;
+}
+
+.servicespage-process-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(42, 90, 47, 0.1);
+  box-shadow: 0 4px 16px rgba(42, 90, 47, 0.06);
+}
+
+.servicespage-process-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-hunter-green);
+  font-family: 'Playfair Display', serif;
+}
+
+.servicespage-process-icon {
+  font-size: 1.5rem;
+}
+
+.servicespage-process-list {
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.servicespage-process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--color-timberwolf) 0%, rgba(216, 203, 199, 0.6) 100%);
+  border-radius: 0.75rem;
+  border-left: 3px solid var(--color-sinopia);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.servicespage-process-step:hover {
+  transform: translateX(8px) scale(1.02);
+  background: linear-gradient(135deg, var(--color-hunter-green) 0%, rgba(42, 90, 47, 0.1) 100%);
+  box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
+}
+
+
+
+.servicespage-step-number {
+  background: var(--color-sinopia);
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.servicespage-step-text {
+  color: var(--color-eerie-black);
+  font-weight: 500;
+  line-height: 1.5;
+  margin-top: 0.1rem;
+}
+
+.servicespage-deliverables-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(42, 90, 47, 0.1);
+  box-shadow: 0 4px 16px rgba(42, 90, 47, 0.06);
+}
+
+.servicespage-deliverables-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-hunter-green);
+  font-family: 'Playfair Display', serif;
+}
+
+.servicespage-deliverables-icon {
+  font-size: 1.5rem;
+}
+
+.servicespage-deliverables-list {
+  padding-left: 1.5rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.servicespage-deliverables-item {
+  color: var(--color-eerie-black);
+  line-height: 1.6;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.servicespage-deliverables-item::before {
+  content: "📋";
+  position: absolute;
+  left: -2rem;
+  font-size: 1rem;
+}
+
+
+
+.servicespage-steps ol {
+  padding-left: 1.1rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.servicespage-steps li {
+  margin: 0.25rem 0;
+}
+
+.servicespage-pricing-section {
+  background: linear-gradient(135deg, var(--color-hunter-green) 0%, rgba(42, 90, 47, 0.95) 100%);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 2px solid var(--color-sinopia);
+  box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
+}
+
+@keyframes servicespagePricingGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+    box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(204, 63, 12, 0.3);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 6px 20px rgba(42, 90, 47, 0.15);
+  }
+}
+
+.servicespage-pricing-note {
+  margin: 0;
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
 }
