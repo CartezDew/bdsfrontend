@@ -21,8 +21,30 @@ const AppointmentScheduler = () => {
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
+  const [animationsTriggered, setAnimationsTriggered] = useState(false);
 
   const fileInputRef = useRef(null);
+  const schedulerRef = useRef(null);
+
+  // Scroll animation effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationsTriggered) {
+            setAnimationsTriggered(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (schedulerRef.current) {
+      observer.observe(schedulerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [animationsTriggered]);
 
   // Business hours configuration
   const businessHours = {
@@ -331,32 +353,35 @@ const AppointmentScheduler = () => {
   ];
 
   return (
-    <div className="appointment-scheduler">
-      <div className="scheduler-header">
+    <div 
+      ref={schedulerRef}
+      className={`appointment-scheduler ${animationsTriggered ? 'animate-in' : ''}`}
+    >
+      <div className={`scheduler-header ${animationsTriggered ? 'animate-in' : ''}`}>
         <h3>Schedule Your Appointment</h3>
         <p>Choose a convenient time for your consultation</p>
       </div>
 
       <form onSubmit={handleSubmit} className="scheduler-form">
         {/* Progress Indicator */}
-        <div className="progress-indicator">
-          <div className={`progress-step ${currentStep >= 1 ? 'active' : ''}`}>
+        <div className={`progress-indicator ${animationsTriggered ? 'animate-in' : ''}`}>
+          <div className={`progress-step ${currentStep >= 1 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
             <span className="step-number">1</span>
             <span className="step-label">Service</span>
           </div>
-          <div className={`progress-step ${currentStep >= 2 ? 'active' : ''}`}>
+          <div className={`progress-step ${currentStep >= 2 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
             <span className="step-number">2</span>
             <span className="step-label">Date</span>
           </div>
-          <div className={`progress-step ${currentStep >= 3 ? 'active' : ''}`}>
+          <div className={`progress-step ${currentStep >= 3 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
             <span className="step-number">3</span>
             <span className="step-label">Time</span>
           </div>
-          <div className={`progress-step ${currentStep >= 4 ? 'active' : ''}`}>
+          <div className={`progress-step ${currentStep >= 4 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
             <span className="step-number">4</span>
             <span className="step-label">Contact</span>
           </div>
-          <div className={`progress-step ${currentStep >= 5 ? 'active' : ''}`}>
+          <div className={`progress-step ${currentStep >= 5 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
             <span className="step-number">5</span>
             <span className="step-label">Files</span>
           </div>
@@ -364,9 +389,9 @@ const AppointmentScheduler = () => {
 
         {/* Step 1: Service Selection */}
         {currentStep === 1 && (
-          <div className="form-section">
+          <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <h4>Select Your Service</h4>
-            <div className="form-group">
+            <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
               <label htmlFor="service">Service Type *</label>
               <select
                 id="service"
@@ -391,7 +416,7 @@ const AppointmentScheduler = () => {
               </select>
             </div>
             
-            <div className="form-group">
+            <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
               <label htmlFor="referralSource">How did you find us? *</label>
               <select
                 id="referralSource"
@@ -433,11 +458,11 @@ const AppointmentScheduler = () => {
 
         {/* Step 2: Date Selection */}
         {currentStep === 2 && (
-          <div className="form-section">
+          <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <h4>Select Date</h4>
             
-            <div className="calendar-container">
-              <div className="calendar-header">
+            <div className={`calendar-container ${animationsTriggered ? 'animate-in' : ''}`}>
+              <div className={`calendar-header ${animationsTriggered ? 'animate-in' : ''}`}>
                 <button
                   type="button"
                   onClick={goToPreviousMonth}
@@ -455,7 +480,7 @@ const AppointmentScheduler = () => {
                 </button>
               </div>
 
-              <div className="calendar-grid">
+              <div className={`calendar-grid ${animationsTriggered ? 'animate-in' : ''}`}>
                 <div className="calendar-weekdays">
                   <div>Sun</div>
                   <div>Mon</div>
@@ -470,7 +495,7 @@ const AppointmentScheduler = () => {
                   {calendarDays.map((day, index) => (
                     <div
                       key={index}
-                      className={`calendar-day ${
+                      className={`calendar-day ${animationsTriggered ? 'animate-in' : ''} ${
                         day === null ? 'empty' :
                         !isDateAvailable(day) ? 'unavailable' :
                         selectedDate && day.toDateString() === selectedDate.toDateString() ? 'selected' : 'available'
@@ -488,16 +513,16 @@ const AppointmentScheduler = () => {
 
         {/* Step 3: Time Selection */}
         {currentStep === 3 && selectedDate && (
-          <div className="form-section">
+          <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <h4>Select Time for {formatDate(selectedDate)}</h4>
             
             <div className="time-slots">
-              <div className="time-grid">
+              <div className={`time-grid ${animationsTriggered ? 'animate-in' : ''}`}>
                 {availableSlots.map((slot, index) => (
                   <button
                     key={index}
                     type="button"
-                    className={`time-slot ${
+                    className={`time-slot ${animationsTriggered ? 'animate-in' : ''} ${
                       selectedTime && selectedTime.getTime() === slot.getTime() ? 'selected' : ''
                     }`}
                     onClick={() => handleTimeSelect(slot)}
@@ -512,12 +537,12 @@ const AppointmentScheduler = () => {
 
         {/* Step 4: Contact Information */}
         {currentStep === 4 && (
-          <div className="form-section">
+          <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <h4>Contact Information</h4>
             <p>Please provide your contact details to confirm your appointment</p>
             
-            <div className="form-row">
-              <div className="form-group">
+            <div className={`form-row ${animationsTriggered ? 'animate-in' : ''}`}>
+              <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
                 <label htmlFor="firstName">First Name *</label>
                 <input
                   type="text"
@@ -529,7 +554,7 @@ const AppointmentScheduler = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
                 <label htmlFor="lastName">Last Name *</label>
                 <input
                   type="text"
@@ -542,8 +567,8 @@ const AppointmentScheduler = () => {
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="form-group">
+            <div className={`form-row ${animationsTriggered ? 'animate-in' : ''}`}>
+              <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
                 <label htmlFor="email">Email Address *</label>
                 <input
                   type="email"
@@ -555,7 +580,7 @@ const AppointmentScheduler = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
                 <label htmlFor="phone">Phone Number *</label>
                 <input
                   type="tel"
@@ -604,7 +629,7 @@ const AppointmentScheduler = () => {
 
         {/* Step 5: File Upload */}
         {currentStep === 5 && (
-          <div className="form-section">
+          <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <h4>Upload Documents (Optional)</h4>
             <p>Upload any relevant documents to help us prepare for your appointment</p>
             
@@ -649,7 +674,7 @@ const AppointmentScheduler = () => {
             )}
 
             {/* Message Section */}
-            <div className="form-group">
+            <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
               <label htmlFor="clientMessage">Anything else to share? (Optional)</label>
               <textarea
                 id="clientMessage"
@@ -671,7 +696,7 @@ const AppointmentScheduler = () => {
             </div>
 
             {/* Consent Checkbox */}
-            <div className="consent-section">
+            <div className={`consent-section ${animationsTriggered ? 'animate-in' : ''}`}>
               <div className="consent-checkbox">
                 <input
                   type="checkbox"
@@ -705,10 +730,10 @@ const AppointmentScheduler = () => {
 
         {/* Submit Button - Only show on final step */}
         {currentStep === 5 && (
-          <div className="form-section">
+          <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <button
               type="submit"
-              className="submit-btn"
+              className={`submit-btn ${animationsTriggered ? 'animate-in' : ''}`}
               disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService || !consentChecked}
               onClick={() => console.log('Submit button clicked!')}
             >
@@ -722,7 +747,7 @@ const AppointmentScheduler = () => {
       {/* Success Modal */}
       {showSuccessModal && (
         <div className="success-modal-overlay" onClick={() => setShowSuccessModal(false)}>
-          <div className="success-modal" onClick={(e) => e.stopPropagation()}>
+          <div className={`success-modal show`} onClick={(e) => e.stopPropagation()}>
             <button
               className="modal-close-btn"
               onClick={() => setShowSuccessModal(false)}

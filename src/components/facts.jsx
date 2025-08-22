@@ -12,12 +12,38 @@ import "../styles/facts.css";
 
 export default function Facts({ items = sampleFacts }) {
   const [openId, setOpenId] = useState(null);
+  const [animationsTriggered, setAnimationsTriggered] = useState(false);
+  const factsRef = useRef(null);
+
+  // Scroll animation effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationsTriggered) {
+            setAnimationsTriggered(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (factsRef.current) {
+      observer.observe(factsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [animationsTriggered]);
 
   return (
-    <section aria-labelledby="facts-heading" className="w-full">
+    <section 
+      ref={factsRef}
+      aria-labelledby="facts-heading" 
+      className={`w-full ${animationsTriggered ? 'facts-animated' : ''}`}
+    >
       <h2 id="facts-heading" className="sr-only">Facts</h2>
 
-      <ul className="facts-accordion">
+      <ul className={`facts-accordion ${animationsTriggered ? 'facts-accordion-animated' : ''}`}>
         {items.map(({ id, q, a }) => (
           <FactItem
             key={id}
@@ -37,6 +63,8 @@ export default function Facts({ items = sampleFacts }) {
 function FactItem({ id, q, isOpen, onToggle, children }) {
   const panelRef = useRef(null);
   const [maxH, setMaxH] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const itemRef = useRef(null);
 
   // Measure content height for smooth max-height animation
   useEffect(() => {
@@ -59,8 +87,38 @@ function FactItem({ id, q, isOpen, onToggle, children }) {
     return () => window.removeEventListener("resize", onResize);
   }, [isOpen]);
 
+  // Individual item animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              setIsVisible(true);
+            }, id * 150); // Staggered delay based on ID
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (itemRef.current) {
+      observer.observe(itemRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [id]);
+
   return (
-    <li className={`fact ${isOpen ? "open" : ""}`}>
+    <li 
+      ref={itemRef}
+      className={`fact ${isOpen ? "open" : ""} ${isVisible ? 'fact-visible' : ''}`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: `opacity 0.6s ease ${id * 0.1}s, transform 0.6s ease ${id * 0.1}s`
+      }}
+    >
       <button
         type="button"
         className="fact-trigger"

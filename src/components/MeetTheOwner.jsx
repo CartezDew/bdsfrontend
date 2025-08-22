@@ -1,22 +1,48 @@
 // src/components/MeetTheOwner.jsx
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/meet_the_owner.css";
 
 export default function MeetTheOwner() {
+  const [animationsTriggered, setAnimationsTriggered] = useState(false);
+  const meetOwnerRef = useRef(null);
+
+  // Scroll animation effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationsTriggered) {
+            setAnimationsTriggered(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (meetOwnerRef.current) {
+      observer.observe(meetOwnerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [animationsTriggered]);
+
   return (
-    <section className="meet-owner-section">
-      <div className="meet-owner-container">
-        <div className="meet-owner">
-          <div className="meet-owner__media">
+    <section 
+      ref={meetOwnerRef}
+      className={`meet-owner-section ${animationsTriggered ? 'meet-owner-section-animated' : ''}`}
+    >
+      <div className={`meet-owner-container ${animationsTriggered ? 'meet-owner-container-animated' : ''}`}>
+        <div className={`meet-owner ${animationsTriggered ? 'meet-owner-animated' : ''}`}>
+          <div className={`meet-owner__media ${animationsTriggered ? 'meet-owner__media-animated' : ''}`}>
             <img 
               src="/src/assets/Images/CEO.jpeg" 
               alt="Brandon Davis, CEO of BDS Talent Group" 
-              className="meet-owner__img"
+              className={`meet-owner__img ${animationsTriggered ? 'meet-owner__img-animated' : ''}`}
             />
-            <div className="meet-owner__name">
+            <div className={`meet-owner__name ${animationsTriggered ? 'meet-owner__name-animated' : ''}`}>
               <h4 className="meet-owner__nameText">Brandon Davis</h4>
-              <p className="meet-owner__title">Founder & CEO</p>
-              <div className="meet-owner__social">
+              <p className={`meet-owner__title ${animationsTriggered ? 'meet-owner__title-animated' : ''}`}>Founder & CEO</p>
+              <div className={`meet-owner__social ${animationsTriggered ? 'meet-owner__social-animated' : ''}`}>
                 <a 
                   href="https://www.linkedin.com/in/bdavis0890/" 
                   target="_blank" 
@@ -36,15 +62,15 @@ export default function MeetTheOwner() {
             </div>
           </div>
           
-          <div className="meet-owner__text">
-            <div className="meet-owner__header">
+          <div className={`meet-owner__text ${animationsTriggered ? 'meet-owner__text-animated' : ''}`}>
+            <div className={`meet-owner__header ${animationsTriggered ? 'meet-owner__header-animated' : ''}`}>
               Meet Brandon
             </div>
-            <p>
+            <p className={animationsTriggered ? 'meet-owner__paragraph-animated' : ''}>
               Brandon Davis, CEO of BDS Talent Group, is a seasoned accountant. He delivers transparent, accurate financials that enable leaders to make confident decisions. Equally important, he is committed to equity— expanding access to reliable, affordable accounting services for underserved entrepreneurs and the communities they power. 
 
             </p>
-            <p className="meet-owner__bds">
+            <p className={`meet-owner__bds ${animationsTriggered ? 'meet-owner__bds-animated' : ''}`}>
               BDS stands for <strong>Business • Development • Solutions</strong>
               — we bring <em>peace of mind, accounted for</em> to life by
               delivering <strong>Business clarity</strong>,{" "}

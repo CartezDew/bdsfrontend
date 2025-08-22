@@ -292,3 +292,106 @@
     left: 100%;
   }
 }
+
+/* Scroll Animations */
+.avoid-confusion-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.avoid-confusion-section-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.avoid-confusion-container {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+.avoid-confusion-container-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.avoid-confusion-header {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+}
+
+.avoid-confusion-header-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.avoid-confusion-title-animated {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s;
+}
+
+.avoid-confusion-title-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.avoid-confusion-subtitle-animated {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
+}
+
+.avoid-confusion-subtitle-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta-options {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 1.0s, transform 0.8s ease 1.0s;
+}
+
+.cta-options-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta-option {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 1.2s, transform 0.8s ease 1.2s;
+}
+
+.cta-option-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 1.4s, transform 0.6s ease 1.4s;
+}
+
+.cta-content-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .avoid-confusion-section,
+  .avoid-confusion-container,
+  .avoid-confusion-header,
+  .avoid-confusion-title-animated,
+  .avoid-confusion-subtitle-animated,
+  .cta-options,
+  .cta-option,
+  .cta-content {
+    transition: none !important;
+  }
+}

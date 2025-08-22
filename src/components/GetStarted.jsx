@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Navbar from './Navbar';
+import Footer from './Footer';
 import '../styles/getStarted.css';
 
 const GetStarted = () => {
@@ -481,8 +482,7 @@ const GetStarted = () => {
           <div className="get-started-content">
             <div className="getstarted-scheduler">
               <div className="getstarted-header">
-                <h3>Schedule Your Appointment</h3>
-                <p>Choose a convenient time for your consultation</p>
+                <h3>Peace of mind, accounted for—starting now.</h3>
               </div>
 
               <form onSubmit={handleSubmit} className="getstarted-form">
@@ -951,11 +951,14 @@ const GetStarted = () => {
                 </div>
               )}
             </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+                  </div>
+      </div>
+    </section>
+    
+    {/* Footer */}
+    <Footer />
+  </>
+);
 };
 
 export default GetStarted;
