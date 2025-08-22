@@ -98,84 +98,94 @@ const ServicesDetailed = () => {
       icon: "📋",
       title: "Reporting",
       longDescription:
-        "Clarity on your personal finances: custom reports that translate transactions into decisions. Understand where money goes and how to optimize taxes and savings.",
+        "Transform your data into actionable insights. We create custom reports and dashboards that help you understand your financial position and make informed decisions.",
       whatsIncluded: [
-        "Custom category framework aligned to goals",
-        "Budget vs. actual tracking with variance notes",
-        "Net-worth snapshot and trend line (optional)",
-        "Goal tracking (debt payoff, emergency fund, investing)"
+        "Custom financial reports and dashboards",
+        "Key performance indicators (KPIs) tracking",
+        "Budget vs. actual analysis",
+        "Cash flow forecasting and projections",
+        "Regular financial health check-ins"
       ],
       idealFor: [
-        "Households building a plan for savings/debt reduction",
-        "Side-hustlers balancing cash flow and taxes",
-        "Anyone who wants decision-ready financial visuals"
+        "Business owners needing financial insights",
+        "Managers tracking department performance",
+        "Investors monitoring portfolio companies"
       ],
-      process: ["Discovery & report design", "Data pull & buildout", "Review session & tuning"],
+      process: ["Data analysis & report design", "Dashboard creation & setup", "Ongoing monitoring & updates"],
       deliverables: [
-        "PDF/CSV reports and dashboard exports",
-        "Quarterly progress summary with recommendations"
+        "Custom financial dashboards",
+        "Monthly/quarterly report packages",
+        "KPI tracking spreadsheets",
+        "Financial health scorecards"
       ],
       pricingNote:
-        "Fixed packages available; custom dashboards priced by complexity."
+        "Fixed monthly rate with custom report development included."
     },
     {
       id: 5,
       icon: "🔍",
-      title: "Audits & Notices",
+      title: "Audit Support",
       longDescription:
-        "From first notice to final resolution, we manage the paper trail and communication so you don't have to. Our focus: minimize penalties and close the loop quickly.",
+        "Expert guidance through IRS audits and examinations. We help you prepare documentation, respond to notices, and navigate the audit process with confidence.",
       whatsIncluded: [
-        "Notice decoding and response strategy",
-        "Document request list & secure file handling",
-        "Correspondence with IRS/state",
-        "Penalty abatement request (when warranted)"
+        "Audit notice review and response preparation",
+        "Documentation gathering and organization",
+        "Communication with IRS agents",
+        "Audit representation (if needed)",
+        "Post-audit follow-up and planning"
       ],
       idealFor: [
-        "CP2000/under-reporting notices",
-        "Math/clerical error letters",
-        "State residency and withholding inquiries"
+        "Taxpayers receiving audit notices",
+        "Businesses facing IRS examinations",
+        "Anyone needing audit preparation help"
       ],
-      process: ["Assess & plan", "Assemble evidence", "Respond & follow-through"],
+      process: ["Notice review & assessment", "Documentation preparation", "Audit representation", "Resolution & follow-up"],
       deliverables: [
-        "Filed responses and proof of submission",
-        "Status updates until closure",
-        "Post-resolution summary and prevention steps"
+        "Audit response packages",
+        "Documentation checklists",
+        "Communication templates",
+        "Audit resolution summaries"
       ],
       pricingNote:
-        "Priced by notice type and depth of research/representation required."
+        "Hourly rate for audit support services."
     },
     {
       id: 6,
-      icon: "⏰",
-      title: "Tax Extensions",
+      icon: "📚",
+      title: "Tax Planning",
       longDescription:
-        "No rush filing. We secure your automatic extension and estimate any payment due to avoid unnecessary penalties or interest.",
+        "Strategic tax planning to minimize your tax burden and maximize savings. We analyze your situation and recommend strategies for current and future tax years.",
       whatsIncluded: [
-        "Federal and state extension submissions",
-        "Estimated payment calculation & vouchers",
-        "Document checklist for post-extension filing",
-        "Deadline reminders and next-steps timeline"
+        "Comprehensive tax situation analysis",
+        "Tax-saving strategy recommendations",
+        "Quarterly tax planning sessions",
+        "Year-end tax optimization",
+        "Multi-year tax planning roadmap"
       ],
       idealFor: [
-        "Late or missing documents (brokerage, K-1, 1099)",
-        "New life events (home sale, relocation, business start)",
-        "Complex returns needing more prep time"
+        "High-income earners",
+        "Business owners and investors",
+        "Anyone with complex tax situations"
       ],
-      process: ["Quick assessment", "Estimate & submit", "File return by extended deadline"],
+      process: ["Initial tax analysis", "Strategy development", "Implementation guidance", "Ongoing optimization"],
       deliverables: [
-        "Extension confirmation",
-        "Payment vouchers/receipts",
-        "Customized filing timeline"
+        "Tax planning reports",
+        "Strategy implementation guides",
+        "Quarterly planning summaries",
+        "Tax optimization checklists"
       ],
       pricingNote:
-        "Flat fee for extension filing; return preparation priced separately."
+        "Hourly rate for planning services with quarterly retainer options."
     }
   ];
 
   // Single section block
   const Section = ({ detail, index }) => {
     return (
-      <section className="servicesdetailed-service-section" id={`service-${detail.id}`}>
+      <section 
+        className="servicesdetailed-service-section" 
+        id={`service-${detail.id}`}
+      >
         <div className="servicesdetailed-content-col">
           <div className="servicesdetailed-section-header">
             <div className="servicesdetailed-header-main">
@@ -207,9 +217,9 @@ const ServicesDetailed = () => {
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = '0 4px 12px rgba(204, 63, 12, 0.3)';
               }}
-                              >
-                    {individualServicePriceText[detail.id]}
-                  </div>
+            >
+              {individualServicePriceText[detail.id]}
+            </div>
           </div>
 
           <div className="servicesdetailed-description-section">

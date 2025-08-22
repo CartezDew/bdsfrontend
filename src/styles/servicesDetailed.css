@@ -108,7 +108,7 @@
 }
 
 .servicesdetailed-description-section {
-  background: white;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 2rem;
   border-radius: 1rem;
   border-left: 4px solid var(--color-hunter-green);
@@ -138,7 +138,7 @@
 }
 
 .servicesdetailed-highlight-card {
-  background: white;
+  background:linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 1.5rem;
   border-radius: 1rem;
   border: 1px solid rgba(42, 90, 47, 0.1);
@@ -189,7 +189,7 @@
 }
 
 .servicesdetailed-process-section {
-  background: white;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 2rem;
   border-radius: 1rem;
   border: 1px solid rgba(42, 90, 47, 0.1);
@@ -259,7 +259,7 @@
 }
 
 .servicesdetailed-deliverables-section {
-  background: white;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 2rem;
   border-radius: 1rem;
   border: 1px solid rgba(42, 90, 47, 0.1);
@@ -295,6 +295,7 @@
   line-height: 1.6;
   position: relative;
   padding: 0.5rem 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
 .servicesdetailed-deliverables-item::before {
