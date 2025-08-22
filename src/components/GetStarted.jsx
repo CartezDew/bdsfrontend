@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import '../styles/getStarted.css';
+import Image2 from '../assets/Detailed_Services_Images/Image_2.jpg';
 
 const GetStarted = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -32,8 +33,32 @@ const GetStarted = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+  const [showMouseIndicator, setShowMouseIndicator] = useState(true);
 
   const fileInputRef = useRef(null);
+  const schedulerRef = useRef(null);
+
+  // Hide mouse indicator when scheduler comes into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShowMouseIndicator(false);
+          } else {
+            setShowMouseIndicator(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (schedulerRef.current) {
+      observer.observe(schedulerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   // Business hours configuration
   const businessHours = {
@@ -479,8 +504,33 @@ const GetStarted = () => {
             </ul>
           </div>
 
+          {/* Still Not Sure Section */}
+          <div className="getstarted-still-unsure-section">
+            <div className="getstarted-still-unsure-bento">
+              <div className="getstarted-still-unsure-image-box">
+                <img src={Image2} alt="Professional consultation" />
+              </div>
+              <div className="getstarted-still-unsure-content-box">
+                <h3>Still unsure?</h3>
+                <p>Schedule a free consultation to discuss your specific needs.</p>
+              </div>
+              <div className="getstarted-still-unsure-button-box">
+                <button 
+                  type="button" 
+                  className="getstarted-consultation-btn"
+                  onClick={() => {
+                    // TODO: Implement consultation scheduling logic
+                    console.log('Schedule consultation clicked');
+                  }}
+                >
+                  Schedule Consultation
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="get-started-content">
-            <div className="getstarted-scheduler">
+            <div className="getstarted-scheduler" ref={schedulerRef}>
               <div className="getstarted-header">
                 <h3>Peace of mind, accounted for—starting now.</h3>
               </div>
@@ -954,6 +1004,16 @@ const GetStarted = () => {
                   </div>
       </div>
     </section>
+    
+    {/* Scroll Down Mouse Indicator */}
+    {showMouseIndicator && (
+      <div className="scroll-mouse-indicator">
+        <div className="mouse">
+          <div className="wheel"></div>
+        </div>
+        <div className="scroll-text">Scroll Down</div>
+      </div>
+    )}
     
     {/* Footer */}
     <Footer />
