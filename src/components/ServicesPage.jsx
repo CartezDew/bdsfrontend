@@ -3,18 +3,14 @@ import { useServiceContext } from '../context/ServiceContext';
 import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
-import EntitySelectorWidget from './EntitySelectorWidget';
-import SocialProof from './SocialProof';
-import Why_Us from './Why_Us';
-import MeetTheOwner from './MeetTheOwner';
-import Facts from './facts';
+import '../styles/servicesPage.css';
 
 // Custom navbar configuration for Services page
 const servicesNavbarConfig = [
   { id: 1, name: 'Contact Us', path: '/contact' }
 ];
 
-const Services = () => {
+const ServicesPage = () => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
   const [animationsTriggered, setAnimationsTriggered] = useState({
@@ -101,29 +97,29 @@ const Services = () => {
     <>
       {/* Only render navbar when it should be sticky (hero section out of view) */}
       {isNavbarSticky && (
-        <div className={`services-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
+        <div className={`servicespage-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
           <Navbar customConfig={servicesNavbarConfig} />
         </div>
       )}
-      <section className={`services-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
-        <div className="services-container">
-          <div className={`services-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
-            <h2 className={`services-title ${animationsTriggered.title ? 'animate-title' : ''}`} ref={titleRef} data-animate="title">Our Services</h2>
-            <p className={`services-subtitle ${animationsTriggered.subtitle ? 'animate-subtitle' : ''}`} ref={subtitleRef} data-animate="subtitle">
+      <section className={`servicespage-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
+        <div className="servicespage-container">
+          <div className={`servicespage-header ${animationsTriggered.header ? 'servicespage-animate-header' : ''}`} ref={headerRef} data-animate="header">
+            <h2 className={`servicespage-title ${animationsTriggered.title ? 'servicespage-animate-title' : ''}`} ref={titleRef} data-animate="title">Our Services</h2>
+            <p className={`servicespage-subtitle ${animationsTriggered.subtitle ? 'servicespage-animate-subtitle' : ''}`} ref={subtitleRef} data-animate="subtitle">
               Comprehensive accounting and tax services to support your financial success
             </p>
             
             {/* Service Type Toggle */}
-            <div className={`service-type-toggle ${animationsTriggered.toggle ? 'animate-toggle' : ''}`} ref={toggleRef} data-animate="toggle">
+            <div className={`servicespage-toggle ${animationsTriggered.toggle ? 'servicespage-animate-toggle' : ''}`} ref={toggleRef} data-animate="toggle">
               <button
-                className={`toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
+                className={`servicespage-toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('individual')}
                 data-tooltip="View personal tax and individual services"
               >
                 Individual Services
               </button>
               <button
-                className={`toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
+                className={`servicespage-toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('business')}
                 data-tooltip="View business accounting services"
               >
@@ -132,7 +128,7 @@ const Services = () => {
             </div>
             
             {/* Current Service Type Note */}
-            <div className={`service-type-note ${animationsTriggered.note ? 'animate-note' : ''}`} ref={noteRef} data-animate="note">
+            <div className={`servicespage-note ${animationsTriggered.note ? 'servicespage-animate-note' : ''}`} ref={noteRef} data-animate="note">
               {serviceType === 'business' 
                 ? "*You are currently viewing our business services*"
                 : "*You are currently viewing our individual services*"
@@ -141,7 +137,7 @@ const Services = () => {
           </div>
           
           {/* Render appropriate services based on toggle */}
-          <div className={`services-content ${animationsTriggered.services ? 'animate-services' : ''}`} ref={servicesRef2} data-animate="services">
+          <div className={`servicespage-content ${animationsTriggered.services ? 'servicespage-animate-services' : ''}`} ref={servicesRef2} data-animate="services">
             {serviceType === 'business' ? (
               <BusinessServices />
             ) : (
@@ -151,32 +147,8 @@ const Services = () => {
         </div>
       </section>
       
-      {/* Social Proof Section */}
-      <SocialProof />
-      
-      {/* Why Us Section */}
-      <Why_Us />
-      
-      {/* Meet The Owner Section */}
-      <MeetTheOwner />
-      
-      {/* Entity Selector Widget */}
-      <section className="widget-section">
-        <EntitySelectorWidget />
-      </section>
-      
-      {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
-          <div className="faq-header">
-            <h2>Frequently Asked Questions</h2>
-            <p>Essential information to help you navigate tax deadlines, deductions, and requirements.</p>
-          </div>
-          <Facts />
-        </div>
-      </section>
     </>
   );
 };
 
-export default Services;
+export default ServicesPage;

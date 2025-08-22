@@ -1,0 +1,364 @@
+
+.servicespage-section {
+  padding: 2rem 2rem 4rem 2rem;
+  background-color: var(--color-timberwolf);
+  min-height: calc(100vh - 80px);
+  margin-top: 0;
+  transition: padding-top 0.3s ease;
+}
+
+/* ServicesPage Navbar Container */
+.servicespage-navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.servicespage-navbar-container.sticky {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.servicespage-navbar-container.sticky .navbar {
+  background: transparent;
+  box-shadow: none;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ServicesPage section padding adjustment when navbar is visible */
+.servicespage-navbar-container + .servicespage-section {
+  padding-top: 6rem;
+}
+
+.servicespage-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.servicespage-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.servicespage-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--color-hunter-green);
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.servicespage-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-errie-black);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* ServicesPage Grid Layout */
+.servicespage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Hide border when navbar is visible */
+.servicespage-section.navbar-visible .servicespage-container {
+  border-top: none;
+}
+
+/* Service Card Wrapper */
+.servicespage-card {
+  position: relative;
+  isolation: isolate;
+  margin-left: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Green strap behind the card */
+.servicespage-card::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: -14px;
+  bottom: 30px;
+  width: 120px;
+  height: 52px;
+  background: var(--color-sinopia);
+  box-shadow: 0 4px 12px rgba(204, 63, 12, 0.3);
+}
+
+/* Blue card content */
+.servicespage-card-content {
+  background: var(--color-hunter-green);
+  padding: 2rem 2rem 4rem 2rem;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8px 25px rgba(92, 154, 214, 0.15);
+  transition: all 0.3s ease;
+  overflow: visible;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.servicespage-card:hover .servicespage-card-content {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(92, 154, 214, 0.25);
+}
+
+.servicespage-icon {
+  font-size: 2rem;
+  margin-bottom: 0;
+  margin-right: 1rem;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.servicespage-card-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: left;
+  font-family: 'Playfair Display', serif;
+  flex: 1;
+}
+
+.servicespage-card-header {
+  display: flex;
+  align-items: left;
+  margin-bottom: 0.75rem;
+}
+
+.servicespage-separator {
+  width: 90px;
+  height: 2px;
+  background: white;
+  margin: 0 0 1rem 0;
+  border-radius: 1px;
+}
+
+.servicespage-description {
+  color: white;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  flex: 1;
+}
+
+.servicespage-details {
+  color: white;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+/* Learn More Button */
+.servicespage-learn-more-btn {
+  background: var(--color-sinopia);
+  color: white;
+  border: none;
+  padding: 14px 22px;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  position: relative;
+  z-index: 2;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.servicespage-learn-more-btn:hover {
+  background: var(--color-golden-brown);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(204, 63, 12, 0.3);
+}
+
+.servicespage-learn-more-btn:active {
+  transform: translateY(0);
+}
+
+/* Service Type Toggle */
+.servicespage-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.servicespage-toggle-btn {
+  background: var(--color-timberwolf);
+  color: var(--color-hunter-green);
+  border: 2px solid var(--color-hunter-green);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.servicespage-toggle-btn:hover {
+  background: var(--color-hunter-green);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(51, 103, 59, 0.3);
+}
+
+.servicespage-toggle-btn.active {
+  background: var(--color-hunter-green);
+  color: white;
+  box-shadow: 0 4px 15px rgba(51, 103, 59, 0.3);
+}
+
+.servicespage-toggle-btn:active {
+  transform: translateY(0);
+}
+
+/* Service Type Note */
+.servicespage-note {
+  font-size: 0.9rem;
+  color: var(--color-hunter-green);
+  font-style: italic;
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
+/* ServicesPage Content */
+.servicespage-content {
+  margin-top: 2rem;
+}
+
+/* Animation Classes */
+.servicespage-animate-header {
+  animation: servicespageFadeInUp 0.8s ease forwards;
+}
+
+.servicespage-animate-title {
+  animation: servicespageFadeInUp 0.8s ease 0.2s forwards;
+}
+
+.servicespage-animate-subtitle {
+  animation: servicespageFadeInUp 0.8s ease 0.4s forwards;
+}
+
+.servicespage-animate-toggle {
+  animation: servicespageFadeInUp 0.8s ease 0.6s forwards;
+}
+
+.servicespage-animate-note {
+  animation: servicespageFadeInUp 0.8s ease 0.8s forwards;
+}
+
+.servicespage-animate-services {
+  animation: servicespageFadeInUp 0.8s ease 1s forwards;
+}
+
+@keyframes servicespageFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .servicespage-section {
+    padding: 1.5rem 1rem 3rem 1rem;
+  }
+  
+  .servicespage-title {
+    font-size: 2rem;
+  }
+  
+  .servicespage-subtitle {
+    font-size: 1rem;
+  }
+  
+  .servicespage-toggle {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .servicespage-toggle-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .servicespage-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  .servicespage-card {
+    margin-left: 15px;
+  }
+  
+  .servicespage-card::before {
+    left: -7px;
+    width: 60px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .servicespage-section {
+    padding: 1rem 0.5rem 2rem 0.5rem;
+  }
+  
+  .servicespage-title {
+    font-size: 1.8rem;
+  }
+  
+  .servicespage-card-content {
+    padding: 1.5rem 1.5rem 3rem 1.5rem;
+  }
+  
+  .servicespage-learn-more-btn {
+    padding: 12px 18px;
+    font-size: 0.75rem;
+  }
+}

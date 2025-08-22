@@ -244,7 +244,7 @@
 
 
 .cta-button-secondary {
-  background-color: var(--color-sinopia, #CC3F0C);
+  background-color: var(--color-sinopia);
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -344,6 +344,19 @@
   text-align: center;
   white-space: nowrap;
   transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.ticker-item:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  color: var(--color-hunter-green);
+}
+
+.ticker-item:active {
+  transform: translateY(0px);
 }
 
 /* Grid overlay positioning */

@@ -1,12 +1,13 @@
 // src/components/Hero.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/hero.css';
 import HeroImageShowcase from './HeroImageShowcase.jsx';
 import heroImages from './data/heroImages.js';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [animationsTriggered, setAnimationsTriggered] = useState({
     nav: false,
@@ -27,8 +28,13 @@ const Hero = () => {
   const tickerRef = useRef(null);
 
   const tickerItems = [
-    'Tax Returns', 'Bookkeeping', 'Compliance', 'Reporting', 'Audits', 'Tax Extensions', 'Advisory'
+    'Tax Returns', 'Payroll', 'Bookkeeping', 'Compliance', 'Reporting', 'Tax Extensions', 'Advisory'
   ];
+
+  // Handle ticker item click - navigate to services
+  const handleTickerClick = () => {
+    navigate('/services');
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -195,11 +201,15 @@ const Hero = () => {
               <motion.div
                 key={`${label}-${i}`}
                 className="ticker-item"
+                onClick={handleTickerClick}
+                style={{ cursor: 'pointer' }}
                 animate={{
                   color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
                   scale: highlightedIndex === i ? 1.1 : 1
                 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
+                whileHover={{ scale: 1.15, color: 'var(--color-hunter-green)' }}
+                whileTap={{ scale: 0.95 }}
               >
                 {label}
               </motion.div>
