@@ -11,7 +11,8 @@
 .footer-content {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0;
+  text-align: center;
 }
 
 .footer-content p {
@@ -22,14 +23,17 @@
 }
 
 /* Footer Navigation */
-.footer-navigation {
+.footer-nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: .2rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 1rem;
+ 
 }
 
 .footer-nav-btn {
@@ -44,12 +48,17 @@
   text-decoration: none;
   display: inline-block;
   text-align: center;
+  white-space: nowrap;
+  margin: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-nav-btn:hover {
   background-color: var(--color-sinopia);
   transform: translateY(-2px);
 }
+
 
 .footer-copyright {
   padding-top: 0rem;
@@ -75,7 +84,7 @@
     font-size: 0.9rem;
   }
   
-  .footer-navigation {
+  .footer-nav {
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;

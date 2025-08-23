@@ -117,55 +117,49 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <div className="footer-navigation">
-          <button 
-            className="footer-nav-btn"
-            onClick={() => scrollToSection('avoid-confusion')}
-          >
-            Where to Start
-          </button>
-          <span className="footer-separator">|</span>
-          <button 
-            className="footer-nav-btn"
-            onClick={() => scrollToSection('why-us')}
-          >
-            Meet the CEO
-          </button>
-          <span className="footer-separator">|</span>
-          <button 
-            className="footer-nav-btn"
-            onClick={() => scrollToSection('social-proof')}
-          >
-            Testimonials
-          </button>
-          <span className="footer-separator">|</span>
-          <button 
-            className="footer-nav-btn"
-            onClick={() => scrollToSection('entity-selector')}
-          >
-            Business Entity Selector
-          </button>
-          <span className="footer-separator">|</span>
-          <button 
-            className="footer-nav-btn"
-            onClick={() => scrollToSection('appointment-scheduler')}
-          >
-            Schedule Appointment
-          </button>
-          <span className="footer-separator">|</span>
-          <button
-            className="footer-nav-btn"
-            onClick={() => {
-              if (location.pathname === '/services') {
-                window.scrollTo({ top: 0, behavior: 'smooth' })
-              } else {
-                navigate('/services')
-              }
-            }}
-          >
-            All Services
-          </button>
+        <div className="footer-nav">
+            <button 
+                className="footer-nav-btn"
+                onClick={() => scrollToSection('avoid-confusion')}
+            >
+                Where to Start
+            </button>
+            <span className="footer-separator">|</span>
+            <button 
+                className="footer-nav-btn"
+                onClick={() => {
+                    if (location.pathname === '/services') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                    } else {
+                        navigate('/services')
+                    }
+                }}
+            >
+                All Services
+            </button>
+            <span className="footer-separator">|</span>
+            <button 
+                className="footer-nav-btn"
+                onClick={() => scrollToSection('social-proof')}
+            >
+                Testimonials
+            </button>
+            <span className="footer-separator">|</span>
+            <button 
+                className="footer-nav-btn"
+                onClick={() => scrollToSection('appointment-scheduler')}
+            >
+                Schedule Appointment
+            </button>
+            <span className="footer-separator">|</span>
+            <button 
+                className="footer-nav-btn"
+                onClick={() => scrollToSection('entity-selector')}
+            >
+                Business Entity Selector
+            </button>
         </div>
+        <div className="footer-divider"></div>
         <div className="footer-copyright">
           <p>&copy; 2025 The BDS Talent Group LLC. All rights reserved.</p>
         </div>

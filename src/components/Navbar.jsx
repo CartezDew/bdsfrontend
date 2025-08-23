@@ -53,6 +53,11 @@ const Navbar = ({ customConfig }) => {
                 {/* menu section */}
                 <div className="menu-section">
                     {menuItems.map((item) => {
+                        // Hide Services button when on /services route
+                        if (item.path === '#services' && location.pathname === '/services') {
+                            return null
+                        }
+                        
                         const isHashLink = item.path.startsWith('#')
                         
                         if (isHashLink) {
@@ -62,9 +67,16 @@ const Navbar = ({ customConfig }) => {
                                     className="menu-link"
                                     onClick={() => {
                                         const targetId = item.path.substring(1)
+                                        // If not on home page, navigate to home with hash so App-level
+                                        // hash handler performs precise mount scroll.
+                                        if (location.pathname !== '/') {
+                                            navigate(`/#${targetId}`)
+                                            return
+                                        }
+
                                         const targetElement = document.getElementById(targetId)
                                         if (targetElement) {
-                                            // Compute precise scroll position so navbar is flush with previous container
+                                            // Compute precise scroll position so navbar is flush with target top
                                             const navbarEl = document.querySelector('.navbar')
                                             const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
                                             const rectTop = targetElement.getBoundingClientRect().top + window.scrollY

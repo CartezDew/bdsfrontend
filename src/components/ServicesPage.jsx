@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useServiceContext } from '../context/ServiceContext';
 import { motion } from 'framer-motion';
 import IndividualServices from './IndividualServices';
@@ -11,6 +11,7 @@ import '../styles/servicesPage.css';
 const ServicesPage = () => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
+  const [searchParams] = useSearchParams();
   
   const [animationsTriggered, setAnimationsTriggered] = useState({
     header: false, title: false, subtitle: false, toggle: false, note: false, services: false
@@ -25,6 +26,31 @@ const ServicesPage = () => {
   const toggleRef = useRef(null);
   const noteRef = useRef(null);
   const servicesRef2 = useRef(null);
+
+  // Handle URL parameters for automatic service type and section navigation
+  useEffect(() => {
+    const urlServiceType = searchParams.get('type');
+    const urlServiceId = searchParams.get('service');
+    
+    // Set service type if specified in URL
+    if (urlServiceType && urlServiceType !== serviceType) {
+      handleServiceTypeChange(urlServiceType);
+    }
+    
+    // Scroll to specific service section after a delay to ensure the page is loaded
+    if (urlServiceId) {
+      setTimeout(() => {
+        const targetElement = document.getElementById(urlServiceId);
+        if (targetElement) {
+          const navbarEl = document.querySelector('.navbar');
+          const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0;
+          const rectTop = targetElement.getBoundingClientRect().top + window.scrollY;
+          const scrollPosition = rectTop - navbarHeight;
+          window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+        }
+      }, 500); // Delay to ensure page is fully loaded
+    }
+  }, [searchParams, serviceType, handleServiceTypeChange]);
 
   // Intersection Observer for animations
   useEffect(() => {

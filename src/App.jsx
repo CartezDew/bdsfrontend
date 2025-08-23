@@ -117,6 +117,18 @@ function App() {
           return oBottom - navbarHeight
         }
       }
+      // Special case: Services — align to bottom of previous section (hero)
+      if (targetId === 'services') {
+        const sEl = document.getElementById('services')
+        if (sEl) {
+          const prev = sEl.previousElementSibling
+          if (prev) {
+            const prevTop = prev.getBoundingClientRect().top + window.scrollY
+            const prevBottom = prevTop + prev.offsetHeight
+            return Math.max(0, prevBottom - navbarHeight)
+          }
+        }
+      }
       // Special case: Testimonials (social-proof) — same pattern as meet-the-owner
       if (targetId === 'social-proof') {
         const servicesEl = document.getElementById('services')

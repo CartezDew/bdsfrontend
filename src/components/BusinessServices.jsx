@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const businessServicePriceText = {
@@ -18,62 +19,63 @@ const businessServicesData = [
     icon: "📊",
     title: "Tax Returns",
     description: "Complete business tax return preparation and filing services.",
-    details: "We handle all types of business tax returns including corporate, partnership, and LLC filings. Our experts ensure maximum deductions and credits while maintaining full compliance with IRS regulations and business tax laws."
+    serviceId: "tax-returns"
   },
   {
     id: 2,
     icon: "💸",
     title: "Payroll Services",
     description: "Run payroll accurately and on time—W-2s, 1099s, and tax filings handled.",
-    details: "Full-service payroll setup and processing for employees and contractors. We manage direct deposit, multi-state withholding, payroll tax deposits, and quarterly/annual filings (941, 940, W-2/W-3, 1099/1096). Includes new-hire reporting, year-end forms, garnishments, and compliance monitoring so you stay audit-ready."
+    serviceId: "payroll-services"
   },
   {
     id: 3,
     icon: "📈",
     title: "Bookkeeping",
     description: "Monthly bookkeeping and financial record maintenance.",
-    details: "Professional bookkeeping services to keep your business finances organized. We track income, expenses, categorize transactions, and provide monthly reports to help you understand your business financial position."
+    serviceId: "bookkeeping"
   },
   {
     id: 4,
     icon: "⚖️",
     title: "Compliance",
     description: "Ensure your business meets all regulatory requirements.",
-    details: "Stay compliant with business tax laws and regulations. We help you understand your obligations, maintain proper documentation, and avoid penalties through proactive compliance management."
+    serviceId: "compliance"
   },
   {
     id: 5,
     icon: "📋",
     title: "Reporting",
     description: "Comprehensive financial reporting and analysis.",
-    details: "Get clear insights into your business financial situation with detailed reports. We analyze your income, expenses, and financial trends to help you make informed decisions about your business."
+    serviceId: "reporting"
   },
   {
     id: 6,
     icon: "🔍",
     title: "Audits",
     description: "Professional representation during IRS audits and reviews.",
-    details: "If your business is facing an IRS audit, we provide expert representation and guidance. Our team handles all communication with the IRS and works to resolve issues efficiently and favorably."
+    serviceId: "audits"
   },
   {
     id: 7,
     icon: "⏰",
     title: "Tax Extensions",
     description: "File extensions and ensure timely tax compliance.",
-    details: "Need more time to file your business taxes? We can file extensions for you and ensure you meet all deadlines. This gives you extra time to gather documents while avoiding late filing penalties."
+    serviceId: "tax-extensions"
   },
   {
     id: 8,
     icon: "💡",
     title: "Advisory",
     description: "Strategic business financial planning and consulting.",
-    details: "Our business advisory services include tax planning, financial strategy, growth planning, and business structure optimization. We help you build wealth and achieve your long-term business goals."
+    serviceId: "advisory"
   }
 ];
 
-const BusinessServiceCard = ({ service, isExpanded, onToggle, cardIndex }) => {
+const BusinessServiceCard = ({ service, cardIndex }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -96,6 +98,10 @@ const BusinessServiceCard = ({ service, isExpanded, onToggle, cardIndex }) => {
     return () => observer.disconnect();
   }, [cardIndex]);
 
+  const handleLearnMore = () => {
+    navigate(`/services?type=business&service=${service.serviceId}`);
+  };
+
   return (
     <div 
       ref={cardRef}
@@ -113,20 +119,14 @@ const BusinessServiceCard = ({ service, isExpanded, onToggle, cardIndex }) => {
         </div>
         <div className="service-separator"></div>
         <p className="service-description">{service.description}</p>
-        
-        {isExpanded && (
-          <div className="service-details">
-            <p>{service.details}</p>
-          </div>
-        )}
       </div>
       
       <button
         className="learn-more-btn"
-        onClick={onToggle}
+        onClick={handleLearnMore}
       >
-        {isExpanded ? 'Show Less' : 'Learn More'}
-        <span className="arrow">{isExpanded ? '↑' : '→'}</span>
+        Learn More
+        <span className="arrow">→</span>
       </button>
       
       {/* Price Display */}
@@ -138,20 +138,12 @@ const BusinessServiceCard = ({ service, isExpanded, onToggle, cardIndex }) => {
 };
 
 const BusinessServices = () => {
-  const [expandedService, setExpandedService] = useState(null);
-
-  const handleToggleService = (serviceId) => {
-    setExpandedService(expandedService === serviceId ? null : serviceId);
-  };
-
   return (
     <div className="services-grid">
       {businessServicesData.map((service, index) => (
         <BusinessServiceCard
           key={service.id}
           service={service}
-          isExpanded={expandedService === service.id}
-          onToggle={() => handleToggleService(service.id)}
           cardIndex={index}
         />
       ))}
