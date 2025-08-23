@@ -244,8 +244,9 @@
 }
 
 .servicespage-toggle-btn:hover {
-  background: var(--color-hunter-green);
+  background: var(--color-sinopia);
   color: white;
+  border: 2px solid var(--color-sinopia);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(51, 103, 59, 0.3);
 }
