@@ -7,8 +7,8 @@
 /* === OUTER FRAME: GRID === */
 .hero-inner {
     /* mobile-safe viewport units */
-    height: 100vh;      /* fallback */
-    height: 100dvh;     /* handles mobile browser chrome */
+    /* height: 100vh;      fallback */
+    /* height: 100dvh;     handles mobile browser chrome */
     display: grid;
     grid-template-areas:
       "left right"
@@ -20,7 +20,7 @@
     background: #D8CBC7;
     box-sizing: border-box;
     overflow: hidden; /* keep everything inside 100vh */
-    inline-size: min(100%, 1300px);
+    inline-size: min(100%, 1400px);
     justify-self: center;
   }
   
@@ -94,16 +94,16 @@
   opacity: 0.8;
 }
 
-.logo-image-hero {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: 0.3rem;
+.logo-image {
+  width: clamp(1.2rem, 2.6vw, 2.5rem);
+  height: clamp(1.2rem, 2.6vw, 2.5rem);
+  margin-right: 0.5rem;
 }
 
 
 .hero-nav-links-hero {
   display: flex;
-  gap: .8rem;
+  gap: clamp(1rem, 2vw, 1.5rem);
   align-items: flex-start;
   margin-top: 0;
   padding-top: 0; /* Consistent with container */
@@ -113,23 +113,26 @@
 .hero-left-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: clamp(0.3rem, 0.5vw, 0.6rem);
   font-weight: 400;
-  font-size: .8rem;
+  font-size: clamp(0.7rem, 1.3vw, 1rem);
   text-decoration: none;
   color: var(--color-eerie-black);
   transition: border-color 0.2s ease, opacity 0.2s ease;
-  opacity: 0.8;
+  opacity: 0.6 !important;
 }
 
 .hero-menu-icon {
-  width: 1rem;
-  height: 1rem;
+  width: clamp(0.8rem, 2vw, 1.2rem);
+  height: clamp(0.8rem, 2vw, 1.2rem);
   flex-shrink: 0;
 }
-.hero-left-link-hero:hover {
-  border-color:  #2a5a2f;
-  opacity: 1;
+.hero-left-link:hover {
+  border-color: #2a5a2f !important;
+  opacity: 1 !important;
+  color: var(--color-hunter-green) !important;
+  transform: scale(1.09) !important;
+  font-weight: 600 !important;
 }
 
 /* === RIGHT COLUMN === */
@@ -183,22 +186,60 @@
   border: 2px solid var(--color-golden-brown);
 }
 
+/* Hero Image container for responsive height */
+
 .hero-media {
     grid-row: 1;                   /* lives in the top row */
     min-height: 0;
-    height: 100%;                  /* fill the row */
-    position: relative;            /* for slide fades, etc. */
+    height: clamp(200px, 25vw, 300px); /* fixed responsive height to prevent layout shift */
+    position: relative;            /* for absolute children */
     overflow: hidden;
-    padding-top: 4rem;
-    /* keep a consistent box so images don’t change the row height */
+    margin-top: 3rem;                /* avoid changing total height */
+    margin-bottom: 1rem;
   }
+
+.hero-image-wrapper { 
+  position: absolute; 
+  inset: 0; 
+}
 
 .hero-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
 
+/* Grid overlay fills wrapper without affecting layout height */
+.hero-grid-overlay { 
+  position: absolute; 
+  inset: 0; 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.3rem;
+  opacity: 0;
+}
+
+.hero-grid-item {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.05);
+  transform-origin: center;
+}
+
+.hero-grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Base image positioning */
+.hero-base-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.8s ease-in-out;
 }
 
 /* Headline/Body */
@@ -206,14 +247,13 @@
   color: var(--color-hunter-green);
   margin-top: 0rem !important;
   padding-top: 0rem !important;
-  font-size: 1.3rem !important;
+  font-size: clamp(1.1rem, 2vw, 1.8rem) !important;
   font-weight: 700 !important;
-  margin-left: 0.2rem !important;
-  padding-left: 0rem !important;
+
 }
 
 .hero-content h1 {
-  font-size: clamp(2.5rem, 4vw, 2.9rem);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.1;
   margin: 0.5rem 0 0.5rem;
@@ -230,7 +270,7 @@
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  padding-right: 2rem;
+  padding-right: clamp(2rem, 4vw, 6rem);
 }
 
 /* CTAs */
@@ -378,44 +418,13 @@
   transform: translateY(0px);
 }
 
-/* Grid overlay positioning */
-.hero-grid-overlay {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0.3rem;
-  opacity: 0;
-}
-
-/* Grid items with tasteful overlap */
-.hero-grid-item {
-  position: relative;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.05);
-  transform-origin: center;
-}
-
-.hero-grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-grid-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Base image positioning */
-.hero-base-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all 0.8s ease-in-out;
-}
-
 /* === RESPONSIVE === */
+@media (min-width: 1300px) {
+  .hero-content p {
+    padding-right: 6rem;
+  }
+}
+
 @media (max-width: 650px) {
   .hero-content h1 {
     font-size: clamp(1.8rem, 2.2vw, 2.2rem);
@@ -427,7 +436,7 @@
   }
 }
 
-@media (min-width: 1024px){
+/* @media (min-width: 1024px){
   .hero-content h1 {
     font-size: clamp(2.5rem, 2.8vw, 2.8rem);
     padding-bottom: 1rem;
@@ -440,7 +449,7 @@
     line-height: 1.5;
   }
 }
-  
+   */
   @media (max-width: 768px){
     .hero-inner{
       grid-template-areas:
