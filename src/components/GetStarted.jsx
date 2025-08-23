@@ -59,6 +59,52 @@ const GetStarted = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Reveal-on-scroll animations when elements are within 5% of viewport
+  useEffect(() => {
+    const selectors = [
+      '.getstarted-header',
+      '.getstarted-progress-indicator',
+      '.getstarted-form-section',
+      '.getstarted-form-row',
+      '.getstarted-form-group',
+      '.getstarted-still-unsure-section .getstarted-still-unsure-bento > *',
+      '.getstarted-fact',
+      '.getstarted-uploaded-files',
+      '.getstarted-file-item',
+      '.getstarted-consent-section',
+      '.getstarted-scheduler'
+    ].join(',');
+
+    const elements = Array.from(document.querySelectorAll(selectors));
+    elements.forEach(el => el.classList.add('gs-animate'));
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('gs-in-view');
+          obs.unobserve(entry.target); // animate once
+        }
+      })
+    }, { threshold: 0.05 });
+
+    elements.forEach(el => io.observe(el));
+
+    return () => io.disconnect();
+  }, []);
+
+  // On-load animations for header and FAQ facts
+  useEffect(() => {
+    const header = document.querySelector('.get-started-header')
+    if (header) {
+      header.classList.add('gs-fade-in-up')
+    }
+    const facts = Array.from(document.querySelectorAll('.getstarted-facts-accordion .getstarted-fact'))
+    facts.forEach((el, idx) => {
+      el.style.setProperty('--gs-delay', `${idx * 120}ms`)
+      el.classList.add('gs-fall-in')
+    })
+  }, [])
+
   // Business hours configuration
   const businessHours = {
     start: 9, // 9 AM
@@ -1007,7 +1053,20 @@ const GetStarted = () => {
     {showMouseIndicator && (
       <div className="scroll-mouse-indicator">
         <div className="mouse">
-          <div className="wheel"></div>
+          <svg className="mouse-svg" viewBox="0 0 40 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="mouseStroke" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.9)"/>
+                <stop offset="100%" stopColor="rgba(255,255,255,0.35)"/>
+              </linearGradient>
+            </defs>
+            {/* Outer body */}
+            <rect x="4" y="2" width="32" height="48" rx="16" stroke="url(#mouseStroke)" strokeWidth="1.6" fill="rgba(255,255,255,0.06)" className="mouse-outline"/>
+            {/* Subtle split for top area */}
+            <line x1="8" y1="18" x2="32" y2="18" stroke="rgba(255,255,255,0.08)" strokeWidth="1"/>
+            {/* Wheel dot animates downward to imply scroll */}
+            <circle cx="20" cy="12" r="2.2" className="mouse-wheel-dot" fill="var(--color-sinopia)"/>
+          </svg>
         </div>
         <div className="scroll-text">Scroll Down</div>
       </div>
