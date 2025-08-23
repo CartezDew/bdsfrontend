@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useServiceContext } from '../context/ServiceContext';
-import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
 import EntitySelectorWidget from './EntitySelectorWidget';
@@ -8,11 +7,6 @@ import SocialProof from './SocialProof';
 import Why_Us from './Why_Us';
 import MeetTheOwner from './MeetTheOwner';
 import Facts from './facts';
-
-// Custom navbar configuration for Services page
-const servicesNavbarConfig = [
-  { id: 1, name: 'Contact Us', path: '/contact' }
-];
 
 const Services = () => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
@@ -99,13 +93,7 @@ const Services = () => {
 
   return (
     <>
-      {/* Only render navbar when it should be sticky (hero section out of view) */}
-      {isNavbarSticky && (
-        <div className={`services-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
-          <Navbar customConfig={servicesNavbarConfig} />
-        </div>
-      )}
-      <section className={`services-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
+      <section id="services" className={`services-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
         <div className="services-container">
           <div className={`services-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
             <h2 className={`services-title ${animationsTriggered.title ? 'animate-title' : ''}`} ref={titleRef} data-animate="title">Our Services</h2>
@@ -166,7 +154,7 @@ const Services = () => {
       </section>
       
       {/* FAQ Section */}
-      <section className="faq-section">
+      <section id="faq" className="faq-section">
         <div className="container">
           <div className="faq-header">
             <h2>Frequently Asked Questions</h2>

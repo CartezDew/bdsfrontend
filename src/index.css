@@ -78,6 +78,22 @@ p {
   transform: scale(1.05);
 }
 
+/* Global link hover effects for consistent user experience */
+a {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+a:hover {
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+/* Ensure buttons and links with specific classes maintain their custom hover effects */
+button:hover,
+.cta-button-primary:hover,
+.cta-button-secondary:hover {
+  transform: translateY(-1px) scale(1.02);
+}
+
 html,
 body,
 #root {

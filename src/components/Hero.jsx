@@ -80,7 +80,7 @@ const Hero = () => {
 
   return (
     /* OUTER = full-bleed background only */
-    <section className="hero-section">
+    <section id="hero" className="hero-section">
       {/* INNER = width-capped grid frame */}
       <div className="hero-inner">
 
@@ -96,16 +96,67 @@ const Hero = () => {
               transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-                          <div className="logo-section-hero">
+                <div className="logo-section-hero">
                 <button className="logo-link-hero" onClick={handleLogoClick}>
                   <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
                   <h1 className="logo-text-hero">Talent Group</h1>
                 </button>
               </div>
             <div className="hero-nav-links-hero">
-              <Link to="/services" className="hero-left-link">Services</Link>
-              <Link to="/why-us" className="hero-left-link">Why Us</Link>
-              <Link to="/contact" className="hero-left-link">Contact Us</Link>
+              <button 
+                className="hero-left-link"
+                onClick={() => {
+                  const targetElement = document.getElementById('services')
+                  if (targetElement) {
+                    const navbarEl = document.querySelector('.navbar')
+                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
+                    const styles = window.getComputedStyle(targetElement)
+                    const marginTop = parseFloat(styles.marginTop) || 0
+                    const borderTop = parseFloat(styles.borderTopWidth) || 0
+                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
+                  }
+                }}
+              >
+                Services
+              </button>
+              <button 
+                className="hero-left-link"
+                onClick={() => {
+                  const targetElement = document.getElementById('why-us')
+                  if (targetElement) {
+                    const navbarEl = document.querySelector('.navbar')
+                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
+                    const styles = window.getComputedStyle(targetElement)
+                    const marginTop = parseFloat(styles.marginTop) || 0
+                    const borderTop = parseFloat(styles.borderTopWidth) || 0
+                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
+                  }
+                }}
+              >
+                Why Us
+              </button>
+              <button 
+                className="hero-left-link"
+                onClick={() => {
+                  const targetElement = document.getElementById('contact')
+                  if (targetElement) {
+                    const navbarEl = document.querySelector('.navbar')
+                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
+                    const styles = window.getComputedStyle(targetElement)
+                    const marginTop = parseFloat(styles.marginTop) || 0
+                    const borderTop = parseFloat(styles.borderTopWidth) || 0
+                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
+                  }
+                }}
+              >
+                Contact Us
+              </button>
             </div>
           </nav>
 

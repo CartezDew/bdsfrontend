@@ -1,6 +1,6 @@
 /* Services Section Styles */
 .services-section {
-  padding: 2rem 2rem 4rem 2rem;
+  padding: 1rem 2rem 4rem 2rem;
   /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); */
   background-color: var(--color-timberwolf);
   min-height: calc(100vh - 80px);
@@ -45,7 +45,7 @@
 
 /* Services section padding adjustment when navbar is visible */
 .services-navbar-container + .services-section {
-  padding-top: 6rem;
+  padding-top: 3rem;
 }
 
 .services-container {

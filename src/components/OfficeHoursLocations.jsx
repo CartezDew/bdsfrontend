@@ -91,7 +91,7 @@ const OfficeHoursLocations = () => {
 
   return (
     <>
-      <section id="office-hours" className="office-hours-locations">
+      <section id="contact" className="office-hours-locations">
         <div className="container">
           {/* Header */}
           <div className={`section-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">

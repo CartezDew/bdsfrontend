@@ -1,6 +1,6 @@
 
 .servicespage-section {
-  padding: 2rem 2rem 4rem 2rem;
+  padding: 3rem 2rem 4rem 2rem;
   background-color: var(--color-timberwolf);
   margin-top: 0;
   transition: padding-top 0.3s ease;
@@ -49,8 +49,8 @@
 }
 
 /* ServicesPage section padding adjustment when navbar is visible */
-.servicespage-navbar-container + .servicespage-section {
-  padding-top: 6rem;
+.servicespage-section {
+  padding-top: 3rem;
 }
 
 .servicespage-container {

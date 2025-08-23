@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import '../styles/getStarted.css';
 import Image2 from '../assets/Detailed_Services_Images/Image_2.jpg';
@@ -391,7 +390,6 @@ const GetStarted = () => {
 
   return (
     <>
-      <Navbar />
       <section className="get-started-page">
         <div className="get-started-container">
           <div className="get-started-header">

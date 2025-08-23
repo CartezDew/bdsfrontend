@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useServiceContext } from '../context/ServiceContext';
 import { motion } from 'framer-motion';
-import Navbar from './Navbar';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
 import ServicesDetailed from './ServicesDetailed';
 import Footer from './Footer';
 import '../styles/servicesPage.css';
-
-// Custom navbar configuration for Services page
-const servicesNavbarConfig = [
-  { id: 1, name: 'Contact Us', path: '/contact' }
-];
 
 const ServicesPage = () => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
@@ -93,10 +87,6 @@ const ServicesPage = () => {
 
   return (
     <>
-      {/* Services page navbar - always visible but with different styling based on scroll */}
-      <div className={`servicespage-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
-        <Navbar customConfig={servicesNavbarConfig} />
-      </div>
       <section className={`servicespage-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
         <div className="servicespage-container">
           <div className={`servicespage-header ${animationsTriggered.header ? 'servicespage-animate-header' : ''}`} ref={headerRef} data-animate="header">
@@ -145,8 +135,9 @@ const ServicesPage = () => {
         </div>
       </section>
       
-      {/* Detailed Individual Services Section - Same level as other components */}
-      {serviceType === 'individual' && <ServicesDetailed />}
+      {/* Detailed Services Section - Same level as other components */}
+      {serviceType === 'individual' && <ServicesDetailed serviceType="individual" />}
+      {serviceType === 'business' && <ServicesDetailed serviceType="business" />}
       
       {/* Social Media Section */}
       <div className="service-social-media-section">

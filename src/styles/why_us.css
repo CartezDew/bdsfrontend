@@ -1,11 +1,11 @@
 /* src/components/whyus.css */
 .whyus {
     background: var(--color-timberwolf);
-    padding: 3rem 2rem 3rem 2rem;
+    padding: 2rem 2rem 3rem 2rem;
   }
   
   .whyus__inner {
-    max-width: 1300px; /* 1152px */
+    max-width: 1300px; 
     margin: 0 auto;
   }
   
@@ -143,16 +143,6 @@
     font-weight: 600;
   }
   
-  /* Grid Section with Business Image */
-  .whyus__grid-section {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(51, 103, 59, 0.2);
-  }
   
   .whyus__grid-content {
     order: 1;
@@ -198,6 +188,7 @@
   .whyus__grid-image {
     order: 2;
     width: 100%;
+    margin-top: 1rem;
   }
   
   .whyus__business-image {
@@ -259,32 +250,32 @@
   .whyus__cta-container {
     text-align: center;
     margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
-  .schedule-consultation-why-us-btn {
-    background: var(--color-hunter-green);
+  .get-started-why-us-btn {
+    background: var(--color-sinopia);
     color: white;
     border: none;
     padding: 1rem 1rem;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
     box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
     letter-spacing: 0.5px;
-    animation: subtle-pulse 3s ease-in-out infinite;
+    display: inline-block; /* allow transform scaling to affect layout */
+  
   }
   
-  .schedule-consultation-why-us-btn:hover {
+  .get-started-why-us-btn:hover {
     background: var(--color-golden-brown);
-    transform: translateY(-1px) scale(1.02); 
     box-shadow: 0 4px 15px rgba(204, 63, 12, 0.4);
+    transform: translateY(-1px) scale(1.02) !important;
   }
   
-  .schedule-consultation-why-us-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
-  }
+ 
 
 /* Scroll Animations */
 .whyus {

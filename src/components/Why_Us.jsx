@@ -88,8 +88,8 @@ export default function Why_Us() {
         
         {/* Schedule Consultation Button */}
         <div className={`whyus__cta-container ${animationsTriggered ? 'whyus__cta-container-animated' : ''}`}>
-          <Link to="/get-started" className="schedule-consultation-why-us-btn">
-            Schedule Consultation
+          <Link to="/get-started" className="get-started-why-us-btn">
+            Get Started
           </Link>
         </div>
       </div>

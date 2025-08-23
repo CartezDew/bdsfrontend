@@ -1,7 +1,8 @@
+
 /* Get Started Page Styles */
 .get-started-page {
   background: var(--color-hunter-green);
-  padding: 2rem 2rem;
+  padding: 3rem 2rem;
 }
 
 .get-started-container {
