@@ -1,6 +1,6 @@
 /* Services Section Styles */
 .services-section {
-  padding: 2rem 2rem 4rem 2rem;
+  padding: 1rem 2rem 4rem 2rem;
   /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); */
   background-color: var(--color-timberwolf);
   min-height: calc(100vh - 80px);
@@ -45,13 +45,12 @@
 
 /* Services section padding adjustment when navbar is visible */
 .services-navbar-container + .services-section {
-  padding-top: 6rem;
+  padding-top: 3rem;
 }
 
 .services-container {
   max-width: 1200px;
   margin: 0 auto;
-  border-top: 1px solid var(--color-hunter-green);
 }
 
 .services-header {
@@ -241,7 +240,6 @@
   border: 2px solid var(--color-hunter-green);
   background: transparent;
   color: var(--color-hunter-green);
-  border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -266,6 +264,40 @@
 .toggle-btn.active:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(25, 35, 26, 0.4);
+}
+
+/* Toggle Button Tooltips */
+.toggle-btn {
+  position: relative;
+}
+
+.toggle-btn:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.toggle-btn:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.8);
+  margin-bottom: -0.5rem;
+  z-index: 1000;
 }
 
 /* Service Type Note */
@@ -374,29 +406,7 @@
   }
 }
 
-/* Animation for card entrance */
-.service-card {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.service-card:nth-child(1) { animation-delay: 0.1s; }
-.service-card:nth-child(2) { animation-delay: 0.2s; }
-.service-card:nth-child(3) { animation-delay: 0.3s; }
-.service-card:nth-child(4) { animation-delay: 0.4s; }
-.service-card:nth-child(5) { animation-delay: 0.5s; }
-.service-card:nth-child(6) { animation-delay: 0.6s; }
-.service-card:nth-child(7) { animation-delay: 0.7s; }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animation removed - now handled by JavaScript */
 
 /* Results Section */
 .entity-results {
@@ -700,3 +710,7 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+
+
+

@@ -87,6 +87,7 @@ export default function HeroImageShowcase({ base, grid = [] }) {
             src={base}
             alt="Hero image"
             className="hero-base-image"
+            style={{ transform: 'scaleX(-1)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

@@ -2,12 +2,11 @@
 .office-hours-locations {
   background: var(--color-timberwolf);
   padding: 2rem 2rem;
-  padding-top: 0rem;
-  margin: 0;
+  padding-bottom: 5rem;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -29,15 +28,42 @@
   font-size: 1.1rem;
   color: var(--color-eerie-black);
   font-weight: 400;
-  margin: 0;
+  margin: 0 0 1.5rem 0;
   line-height: 1.6;
 }
 
-/* Office Hours Section */
-.office-hours-section {
+.schedule-consultation-btn {
+  background: var(--color-hunter-green);
+  color: white;
+  border: none;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+  letter-spacing: 0.5px;
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+
+.schedule-consultation-btn:hover {
+  background: var(--color-golden-brown);
+  transform: translateY(-1px) scale(1.02); 
+  box-shadow: 0 4px 15px rgba(204, 63, 12, 0.4);
+}
+
+.schedule-consultation-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+}
+
+/* Office Hours & Location Combined Section */
+.office-hours-location-combined {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
 }
 
 
@@ -115,27 +141,14 @@
   font-weight: 600;
 }
 
-/* Locations Section */
-.locations-section {
-  margin-top: 3rem;
+/* Location Section Below Office Hours */
+.location-section-below {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid rgba(51, 103, 59, 0.1);
 }
 
-.location-card {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  transition: all 0.3s ease;
- 
-}
-
-.location-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.locations-header {
+.location-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -144,7 +157,12 @@
   border-bottom: 2px solid rgba(51, 103, 59, 0.1);
 }
 
-.locations-header h4 {
+.location-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.location-header h4 {
   font-size: 1.6rem;
   color: var(--color-hunter-green);
   font-weight: 700;
@@ -161,11 +179,20 @@
   font-size: 1.1rem;
 }
 
-.locations-grid-simple {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+.location-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 3rem 1rem 3rem;
+}
+
+.location-item-combined {
+  padding: 1.5rem;
+  background: rgba(51, 103, 59, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid var(--color-hunter-green);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
 }
 
 .location-item {
@@ -200,6 +227,7 @@
   line-height: 1.5;
   margin: 0;
   padding-left: 2.25rem;
+  font-weight: 500;
 }
 
 .location-map {
@@ -393,4 +421,149 @@
 .locations-grid-simple.animate-location-items {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Social Media Section */
+.social-media-section {
+  text-align: center;
+  margin: 2rem 0 3rem 0;
+  padding: 1.5rem;
+  /* background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); */
+  border-radius: 12px;
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); */
+}
+
+.follow-us-text {
+  color: var(--color-hunter-green);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  text-shadow: 0 1px 2px rgba(51, 103, 59, 0.1);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+ 
+  background: var(--color-sinopia);
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+  animation: bounce 4s ease-in-out infinite;
+}
+
+.social-icon.facebook {
+  animation-delay: 0s;
+}
+
+.social-icon.instagram {
+  animation-delay: 0.7s;
+}
+
+.social-icon.linkedin {
+  animation-delay: 1s;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(204, 63, 12, 0.5);
+}
+
+.social-icon svg {
+  width: 30px;
+  height: 30px;
+}
+/* 
+.social-icon.facebook {
+  background: #1877F2;
+}
+
+.social-icon.facebook:hover {
+  background: #166FE5;
+  box-shadow: 0 4px 15px rgba(24, 119, 242, 0.5);
+} */
+
+/* .social-icon.instagram {
+  background: linear-gradient(45deg, #F09433 0%, #E6683C 25%, #DC2743 50%, #CC2366 75%, #BC1888 100%);
+} */
+
+.social-icon.instagram:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(220, 39, 67, 0.5);
+}
+/* 
+.social-icon.linkedin {
+  background: #0077B5;
+} */
+
+.social-icon.linkedin:hover {
+  background: #006097;
+  box-shadow: 0 4px 15px rgba(0, 119, 181, 0.5);
+}
+
+/* Responsive Design for Social Media */
+@media (max-width: 768px) {
+  .social-media-section {
+    margin: 1.5rem 0 2rem 0;
+    padding: 1rem;
+  }
+  
+  .social-icons {
+    gap: 1rem;
+  }
+  
+  .social-icon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .follow-us-text {
+    font-size: 1rem;
+  }
+}
+
+/* Bounce Animation Keyframes */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Subtle Pulse Animation Keyframes */
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(204, 63, 12, 0.4);
+  }
 }

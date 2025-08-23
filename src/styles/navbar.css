@@ -1,17 +1,72 @@
 /* Navbar Container */
 .navbar {
-    background-color:  #D8CBC7;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+ 
+  }
+  
+  /* Add padding to body to account for fixed navbar */
+  body {
+    padding-top: 3rem;
+  }
+  
+  /* Ensure first container has proper top margin */
+  .get-started-page > *:first-child {
+    margin-top: 2rem;
+  }
+  
+  /* Alternative: target specific first section */
+  .get-started-hero-section {
+    margin-top: 2rem;
+  }
+  
+  /* Navbar scroll effect - shrink content on scroll */
+  .navbar.scrolled .navbar-container {
+    height: 2.5rem;
+  }
+  
+  .navbar.scrolled .logo-image {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .navbar.scrolled .logo-text {
+    font-size: 0.875rem;
+  }
+  
+  .navbar.scrolled .menu-text {
+    font-size: 0.7rem;
+  }
+  
+  .navbar.scrolled .get-started-btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.65rem;
   }
   
   .navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 4rem;
+    height: 3rem;
     max-width: 80rem;
     margin: 0 auto;
     padding: 0 1rem;
+    transition: height 0.3s ease;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9f8 25%, #f0f2f0 50%, #e8ebe8 75%, #e0e4e0 100%);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    width: 100%;
+  }
+  
+  /* Override services page navbar transparency */
+  .services-navbar-container .navbar,
+  .services-navbar-container.sticky .navbar {
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
   }
   
   /* Logo Section */
@@ -25,18 +80,30 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    transition: opacity 0.2s ease;
+  }
+  
+  .logo-link:hover {
+    opacity: 0.8;
   }
   
   .logo-image {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     margin-right: 0.75rem;
+    transition: width 0.3s ease, height 0.3s ease;
   }
   
   .logo-text {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
+    transition: font-size 0.3s ease;
   }
   
   /* Menu Section */
@@ -58,7 +125,7 @@
   }
   
   .menu-link:hover {
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   .menu-icon {
@@ -67,7 +134,8 @@
   }
   
   .menu-text {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    transition: font-size 0.3s ease;
   }
   
   /* Icon Section */
@@ -79,19 +147,47 @@
   }
   
   
-  .schedule-consultation-button {
-    background-color: #33673B; /* hunter-green */
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
+  .get-started-btn {
+    background-color: var(--color-hunter-green); /* hunter-green */
+    color: var(--color-timberwolf);
+    padding: 0.4rem 0.6rem;
     border: none;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, padding 0.3s ease, font-size 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
   
-  .schedule-consultation-button:hover {
-    background-color: #059669; /* green-700 */
+  .get-started-btn:hover {
+    background-color: var(--color-golden-brown); /* green-700 */
+  }
+
+  /* Get Started button animation - moving sharpness effect */
+  .get-started-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: movingSharpness 3s infinite;
+  }
+
+  @keyframes movingSharpness {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
   }
   
   /* Mobile Menu Section */
@@ -110,7 +206,7 @@
   }
   
   .mobile-menu-button:hover {
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   .mobile-menu-icon {
@@ -142,7 +238,7 @@
   }
   
   .mobile-dropdown-link:hover {
-    color: #33673B; /* hunter-green */
+    color:  #2a5a2f; /* hunter-green */
   }
   
   /* Responsive Design */

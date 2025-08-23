@@ -1,24 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Navbar from './Navbar';
+import { useServiceContext } from '../context/ServiceContext';
 import IndividualServices from './IndividualServices';
 import BusinessServices from './BusinessServices';
 import EntitySelectorWidget from './EntitySelectorWidget';
 import SocialProof from './SocialProof';
-
-// Custom navbar configuration for Services page
-const servicesNavbarConfig = [
-  { id: 1, name: 'About Us', path: '/about' },
-  { id: 2, name: 'FAQ', path: '/faq' },
-  { id: 3, name: 'Contact Us', path: '/contact' }
-];
+import Why_Us from './Why_Us';
+import MeetTheOwner from './MeetTheOwner';
+import Facts from './facts';
 
 const Services = () => {
-  const [expandedService, setExpandedService] = useState(null);
+  const { serviceType, handleServiceTypeChange } = useServiceContext();
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
-  const [serviceType, setServiceType] = useState('individual'); // 'business' or 'individual'
   const [animationsTriggered, setAnimationsTriggered] = useState({
     header: false, title: false, subtitle: false, toggle: false, note: false, services: false
   });
+  
+  const [cardsVisible, setCardsVisible] = useState(false);
 
   const servicesRef = useRef(null);
   const headerRef = useRef(null);
@@ -28,23 +25,29 @@ const Services = () => {
   const noteRef = useRef(null);
   const servicesRef2 = useRef(null);
 
-  // Intersection Observer for header animations only
+  // Intersection Observer for animations
   useEffect(() => {
     const observerOptions = { 
-      threshold: 0.1,
-      rootMargin: '50px'
+      threshold: 0.05, // 5% visibility
+      rootMargin: '0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const elementId = entry.target.dataset.animate;
-          setAnimationsTriggered(prev => ({ ...prev, [elementId]: true }));
+          
+          if (elementId === 'services') {
+            setAnimationsTriggered(prev => ({ ...prev, services: true }));
+            setCardsVisible(true); // Trigger card animations
+          } else {
+            setAnimationsTriggered(prev => ({ ...prev, [elementId]: true }));
+          }
         }
       });
     }, observerOptions);
 
-    // Observe header elements only
+    // Observe elements
     if (headerRef.current) observer.observe(headerRef.current);
     if (titleRef.current) observer.observe(titleRef.current);
     if (subtitleRef.current) observer.observe(subtitleRef.current);
@@ -55,21 +58,27 @@ const Services = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleToggleService = (serviceId) => {
-    setExpandedService(expandedService === serviceId ? null : serviceId);
-  };
+  // Reset card animations when service type changes
+  useEffect(() => {
+    setCardsVisible(false);
+    // Small delay to ensure reset is complete, then trigger animations
+    setTimeout(() => {
+      setCardsVisible(true);
+    }, 100);
+  }, [serviceType]);
 
-  const handleServiceTypeChange = (type) => {
-    setServiceType(type);
-    setExpandedService(null);
+  const handleToggleService = (serviceId) => {
+    // This function is now handled by the context
   };
 
   // Scroll detection for sticky navbar
   useEffect(() => {
     const handleScroll = () => {
-      if (servicesRef.current) {
-        const rect = servicesRef.current.getBoundingClientRect();
-        // Only show navbar when services section is fully in view (top of viewport)
+      // Look for the avoid confusion section by its class name
+      const avoidConfusionSection = document.querySelector('.avoid-confusion-section');
+      if (avoidConfusionSection) {
+        const rect = avoidConfusionSection.getBoundingClientRect();
+        // Only show navbar when avoid confusion section is fully in view (top of viewport)
         // This means hero section is completely out of view
         const shouldBeSticky = rect.top <= 0;
         setIsNavbarSticky(shouldBeSticky);
@@ -84,13 +93,7 @@ const Services = () => {
 
   return (
     <>
-      {/* Only render navbar when it should be sticky (hero section out of view) */}
-      {isNavbarSticky && (
-        <div className={`services-navbar-container ${isNavbarSticky ? 'sticky' : ''}`}>
-          <Navbar customConfig={servicesNavbarConfig} />
-        </div>
-      )}
-      <section className={`services-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
+      <section id="services" className={`services-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
         <div className="services-container">
           <div className={`services-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
             <h2 className={`services-title ${animationsTriggered.title ? 'animate-title' : ''}`} ref={titleRef} data-animate="title">Our Services</h2>
@@ -103,12 +106,14 @@ const Services = () => {
               <button
                 className={`toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('individual')}
+                data-tooltip="View personal tax and individual services"
               >
                 Individual Services
               </button>
               <button
                 className={`toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('business')}
+                data-tooltip="View business accounting services"
               >
                 Business Services
               </button>
@@ -126,11 +131,9 @@ const Services = () => {
           {/* Render appropriate services based on toggle */}
           <div className={`services-content ${animationsTriggered.services ? 'animate-services' : ''}`} ref={servicesRef2} data-animate="services">
             {serviceType === 'business' ? (
-              <BusinessServices 
-              />
+              <BusinessServices />
             ) : (
-              <IndividualServices 
-              />
+              <IndividualServices />
             )}
           </div>
         </div>
@@ -139,9 +142,26 @@ const Services = () => {
       {/* Social Proof Section */}
       <SocialProof />
       
+      {/* Why Us Section */}
+      <Why_Us />
+      
+      {/* Meet The Owner Section */}
+      <MeetTheOwner />
+      
       {/* Entity Selector Widget */}
       <section className="widget-section">
         <EntitySelectorWidget />
+      </section>
+      
+      {/* FAQ Section */}
+      <section id="faq" className="faq-section">
+        <div className="container">
+          <div className="faq-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Essential information to help you navigate tax deadlines, deductions, and requirements.</p>
+          </div>
+          <Facts />
+        </div>
       </section>
     </>
   );

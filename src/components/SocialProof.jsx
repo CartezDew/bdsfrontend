@@ -237,8 +237,7 @@ export default function SocialProof() {
             <button
               onClick={prevPage}
               className="nav-button"
-              aria-label="Previous page"
-              title="Previous page"
+              data-tooltip="Previous page"
             >
               ←
             </button>
@@ -251,7 +250,7 @@ export default function SocialProof() {
               onClick={nextPage}
               className="nav-button"
               aria-label="Next page"
-              title="Next page"
+              data-tooltip="Next page"
             >
               →
             </button>
