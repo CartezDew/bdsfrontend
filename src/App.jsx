@@ -76,9 +76,16 @@ function App() {
       if (targetId === 'avoid-confusion') {
         return rectTop - marginTop - borderTop
       }
-      // Special case: Meet the CEO (why-us) — scroll to bottom of why-us so
-      // the top of meet-the-owner (next section) is fully visible
+      // Special case: Meet the CEO (why-us) — scroll to bottom of social-proof so
+      // the top of why-us (next section) is fully visible
       if (targetId === 'why-us') {
+        const socialProofEl = document.getElementById('social-proof')
+        if (socialProofEl) {
+          const socialProofTop = socialProofEl.getBoundingClientRect().top + window.scrollY
+          const socialProofBottom = socialProofTop + socialProofEl.offsetHeight
+          return socialProofBottom - navbarHeight
+        }
+        // Fallback to bottom of why-us section itself
         const sectionHeight = el.offsetHeight
         return rectTop + sectionHeight - navbarHeight
       }
