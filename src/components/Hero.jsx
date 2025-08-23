@@ -32,6 +32,10 @@ const Hero = () => {
     'Tax Returns', 'Payroll', 'Bookkeeping', 'Compliance', 'Reporting', 'Tax Extensions', 'Advisory'
   ];
 
+  const mobileTickerItems = [
+    'Tax Returns', 'Payroll', 'Bookkeeping', 'Reporting', 'Advisory'
+  ];
+
   // Handle ticker item click - navigate to services
   const handleTickerClick = () => {
     navigate('/services');
@@ -103,7 +107,7 @@ const Hero = () => {
   useEffect(() => {
     const id = setInterval(() => {
       setHighlightedIndex(prev => (prev + 1) % tickerItems.length);
-    }, 3000);
+    }, 2500);
     return () => clearInterval(id);
   }, [tickerItems.length]);
 
@@ -125,12 +129,12 @@ const Hero = () => {
               transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-                <div className="logo-section-hero">
-                <button className="logo-link-hero" onClick={handleLogoClick}>
-                  <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
-                  <h1 className="logo-text-hero">Talent Group</h1>
-                </button>
-              </div>
+            <div className="logo-section-hero">
+              <button className="logo-link-hero" onClick={handleLogoClick}>
+                <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
+                <h1 className="logo-text-hero">Talent Group</h1>
+              </button>
+            </div>
             <div className="hero-nav-links-hero">
               <button 
                 className="hero-left-link"
@@ -151,6 +155,21 @@ const Hero = () => {
                 Contact Us
               </button>
             </div>
+            <button className="hero-hamburger-menu" onClick={() => {
+              try {
+                console.log('[Hero] hamburger clicked → dispatch toggleMobileMenu');
+                const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
+                window.dispatchEvent(evtWin);
+                const evtDoc = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-doc', ts: Date.now() } });
+                document.dispatchEvent(evtDoc);
+              } catch (err) {
+                console.error('[Hero] error dispatching toggleMobileMenu', err);
+              }
+            }}>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+            </button>
           </nav>
 
           <h1
@@ -210,7 +229,6 @@ const Hero = () => {
             <Link to="/signin" className="hero-nav-btn">Sign In</Link>
             <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
           </div>
-
           <div className="hero-media">
             <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
           </div>
@@ -254,22 +272,26 @@ const Hero = () => {
           }}
         >
           <div className="ticker-track">
-            {tickerItems.map((label, i) => (
-              <motion.div
-                key={`${label}-${i}`}
-                className="ticker-item"
-                onClick={handleTickerClick}
-                style={{ cursor: 'pointer' }}
-                animate={{
-                  color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
-                  scale: highlightedIndex === i ? 1.1 : 1
-                }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                whileHover={{ scale: 1.15, color: 'var(--color-hunter-green)' }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {label}
-              </motion.div>
+            {(window.innerWidth <= 720 ? mobileTickerItems : tickerItems).map((label, i) => (
+              <React.Fragment key={`${label}-${i}`}>
+                <motion.div
+                  className="ticker-item"
+                  onClick={handleTickerClick}
+                  style={{ cursor: 'pointer' }}
+                  animate={{
+                    color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
+                    scale: highlightedIndex === i ? 1.1 : 1
+                  }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  whileHover={{ scale: 1.15, color: 'var(--color-hunter-green)' }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {label}
+                </motion.div>
+                {i < (window.innerWidth <= 720 ? mobileTickerItems.length - 1 : tickerItems.length - 1) && (
+                  <span className="ticker-separator">•</span>
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>

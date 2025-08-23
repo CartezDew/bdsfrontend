@@ -168,6 +168,45 @@ function App() {
     }, 700)
   }, [isHomePage, location.key])
   
+  // Bridge hero hamburger → Navbar when navbar is hidden
+  useEffect(() => {
+    const handleHeroToggle = (e) => {
+      console.log('[App] toggleMobileMenu intercepted; showNavbar?', navbarStateRef.current, 'detail:', e && e.detail)
+      if (e?.detail?.rebroadcast) return; // ignore our own rebroadcasts
+      if (!navbarStateRef.current) {
+        setShowNavbar(true);
+        setTimeout(() => {
+          console.log('[App] rebroadcasting toggleMobileMenu to Navbar')
+          window.dispatchEvent(new CustomEvent('toggleMobileMenu', { detail: { source: 'app-rebroadcast', rebroadcast: true, ts: Date.now() } }));
+        }, 120);
+      }
+    };
+    window.addEventListener('toggleMobileMenu', handleHeroToggle);
+    return () => window.removeEventListener('toggleMobileMenu', handleHeroToggle);
+  }, []);
+  
+  // Hide navbar on mobile when menu closes and hero is in view
+  useEffect(() => {
+    const onMobileMenuState = (e) => {
+      const open = !!(e && e.detail && e.detail.open)
+      if (!open && location.pathname === '/') {
+        // check if we are near top/hero
+        const hero = document.getElementById('hero')
+        if (hero) {
+          const rect = hero.getBoundingClientRect()
+          const heroMostlyInView = rect.bottom > 0 && rect.top < window.innerHeight * 0.4
+          if (heroMostlyInView) {
+            setShowNavbar(false)
+          }
+        } else {
+          // if no hero found, default to leaving navbar as-is
+        }
+      }
+    }
+    window.addEventListener('mobileMenuState', onMobileMenuState)
+    return () => window.removeEventListener('mobileMenuState', onMobileMenuState)
+  }, [location.pathname])
+  
   return (
     <ServiceProvider>
       <div className="App">
