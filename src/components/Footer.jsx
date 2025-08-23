@@ -6,163 +6,110 @@ const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Helper function to scroll to sections on current page
   const scrollToSection = (sectionId) => {
-    // If we're not on the home page, navigate to the home page with hash
     if (location.pathname !== '/') {
-      navigate(`/#${sectionId}`);
-      return;
-    }
-
-    const element = document.getElementById(sectionId)
-    if (element) {
-      const navbarEl = document.querySelector('.navbar')
-      const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-      const rectTop = element.getBoundingClientRect().top + window.scrollY
-      const styles = window.getComputedStyle(element)
-      const marginTop = parseFloat(styles.marginTop) || 0
-      const borderTop = parseFloat(styles.borderTopWidth) || 0
-
-      let scrollPosition
-      if (sectionId === 'avoid-confusion') {
-        // Align the very top of AvoidConfusion with viewport top
-        scrollPosition = rectTop - marginTop - borderTop
-      } else if (sectionId === 'why-us') {
-        // Scroll to the bottom of the previous section (hero/services) so that
-        // the top of MeetTheOwner (next section) is visible. We approximate by
-        // aligning why-us bottom to viewport top using its height.
-        const sectionHeight = element.offsetHeight
-        scrollPosition = rectTop + sectionHeight - navbarHeight
-      } else if (sectionId === 'social-proof') {
-        // Same style as Meet the CEO logic: align the bottom of the preceding
-        // section (services) so the testimonials are fully visible.
-        const servicesEl = document.getElementById('services')
-        if (servicesEl) {
-          const servicesTop = servicesEl.getBoundingClientRect().top + window.scrollY
-          const servicesStyles = window.getComputedStyle(servicesEl)
-          const marginBottom = parseFloat(servicesStyles.marginBottom) || 0
-          const servicesBottom = servicesTop + servicesEl.offsetHeight + marginBottom
-          scrollPosition = servicesBottom - navbarHeight
-        } else {
-          // Fallback
-          scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-        }
-      } else if (sectionId === 'entity-selector') {
-        // Prefer precise alignment: navbar bottom flush with top of entity selector
-        const targetEl = document.getElementById('entity-selector')
-        const computeEntityTop = () => {
-          const navbar = document.querySelector('.navbar')
-          const navH = navbar ? navbar.getBoundingClientRect().height : 0
-          if (targetEl) {
-            const tTop = targetEl.getBoundingClientRect().top + window.scrollY
-            const tStyles = window.getComputedStyle(targetEl)
-            const tMarginTop = parseFloat(tStyles.marginTop) || 0
-            const tBorderTop = parseFloat(tStyles.borderTopWidth) || 0
-            return tTop - navH - tMarginTop - tBorderTop
-          }
-          // Fallback: bottom of meet-the-owner
-          const meet = document.getElementById('meet-the-owner')
-          if (meet) {
-            const mTop = meet.getBoundingClientRect().top + window.scrollY
-            const mBottom = mTop + meet.offsetHeight
-            return mBottom - navH
-          }
-          return rectTop - navbarHeight - marginTop - borderTop
-        }
-        scrollPosition = computeEntityTop()
-        // post-adjust in case navbar size changes during scroll
-        window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-        setTimeout(() => {
-          window.scrollTo({ top: computeEntityTop(), behavior: 'auto' })
-        }, 300)
-        setTimeout(() => {
-          window.scrollTo({ top: computeEntityTop(), behavior: 'auto' })
-        }, 700)
-        return
-      } else if (sectionId === 'appointment-scheduler') {
-        // Scroll to the bottom of the OfficeHoursLocations section so the
-        // scheduler is fully visible; fallback to aligning its own top if mounted.
-        const officeEl = document.getElementById('contact')
-        const schedulerEl = document.querySelector('.appointment-scheduler')
-        const computeSchedulerTop = () => {
-          const navbar = document.querySelector('.navbar')
-          const navH = navbar ? navbar.getBoundingClientRect().height : 0
-          if (schedulerEl) {
-            const sTop = schedulerEl.getBoundingClientRect().top + window.scrollY
-            const sStyles = window.getComputedStyle(schedulerEl)
-            const sMarginTop = parseFloat(sStyles.marginTop) || 0
-            const sBorderTop = parseFloat(sStyles.borderTopWidth) || 0
-            return sTop - navH - sMarginTop - sBorderTop
-          }
-          if (officeEl) {
-            const oTop = officeEl.getBoundingClientRect().top + window.scrollY
-            const oBottom = oTop + officeEl.offsetHeight
-            return oBottom - navH
-          }
-          return rectTop - navbarHeight - marginTop - borderTop
-        }
-        const pos = computeSchedulerTop()
-        window.scrollTo({ top: pos, behavior: 'smooth' })
-        setTimeout(() => window.scrollTo({ top: computeSchedulerTop(), behavior: 'auto' }), 300)
-        setTimeout(() => window.scrollTo({ top: computeSchedulerTop(), behavior: 'auto' }), 700)
-        return
-      } else {
-        scrollPosition = rectTop - navbarHeight - marginTop - borderTop
+      navigate('/', { state: { scrollTo: sectionId } });
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const navbar = document.querySelector('.navbar-container');
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+        const elementTop = element.offsetTop;
+        const scrollPosition = elementTop - navbarHeight;
+        
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        });
       }
-
-      window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
     }
   };
 
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-nav">
-            <button 
-                className="footer-nav-btn"
-                onClick={() => scrollToSection('avoid-confusion')}
-            >
-                Where to Start
-            </button>
-            <span className="footer-separator">|</span>
-            <button 
-                className="footer-nav-btn"
-                onClick={() => {
-                    if (location.pathname === '/services') {
-                        window.scrollTo({ top: 0, behavior: 'smooth' })
-                    } else {
-                        navigate('/services')
-                    }
-                }}
-            >
-                All Services
-            </button>
-            <span className="footer-separator">|</span>
-            <button 
-                className="footer-nav-btn"
-                onClick={() => scrollToSection('social-proof')}
-            >
-                Testimonials
-            </button>
-            <span className="footer-separator">|</span>
-            <button 
-                className="footer-nav-btn"
-                onClick={() => scrollToSection('appointment-scheduler')}
-            >
-                Schedule Appointment
-            </button>
-            <span className="footer-separator">|</span>
-            <button 
-                className="footer-nav-btn"
-                onClick={() => scrollToSection('entity-selector')}
-            >
-                Business Entity Selector
-            </button>
+      {/* Desktop Navigation - Hidden below 680px */}
+      <div className="footer-nav desktop-only">
+        <button 
+          onClick={() => scrollToSection('avoid-confusion')}
+          className="footer-nav-btn"
+        >
+          Where to Start
+        </button>
+        <span className="footer-separator">|</span>
+        
+        <button 
+          onClick={() => scrollToSection('services')}
+          className="footer-nav-btn"
+        >
+          All Services
+        </button>
+        <span className="footer-separator">|</span>
+        
+        <button 
+          onClick={() => scrollToSection('social-proof')}
+          className="footer-nav-btn"
+        >
+          Testimonials
+        </button>
+        <span className="footer-separator">|</span>
+        
+        <button 
+          onClick={() => scrollToSection('appointment-scheduler')}
+          className="footer-nav-btn"
+        >
+          Schedule Appointment
+        </button>
+        <span className="footer-separator">|</span>
+        
+        <button 
+          onClick={() => scrollToSection('meet-the-owner')}
+          className="footer-nav-btn"
+        >
+          Business Entity Selector
+        </button>
+      </div>
+
+      {/* Mobile Social Media - Hidden above 680px */}
+      <div className="footer-social mobile-only">
+        <h3 className="footer-social-title">Follow Us</h3>
+        <div className="footer-social-buttons">
+          <a 
+            href="https://www.linkedin.com/in/bdavis0890/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="footer-social-btn linkedin"
+          >
+            <svg className="footer-social-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          
+          <a 
+            href="https://www.facebook.com/bdstalentgroup" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="footer-social-btn facebook"
+          >
+            <svg className="footer-social-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          
+          <a 
+            href="https://www.instagram.com/bdstalentgroup" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="footer-social-btn instagram"
+          >
+            <svg className="footer-social-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
         </div>
-        <div className="footer-divider"></div>
-        <div className="footer-copyright">
-          <p>&copy; 2025 The BDS Talent Group LLC. All rights reserved.</p>
-        </div>
+      </div>
+
+      <div className="footer-copyright">
+        <p>&copy; 2025 BDS Talent Group. All rights reserved.</p>
       </div>
     </footer>
   );
