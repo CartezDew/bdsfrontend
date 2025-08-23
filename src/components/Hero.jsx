@@ -49,6 +49,35 @@ const Hero = () => {
     }
   };
 
+  // Scroll helper that mirrors Navbar.jsx calculation and compensates if navbar is hidden initially
+  const scrollToSectionWithNavbarCompensation = (targetId) => {
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) return;
+
+    const computeScrollTop = () => {
+      const navbarEl = document.querySelector('.navbar');
+      // Fallback to expected scrolled navbar height (2.5rem ≈ 40px) if navbar isn't mounted yet
+      const fallbackHeightPx = 40;
+      const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : fallbackHeightPx;
+      const rectTop = targetElement.getBoundingClientRect().top + window.scrollY;
+      const styles = window.getComputedStyle(targetElement);
+      const marginTop = parseFloat(styles.marginTop) || 0;
+      const borderTop = parseFloat(styles.borderTopWidth) || 0;
+      return rectTop - navbarHeight - marginTop - borderTop;
+    };
+
+    // Initial smooth scroll
+    window.scrollTo({ top: computeScrollTop(), behavior: 'smooth' });
+
+    // Post-adjust once the navbar likely toggled/settled after scroll starts
+    setTimeout(() => {
+      window.scrollTo({ top: computeScrollTop(), behavior: 'auto' });
+    }, 300);
+    setTimeout(() => {
+      window.scrollTo({ top: computeScrollTop(), behavior: 'auto' });
+    }, 700);
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -105,55 +134,19 @@ const Hero = () => {
             <div className="hero-nav-links-hero">
               <button 
                 className="hero-left-link"
-                onClick={() => {
-                  const targetElement = document.getElementById('services')
-                  if (targetElement) {
-                    const navbarEl = document.querySelector('.navbar')
-                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-                    const styles = window.getComputedStyle(targetElement)
-                    const marginTop = parseFloat(styles.marginTop) || 0
-                    const borderTop = parseFloat(styles.borderTopWidth) || 0
-                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => scrollToSectionWithNavbarCompensation('services')}
               >
                 Services
               </button>
               <button 
                 className="hero-left-link"
-                onClick={() => {
-                  const targetElement = document.getElementById('why-us')
-                  if (targetElement) {
-                    const navbarEl = document.querySelector('.navbar')
-                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-                    const styles = window.getComputedStyle(targetElement)
-                    const marginTop = parseFloat(styles.marginTop) || 0
-                    const borderTop = parseFloat(styles.borderTopWidth) || 0
-                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => scrollToSectionWithNavbarCompensation('why-us')}
               >
                 Why Us
               </button>
               <button 
                 className="hero-left-link"
-                onClick={() => {
-                  const targetElement = document.getElementById('contact')
-                  if (targetElement) {
-                    const navbarEl = document.querySelector('.navbar')
-                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-                    const styles = window.getComputedStyle(targetElement)
-                    const marginTop = parseFloat(styles.marginTop) || 0
-                    const borderTop = parseFloat(styles.borderTopWidth) || 0
-                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => scrollToSectionWithNavbarCompensation('contact')}
               >
                 Contact Us
               </button>
