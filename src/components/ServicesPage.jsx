@@ -143,8 +143,8 @@ const ServicesPage = () => {
             {/* Current Service Type Note */}
             <div className={`servicespage-note ${animationsTriggered.note ? 'servicespage-animate-note' : ''}`} ref={noteRef} data-animate="note">
               {serviceType === 'business' 
-                ? "*You are currently viewing our business services*"
-                : "*You are currently viewing our individual services*"
+                ? "*Switch the toggle to view our individual services*"
+                : "*Switch the toggle to view our business services*"
               }
             </div>
           </div>
