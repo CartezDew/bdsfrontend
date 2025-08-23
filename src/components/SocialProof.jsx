@@ -290,7 +290,7 @@ export default function SocialProof() {
   );
 
   return (
-    <section className="testimonial-grid">
+    <section id="social-proof" className="testimonial-grid">
       {/* Section header */}
       <div className={`grid-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
         <h2>What our clients say</h2>

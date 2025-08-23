@@ -28,6 +28,7 @@ export default function MeetTheOwner() {
 
   return (
     <section 
+      id="meet-the-owner"
       ref={meetOwnerRef}
       className={`meet-owner-section ${animationsTriggered ? 'meet-owner-section-animated' : ''}`}
     >

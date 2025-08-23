@@ -149,7 +149,7 @@ const Services = () => {
       <MeetTheOwner />
       
       {/* Entity Selector Widget */}
-      <section className="widget-section">
+      <section id="entity-selector" className="widget-section">
         <EntitySelectorWidget />
       </section>
       

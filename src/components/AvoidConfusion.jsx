@@ -27,6 +27,7 @@ const AvoidConfusion = () => {
 
   return (
     <section 
+      id="avoid-confusion"
       ref={avoidConfusionRef}
       className={`avoid-confusion-section ${animationsTriggered ? 'avoid-confusion-section-animated' : ''}`}
     >

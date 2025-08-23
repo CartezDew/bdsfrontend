@@ -8,6 +8,7 @@ import AvoidConfusion from './components/AvoidConfusion'
 import Services from './components/Services'
 import OfficeHoursLocations from './components/OfficeHoursLocations'
 import GetStarted from './components/GetStarted'
+import ServicesPage from './components/ServicesPage'
 
 function App() {
   const location = useLocation()
@@ -51,6 +52,86 @@ function App() {
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isHomePage, location.pathname])
+
+  // If we land on home route with a hash (e.g., /#services), perform precise scroll
+  useEffect(() => {
+    if (!isHomePage) return
+    const hash = window.location.hash
+    if (!hash) return
+    const targetId = hash.replace('#', '')
+    const computeScrollTop = () => {
+      // Fallback lookup if element lacks id
+      let el = document.getElementById(targetId)
+      if (!el && targetId === 'avoid-confusion') {
+        el = document.querySelector('.avoid-confusion-section')
+      }
+      if (!el) return null
+      const navbarEl = document.querySelector('.navbar')
+      const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+      const rectTop = el.getBoundingClientRect().top + window.scrollY
+      const styles = window.getComputedStyle(el)
+      const marginTop = parseFloat(styles.marginTop) || 0
+      const borderTop = parseFloat(styles.borderTopWidth) || 0
+      // Special case: align the very top of AvoidConfusion to viewport top
+      if (targetId === 'avoid-confusion') {
+        return rectTop - marginTop - borderTop
+      }
+      // Special case: Meet the CEO (why-us) — scroll to bottom of why-us so
+      // the top of meet-the-owner (next section) is fully visible
+      if (targetId === 'why-us') {
+        const sectionHeight = el.offsetHeight
+        return rectTop + sectionHeight - navbarHeight
+      }
+      // Special case: Business Entity Selector — scroll to bottom of
+      // meet-the-owner so the widget starts visible
+      if (targetId === 'entity-selector') {
+        const entityEl = document.getElementById('entity-selector')
+        if (entityEl) {
+          const eTop = entityEl.getBoundingClientRect().top + window.scrollY
+          const eStyles = window.getComputedStyle(entityEl)
+          const eMarginTop = parseFloat(eStyles.marginTop) || 0
+          const eBorderTop = parseFloat(eStyles.borderTopWidth) || 0
+          return eTop - navbarHeight - eMarginTop - eBorderTop
+        }
+        // Fallback to bottom of meet-the-owner
+        const meetEl = document.getElementById('meet-the-owner')
+        if (meetEl) {
+          const meetTop = meetEl.getBoundingClientRect().top + window.scrollY
+          const meetBottom = meetTop + meetEl.offsetHeight
+          return meetBottom - navbarHeight
+        }
+      }
+      // Special case: Testimonials (social-proof) — same pattern as meet-the-owner
+      if (targetId === 'social-proof') {
+        const servicesEl = document.getElementById('services')
+        if (servicesEl) {
+          const servicesTop = servicesEl.getBoundingClientRect().top + window.scrollY
+          const servicesBottom = servicesTop + servicesEl.offsetHeight
+          return servicesBottom - navbarHeight
+        }
+      }
+      return rectTop - navbarHeight - marginTop - borderTop
+    }
+
+    // defer to allow DOM render then do initial smooth scroll
+    setTimeout(() => {
+      const pos = computeScrollTop()
+      if (pos == null) return
+      window.scrollTo({ top: pos, behavior: 'smooth' })
+    }, 50)
+
+    // post-adjust like hero controls (in case navbar size changes during scroll)
+    setTimeout(() => {
+      const pos = computeScrollTop()
+      if (pos == null) return
+      window.scrollTo({ top: pos, behavior: 'auto' })
+    }, 350)
+    setTimeout(() => {
+      const pos = computeScrollTop()
+      if (pos == null) return
+      window.scrollTo({ top: pos, behavior: 'auto' })
+    }, 700)
+  }, [isHomePage, location.key])
   
   return (
     <ServiceProvider>
@@ -69,6 +150,7 @@ function App() {
         } />
 
         <Route path="/get-started" element={<GetStarted />} />
+        <Route path="/services" element={<ServicesPage />} />
         </Routes>
       </div>
     </ServiceProvider>
