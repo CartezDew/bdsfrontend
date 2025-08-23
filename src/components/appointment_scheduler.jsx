@@ -367,6 +367,7 @@ const AppointmentScheduler = () => {
 
   return (
     <div 
+      id="appointment-scheduler"
       ref={schedulerRef}
       className={`appointment-scheduler ${animationsTriggered ? 'animate-in' : ''}`}
     >

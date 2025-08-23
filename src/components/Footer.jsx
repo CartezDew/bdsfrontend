@@ -79,6 +79,33 @@ const Footer = () => {
           window.scrollTo({ top: computeEntityTop(), behavior: 'auto' })
         }, 700)
         return
+      } else if (sectionId === 'appointment-scheduler') {
+        // Scroll to the bottom of the OfficeHoursLocations section so the
+        // scheduler is fully visible; fallback to aligning its own top if mounted.
+        const officeEl = document.getElementById('contact')
+        const schedulerEl = document.querySelector('.appointment-scheduler')
+        const computeSchedulerTop = () => {
+          const navbar = document.querySelector('.navbar')
+          const navH = navbar ? navbar.getBoundingClientRect().height : 0
+          if (schedulerEl) {
+            const sTop = schedulerEl.getBoundingClientRect().top + window.scrollY
+            const sStyles = window.getComputedStyle(schedulerEl)
+            const sMarginTop = parseFloat(sStyles.marginTop) || 0
+            const sBorderTop = parseFloat(sStyles.borderTopWidth) || 0
+            return sTop - navH - sMarginTop - sBorderTop
+          }
+          if (officeEl) {
+            const oTop = officeEl.getBoundingClientRect().top + window.scrollY
+            const oBottom = oTop + officeEl.offsetHeight
+            return oBottom - navH
+          }
+          return rectTop - navbarHeight - marginTop - borderTop
+        }
+        const pos = computeSchedulerTop()
+        window.scrollTo({ top: pos, behavior: 'smooth' })
+        setTimeout(() => window.scrollTo({ top: computeSchedulerTop(), behavior: 'auto' }), 300)
+        setTimeout(() => window.scrollTo({ top: computeSchedulerTop(), behavior: 'auto' }), 700)
+        return
       } else {
         scrollPosition = rectTop - navbarHeight - marginTop - borderTop
       }

@@ -101,6 +101,22 @@ function App() {
           return meetBottom - navbarHeight
         }
       }
+      if (targetId === 'appointment-scheduler') {
+        const schedulerEl = document.querySelector('.appointment-scheduler')
+        if (schedulerEl) {
+          const sTop = schedulerEl.getBoundingClientRect().top + window.scrollY
+          const sStyles = window.getComputedStyle(schedulerEl)
+          const sMarginTop = parseFloat(sStyles.marginTop) || 0
+          const sBorderTop = parseFloat(sStyles.borderTopWidth) || 0
+          return sTop - navbarHeight - sMarginTop - sBorderTop
+        }
+        const officeEl = document.getElementById('contact')
+        if (officeEl) {
+          const oTop = officeEl.getBoundingClientRect().top + window.scrollY
+          const oBottom = oTop + officeEl.offsetHeight
+          return oBottom - navbarHeight
+        }
+      }
       // Special case: Testimonials (social-proof) — same pattern as meet-the-owner
       if (targetId === 'social-proof') {
         const servicesEl = document.getElementById('services')
