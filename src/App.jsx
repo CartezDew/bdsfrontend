@@ -22,7 +22,7 @@ function App() {
     navbarStateRef.current = showNavbar
   }, [showNavbar])
   
-  // Show navbar when scrolling past hero section on home page
+  // Show navbar on home page when hero is out of view (with hysteresis)
   useEffect(() => {
     if (!isHomePage) {
       setShowNavbar(true)
@@ -32,20 +32,24 @@ function App() {
     // For home page, start with navbar hidden
     setShowNavbar(false)
     
+    // Hysteresis to prevent flicker near threshold
+    const SHOW_THRESHOLD = 0; // hero bottom <= top
+    const HIDE_THRESHOLD = 20; // allow a small buffer when re-entering
+
     const handleScroll = () => {
       // If mobile menu is open, keep navbar mounted and ignore auto-hide
       if (mobileMenuOpen) return
-      // Look for the avoid confusion section by its class name
-      const avoidConfusionSection = document.querySelector('.avoid-confusion-section')
-      
-      if (avoidConfusionSection) {
-        const rect = avoidConfusionSection.getBoundingClientRect()
-        // Show navbar when avoid confusion section is fully in view (top of viewport)
-        // This means hero section is completely out of view
-        const shouldShowNavbar = rect.top <= 0
-        
-        if (shouldShowNavbar !== navbarStateRef.current) {
-          setShowNavbar(shouldShowNavbar)
+      // Determine visibility by the hero section position instead
+      const heroEl = document.getElementById('hero')
+      if (heroEl) {
+        const heroRect = heroEl.getBoundingClientRect()
+        // Use thresholds to reduce rapid toggling near boundary
+        if (!navbarStateRef.current) {
+          // currently hidden → show when hero is clearly above
+          if (heroRect.bottom <= SHOW_THRESHOLD) setShowNavbar(true)
+        } else {
+          // currently shown → hide only when hero clearly re-enters view
+          if (heroRect.bottom > HIDE_THRESHOLD) setShowNavbar(false)
         }
       }
     }
