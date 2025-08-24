@@ -1,12 +1,30 @@
 import React from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { NavbarMenu } from '../mockData/data'
+import { Home, Calculator, Users, Phone, HelpCircle } from 'lucide-react'
 import '../styles/navbar.css'
 
 const NavbarDesktop = ({ customConfig }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const menuItems = customConfig || NavbarMenu
+
+    const getIconForMenuItem = (itemName) => {
+        switch (itemName) {
+            case 'Home':
+                return <Home className="menu-icon" size={18} />
+            case 'Services':
+                return <Calculator className="menu-icon" size={18} />
+            case 'Why Us':
+                return <Users className="menu-icon" size={18} />
+            case 'Contact Us':
+                return <Phone className="menu-icon" size={18} />
+            case 'FAQ':
+                return <HelpCircle className="menu-icon" size={18} />
+            default:
+                return null
+        }
+    }
 
     const handleLogoClick = (e) => {
         e.preventDefault()
@@ -30,6 +48,8 @@ const NavbarDesktop = ({ customConfig }) => {
                     {menuItems.map((item) => {
                         if (item.path === '#services' && location.pathname === '/services') return null
                         const isHashLink = item.path.startsWith('#')
+                        const icon = getIconForMenuItem(item.name)
+                        
                         if (isHashLink) {
                             return (
                                 <button key={item.id} className="menu-link" onClick={() => {
@@ -47,12 +67,14 @@ const NavbarDesktop = ({ customConfig }) => {
                                         window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
                                     }
                                 }}>
+                                    {icon && icon}
                                     <span className="menu-text">{item.name}</span>
                                 </button>
                             )
                         }
                         return (
                             <Link key={item.id} to={item.path} className="menu-link">
+                                {icon && icon}
                                 <span className="menu-text">{item.name}</span>
                             </Link>
                         )

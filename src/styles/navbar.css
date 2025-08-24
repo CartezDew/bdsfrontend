@@ -9,6 +9,10 @@
     width: 100%;
  
   }
+ 
+  /* Visibility defaults: desktop shown, mobile hidden */
+  .navbar-visible-desktop { display: block; }
+  .navbar-visible-mobile { display: none; }
   
   /* Add padding to body to account for fixed navbar */
   body {
@@ -366,6 +370,28 @@
 .mobile-nav-close-line:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
 .mobile-nav-close-line:nth-child(2) { transform: translate(-50%, -50%) rotate(-45deg); }
 
+@media (max-width: 900px) {
+ 
+  /* Desktop navbar sizing + spacing trims */
+  .navbar-desktop .logo-image {
+    width: clamp(1.0rem, 2.2vw, 1.25rem);
+    height: clamp(1.0rem, 2.2vw, 1.25rem);
+  }
+  .navbar-desktop .menu-section {
+    gap: clamp(0.5rem, 1.8vw, 1rem);
+  }
+  .navbar-desktop .menu-icon {
+    width: clamp(0.75rem, 1.8vw, 0.95rem);
+    height: clamp(0.75rem, 1.8vw, 0.95rem);
+  }
+  .navbar-desktop .menu-text {
+    font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+  }
+  .navbar-desktop .get-started-btn {
+    padding: clamp(0.3rem, 1.2vw, 0.45rem) clamp(0.45rem, 1.6vw, 0.6rem);
+    font-size: clamp(0.68rem, 1.5vw, 0.78rem);
+  }
+}
 
 /* Hide hamburger above 680px */
 @media (min-width: 681px) {
@@ -402,10 +428,10 @@
 }
   
 /* Visibility gates */
-@media (max-width: 680px) {
+/* @media (max-width: 680px) {
   .navbar-visible-desktop { display: none; }
   .navbar-visible-mobile { display: block; }
-}
+} */
 
 @media (max-width: 520px) {
   .get-started-btn { padding: 0.35rem 0.3rem; font-size: 0.7rem; }
