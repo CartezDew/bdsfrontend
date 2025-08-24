@@ -366,6 +366,12 @@
 .mobile-nav-close-line:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
 .mobile-nav-close-line:nth-child(2) { transform: translate(-50%, -50%) rotate(-45deg); }
 
+
+/* Hide hamburger above 680px */
+@media (min-width: 681px) {
+  .hamburger-line { display: none !important; }
+}
+
 /* Show toggle on small screens */
 @media (max-width: 680px) {
   .mobile-nav-toggle { 
