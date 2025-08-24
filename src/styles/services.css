@@ -59,7 +59,7 @@
 }
 
 .services-title {
-  font-size: 2.5rem;
+  font-size: clamp(2.2rem, 3.7vw, 3rem);
   font-weight: 900;
   color: var(--color-hunter-green);
   margin-bottom: 1rem;
@@ -67,12 +67,13 @@
 }
 
 .services-subtitle {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
   color: var(--color-errie-black);
-  max-width: 600px;
+  max-width: auto;
   margin: 0 auto;
   line-height: 1.6;
-  opacity: 0.9;
+  opacity: 0.8;
+
 }
 
 /* Services Grid Layout */
@@ -80,7 +81,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -143,7 +144,7 @@
 
 .service-title {
   color: white;
-  font-size: 1.5rem;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
   font-weight: 700;
   margin-bottom: 0.75rem;
   text-align: left;
@@ -167,7 +168,7 @@
 
 .service-description {
   color: white;
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   text-align: left;
@@ -201,7 +202,7 @@
   gap: 0.5rem;
   position: absolute;
   z-index: 2; /* Above the card */
-  left: 6px; /* Moved left to overlap the strap */
+  left: -14px; /* Moved left to overlap the strap */
   bottom: 15px; /* Moved higher up */
   min-width: 140px;
   box-shadow: 0 6px 16px rgba(227, 89, 3, 0.50);
@@ -209,8 +210,8 @@
 }
 
 .learn-more-btn:hover {
-  background: var(--color-golden-brown);
-  transform: translateY(-1px);
+  /* background: var(--color-golden-brown); */
+  transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 176, 80, 0.45);
 }
 
@@ -224,7 +225,7 @@
 }
 
 .learn-more-btn:hover .arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 /* Service Type Toggle */
@@ -240,7 +241,7 @@
   border: 2px solid var(--color-hunter-green);
   background: transparent;
   color: var(--color-hunter-green);
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -304,7 +305,7 @@
 .service-type-note {
   text-align: center;
   color: var(--color-hunter-green);
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
   font-style: italic;
   opacity: 0.8;
   margin-top: 0.5rem;
@@ -315,7 +316,7 @@
 .service-price {
   position: absolute;
   bottom: 15px;
-  right: 2rem;
+  right: 1rem;
   font-size: 0.9rem;
   color: white;
   opacity: 0.6;
@@ -324,23 +325,18 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1150px) {
   .services-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2.5rem;
+    max-width: 900px;
   }
   .service-card {
     margin-left: 25px;
   }
-  .service-card::before {
-    left: -15px; /* Adjusted for smaller screens */
-    width: 110px;
-    height: 48px;
-    bottom: 30px; /* Adjusted for smaller screens */
-    clip-path: polygon(18px 0, 100% 0, 100% 100%, 0 100%);
-  }
+
   .learn-more-btn {
-    left: -15px; /* Adjusted for smaller screens */
+    left: -14px; /* Adjusted for smaller screens */
     bottom: 15px;
   }
 }
