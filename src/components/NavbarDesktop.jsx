@@ -109,8 +109,8 @@ const NavbarDesktop = ({ customConfig }) => {
             <div className="navbar-container">
                 <div className="logo-section">
                     <button className="logo-link" onClick={handleLogoClick}>
-                        <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
-                        <h1 className="logo-text">Talent Group</h1>
+                        <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image-nav" />
+                        <h1 className="logo-text-nav">Talent Group</h1>
                     </button>
                 </div>
                 <AnimatePresence initial={false}>

@@ -97,8 +97,8 @@ const NavbarMobile = ({ customConfig }) => {
         <nav className="navbar navbar-mobile">
             <div className="navbar-container">
                 <div className="logo-section">
-                    <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
-                    <h1 className="logo-text">Talent Group</h1>
+                    <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image-nav" />
+                    <h1 className="logo-text-nav">Talent Group</h1>
                 </div>
                 <button className={`mobile-nav-toggle ${isOpen ? 'open' : ''}`} onClick={() => { try { console.log('[NavbarMobile] toggle button clicked') } catch {}; setIsOpen(v => !v) }} aria-label="Toggle mobile menu">
                     <span className="mobile-nav-line"></span>
