@@ -15,6 +15,7 @@ function App() {
   const isHomePage = location.pathname === '/'
   const [showNavbar, setShowNavbar] = useState(!isHomePage)
   const navbarStateRef = useRef(showNavbar)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   // Update ref when state changes
   useEffect(() => {
@@ -32,6 +33,8 @@ function App() {
     setShowNavbar(false)
     
     const handleScroll = () => {
+      // If mobile menu is open, keep navbar mounted and ignore auto-hide
+      if (mobileMenuOpen) return
       // Look for the avoid confusion section by its class name
       const avoidConfusionSection = document.querySelector('.avoid-confusion-section')
       
@@ -51,7 +54,7 @@ function App() {
     handleScroll() // Check initial position
 
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isHomePage, location.pathname])
+  }, [isHomePage, location.pathname, mobileMenuOpen])
 
   // If we land on home route with a hash (e.g., /#services), perform precise scroll
   useEffect(() => {
@@ -173,7 +176,9 @@ function App() {
       console.log('[App] toggleMobileMenu intercepted; showNavbar?', navbarStateRef.current, 'detail:', e && e.detail)
       if (e?.detail?.rebroadcast) return; // ignore our own rebroadcasts
       if (!navbarStateRef.current) {
-        setShowNavbar(true);
+        // Force mount and mark menu as opening to prevent auto-hide during scroll
+        setShowNavbar(true)
+        setMobileMenuOpen(true)
         setTimeout(() => {
           console.log('[App] rebroadcasting toggleMobileMenu to Navbar')
           window.dispatchEvent(new CustomEvent('toggleMobileMenu', { detail: { source: 'app-rebroadcast', rebroadcast: true, ts: Date.now() } }));
@@ -188,6 +193,12 @@ function App() {
   useEffect(() => {
     const onMobileMenuState = (e) => {
       const open = !!(e && e.detail && e.detail.open)
+      setMobileMenuOpen(open)
+      if (open) {
+        // Ensure navbar remains mounted while menu is open
+        if (!navbarStateRef.current) setShowNavbar(true)
+        return
+      }
       if (!open && location.pathname === '/') {
         // check if we are near top/hero
         const hero = document.getElementById('hero')
@@ -205,12 +216,18 @@ function App() {
     window.addEventListener('mobileMenuState', onMobileMenuState)
     return () => window.removeEventListener('mobileMenuState', onMobileMenuState)
   }, [location.pathname])
+
+  // Safeguard: force-close mobile menu on route changes
+  useEffect(() => {
+    try { document.body.classList.remove('mobile-menu-opened') } catch {}
+    try { window.dispatchEvent(new CustomEvent('mobileMenuState', { detail: { open: false, source: 'app-route-change', ts: Date.now() } })) } catch {}
+  }, [location.key])
   
   return (
     <ServiceProvider>
-      <div className="App">
-        {/* Show navbar on non-home pages OR when scrolling past hero on home page */}
-        {showNavbar && <Navbar />}
+      <div className={`App ${showNavbar ? '' : 'navbar-hidden'}`}>
+        {/* Navbar is always mounted; visibility controlled by wrapper class */}
+        <Navbar />
         <Routes>
         <Route path="/" element={
           <>

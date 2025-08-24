@@ -142,7 +142,7 @@ const Hero = () => {
     const handleMobileMenuState = (e) => {
       if (e && e.detail && typeof e.detail.open === 'boolean') {
         if (e.detail.open) {
-          // Wait for explicit animation-end signal to hide
+          // After the mobile menu opens, keep hamburger hidden
           return;
         } else {
           // Fallback: ensure it reappears shortly after close begins
@@ -156,11 +156,10 @@ const Hero = () => {
       }
     };
     const handleOpenAnimEnd = () => {
-      try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'none', 'important'); } catch {}
+      // Morph finished. Ease the button off to the right but keep it mounted.
       setHideHeroToggle(true);
     };
     const handleCloseAnimEnd = () => {
-      try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'flex', 'important'); } catch {}
       setHideHeroToggle(false);
       setIsHeroHamburgerOpenAnim(false);
     };
@@ -218,18 +217,14 @@ const Hero = () => {
                 Contact Us
               </button>
             </div>
-            <button ref={heroHamburgerRef} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''}`} onClick={() => {
+            <button ref={heroHamburgerRef} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''} ${hideHeroToggle ? 'offstage' : ''}`} onClick={() => {
                try {
                  console.log('[Hero] hamburger clicked → dispatch toggleMobileMenu');
-                 // Step 1: animate hamburger → X
+                 // Animate hamburger → X
                  setIsHeroHamburgerOpenAnim(true);
-                 // Step 2: after morph completes, open navbar (slide-down animation handled in CSS)
-                 setTimeout(() => {
-                   const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
-                   window.dispatchEvent(evtWin);
-                   const evtDoc = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-doc', ts: Date.now() } });
-                   document.dispatchEvent(evtDoc);
-                 }, 280); // match CSS transition duration
+                 // Dispatch immediately so navbar opens without delay
+                const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
+                window.dispatchEvent(evtWin);
                } catch (err) {
                  console.error('[Hero] error dispatching toggleMobileMenu', err);
                }

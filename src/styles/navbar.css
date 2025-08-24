@@ -290,7 +290,7 @@
   left: 0;
   
  
-  width: 33.333vw; /* one-third of the viewport width */
+  width: 40vw; /* one-third of the viewport width */
   background: linear-gradient(135deg, #ffffff 0%, #f8f9f8 25%, #f0f2f0 50%, #e8ebe8 75%, #e0e4e0 100%);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   padding: 1rem;
@@ -367,24 +367,58 @@
 .mobile-nav-close-line:nth-child(2) { transform: translate(-50%, -50%) rotate(-45deg); }
 
 /* Show toggle on small screens */
-@media (max-width: 768px) {
-  .mobile-nav-toggle { display: flex; }
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .navbar-container { padding: 0 0.75rem; }
-
+@media (max-width: 680px) {
+  .mobile-nav-toggle { 
+    display: flex; 
+  }
   /* Hide full menu on mobile */
-  .menu-section { display: none; }
-
-  .logo-text { font-size: 0.875rem; }
-  .logo-image { width: 1.25rem; height: 1.25rem; margin-right: 0.5rem; }
+  .menu-section { 
+    display: none;
+  }
+  .logo-section {
+    gap: -0.5rem;
+  }
+  .logo-image { 
+    width: 1.25rem; 
+    height: 1.25rem;
+    margin-right: 0.2rem;
+  }
+  .navbar-container {
+    padding: 0 0.5rem;
+  }
+  .logo-text { 
+  font-size: clamp(0.8rem, 3.5vw, 1.1rem);
+  }
+  .get-started-btn {
+    padding: 0.35rem 0.3rem; 
+    font-size: clamp(0.7rem, 3.3vw, .9rem);
+   }
+}
+  
+/* Visibility gates */
+@media (max-width: 680px) {
+  .navbar-visible-desktop { display: none; }
+  .navbar-visible-mobile { display: block; }
 }
 
-@media (max-width: 480px) {
-  .navbar-container { padding: 0 0.5rem; }
-  .logo-text { font-size: 0.75rem; }
-  .get-started-btn { padding: 0.25rem 0.5rem; font-size: 0.6rem; }
+@media (max-width: 520px) {
+  .get-started-btn { padding: 0.35rem 0.3rem; font-size: 0.7rem; }
 }
+
+/* Desktop variant marker */
+.navbar-desktop .mobile-nav-toggle { display: none !important; }
+.navbar-desktop .mobile-nav-menu { display: none !important; }
+
+/* Mobile variant marker */
+.navbar-mobile .menu-section { display: none !important; }
+
+/* App wrapper visibility control */
+.App.navbar-hidden .navbar-visible-desktop,
+.App.navbar-hidden .navbar-visible-mobile {
+  display: none;
+}
+
+/* Ensure mobile navbar is visible while menu is open */
+body.mobile-menu-opened .navbar-visible-mobile { display: block !important; }
+body.mobile-menu-opened .navbar-visible-desktop { display: none !important; }
   
