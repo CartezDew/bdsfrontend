@@ -63,13 +63,15 @@
 /* Left-side mini nav */
 .hero-left-nav {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;             /* prevent wrapping that shifts links */
   gap: 1rem 1.25rem;
   margin-bottom: 0.25rem;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;   /* let margin-left:auto on links push to right */
+  align-items: flex-start;       /* align children (logo + links) to top */
   padding-top: 0rem; /* Consistent top padding for the container */
   margin-top: -.3rem;
+  width: 100%;
+  position: relative;            /* anchor absolute hamburger */
 }
 
 /* Logo Section - Exact copy from navbar */
@@ -105,14 +107,18 @@
 .hero-nav-links-hero {
   display: flex;
   gap: clamp(.5rem, 1.3vw, 1.5rem);
-  align-items: flex-start;
+  flex-wrap: nowrap;            /* keep links on one line */
+  justify-content: flex-end;    /* align items to the right within self */
+  align-items: flex-start;      /* align to top */
   margin-top: 0;
-  padding-top: 0; /* Consistent with container */
-  align-self: flex-start; /* Ensure it aligns to the top */
+  padding-top: 0;               /* Consistent with container */
+  margin-left: auto;            /* push group to far right of parent row */
+  align-self: flex-start;       /* align this flex item to the top within row */
+
 }
 
 .hero-left-link {
-  display: flex;
+  display: inline-flex;         /* valid display for inline buttons */
   align-items: center;
   gap: clamp(0.3rem, 0.5vw, 0.6rem);
   font-weight: 400;
@@ -148,8 +154,10 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
-  position: relative;
+  z-index: 50; /* above links */
+  position: absolute;  /* take no layout space */
+  top: 0;
+  right: 0;
 }
 
 .hamburger-line {

@@ -426,5 +426,5 @@
 
 /* Ensure mobile navbar is visible while menu is open */
 body.mobile-menu-opened .navbar-visible-mobile { display: block !important; }
-body.mobile-menu-opened .navbar-visible-desktop { display: none !important; }
+body.mobile-menu-opened .navbar-visible-desktop { display: none !important; } 
   
