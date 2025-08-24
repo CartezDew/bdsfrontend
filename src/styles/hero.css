@@ -69,6 +69,7 @@
   justify-content: space-between;
   align-items: flex-start;
   padding-top: 0rem; /* Consistent top padding for the container */
+  margin-top: -.3rem;
 }
 
 /* Logo Section - Exact copy from navbar */
@@ -76,7 +77,7 @@
   display: flex;
   align-items: flex-start;
   flex-shrink: 0;
-  padding-top: 0; /* Reset any padding to inherit from parent */
+  padding-top: 0; /* Reset any padding to inheritfrom parent */
 }
 
 .logo-link-hero {
@@ -136,11 +137,11 @@
 }
 
 .hero-hamburger-menu {
-  display: none;
+  display: none; /* Hidden by default, shown in media query */
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: clamp(1.5rem, 3vw, 2.5rem);
+  height: clamp(1.5rem, 3vw, 2.5rem);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -150,7 +151,7 @@
 
 .hamburger-line {
   width: 100%;
-  height: 0.25rem;
+  height: clamp(0.2rem, 0.4vw, 0.3rem);
   background-color: var(--color-hunter-green);
   border-radius: 0.125rem;
   transition: all 0.3s ease;
@@ -175,7 +176,7 @@
 .hero-nav-buttons {
   position: absolute;
   top: clamp(0.75rem, 1.5vw, 1.5rem);
-  right: clamp(1rem, 2vw, 2rem);
+  right: 1.5rem;
   display: flex;
   gap: clamp(0.5rem, 1vw, 1rem);
   z-index: 10;
@@ -385,7 +386,21 @@
     align-items: center;     /* left-align the block's contents */
     text-align: left;
     inline-size: max-content;    /* shrink to text width so "left" is visible */
-  }
+}
+
+/* header row: icon + number inline */
+.proof-header-right{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.proof-icon-right{
+  width: 1rem;
+  height: 1rem;
+  color: #D8CBC7;
+  opacity: 0.9;
+}
   
   /* Text styles (left-aligned) */
   .proof-number-right{
@@ -393,7 +408,7 @@
     font-weight: 800;
     color: #D8CBC7;
     line-height: 1;
-    margin: 0;
+    padding-bottom: 0.5rem;
   }
   
   .proof-label-right{
@@ -404,6 +419,7 @@
     line-height: 1.2;
     margin: 0;
     text-transform: lowercase;
+  
   }
 
 /* === BOTTOM TICKER (spans both columns) === */
@@ -465,12 +481,13 @@
   .hero-image-container {
     grid-template-rows: 1fr auto;
     padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   
   .hero-media {
     height: clamp(250px, 30vw, 400px);
     margin-top: 2.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     margin-left: -.5rem !important;
     margin-right: -.5rem !important;
     overflow: hidden;
@@ -478,7 +495,7 @@
   
   .social-proof-right {
     gap: clamp(1rem, 1.5vw, 1.5rem);
-    padding-top: 0.5rem;
+    padding-top: 1rem;
     min-height: auto;
     margin-left: -.5rem !important;
     margin-right: -.5rem !important;
@@ -493,8 +510,8 @@
   }
   
   .hero-nav-buttons {
-    top: clamp(0.5rem, 1vw, 1rem);
-    right: clamp(0.75rem, 1.5vw, 1.5rem);
+  
+    right: 1rem;
   }
 }
 
@@ -512,7 +529,9 @@
       "ticker"
       "right";
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0,1fr) auto minmax(0,1fr);
+    /* Let rows shrink to content to avoid extra vertical space */
+    grid-template-rows: auto auto auto;
+    align-content: start;
     }
     
   .hero-nav-links-hero {
@@ -530,20 +549,275 @@
   .hero-nav-buttons {
     display: none;
   }
+
+  
+  .logo-image {
+    width: clamp(2rem, 5vw, 3rem);
+    height: clamp(2rem, 5vw, 3rem);
   }
 
+  .logo-text-hero{
+    font-size: clamp(1.35rem, 4vw, 2.1rem) !important;
+    line-height: 1.1;
+  }
 
+  .hero-content h1 {
+    font-size: clamp(2rem, 6.5vw, 4rem);
+  }
+
+  .hero-content p {
+    font-size: clamp(1.3rem, 2vw, 2rem);
+  }
+
+  .hero-content {
+    padding-bottom: clamp(1rem, 5vw, 2rem) !important;
+  }
+  
+  /* CTA button font scaling on mobile */
+  .cta-button-primary,
+  .cta-button-secondary {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  }
+  
+  /* Fix image cutoff and lay out proof + image side-by-side */
+  .hero-media {
+    height: clamp(200px, 40vw, 400px);
+    width: clamp(200px, 40vw, 400px);
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    justify-self: flex-end;
+  }
+
+  
+  .hero-image-container {
+    padding-top: 0;
+    margin-bottom: 3rem;
+    row-gap: 0.5rem;
+    column-gap: 0.75rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* proof | image */
+    grid-template-areas: "proof image";
+    align-items: center;
+    /* Override grid height constraints */
+    grid-template-rows: auto auto !important;
+    min-height: auto !important;
+    height: auto !important;
+    /* Remove all padding */
+    padding: 1rem 1.5rem 1rem 1rem !important;
+    /* Remove any remaining spacing */
+    gap: 0 !important;
+  }
+
+  /* Ensure images align to top on small screens to avoid cropping important content */
+  .hero-image-wrapper img,
+  .hero-grid-item img,
+  .hero-base-image {
+    object-position: top center;
+  }
+
+  /* Show mobile social proof, hide desktop */
+  .social-proof-mobile {
+    display: flex !important;
+    grid-area: proof;
+    flex-direction: column;
+    gap: 0 !important;
+    justify-content: space-around;
+    height: 100%;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0; /* allow shrinking within the grid cell */
+    /* Remove all padding */
+    padding: 0 !important;
+  }
+
+  .proof-item-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: clamp(0.5rem, 1.2vw, 0.8rem) clamp(0.5rem, 1.2vw, 0.9rem);
+    background: rgba(0,0,0,0.14);
+    border: 1px solid rgba(216,203,199,0.18);
+    flex: 0 0 auto;
+    align-self: stretch;
+  }
+
+  .proof-icon-mobile {
+    width: clamp(2rem, 4vw, 3rem);
+    height: clamp(2rem, 4vw, 3rem);
+    color: var(--color-timberwolf);
+    padding: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .proof-content-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1 1 auto;
+    min-width: 0;
+
+  }
+
+  .proof-number-mobile {
+    font-size: clamp(0.9rem, 2.8vw, 1.35rem);
+    font-weight: 800;
+    color: var(--color-timberwolf);
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .proof-label-mobile {
+    font-size: clamp(0.6rem, 2vw, 0.8rem);
+    font-weight: 600;
+    color: rgba(216,203,199,0.9); /* timberwolf */
+    line-height: 1.2;
+    text-transform: none;
+    opacity: 0.7;
+    padding-left: 0rem;
+  }
+  
+  .social-proof-right {
+    display: none;
+  }
+  
+}
+
+@media (max-width: 520px) {
+  .hero-content p {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+  }
+  
+  /* Tighten container to avoid horizontal overflow while keeping side padding */
+  .hero-inner {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    padding-left: clamp(0.75rem, 4vw, 1rem);
+    padding-right: clamp(0.75rem, 4vw, 1rem);
+    overflow-x: hidden; /* guard against child overflow */
+  }
+
+  /* Allow grid children to shrink instead of forcing overflow */
+  .hero-left,
+  .hero-right,
+  .services-ticker {
+    min-width: 0;
+    max-width: 100%;
+  }
+  
+  /* Make social proof boxes smaller to give more room for images */
+  .social-proof-mobile {
+    justify-content: space-around;
+    align-items: stretch;
+    gap: 0 !important;
+  }
+  
+  .proof-item-mobile {
+    padding: 0.4rem 0.6rem;
+    flex: 0 0 auto;
+    width: 100% !important;
+    max-width: 90%;
+    align-self: stretch;
+    padding-left: 0.2rem !important;
+  }
+
+  .proof-label-mobile {
+    font-size: clamp(0.5rem, 2vw, 0.9rem);
+  }
+
+  .proof-number-mobile {
+    font-size: clamp(1rem, 4.5vw, 1.5rem);
+  }
+  
+  /* Adjust grid layout to 40/60 split for more image space */
+  .hero-image-container {
+    grid-template-columns: 40% 60%;
+    align-items: stretch; /* let both columns fill the row height */
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden; /* prevent internal overflow */
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+    padding-left: .5rem !important;
+    padding-right: .7rem !important;
+  }
+  
+  /* Make image fill the available 60% space without causing overflow */
+  .hero-media {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: clamp(250px, 50vw, 350px) !important;
+    object-fit: cover;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 409px) {
+  .ticker-item {
+    font-size: clamp(.7rem, 1.5vw, 1.2rem);
+  }
+
+  .ticker-separator {
+    margin: 0rem 0rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Reduce CTA button sizes */
+  .cta-button-primary,
+  .cta-button-secondary {
+    font-size: clamp(0.7rem, 2.2vw, 1rem);
+    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem);
+  }
+  
+  /* Reduce p tag size */
+  .hero-content p {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+  }
+  
+  /* Reduce h1 size */
+  .hero-content h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+  
+  /* Reduce logo size */
+  .logo-image {
+    width: clamp(1.8rem, 4.5vw, 2.5rem);
+    height: clamp(1.8rem, 4.5vw, 2.5rem);
+  }
+  
+  /* Reduce logo text size */
+  .logo-text-hero {
+    font-size: clamp(1.1rem, 3.5vw, 1.8rem) !important;
+  }
+  
+  /* Reduce hamburger icon size */
+  .hero-hamburger-menu {
+    width: clamp(1.2rem, 2.8vw, 2rem);
+    height: clamp(1.2rem, 2.8vw, 2rem);
+  }
+  
+  .hamburger-line {
+    height: clamp(0.15rem, 0.35vw, 0.25rem);
+  }
+}
 
 @media (max-width: 349px) {
-  .hero-image-container {
-    padding: 1rem;
-    margin: 1rem;
+  /* .hero-image-container {
+    padding: 0.5rem;
+    margin: 0.5rem;
   }
   
   .hero-media {
-    height: clamp(200px, 25vw, 300px);
-    margin: 1rem;
-  }
+    height: clamp(250px, 35vw, 350px);
+    margin: 0.5rem;
+  } */
   
   .social-proof-right {
     margin: 1rem;
@@ -556,7 +830,7 @@
   }
 }
 
-@media (max-width: 650px) {
+/* @media (max-width: 650px) {
   .hero-content h1 {
     font-size: clamp(1.8rem, 2.2vw, 2.2rem);
   }
@@ -565,10 +839,10 @@
     font-size: clamp(0.95rem, 1.2vw, 1.05rem);
     line-height: 1.5;
   }
-}
+} */
 
 
-@media (max-width: 680px){
+/* @media (max-width: 680px){
   .hero-inner{
     grid-template-areas:
       "left"
@@ -593,5 +867,8 @@
   .hero-nav-buttons {
     display: none;
   }
-  }
+  } */
+
+/* Ensure mobile social proof is hidden by default (desktop/tablet) */
+.social-proof-mobile { display: none; }
 

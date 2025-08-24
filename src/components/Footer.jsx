@@ -57,7 +57,7 @@ const Footer = () => {
           onClick={() => scrollToSection('appointment-scheduler')}
           className="footer-nav-btn"
         >
-          Schedule Appointment
+          Schedule Consultation
         </button>
         <span className="footer-separator">|</span>
         

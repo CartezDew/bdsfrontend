@@ -229,7 +229,7 @@
 @media (max-width: 768px) {
   .avoid-confusion-section {
     padding: 3rem 1.5rem;
-    margin-top: 3rem;
+    margin-top: 0rem;
   }
   
   .avoid-confusion-header {

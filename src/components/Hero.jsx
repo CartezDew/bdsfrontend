@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/hero.css';
 import HeroImageShowcase from './HeroImageShowcase.jsx';
 import heroImages from './data/heroImages.js';
+import { HeartHandshake } from 'lucide-react';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Hero = () => {
   const buttonsRef = useRef(null);
   const imageContainerRef = useRef(null);
   const socialProofRef = useRef(null);
+  const socialProofMobileRef = useRef(null);
   const tickerRef = useRef(null);
 
   const tickerItems = [
@@ -35,6 +37,27 @@ const Hero = () => {
   const mobileTickerItems = [
     'Tax Returns', 'Payroll', 'Bookkeeping', 'Reporting', 'Advisory'
   ];
+
+  const smallMobileTickerItems = [
+    'Tax Returns', 'Payroll', 'Bookkeeping', 'Advisory'
+  ];
+
+  const getTickerItemsForWidth = (width) => {
+    if (width <= 505) return smallMobileTickerItems;
+    if (width <= 720) return mobileTickerItems;
+    return tickerItems;
+  };
+
+  const [currentTickerItems, setCurrentTickerItems] = useState(() => getTickerItemsForWidth(typeof window !== 'undefined' ? window.innerWidth : 9999));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentTickerItems(getTickerItemsForWidth(window.innerWidth));
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Handle ticker item click - navigate to services
   const handleTickerClick = () => {
@@ -99,17 +122,17 @@ const Hero = () => {
       });
     }, { threshold: 0.05, rootMargin: '0px' });
 
-    [navRef, headlineRef, subtextRef, buttonsRef, imageContainerRef, socialProofRef, tickerRef]
+    [navRef, headlineRef, subtextRef, buttonsRef, imageContainerRef, socialProofRef, socialProofMobileRef, tickerRef]
       .forEach(r => r.current && observer.observe(r.current));
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setHighlightedIndex(prev => (prev + 1) % tickerItems.length);
+      setHighlightedIndex(prev => (prev + 1) % currentTickerItems.length);
     }, 2500);
     return () => clearInterval(id);
-  }, [tickerItems.length]);
+  }, [currentTickerItems.length]);
 
   return (
     /* OUTER = full-bleed background only */
@@ -229,10 +252,67 @@ const Hero = () => {
             <Link to="/signin" className="hero-nav-btn">Sign In</Link>
             <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
           </div>
+          
+          {/* Mobile Social Proof - Left of image under 680px */}
+          <div
+            ref={socialProofMobileRef}
+            data-animate="socialProof"
+            className="social-proof-mobile"
+          >
+            <motion.div
+              className="proof-item-mobile"
+              initial={{ opacity: 0, y: 12 }}
+              animate={animationsTriggered.socialProof ? { opacity: 1, y: 0, boxShadow: '0 10px 24px rgba(0,0,0,0.18)' } : {}}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.05 }}
+            >
+              {/* Clock icon for on-time filings */}
+              <svg className="proof-icon-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 3" />
+              </svg>
+              <div className="proof-content-mobile">
+                <span className="proof-number-mobile">100%</span>
+                <span className="proof-label-mobile">on-time filings</span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="proof-item-mobile"
+              initial={{ opacity: 0, y: 12 }}
+              animate={animationsTriggered.socialProof ? { opacity: 1, y: 0, boxShadow: '0 10px 24px rgba(0,0,0,0.18)' } : {}}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.15 }}
+            >
+              <HeartHandshake className="proof-icon-mobile" aria-hidden="true" />
+              <div className="proof-content-mobile">
+                <span className="proof-number-mobile">200+</span>
+                <span className="proof-label-mobile">happy clients</span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="proof-item-mobile"
+              initial={{ opacity: 0, y: 12 }}
+              animate={animationsTriggered.socialProof ? { opacity: 1, y: 0, boxShadow: '0 10px 24px rgba(0,0,0,0.18)' } : {}}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.25 }}
+            >
+              {/* Trophy/Award icon for years of experience */}
+              <svg className="proof-icon-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M8 4h8v4a4 4 0 01-4 4 4 4 0 01-4-4V4z" />
+                <path d="M6 4H4a3 3 0 003 3" />
+                <path d="M18 4h2a3 3 0 01-3 3" />
+                <path d="M12 17v4" />
+                <path d="M8 21h8" />
+              </svg>
+              <div className="proof-content-mobile">
+                <span className="proof-number-mobile">14+</span>
+                <span className="proof-label-mobile">years experience</span>
+              </div>
+            </motion.div>
+          </div>
+          
           <div className="hero-media">
             <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
           </div>
 
+          {/* Desktop Social Proof - Hidden under 680px */}
           <div
             ref={socialProofRef}
             data-animate="socialProof"
@@ -272,7 +352,7 @@ const Hero = () => {
           }}
         >
           <div className="ticker-track">
-            {(window.innerWidth <= 720 ? mobileTickerItems : tickerItems).map((label, i) => (
+            {currentTickerItems.map((label, i) => (
               <React.Fragment key={`${label}-${i}`}>
                 <motion.div
                   className="ticker-item"
@@ -288,7 +368,7 @@ const Hero = () => {
                 >
                   {label}
                 </motion.div>
-                {i < (window.innerWidth <= 720 ? mobileTickerItems.length - 1 : tickerItems.length - 1) && (
+                {i < (currentTickerItems.length - 1) && (
                   <span className="ticker-separator">•</span>
                 )}
               </React.Fragment>
@@ -296,7 +376,7 @@ const Hero = () => {
           </div>
         </div>
 
-      </div>
+        </div>
     </section>
   );
 };
