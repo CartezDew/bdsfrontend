@@ -11,6 +11,8 @@ const Hero = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [isHeroHamburgerOpenAnim, setIsHeroHamburgerOpenAnim] = useState(false); // controls X morph
+  const [hideHeroToggle, setHideHeroToggle] = useState(false); // hides after navbar begins opening
   const [animationsTriggered, setAnimationsTriggered] = useState({
     nav: false,
     headline: false,
@@ -29,6 +31,7 @@ const Hero = () => {
   const socialProofRef = useRef(null);
   const socialProofMobileRef = useRef(null);
   const tickerRef = useRef(null);
+  const heroHamburgerRef = useRef(null);
 
   const tickerItems = [
     'Tax Returns', 'Payroll', 'Bookkeeping', 'Compliance', 'Reporting', 'Tax Extensions', 'Advisory'
@@ -134,6 +137,43 @@ const Hero = () => {
     return () => clearInterval(id);
   }, [currentTickerItems.length]);
 
+  // Sync hero hamburger visibility with global mobile menu state and animation
+  useEffect(() => {
+    const handleMobileMenuState = (e) => {
+      if (e && e.detail && typeof e.detail.open === 'boolean') {
+        if (e.detail.open) {
+          // Wait for explicit animation-end signal to hide
+          return;
+        } else {
+          // Fallback: ensure it reappears shortly after close begins
+          setTimeout(() => {
+            try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'flex', 'important'); } catch {}
+            setHideHeroToggle(false);
+            setIsHeroHamburgerOpenAnim(false);
+          }, 340);
+          return;
+        }
+      }
+    };
+    const handleOpenAnimEnd = () => {
+      try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'none', 'important'); } catch {}
+      setHideHeroToggle(true);
+    };
+    const handleCloseAnimEnd = () => {
+      try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'flex', 'important'); } catch {}
+      setHideHeroToggle(false);
+      setIsHeroHamburgerOpenAnim(false);
+    };
+    window.addEventListener('mobileMenuState', handleMobileMenuState);
+    window.addEventListener('mobileMenuOpenAnimationEnd', handleOpenAnimEnd);
+    window.addEventListener('mobileMenuCloseAnimationEnd', handleCloseAnimEnd);
+    return () => {
+      window.removeEventListener('mobileMenuState', handleMobileMenuState);
+      window.removeEventListener('mobileMenuOpenAnimationEnd', handleOpenAnimEnd);
+      window.removeEventListener('mobileMenuCloseAnimationEnd', handleCloseAnimEnd);
+    };
+  }, []);
+
   return (
     /* OUTER = full-bleed background only */
     <section id="hero" className="hero-section">
@@ -178,18 +218,22 @@ const Hero = () => {
                 Contact Us
               </button>
             </div>
-            <button className="hero-hamburger-menu" onClick={() => {
-              try {
-                console.log('[Hero] hamburger clicked → dispatch toggleMobileMenu');
-                const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
-                window.dispatchEvent(evtWin);
-                const evtDoc = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-doc', ts: Date.now() } });
-                document.dispatchEvent(evtDoc);
-              } catch (err) {
-                console.error('[Hero] error dispatching toggleMobileMenu', err);
-              }
+            <button ref={heroHamburgerRef} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''}`} onClick={() => {
+               try {
+                 console.log('[Hero] hamburger clicked → dispatch toggleMobileMenu');
+                 // Step 1: animate hamburger → X
+                 setIsHeroHamburgerOpenAnim(true);
+                 // Step 2: after morph completes, open navbar (slide-down animation handled in CSS)
+                 setTimeout(() => {
+                   const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
+                   window.dispatchEvent(evtWin);
+                   const evtDoc = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-doc', ts: Date.now() } });
+                   document.dispatchEvent(evtDoc);
+                 }, 280); // match CSS transition duration
+               } catch (err) {
+                 console.error('[Hero] error dispatching toggleMobileMenu', err);
+               }
             }}>
-              <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
             </button>

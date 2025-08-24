@@ -15,7 +15,7 @@ function App() {
   const isHomePage = location.pathname === '/'
   const [showNavbar, setShowNavbar] = useState(!isHomePage)
   const navbarStateRef = useRef(showNavbar)
-  
+
   // Update ref when state changes
   useEffect(() => {
     navbarStateRef.current = showNavbar
@@ -148,24 +148,23 @@ function App() {
       return rectTop - navbarHeight - marginTop - borderTop
     }
 
-    // defer to allow DOM render then do initial smooth scroll
-    setTimeout(() => {
+    // Wait for navbar to mount this frame, then measure and scroll precisely
+    requestAnimationFrame(() => {
       const pos = computeScrollTop()
       if (pos == null) return
       window.scrollTo({ top: pos, behavior: 'smooth' })
-    }, 50)
+    })
 
-    // post-adjust like hero controls (in case navbar size changes during scroll)
     setTimeout(() => {
       const pos = computeScrollTop()
       if (pos == null) return
       window.scrollTo({ top: pos, behavior: 'auto' })
-    }, 350)
+    }, 320)
     setTimeout(() => {
       const pos = computeScrollTop()
       if (pos == null) return
       window.scrollTo({ top: pos, behavior: 'auto' })
-    }, 700)
+    }, 650)
   }, [isHomePage, location.key])
   
   // Bridge hero hamburger → Navbar when navbar is hidden

@@ -136,10 +136,12 @@
   font-weight: 600 !important;
 }
 
+/* Hero hamburger (two-line) default positions */
 .hero-hamburger-menu {
-  display: none; /* Hidden by default, shown in media query */
+  display: none; /* shown in media query */
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   width: clamp(1.5rem, 3vw, 2.5rem);
   height: clamp(1.5rem, 3vw, 2.5rem);
   background: transparent;
@@ -147,14 +149,30 @@
   cursor: pointer;
   padding: 0;
   z-index: 10;
+  position: relative;
 }
 
 .hamburger-line {
-  width: 100%;
-  height: clamp(0.2rem, 0.4vw, 0.3rem);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70%;
+  height: clamp(0.18rem, 0.35vw, 0.28rem);
   background-color: var(--color-hunter-green);
   border-radius: 0.125rem;
-  transition: all 0.3s ease;
+  transform-origin: center;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease, width 200ms ease;
+}
+
+.hamburger-line:nth-child(1) { transform: translate(-50%, calc(-50% - 5px)); }
+.hamburger-line:nth-child(2) { transform: translate(-50%, calc(-50% + 5px)); }
+
+/* Open state becomes X */
+.hero-hamburger-menu.open .hamburger-line:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.hero-hamburger-menu.open .hamburger-line:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* === RIGHT COLUMN === */
@@ -572,6 +590,19 @@
   .hero-content {
     padding-bottom: clamp(1rem, 5vw, 2rem) !important;
   }
+
+  .hero-content {
+    background: linear-gradient(
+      135deg,
+      #D8CBC7 0%,
+      #E8D8D4 42%,
+      #F0E6E2 72%,
+      rgba(226, 75, 20, 0.10) 82%,
+      rgba(226, 75, 20, 0.20) 90%,
+      rgba(204, 63, 12, 0.32) 96%,
+      rgba(204, 63, 12, 0.40) 100%
+    );
+  }
   
   /* CTA button font scaling on mobile */
   .cta-button-primary,
@@ -871,4 +902,12 @@
 
 /* Ensure mobile social proof is hidden by default (desktop/tablet) */
 .social-proof-mobile { display: none; }
+
+/* Hide hero hamburger while mobile menu is opened */
+body.mobile-menu-opened .hero-hamburger-menu { display: none !important; }
+
+/* Ensure it is visible again when menu is closed */
+@media (max-width: 680px){
+  body:not(.mobile-menu-opened) .hero-hamburger-menu { display: flex !important; }
+}
 
