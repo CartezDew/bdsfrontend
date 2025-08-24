@@ -22,43 +22,19 @@ function App() {
     navbarStateRef.current = showNavbar
   }, [showNavbar])
   
-  // Show navbar on home page when hero is out of view (with hysteresis)
+  // Navbar visibility rules:
+  // - Home ('/') → hidden by default and stays hidden (except when mobile menu is explicitly opened)
+  // - '/services' and '/get-started' → always visible
   useEffect(() => {
-    if (!isHomePage) {
+    const isSpecialRoute = location.pathname === '/services' || location.pathname === '/get-started'
+    if (isSpecialRoute) {
       setShowNavbar(true)
       return
     }
-    
-    // For home page, start with navbar hidden
+    // Home and any other routes → hide by default
     setShowNavbar(false)
-    
-    // Hysteresis to prevent flicker near threshold
-    const SHOW_THRESHOLD = 0; // hero bottom <= top
-    const HIDE_THRESHOLD = 20; // allow a small buffer when re-entering
-
-    const handleScroll = () => {
-      // If mobile menu is open, keep navbar mounted and ignore auto-hide
-      if (mobileMenuOpen) return
-      // Determine visibility by the hero section position instead
-      const heroEl = document.getElementById('hero')
-      if (heroEl) {
-        const heroRect = heroEl.getBoundingClientRect()
-        // Use thresholds to reduce rapid toggling near boundary
-        if (!navbarStateRef.current) {
-          // currently hidden → show when hero is clearly above
-          if (heroRect.bottom <= SHOW_THRESHOLD) setShowNavbar(true)
-        } else {
-          // currently shown → hide only when hero clearly re-enters view
-          if (heroRect.bottom > HIDE_THRESHOLD) setShowNavbar(false)
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Check initial position
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [isHomePage, location.pathname, mobileMenuOpen])
+    // No scroll listener needed anymore
+  }, [location.pathname, mobileMenuOpen])
 
   // If we land on home route with a hash (e.g., /#services), perform precise scroll
   useEffect(() => {

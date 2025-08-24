@@ -158,6 +158,8 @@
   position: absolute;  /* take no layout space */
   top: 0;
   right: 0;
+  will-change: transform, opacity;
+  transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1), opacity 260ms ease;
 }
 
 .hamburger-line {
@@ -911,11 +913,15 @@
 /* Ensure mobile social proof is hidden by default (desktop/tablet) */
 .social-proof-mobile { display: none; }
 
-/* Hide hero hamburger while mobile menu is opened */
-body.mobile-menu-opened .hero-hamburger-menu { display: none !important; }
+/* Animate hero hamburger offstage while mobile menu is open */
+body.mobile-menu-opened .hero-hamburger-menu {
+  transform: translateY(-10px) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* Ensure it is visible again when menu is closed */
 @media (max-width: 680px){
-  body:not(.mobile-menu-opened) .hero-hamburger-menu { display: flex !important; }
+  body:not(.mobile-menu-opened) .hero-hamburger-menu { display: flex !important; transform: translateY(0) scale(1); opacity: 1; }
 }
 

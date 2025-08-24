@@ -109,7 +109,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-copyright">
-        <p>&copy; 2025 BDS Talent Group. All rights reserved.</p>
+        <p>&copy; 2025 The BDS Talent Group. All rights reserved.</p>
       </div>
     </footer>
   );

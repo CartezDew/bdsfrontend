@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { NavbarMenu } from '../mockData/data'
-import { Home, Calculator, Users, Phone, HelpCircle } from 'lucide-react'
+import { Home, Calculator, Users, Phone, HelpCircle, MessageCircle } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import '../styles/navbar.css'
 
@@ -28,6 +28,8 @@ const NavbarDesktop = ({ customConfig }) => {
                 return <Users className="menu-icon" size={18} />
             case 'Contact Us':
                 return <Phone className="menu-icon" size={18} />
+            case 'Testimonials':
+                return <MessageCircle className="menu-icon" size={18} />
             case 'FAQ':
                 return <HelpCircle className="menu-icon" size={18} />
             default:
@@ -123,6 +125,9 @@ const NavbarDesktop = ({ customConfig }) => {
                     exit={{ opacity: 0, y: -4, transition: { duration: 0.22, ease: 'easeOut' } }}
                   >
                     {menuItems.map((item) => {
+                        // Hide Testimonials on desktop navbar
+                        if (item.name === 'Testimonials') return null
+                        
                         // On dedicated services route, fully hide Services link
                         if (item.name === 'Services' && location.pathname === '/services') return null
 

@@ -1,16 +1,27 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Home, Calculator, Users, Phone, HelpCircle, LogIn, MessageCircle } from 'lucide-react'
 import { NavbarMenu } from '../mockData/data'
 import '../styles/navbar.css'
 
 const NavbarMobile = ({ customConfig }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const isOpenRef = useRef(false)
     const navigate = useNavigate()
     const location = useLocation()
     const menuItems = customConfig || NavbarMenu
     const menuRef = useRef(null)
     const openAtRef = useRef(0)
+
+    const handleLogoClick = (e) => {
+        e.preventDefault()
+        if (location.pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        } else {
+            navigate('/')
+        }
+    }
 
     useLayoutEffect(() => {
         const setVar = () => {
@@ -33,6 +44,10 @@ const NavbarMobile = ({ customConfig }) => {
     useEffect(() => {
         const handleExternalToggle = (e) => {
             try { console.log('[NavbarMobile] toggle received', e && e.type, e && e.detail) } catch {}
+            if (isOpenRef.current) {
+                // Already open; ignore redundant toggles
+                return
+            }
             setIsOpen(true)
         }
         try { console.log('[NavbarMobile] mounting, attaching toggle listeners') } catch {}
@@ -63,6 +78,7 @@ const NavbarMobile = ({ customConfig }) => {
 
     // Publish state changes + duration tracking
     useEffect(() => {
+        isOpenRef.current = isOpen
         try { window.dispatchEvent(new CustomEvent('mobileMenuState', { detail: { open: isOpen, source: 'navbar-mobile', ts: Date.now() } })) } catch {}
         if (isOpen) {
             openAtRef.current = performance.now()
@@ -93,14 +109,45 @@ const NavbarMobile = ({ customConfig }) => {
         setIsOpen(false)
     }
 
+    const getIconForMenuItem = (name) => {
+        switch (name) {
+            case 'Home':
+                return <Home className="mobile-nav-icon" size={18} />
+            case 'Services':
+                return <Calculator className="mobile-nav-icon" size={18} />
+            case 'Why Us':
+                return <Users className="mobile-nav-icon" size={18} />
+            case 'Contact Us':
+                return <Phone className="mobile-nav-icon" size={18} />
+            case 'Testimonials':
+                return <MessageCircle className="mobile-nav-icon" size={18} />
+            case 'FAQ':
+                return <HelpCircle className="mobile-nav-icon" size={18} />
+            case 'Sign In':
+                return <LogIn className="mobile-nav-icon" size={18} />
+            default:
+                return null
+        }
+    }
+
     return (
         <nav className="navbar navbar-mobile">
             <div className="navbar-container">
                 <div className="logo-section">
-                    <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image-nav" />
-                    <h1 className="logo-text-nav">Talent Group</h1>
+                    <button className="logo-link" onClick={handleLogoClick} aria-label="Go to home">
+                        <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image-nav" />
+                        <h1 className="logo-text-nav">Talent Group</h1>
+                    </button>
                 </div>
-                <button className={`mobile-nav-toggle ${isOpen ? 'open' : ''}`} onClick={() => { try { console.log('[NavbarMobile] toggle button clicked') } catch {}; setIsOpen(v => !v) }} aria-label="Toggle mobile menu">
+                <button className={`mobile-nav-toggle ${isOpen ? 'open' : ''}`} onClick={() => { 
+                    try { console.log('[NavbarMobile] toggle button clicked') } catch {}
+                    setIsOpen(v => {
+                        // Always allow close when open
+                        if (isOpenRef.current && v) return false
+                        // Opening: if already open (shouldn't happen), keep open; else open
+                        return !v
+                    })
+                }} aria-label="Toggle mobile menu">
                     <span className="mobile-nav-line"></span>
                     <span className="mobile-nav-line"></span>
                 </button>
@@ -132,20 +179,31 @@ const NavbarMobile = ({ customConfig }) => {
                             {menuItems.map((item) => {
                                 if (item.path === '#services' && location.pathname === '/services') return null
                                 const isHash = item.path.startsWith('#')
+                                const icon = getIconForMenuItem(item.name)
                                 if (isHash) {
                                     return (
                                         <button key={item.id} className="mobile-nav-item" onClick={() => onHashClick(item.path)}>
+                                            {icon}
                                             {item.name}
                                         </button>
                                     )
                                 }
                                 return (
                                     <Link key={item.id} to={item.path} className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: route link') } catch {}; setIsOpen(false) }}>
+                                        {icon}
                                         {item.name}
                                     </Link>
                                 )
                             })}
-                            <Link to="/signin" className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: Sign In link') } catch {}; setIsOpen(false) }}>Sign In</Link>
+                            {/* Sign In */}
+                            <Link to="/signin" className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: Sign In link') } catch {}; setIsOpen(false) }}>
+                                {getIconForMenuItem('Sign In')}
+                                Sign In
+                            </Link>
+                            {/* CTA: Schedule Consultation */}
+                            <Link to="/get-started" className="mobile-nav-item cta-button-primary" onClick={() => { try { console.log('[NavbarMobile] closing reason: Schedule Consultation CTA') } catch {}; setIsOpen(false) }}>
+                                Schedule Consultation
+                            </Link>
                         </div>
                     </motion.div>
                 )}

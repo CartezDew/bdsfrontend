@@ -17,6 +17,16 @@
   .navbar-visible-desktop { display: block; }
   .navbar-visible-mobile { display: none; }
 
+  /* Show mobile navbar on services and get-started pages */
+  body:not(.mobile-menu-opened) .navbar-visible-mobile {
+    display: none;
+  }
+
+  /* Ensure mobile navbar is visible on non-home pages */
+  .App:not(.navbar-hidden) .navbar-visible-mobile {
+    display: block;
+  }
+
   /* Smoothly hide navbar when app wrapper adds navbar-hidden */
   .App.navbar-hidden .navbar {
     transform: translateY(-110%);
@@ -183,7 +193,7 @@
   }
   
   .get-started-btn:hover {
-    background-color: var(--color-golden-brown); /* green-700 */
+    background-color: rgba(154, 109, 56, 0.9);
   }
 
   /* Get Started button animation - moving sharpness effect */
@@ -432,16 +442,25 @@
     gap: -0.5rem;
   }
   .logo-image-nav { 
-    width: 1.25rem; 
-    height: 1.25rem;
+    width: clamp(1.8rem, 3.5vw, 2.35rem); 
+    height: clamp(1.8rem, 3.5vw, 2.35rem);
     margin-right: 0.2rem;
+    transition: opacity 0.2s ease;
   }
   .navbar-container {
     padding: 0 0.5rem;
   }
   .logo-text-nav { 
   font-size: clamp(0.8rem, 3.5vw, 1.1rem);
+  transition: opacity 0.2s ease;
   }
+  
+  /* Mobile navbar logo hover effects */
+  .navbar-mobile .logo-link:hover .logo-image-nav,
+  .navbar-mobile .logo-link:hover .logo-text-nav {
+    opacity: 0.7;
+  }
+  
   .get-started-btn {
     padding: 0.35rem 0.3rem; 
     font-size: clamp(0.7rem, 3.3vw, .9rem);
@@ -465,9 +484,67 @@
 /* Mobile variant marker */
 .navbar-mobile .menu-section { display: none !important; }
 
-/* App wrapper visibility control: handled via transform on .navbar now */
-
 /* Ensure mobile navbar is visible while menu is open */
 body.mobile-menu-opened .navbar-visible-mobile { display: block !important; }
-body.mobile-menu-opened .navbar-visible-desktop { display: none !important; } 
+body.mobile-menu-opened .navbar-visible-desktop { display: none !important; }
+
+/* Prevent App wrapper from hiding navbar while mobile menu is open */
+body.mobile-menu-opened .App.navbar-hidden .navbar { 
+  transform: translateY(0); 
+  opacity: 1; 
+  pointer-events: auto; 
+}
+
+/* Back to top button - only visible on mobile and when not in hero */
+.back-to-top-btn {
+  display: none;
+  position: fixed;
+  right: .5rem;
+  bottom: 2rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(154, 109, 56, 0.8);
+  color: var(--color-timberwolf);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(154, 109, 56, 0.9);
+  transition: all 0.3s ease;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.back-to-top-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(154, 109, 56, 0.4);
+}
+
+.back-to-top-btn svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(154, 109, 56, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(154, 109, 56, 0.6);
+  }
+}
+
+/* Show back to top button at 680px and below */
+@media (max-width: 680px) {
+  .back-to-top-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Hide when navbar is hidden (hero section) */
+  .App.navbar-hidden .back-to-top-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
   

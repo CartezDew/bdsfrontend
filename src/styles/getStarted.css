@@ -1081,6 +1081,13 @@
   .mouse { width: 2.6rem; height: 4rem; }
 }
 
+/* Hide scroll mouse indicator under 680px */
+@media (max-width: 680px) {
+  .scroll-mouse-indicator {
+    display: none !important;
+  }
+}
+
 /* Still Not Sure Section */
 .getstarted-still-unsure-section {
   /* background: linear-gradient(135deg, var(--color-timberwolf) 0%, rgba(216, 203, 199, 0.8) 100%); */
