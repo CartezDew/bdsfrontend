@@ -1,6 +1,7 @@
 // src/components/MeetTheOwner.jsx
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/meet_the_owner.css";
+import ceoImage from '../assets/Images/CEO_Adjusted.png';
 
 export default function MeetTheOwner() {
   const [animationsTriggered, setAnimationsTriggered] = useState(false);
@@ -36,8 +37,8 @@ export default function MeetTheOwner() {
         <div className={`meet-owner ${animationsTriggered ? 'meet-owner-animated' : ''}`}>
           <div className={`meet-owner__media ${animationsTriggered ? 'meet-owner__media-animated' : ''}`}>
             <img 
-              src={require('../assets/Images/CEO_Adjusted.png').default}
-              srcSet={`${require('../assets/Images/CEO_Adjusted.png').default} 1x`}
+              src={ceoImage}
+              srcSet={`${ceoImage} 1x`}
               sizes="(max-width: 680px) 100vw, 40vw"
               alt="Brandon Davis, CEO of BDS Talent Group" 
               className={`meet-owner__img ${animationsTriggered ? 'meet-owner__img-animated' : ''}`}
