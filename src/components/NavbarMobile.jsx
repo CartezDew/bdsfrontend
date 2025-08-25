@@ -152,7 +152,20 @@ const NavbarMobile = ({ customConfig }) => {
                     <span className="mobile-nav-line"></span>
                 </button>
                 <div className="icon-section">
-                    <Link to="/get-started" className="get-started-btn" onClick={() => { try { console.log('[NavbarMobile] closing reason: Get Started click') } catch {}; setIsOpen(false) }}>Get Started</Link>
+                    <Link 
+                        to="/get-started" 
+                        className="get-started-btn" 
+                        onClick={(e) => { 
+                            try { console.log('[NavbarMobile] closing reason: Get Started click') } catch {}; 
+                            if (location.pathname === '/get-started') {
+                                e.preventDefault()
+                                window.scrollTo({ top: 0, behavior: 'smooth' })
+                            }
+                            setIsOpen(false) 
+                        }}
+                    >
+                        Get Started
+                    </Link>
                 </div>
             </div>
 
@@ -201,7 +214,18 @@ const NavbarMobile = ({ customConfig }) => {
                                 Sign In
                             </Link>
                             {/* CTA: Schedule Consultation */}
-                            <Link to="/get-started" className="mobile-nav-item cta-button-primary" onClick={() => { try { console.log('[NavbarMobile] closing reason: Schedule Consultation CTA') } catch {}; setIsOpen(false) }}>
+                            <Link 
+                                to="/get-started" 
+                                className="mobile-nav-item cta-button-primary" 
+                                onClick={(e) => { 
+                                    try { console.log('[NavbarMobile] closing reason: Schedule Consultation CTA') } catch {}; 
+                                    if (location.pathname === '/get-started') {
+                                        e.preventDefault()
+                                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                                    }
+                                    setIsOpen(false) 
+                                }}
+                            >
                                 Schedule Consultation
                             </Link>
                         </div>

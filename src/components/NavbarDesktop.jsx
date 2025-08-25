@@ -189,7 +189,18 @@ const NavbarDesktop = ({ customConfig }) => {
                 )}
                 </AnimatePresence>
                 <div className="icon-section">
-                    <Link to="/get-started" className="get-started-btn">Get Started</Link>
+                    <Link 
+                        to="/get-started" 
+                        className="get-started-btn"
+                        onClick={(e) => {
+                            if (location.pathname === '/get-started') {
+                                e.preventDefault()
+                                window.scrollTo({ top: 0, behavior: 'smooth' })
+                            }
+                        }}
+                    >
+                        Get Started
+                    </Link>
                 </div>
             </div>
         </nav>

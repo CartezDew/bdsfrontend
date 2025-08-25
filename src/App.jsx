@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom'
 import { ServiceProvider } from './context/ServiceContext'
 import Navbar from './components/Navbar'
 import PageTitle from './components/PageTitle'
@@ -13,6 +13,7 @@ import SignIn from './components/SignIn'
 
 function App() {
   const location = useLocation()
+  const navigate = useNavigate()
   const isHomePage = location.pathname === '/'
   const [showNavbar, setShowNavbar] = useState(!isHomePage)
   const navbarStateRef = useRef(showNavbar)
@@ -189,6 +190,53 @@ function App() {
       window.scrollTo({ top: pos, behavior: 'auto' })
     }, 650)
   }, [isHomePage, location.key])
+
+  // If we navigate to home with a location.state.scrollTo, perform the same precise scroll
+  useEffect(() => {
+    if (!isHomePage) return
+    const state = location.state
+    if (!state || !state.scrollTo) return
+    const targetId = state.scrollTo
+    const computeScrollTop = () => {
+      let el = document.getElementById(targetId)
+      if (!el && targetId === 'avoid-confusion') {
+        el = document.querySelector('.avoid-confusion-section')
+      }
+      if (!el && targetId === 'appointment-scheduler') {
+        el = document.querySelector('.appointment-scheduler')
+      }
+      if (!el) return null
+      const navbarEl = document.querySelector('.navbar')
+      const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+      const rectTop = el.getBoundingClientRect().top + window.scrollY
+      const styles = window.getComputedStyle(el)
+      const marginTop = parseFloat(styles.marginTop) || 0
+      const borderTop = parseFloat(styles.borderTopWidth) || 0
+      if (targetId === 'appointment-scheduler') {
+        return rectTop - navbarHeight - marginTop - borderTop
+      }
+      return rectTop - navbarHeight - marginTop - borderTop
+    }
+
+    requestAnimationFrame(() => {
+      const pos = computeScrollTop()
+      if (pos == null) return
+      window.scrollTo({ top: pos, behavior: 'smooth' })
+    })
+    setTimeout(() => {
+      const pos = computeScrollTop()
+      if (pos == null) return
+      window.scrollTo({ top: pos, behavior: 'auto' })
+    }, 320)
+    setTimeout(() => {
+      const pos = computeScrollTop()
+      if (pos == null) return
+      window.scrollTo({ top: pos, behavior: 'auto' })
+    }, 650)
+
+    // Clear the state to avoid sticky scrolling on back/forward
+    navigate(location.pathname, { replace: true })
+  }, [isHomePage, location.state])
   
   // Bridge hero hamburger → Navbar when navbar is hidden
   useEffect(() => {
@@ -242,6 +290,76 @@ function App() {
     try { document.body.classList.remove('mobile-menu-opened') } catch {}
     try { window.dispatchEvent(new CustomEvent('mobileMenuState', { detail: { open: false, source: 'app-route-change', ts: Date.now() } })) } catch {}
   }, [location.key])
+
+  // Global handler: ensure ALL Get Started + Schedule Consultation/Appointment go to consistent locations
+  useEffect(() => {
+    const onClick = (e) => {
+      const target = e.target;
+      if (!target) return;
+      const clickable = target.closest && target.closest('a,button');
+      if (!clickable) return;
+      const text = (clickable.textContent || '').toLowerCase();
+      const classList = (clickable.className || '').toString();
+      // Match Get Started buttons generically
+      const isGetStarted = text.includes('get started');
+      // Match Schedule Consultation or Schedule Appointment buttons generically
+      const isSchedule = text.includes('schedule consultation') || text.includes('schedule appointment')
+        || classList.includes('schedule-consultation-btn')
+        || classList.includes('cta-button-primary');
+
+      // If it's a Schedule action, route to home and scroll to the appointment scheduler section
+      if (isSchedule) {
+        e.preventDefault();
+        if (location.pathname === '/') {
+          // Scroll to appointment-scheduler with navbar offset
+          const el = document.getElementById('appointment-scheduler') || document.querySelector('.appointment-scheduler');
+          const navbarEl = document.querySelector('.navbar');
+          const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0;
+          if (el) {
+            const rectTop = el.getBoundingClientRect().top + window.scrollY;
+            const styles = window.getComputedStyle(el);
+            const marginTop = parseFloat(styles.marginTop) || 0;
+            const borderTop = parseFloat(styles.borderTopWidth) || 0;
+            const pos = rectTop - navbarHeight - marginTop - borderTop;
+            window.scrollTo({ top: pos, behavior: 'smooth' });
+          }
+        } else {
+          navigate('/', { state: { scrollTo: 'appointment-scheduler' } });
+        }
+        return;
+      }
+
+      // If it's a Get Started action, normalize to /get-started top
+      const anchor = clickable.tagName === 'A' ? clickable : (clickable.closest && clickable.closest('a'));
+      let href = anchor && anchor.getAttribute && anchor.getAttribute('href');
+      let url;
+      try { url = href ? new URL(href, window.location.origin) : null } catch { url = null }
+      const isGetStartedPath = url && url.pathname === '/get-started';
+      if (!isGetStarted && !isGetStartedPath) return;
+      e.preventDefault();
+      if (location.pathname === '/get-started') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        try { sessionStorage.setItem('scrollToTopOnGetStarted', '1') } catch {}
+        navigate('/get-started');
+      }
+    };
+    document.addEventListener('click', onClick, true);
+    return () => document.removeEventListener('click', onClick, true);
+  }, [location.pathname])
+
+  // After navigation to /get-started, perform the top scroll if flagged
+  useEffect(() => {
+    if (location.pathname !== '/get-started') return;
+    let shouldScroll = false;
+    try { shouldScroll = sessionStorage.getItem('scrollToTopOnGetStarted') === '1' } catch {}
+    if (!shouldScroll) return;
+    try { sessionStorage.removeItem('scrollToTopOnGetStarted') } catch {}
+    // Wait a frame so layout is ready, then scroll smoothly to the absolute top
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  }, [location.pathname])
   
   return (
     <ServiceProvider>

@@ -1,11 +1,12 @@
 // src/components/Why_Us.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Award, CheckCircle, Users, Shield, Rocket, Heart } from 'lucide-react';
 
 export default function Why_Us() {
   const [animationsTriggered, setAnimationsTriggered] = useState(false);
   const whyUsRef = useRef(null);
+  const location = useLocation();
 
   // Scroll animation effect
   useEffect(() => {
@@ -92,7 +93,21 @@ export default function Why_Us() {
         
         {/* Schedule Consultation Button */}
         <div className={`whyus__cta-container ${animationsTriggered ? 'whyus__cta-container-animated' : ''}`}>
-          <Link to="/get-started" className="get-started-why-us-btn">
+          <Link 
+            to="/get-started" 
+            className="get-started-why-us-btn"
+            onClick={(e) => {
+              if (location.pathname === '/get-started') {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              } else {
+                // Force scroll to top when navigating to get-started page
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }, 100)
+              }
+            }}
+          >
             Get Started
           </Link>
         </div>

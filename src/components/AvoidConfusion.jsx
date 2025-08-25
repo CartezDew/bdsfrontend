@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const AvoidConfusion = () => {
   const [animationsTriggered, setAnimationsTriggered] = useState(false);
   const avoidConfusionRef = useRef(null);
+  const location = useLocation();
 
   // Scroll animation effect
   useEffect(() => {
@@ -46,7 +47,16 @@ const AvoidConfusion = () => {
                 <li>No appointment required</li>
                 <li>We begin work immediately and follow up</li>
               </ul>
-              <Link to="/get-started" className="cta-button-primary-avoid-confusion">
+              <Link 
+                to="/get-started" 
+                className="cta-button-primary-avoid-confusion"
+                onClick={(e) => {
+                  if (location.pathname === '/get-started') {
+                    e.preventDefault()
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }
+                }}
+              >
                 Get Started
               </Link>
               <p className="cta-alternative">

@@ -292,7 +292,7 @@ const Hero = () => {
         >
           <div className="hero-nav-buttons">
             <Link to="/signin" className="hero-nav-btn">Sign In</Link>
-            <Link to="/sign-in" className="hero-nav-btn primary">Sign In</Link>
+            <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
           </div>
           
           {/* Mobile Social Proof - Left of image under 680px */}
