@@ -169,6 +169,15 @@ function App() {
           return servicesBottom - navbarHeight
         }
       }
+      // Special case: Meet the Owner — scroll to bottom of section for Business Entity Selector
+      if (targetId === 'meet-the-owner') {
+        const meetEl = document.getElementById('meet-the-owner')
+        if (meetEl) {
+          const meetTop = meetEl.getBoundingClientRect().top + window.scrollY
+          const meetBottom = meetTop + meetEl.offsetHeight
+          return meetBottom - navbarHeight
+        }
+      }
       return rectTop - navbarHeight - marginTop - borderTop
     }
 
@@ -212,30 +221,36 @@ function App() {
       const styles = window.getComputedStyle(el)
       const marginTop = parseFloat(styles.marginTop) || 0
       const borderTop = parseFloat(styles.borderTopWidth) || 0
+      // Special case: Meet the Owner → scroll to bottom of section
+      if (targetId === 'meet-the-owner') {
+        const sectionHeight = el.offsetHeight
+        return rectTop + sectionHeight - navbarHeight
+      }
+      // Special case: Testimonials (social-proof) → align to bottom of Services so social-proof starts fully visible
+      if (targetId === 'social-proof') {
+        const servicesEl = document.getElementById('services')
+        if (servicesEl) {
+          const servicesTop = servicesEl.getBoundingClientRect().top + window.scrollY
+          const servicesBottom = servicesTop + servicesEl.offsetHeight
+          return servicesBottom - navbarHeight
+        }
+      }
       if (targetId === 'appointment-scheduler') {
         return rectTop - navbarHeight - marginTop - borderTop
       }
       return rectTop - navbarHeight - marginTop - borderTop
     }
 
-    requestAnimationFrame(() => {
+    // Allow layout/images to settle briefly, then perform a single smooth scroll
+    const t = setTimeout(() => {
       const pos = computeScrollTop()
       if (pos == null) return
       window.scrollTo({ top: pos, behavior: 'smooth' })
-    })
-    setTimeout(() => {
-      const pos = computeScrollTop()
-      if (pos == null) return
-      window.scrollTo({ top: pos, behavior: 'auto' })
-    }, 320)
-    setTimeout(() => {
-      const pos = computeScrollTop()
-      if (pos == null) return
-      window.scrollTo({ top: pos, behavior: 'auto' })
-    }, 650)
+    }, 220)
 
     // Clear the state to avoid sticky scrolling on back/forward
     navigate(location.pathname, { replace: true })
+    return () => clearTimeout(t)
   }, [isHomePage, location.state])
   
   // Bridge hero hamburger → Navbar when navbar is hidden

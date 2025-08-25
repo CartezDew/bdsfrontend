@@ -8,7 +8,7 @@ const Footer = () => {
 
   const scrollToSection = (sectionId) => {
     if (location.pathname !== '/') {
-      navigate('/', { state: { scrollTo: sectionId } });
+      navigate(`/#${sectionId}`);
     } else {
       const element = document.getElementById(sectionId);
       if (element) {

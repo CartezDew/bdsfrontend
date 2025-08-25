@@ -1,6 +1,7 @@
 /* Entity Selector Widget */
 .entity-selector-widget {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  background:  linear-gradient(135deg, #ffffff 0%, #f8f9f8 15%, #f0f2f0 30%, #e8ebe8 45%, #e0e4e0 60%, #d8e0d8 75%, #d0dcd0 90%, #c8d8c8 100%) padding-box,
+  linear-gradient(135deg, rgba(42,90,47,.15), rgba(204,63,12,.18)) border-box;
   padding: 2rem;
   margin: 0 auto 3rem auto;
   max-width: 900px;
