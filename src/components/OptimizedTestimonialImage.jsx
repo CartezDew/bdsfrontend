@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const OptimizedTestimonialImage = ({ src, alt, className, onLoad, onError }) => {
+const OptimizedTestimonialImage = ({ src, srcSet, sizes, alt, className, onLoad, onError, loading = 'lazy', decoding = 'async' }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef(null);
@@ -48,8 +48,12 @@ const OptimizedTestimonialImage = ({ src, alt, className, onLoad, onError }) => 
       {isLoaded ? (
         <img
           src={src}
+          srcSet={srcSet}
+          sizes={sizes}
           alt={alt}
           className="optimized-image"
+          loading={loading}
+          decoding={decoding}
           style={{
             width: '100%',
             height: '100%',
