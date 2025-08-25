@@ -3,7 +3,7 @@
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   padding: 2rem;
   margin: 0 auto 3rem auto;
-  max-width: 800px;
+  max-width: 900px;
   margin-top: 2rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(148, 163, 184, 0.2);
@@ -22,7 +22,7 @@
 }
 
 .widget-header h3 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
   color: var(--color-hunter-green);
   margin-bottom: 1rem;
   font-family: 'Playfair Display', serif;
@@ -30,7 +30,7 @@
 
 .widget-header p {
   color: var(--color-errie-black);
-  font-size: 1.1rem;
+  font-size: clamp(.9rem, 1.3vw, 1.3rem);
   margin-bottom: 1.5rem;
   opacity: 0.8;
 }
@@ -52,7 +52,7 @@
 }
 
 .progress-text {
-  font-size: 0.9rem;
+  font-size: clamp(.8rem, 1.2vw, 1.3rem);
   color: var(--color-errie-black);
   opacity: 0.7;
 }
@@ -62,7 +62,7 @@
 }
 
 .question-section h4 {
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
   color: var(--color-hunter-green);
   margin-bottom: 1.5rem;
   text-align: center;
@@ -80,7 +80,7 @@
   border: 2px solid var(--color-hunter-green);
   background: transparent;
   color: var(--color-hunter-green);
-  font-size: 1rem;
+  font-size: clamp(.9rem, 1.3vw, 1.3rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -101,7 +101,7 @@
 }
 
 .disclaimer {
-  font-size: 0.8rem;
+  font-size: clamp(.8rem, 1.2vw, 1.3rem);
   color: var(--color-errie-black);
   opacity: 0.6;
   font-style: italic;
@@ -320,11 +320,27 @@
   }
   
   .widget-header h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.4rem, 3.5vw, 1.7rem);
   }
   
   .question-section h4 {
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+  }
+
+  .widget-header p {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+  }
+
+  .progress-text {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+  }
+
+  .option-button {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+  }
+
+  .disclaimer {
+    font-size: clamp(.8rem, 2.2vw, 1.2rem);
   }
   
   .entity-comparison {
@@ -342,6 +358,19 @@
     width: 100%;
     margin: 0.5rem 0;
   }
+}
+
+@media (max-width: 550px) {
+  .entity-selector-widget {
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    margin: 0 auto;
+  }
+
+  .widget-section {
+    padding: 3rem 1.5rem 3rem 1.5rem;
+
+  }
+
 }
 
 /* Animation Classes for Entity Selector Widget */
