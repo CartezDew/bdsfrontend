@@ -46,8 +46,9 @@ const Hero = () => {
   ];
 
   const getTickerItemsForWidth = (width) => {
+    console.log('Ticker width check:', width, '<= 760?', width <= 760);
     if (width <= 505) return smallMobileTickerItems;
-    if (width <= 720) return mobileTickerItems;
+    if (width <= 760) return mobileTickerItems;
     return tickerItems;
   };
 
@@ -55,7 +56,9 @@ const Hero = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setCurrentTickerItems(getTickerItemsForWidth(window.innerWidth));
+      const currentWidth = window.innerWidth;
+      console.log('Resize event fired, width:', currentWidth);
+      setCurrentTickerItems(getTickerItemsForWidth(currentWidth));
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -289,7 +292,7 @@ const Hero = () => {
         >
           <div className="hero-nav-buttons">
             <Link to="/signin" className="hero-nav-btn">Sign In</Link>
-            <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
+            <Link to="/sign-in" className="hero-nav-btn primary">Sign In</Link>
           </div>
           
           {/* Mobile Social Proof - Left of image under 680px */}

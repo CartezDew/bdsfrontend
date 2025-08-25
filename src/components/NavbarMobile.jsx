@@ -196,7 +196,7 @@ const NavbarMobile = ({ customConfig }) => {
                                 )
                             })}
                             {/* Sign In */}
-                            <Link to="/signin" className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: Sign In link') } catch {}; setIsOpen(false) }}>
+                            <Link to="/sign-in" className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: Sign In link') } catch {}; setIsOpen(false) }}>
                                 {getIconForMenuItem('Sign In')}
                                 Sign In
                             </Link>

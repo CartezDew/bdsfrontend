@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { ServiceProvider } from './context/ServiceContext'
 import Navbar from './components/Navbar'
 import PageTitle from './components/PageTitle'
@@ -9,6 +9,7 @@ import Services from './components/Services'
 import OfficeHoursLocations from './components/OfficeHoursLocations'
 import GetStarted from './components/GetStarted'
 import ServicesPage from './components/ServicesPage'
+import SignIn from './components/SignIn'
 
 function App() {
   const location = useLocation()
@@ -260,6 +261,8 @@ function App() {
 
         <Route path="/get-started" element={<GetStarted />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/signin" element={<Navigate to="/sign-in" replace />} />
         </Routes>
       </div>
     </ServiceProvider>

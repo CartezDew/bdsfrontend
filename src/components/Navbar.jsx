@@ -30,6 +30,12 @@ const Navbar = (props) => {
             setShowBackToTop(true)
             return
         }
+        
+        // Hide back-to-top button on sign-in page
+        if (location.pathname === '/sign-in') {
+            setShowBackToTop(false)
+            return
+        }
         // Mobile rule (default): show everywhere except while hero is visible (on home) or footer is visible
         let observers = []
         let retryTimer = null
