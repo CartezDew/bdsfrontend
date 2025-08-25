@@ -3,7 +3,8 @@ import Footer from './Footer';
 import '../styles/getStarted.css';
 import '../styles/dropdown_reusable.css';
 import CustomSelect from './CustomSelect';
-import Image2 from '../assets/Detailed_Services_Images/Image_2.jpg';
+// Use Vite/ESM URL resolution to avoid path issues on CI (Netlify)
+const imageStillUnsure = new URL('../assets/Detailed_Services_Images/Image_2.jpg', import.meta.url).href;
 
 const GetStarted = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -581,7 +582,7 @@ const GetStarted = () => {
             <div className="getstarted-still-unsure-bento">
               <div className="getstarted-still-unsure-image-box">
                 <img 
-                  src={Image2} 
+                  src={imageStillUnsure} 
                   alt="Professional consultation scheduling with calendar and team" 
                   loading="lazy" 
                   decoding="async" 
