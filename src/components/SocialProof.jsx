@@ -20,7 +20,7 @@ import girlCafe from "../assets/Testimonials/thumbnails/thumb_girl-cafe.jpg";
 const testimonials = [
   {
     quote: "I was out of the country during tax season, but BDS filed both my business and personal taxes before the deadline. They even found business savings with truck repair costs and purchases.",
-    author: "Cartez Dewberry",
+    author: "Cartez D.",
     role: "Founder & CEO",
     company: "Marc'd Group LLC",
     yearOfService: "2025",
@@ -104,6 +104,9 @@ const testimonials = [
 export default function SocialProof() {
   const [currentPage, setCurrentPage] = useState(0);
   const [allCardsExpanded, setAllCardsExpanded] = useState(false);
+  const [isNarrow800, setIsNarrow800] = useState(typeof window !== 'undefined' ? window.innerWidth <= 800 : false);
+  const [isNarrow600, setIsNarrow600] = useState(typeof window !== 'undefined' ? window.innerWidth <= 600 : false);
+  const [expandedIndexSmall, setExpandedIndexSmall] = useState(null); // 0..2 per page when <=600px
   const [animationsTriggered, setAnimationsTriggered] = useState({
     header: false,
     leftImage: false,
@@ -222,10 +225,24 @@ export default function SocialProof() {
     return () => observer.disconnect();
   }, []);
 
+  // Track viewport width to control full-width card behavior (<= 800px) and unify at <= 600px
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onResize = () => {
+      const w = window.innerWidth;
+      setIsNarrow800(w <= 800);
+      setIsNarrow600(w <= 600);
+    }
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   const nextPage = () => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
     // Reset expanded state when changing pages
     setAllCardsExpanded(false);
+    setExpandedIndexSmall(null);
     // Reset card animations for new page and trigger them immediately
     setCardAnimations(Array(3).fill(false));
     
@@ -245,6 +262,7 @@ export default function SocialProof() {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
     // Reset expanded state when changing pages
     setAllCardsExpanded(false);
+    setExpandedIndexSmall(null);
     // Reset card animations for new page and trigger them immediately
     setCardAnimations(Array(3).fill(false));
     
@@ -264,6 +282,7 @@ export default function SocialProof() {
     setCurrentPage(pageIndex);
     // Reset expanded state when changing pages
     setAllCardsExpanded(false);
+    setExpandedIndexSmall(null);
     // Reset card animations for new page and trigger them immediately
     setCardAnimations(Array(3).fill(false));
     
@@ -290,7 +309,9 @@ export default function SocialProof() {
   );
 
   return (
-    <section id="social-proof" className="testimonial-grid">
+    <section id="social-proof" className="social-proof-section">
+      <div className="social-proof-container">
+      <div className="testimonial-grid">
       {/* Section header */}
       <div className={`grid-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
         <h2>What our clients say</h2>
@@ -368,11 +389,13 @@ export default function SocialProof() {
       <div className={`testimonials-grid ${animationsTriggered.cards ? 'animate-cards' : ''}`} ref={cardsRef} data-animate="cards">
         {currentTestimonials.map((testimonial, index) => {
           const globalIndex = currentPage * cardsPerPage + index;
+          const isWideCard = isNarrow800 && !isNarrow600 && ((index + 1) % 3 === 0); // only at <=800 and >600
+          const showFullQuote = isNarrow600 ? (expandedIndexSmall === index) : (allCardsExpanded || isWideCard);
           
           return (
             <article 
               key={globalIndex} 
-              className={`testimonial-card ${allCardsExpanded ? 'expanded' : ''}`}
+              className={`testimonial-card ${allCardsExpanded ? 'expanded' : ''} ${isWideCard ? 'full-quote' : ''}`}
               style={{
                 opacity: cardAnimations[index] ? 1 : 0,
                 transform: cardAnimations[index] ? 'translateY(0)' : 'translateY(30px)',
@@ -403,7 +426,7 @@ export default function SocialProof() {
               
               <div className="card-content">
                 <p className="testimonial-quote">
-                  "{allCardsExpanded ? testimonial.quote : testimonial.quote.slice(0, 100) + '...'}"
+                  "{showFullQuote ? testimonial.quote : (testimonial.quote.slice(0, 100) + '...')}"
                 </p>
               </div>
               
@@ -411,16 +434,24 @@ export default function SocialProof() {
                 {renderStars(testimonial.rating)}
                 <button 
                   className="expand-btn" 
-                  onClick={toggleAllCardsExpansion}
-                  aria-label={allCardsExpanded ? "Show less" : "Read more"}
-                  title={allCardsExpanded ? "Collapse" : "Expand"}
+                  onClick={() => {
+                    if (isNarrow600) {
+                      setExpandedIndexSmall(prev => prev === index ? null : index)
+                    } else {
+                      toggleAllCardsExpansion()
+                    }
+                  }}
+                  aria-label={(isNarrow600 ? (expandedIndexSmall === index) : allCardsExpanded) ? "Show less" : "Read more"}
+                  title={(isNarrow600 ? (expandedIndexSmall === index) : allCardsExpanded) ? "Collapse" : "Expand"}
                 >
-                  {allCardsExpanded ? '←' : '→'}
+                  {(isNarrow600 ? (expandedIndexSmall === index) : allCardsExpanded) ? '←' : '→'}
                 </button>
               </div>
             </article>
           );
         })}
+      </div>
+      </div>
       </div>
     </section>
   );
