@@ -1,6 +1,7 @@
 // src/components/Why_Us.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Award, CheckCircle, Users, Shield, Rocket, Heart } from 'lucide-react';
 
 export default function Why_Us() {
   const [animationsTriggered, setAnimationsTriggered] = useState(false);
@@ -61,28 +62,31 @@ export default function Why_Us() {
           </div>
         </header>
 
-        {/* Bullets */}
+        {/* Bullets with icons */}
         <ul className={`whyus__list ${animationsTriggered ? 'whyus__list-animated' : ''}`} role="list">
           <li>
-            <strong>14+ years</strong> across tax, bookkeeping, and full-cycle
-            accounting
+            <Award className="whyus__list-icon" aria-hidden="true" />
+            <span><strong>14+ years</strong> across tax, bookkeeping, and full-cycle accounting</span>
           </li>
           <li>
-            <strong>100% on-time filings</strong> and audit-ready records
+            <CheckCircle className="whyus__list-icon" aria-hidden="true" />
+            <span><strong>100% on-time filings</strong> and audit-ready records</span>
           </li>
           <li>
-            <strong>200+ clients served</strong> with transparent, accurate
-            financials
+            <Users className="whyus__list-icon" aria-hidden="true" />
+            <span><strong>200+ clients served</strong> with transparent, accurate financials</span>
           </li>
           <li>
-            <strong>Industry memberships:</strong> Atlanta Accounting & Tax Society; LaunchGSU network.
+            <Shield className="whyus__list-icon" aria-hidden="true" />
+            <span><strong>Industry memberships:</strong> Atlanta Accounting & Tax Society; LaunchGSU network</span>
           </li>
           <li>
-            <strong>Launch &amp; level-up support:</strong> new business setups,
-            cleanup/catch-up, and monthly care
+            <Rocket className="whyus__list-icon" aria-hidden="true" />
+            <span><strong>Launch &amp; level-up support:</strong> new business setups, cleanup/catch-up, and monthly care</span>
           </li>
           <li>
-            <strong>Community-first approach</strong> expanding access to reliable, affordable accounting
+            <Heart className="whyus__list-icon" aria-hidden="true" />
+            <span><strong>Community-first approach</strong> expanding access to reliable, affordable accounting</span>
           </li>
         </ul>
         

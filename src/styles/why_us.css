@@ -5,41 +5,41 @@
   }
   
   .whyus__inner {
-    max-width: 1300px; 
+    max-width: 1400px; 
     margin: 0 auto;
   }
   
   .whyus__header {
     max-width: 100%;
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     align-items: flex-start;
   }
   
   .whyus__header-content {
     flex: 1;
-    max-width: 48rem;
+    max-width: 1400px;
   }
   
   .whyus__title {
     color: var(--color-hunter-green);
     font-weight: 800;
     letter-spacing: -0.01em;
-    font-size: clamp(1.75rem, 2vw + 1.25rem, 2.5rem);
+    font-size: clamp(2rem, 3.7vw, 3rem);
     margin: 0;
   }
   
   .whyus__kicker {
     margin-top: 0.25rem;
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: clamp(.9rem, 1.7vw, 1.2rem);
     letter-spacing: 0.18em;
     color: color-mix(in oklab, var(--color-hunter-green) 78%, #000 0%);
   }
   
   .whyus__lede {
     margin-top: 0.9rem;
-    font-size: 1.1rem;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
     line-height: 1.6;
     color: var(--color-eerie-black);
   }
@@ -58,26 +58,26 @@
   
   .whyus__list li {
     position: relative;
-    padding-left: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding-left: 0;
+    font-size: clamp(1.1rem, 1.7vw, 1.2rem) !important;
   }
-  
-  .whyus__list li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.6em;
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--color-hunter-green);
-    box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-hunter-green) 20%, transparent);
+
+  .whyus__list-icon {
+    flex-shrink: 0;
+    width: clamp(1.3rem, 2.7vw, 1.7rem);
+    height: clamp(1.3rem, 2.7vw, 1.7rem);
+    color: var(--color-hunter-green);
+    margin-top: 0.25rem;
   }
   
   /* Owner block */
   .whyus__owner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
     margin-top: 2.25rem;
   }
@@ -95,21 +95,7 @@
     margin: 0.75rem 0 0 0;
   }
   
-  .whyus__ownerBDS em {
-    font-style: italic;
-  }
   
-  /* Right-side image (mirrors your hero’s visual weight) */
-  .whyus__ownerMedia {
-    width: 100%;
-  }
-  
-  .whyus__ownerImg {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;;
-  }
   
   /* Responsive: switch to 2 columns on large screens */
   @media (min-width: 1024px) {
@@ -196,33 +182,26 @@
     height: auto;
     display: block;
     border: 3px solid var(--color-hunter-green);
-
- 
     object-fit: cover;
   }
   
-  /* Responsive: switch to 2 columns on large screens for grid section */
-  @media (min-width: 1024px) {
-    .whyus__grid-section {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-    
-    .whyus__grid-content {
-      order: 1;
-    }
-    
+  @media (max-width: 775px) {
     .whyus__grid-image {
-      order: 2;
+      max-width: 270px;
+      flex-shrink: 1;
+      display: block;
+      margin-left: 1rem;
     }
+    
   }
   
   /* Responsive header layout */
-  @media (min-width: 768px) {
+  @media (min-width: 776px) {
     .whyus__header {
-      gap: 3rem;
+      gap: 2rem;
+     
     }
-    
+  
     .whyus__grid-image {
       flex-shrink: 0;
       width: 300px;
@@ -233,19 +212,22 @@
       height: auto;
     }
   }
-  
-  @media (max-width: 767px) {
-    .whyus__header {
-      flex-direction: column;
-      gap: 1.5rem;
+
+  @media (max-width: 720px) {
+    .whyus__business-image {
+      display: none;
     }
-    
     .whyus__grid-image {
-      order: -1;
-      width: 100%;
+      flex-shrink: 0;
+      width: 0px;
     }
-  }
+    .whyus {
+      padding: 2rem 1.5rem 2rem 1.5rem;
+    }
+    }
+   
   
+
   /* Schedule Consultation Button */
   .whyus__cta-container {
     text-align: center;
@@ -260,7 +242,7 @@
     color: white;
     border: none;
     padding: 1rem 1rem;
-    font-size: 1rem;
+    font-size: clamp(1rem, 2.2vw, 1.3rem);
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
