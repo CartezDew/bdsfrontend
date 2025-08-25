@@ -16,25 +16,64 @@ function App() {
   const [showNavbar, setShowNavbar] = useState(!isHomePage)
   const navbarStateRef = useRef(showNavbar)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isMobileWidth, setIsMobileWidth] = useState(typeof window !== 'undefined' ? window.matchMedia('(max-width: 680px)').matches : false)
 
   // Update ref when state changes
   useEffect(() => {
     navbarStateRef.current = showNavbar
   }, [showNavbar])
   
-  // Navbar visibility rules:
-  // - Home ('/') → hidden by default and stays hidden (except when mobile menu is explicitly opened)
-  // - '/services' and '/get-started' → always visible
+  // Track viewport width for mobile/desktop gating (<= 680px is mobile)
   useEffect(() => {
-    const isSpecialRoute = location.pathname === '/services' || location.pathname === '/get-started'
-    if (isSpecialRoute) {
+    if (typeof window === 'undefined') return
+    const mql = window.matchMedia('(max-width: 680px)')
+    const onChange = (e) => setIsMobileWidth(e.matches)
+    setIsMobileWidth(mql.matches)
+    if (mql.addEventListener) mql.addEventListener('change', onChange)
+    else mql.addListener(onChange)
+    return () => {
+      if (mql.removeEventListener) mql.removeEventListener('change', onChange)
+      else mql.removeListener(onChange)
+    }
+  }, [])
+
+  // Navbar visibility rules (desktop shows on all routes except when hero is in view on home)
+  useEffect(() => {
+    const path = location.pathname
+    // Always visible on non-home routes
+    if (path !== '/') {
       setShowNavbar(true)
       return
     }
-    // Home and any other routes → hide by default
-    setShowNavbar(false)
-    // No scroll listener needed anymore
-  }, [location.pathname, mobileMenuOpen])
+
+    // Home route: on desktop, show when hero is not visible; on mobile, leave hidden unless menu opens
+    let observer
+    const heroEl = document.getElementById('hero')
+    const updateFromHero = (inView) => {
+      if (isMobileWidth) {
+        // On mobile width, keep the previous behavior; do not force show here
+        setShowNavbar(false)
+      } else {
+        setShowNavbar(!inView)
+      }
+    }
+
+    if (heroEl && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver((entries) => {
+        const entry = entries[0]
+        updateFromHero(!!(entry && entry.isIntersecting))
+      }, { threshold: [0.01] })
+      observer.observe(heroEl)
+      // Initial calc in case observer fires late
+      const rect = heroEl.getBoundingClientRect()
+      updateFromHero(rect.bottom > 0 && rect.top < window.innerHeight)
+    } else {
+      // If no hero, default to shown on desktop
+      setShowNavbar(!isMobileWidth)
+    }
+
+    return () => { if (observer) observer.disconnect() }
+  }, [location.pathname, isMobileWidth])
 
   // If we land on home route with a hash (e.g., /#services), perform precise scroll
   useEffect(() => {

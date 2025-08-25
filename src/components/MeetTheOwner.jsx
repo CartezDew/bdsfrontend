@@ -64,6 +64,7 @@ export default function MeetTheOwner() {
           </div>
           
           <div className={`meet-owner__text ${animationsTriggered ? 'meet-owner__text-animated' : ''}`}>
+            <div className={`meet-owner__divider ${animationsTriggered ? 'meet-owner__divider-animated' : ''}`}></div>
             <div className={`meet-owner__header ${animationsTriggered ? 'meet-owner__header-animated' : ''}`}>
               Meet Brandon
             </div>
