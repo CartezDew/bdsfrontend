@@ -3,6 +3,18 @@ import "../styles/socialProof.css";
 import businessHandshake from "../assets/Images/business-people-shaking-hands-together.png";
 import image_1 from "../assets/Images/Frame_1.png";
 import image_2 from "../assets/Images/Frame_2.png";
+import OptimizedTestimonialImage from "./OptimizedTestimonialImage.jsx";
+
+// Import testimonial images (optimized thumbnails)
+import T_1 from "../assets/Testimonials/thumbnails/thumb_T_1.jpeg";
+import T_2 from "../assets/Testimonials/thumbnails/thumb_T_2.jpg";
+import T_3 from "../assets/Testimonials/thumbnails/thumb_T_3.jpg";
+import T_4 from "../assets/Testimonials/thumbnails/thumb_T_4.jpg";
+import T_5 from "../assets/Testimonials/thumbnails/thumb_T_5.jpg";
+import T_6 from "../assets/Testimonials/thumbnails/thumb_T_6.jpg";
+import T_8 from "../assets/Testimonials/thumbnails/thumb_T_8.jpg";
+import T_9 from "../assets/Testimonials/thumbnails/thumb_T_9.jpg";
+import girlCafe from "../assets/Testimonials/thumbnails/thumb_girl-cafe.jpg";
 
 
 const testimonials = [
@@ -11,63 +23,81 @@ const testimonials = [
     author: "Cartez Dewberry",
     role: "Founder & CEO",
     company: "Marc'd Group LLC",
-    yearOfService: "2025"
+    yearOfService: "2025",
+    rating: 5.0,
+    image: T_1
   },
   {
     quote: "BDS Talent Group made tax season painless. Clear pricing, fast responses, and real guidance when I needed it most.",
     author: "Jordan M.",
     role: "Freelance Designer",
     company: "Atlanta, GA",
-    yearOfService: "2025"
+    yearOfService: "2025",
+    rating: 5.0,
+    image: T_2
   },
   {
     quote: "They found deductions I missed and set up a comprehensive plan for next year. Definitely worth the investment.",
     author: "Marcus L.",
-    role: "Independent Contractor",
+    role: "1099 Contractor",
     company: "Cobb County, GA",
-    yearOfService: "2024"
+    yearOfService: "2024",
+    rating: 4.7,
+    image: T_3
   },
   {
     quote: "BDS Talent Group helped me get a deadline extension when I needed it most. Their expertise saved me from penalties.",
     author: "Alex R.",
     role: "Small Business Owner",
     company: "Fulton County, GA",
-    yearOfService: "2023"
+    yearOfService: "2023",
+    rating: 4.5,
+    image: T_4
   },
   {
     quote: "We moved our bookkeeping here and immediately shaved hours off month-end close. The team is incredibly efficient.",
     author: "Priya S.",
     role: "Owner",
     company: "Oak & Ivy Boutique",
-    yearOfService: "2022"
+    yearOfService: "2022",
+    rating: 5,
+    image: T_5
   },
   {
     quote: "Proactive advice, not just filings. They helped me understand payroll and cash flow management.",
     author: "Elena R.",
     role: "Founder",
     company: "Café Roble",
-    yearOfService: "2022"
+    yearOfService: "2022",
+    rating: 4.9,
+    image: T_6
   },
   {
     quote: "When I got an audit notice, they handled everything professionally. Communication was on point throughout.",
     author: "Sam K.",
     role: "Managing Member",
     company: "Kline Properties LLC",
-    yearOfService: "2023"
+    yearOfService: "2023",
+    rating: 5,
+    image: T_8
   },
   {
     quote: "Simple, honest pricing and great follow-through. I highly recommend BDS Talent Group for all tax needs.",
     author: "Danielle T.",
     role: "Solo Realtor",
     company: "DeKalb County, GA",
-    yearOfService: "2022"
+    yearOfService: "2022",
+    rating: 4.9,
+    image: girlCafe
   },
   {
     quote: "As a college student filing taxes for the first time, I was completely lost. BDS guided me through everything step by step. They made filing my cashier job taxes so simple and even found education credits I didn't know about!",
     author: "Sarah T.",
     role: "College Student",
     company: "Part-time Cashier",
-    yearOfService: "2024"
+    yearOfService: "2024",
+    rating: 5,
+    image: T_9
   }
 ];
 
@@ -83,6 +113,57 @@ export default function SocialProof() {
   });
   
   const [cardAnimations, setCardAnimations] = useState(Array(3).fill(false)); // 3 cards per page
+
+  // Helper function to render star ratings
+  const renderStars = (rating) => {
+    const fullStars = Math.floor(rating);
+    const decimalPart = rating % 1;
+    const stars = [];
+    
+    // Add full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <svg key={`full-${i}`} className="star-icon full" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      );
+    }
+    
+    // Add partial star if there's a decimal
+    if (decimalPart > 0) {
+      const partialWidth = Math.round(decimalPart * 24); // 24 is the SVG width
+      const maskId = `partial-star-${Math.random()}`;
+      
+      stars.push(
+        <svg key="partial" className="star-icon partial" viewBox="0 0 24 24" fill="currentColor">
+          <defs>
+            <mask id={maskId}>
+              <rect x="0" y="0" width="24" height="24" fill="white"/>
+              <rect x={partialWidth} y="0" width={24 - partialWidth} height="24" fill="black"/>
+            </mask>
+          </defs>
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" mask={`url(#${maskId})`}/>
+        </svg>
+      );
+    }
+    
+    // Add empty stars to complete 5 stars
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(
+        <svg key={`empty-${i}`} className="star-icon empty" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      );
+    }
+    
+    return (
+      <div className="star-rating">
+        {stars}
+        <span className="rating-number">{rating}</span>
+      </div>
+    );
+  };
   
   const cardsPerPage = 3;
   const totalPages = Math.ceil(testimonials.length / cardsPerPage);
@@ -209,7 +290,7 @@ export default function SocialProof() {
   );
 
   return (
-    <section className="testimonial-grid">
+    <section id="social-proof" className="testimonial-grid">
       {/* Section header */}
       <div className={`grid-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
         <h2>What our clients say</h2>
@@ -304,7 +385,20 @@ export default function SocialProof() {
                   <p className="author-role">{testimonial.role}</p>
                   <p className="author-company">{testimonial.company}</p>
                 </div>
-                <div className="year-badge">{testimonial.yearOfService}</div>
+                <div className="image-year-container">
+                  <OptimizedTestimonialImage
+                    src={testimonial.image}
+                    alt={`${testimonial.author} testimonial`}
+                    className="testimonial-image"
+                    onLoad={() => {
+                      console.log(`Successfully loaded image for ${testimonial.author}`);
+                    }}
+                    onError={() => {
+                      console.error(`Failed to load image for ${testimonial.author}`);
+                    }}
+                  />
+                  <div className="year-badge">{testimonial.yearOfService}</div>
+                </div>
               </div>
               
               <div className="card-content">
@@ -314,6 +408,7 @@ export default function SocialProof() {
               </div>
               
               <div className="card-footer">
+                {renderStars(testimonial.rating)}
                 <button 
                   className="expand-btn" 
                   onClick={toggleAllCardsExpansion}

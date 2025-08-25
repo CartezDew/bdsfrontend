@@ -5,11 +5,14 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/hero.css';
 import HeroImageShowcase from './HeroImageShowcase.jsx';
 import heroImages from './data/heroImages.js';
+import { HeartHandshake } from 'lucide-react';
 
 const Hero = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [isHeroHamburgerOpenAnim, setIsHeroHamburgerOpenAnim] = useState(false); // controls X morph
+  const [hideHeroToggle, setHideHeroToggle] = useState(false); // hides after navbar begins opening
   const [animationsTriggered, setAnimationsTriggered] = useState({
     nav: false,
     headline: false,
@@ -26,11 +29,38 @@ const Hero = () => {
   const buttonsRef = useRef(null);
   const imageContainerRef = useRef(null);
   const socialProofRef = useRef(null);
+  const socialProofMobileRef = useRef(null);
   const tickerRef = useRef(null);
+  const heroHamburgerRef = useRef(null);
 
   const tickerItems = [
     'Tax Returns', 'Payroll', 'Bookkeeping', 'Compliance', 'Reporting', 'Tax Extensions', 'Advisory'
   ];
+
+  const mobileTickerItems = [
+    'Tax Returns', 'Payroll', 'Bookkeeping', 'Reporting', 'Advisory'
+  ];
+
+  const smallMobileTickerItems = [
+    'Tax Returns', 'Payroll', 'Bookkeeping', 'Advisory'
+  ];
+
+  const getTickerItemsForWidth = (width) => {
+    if (width <= 505) return smallMobileTickerItems;
+    if (width <= 720) return mobileTickerItems;
+    return tickerItems;
+  };
+
+  const [currentTickerItems, setCurrentTickerItems] = useState(() => getTickerItemsForWidth(typeof window !== 'undefined' ? window.innerWidth : 9999));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentTickerItems(getTickerItemsForWidth(window.innerWidth));
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Handle ticker item click - navigate to services
   const handleTickerClick = () => {
@@ -47,6 +77,35 @@ const Hero = () => {
       // Navigate to home page
       navigate('/');
     }
+  };
+
+  // Scroll helper that mirrors Navbar.jsx calculation and compensates if navbar is hidden initially
+  const scrollToSectionWithNavbarCompensation = (targetId) => {
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) return;
+
+    const computeScrollTop = () => {
+      const navbarEl = document.querySelector('.navbar');
+      // Fallback to expected scrolled navbar height (2.5rem ≈ 40px) if navbar isn't mounted yet
+      const fallbackHeightPx = 40;
+      const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : fallbackHeightPx;
+      const rectTop = targetElement.getBoundingClientRect().top + window.scrollY;
+      const styles = window.getComputedStyle(targetElement);
+      const marginTop = parseFloat(styles.marginTop) || 0;
+      const borderTop = parseFloat(styles.borderTopWidth) || 0;
+      return rectTop - navbarHeight - marginTop - borderTop;
+    };
+
+    // Initial smooth scroll
+    window.scrollTo({ top: computeScrollTop(), behavior: 'smooth' });
+
+    // Post-adjust once the navbar likely toggled/settled after scroll starts
+    setTimeout(() => {
+      window.scrollTo({ top: computeScrollTop(), behavior: 'auto' });
+    }, 300);
+    setTimeout(() => {
+      window.scrollTo({ top: computeScrollTop(), behavior: 'auto' });
+    }, 700);
   };
 
   useEffect(() => {
@@ -66,17 +125,53 @@ const Hero = () => {
       });
     }, { threshold: 0.05, rootMargin: '0px' });
 
-    [navRef, headlineRef, subtextRef, buttonsRef, imageContainerRef, socialProofRef, tickerRef]
+    [navRef, headlineRef, subtextRef, buttonsRef, imageContainerRef, socialProofRef, socialProofMobileRef, tickerRef]
       .forEach(r => r.current && observer.observe(r.current));
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setHighlightedIndex(prev => (prev + 1) % tickerItems.length);
-    }, 3000);
+      setHighlightedIndex(prev => (prev + 1) % currentTickerItems.length);
+    }, 2500);
     return () => clearInterval(id);
-  }, [tickerItems.length]);
+  }, [currentTickerItems.length]);
+
+  // Sync hero hamburger visibility with global mobile menu state and animation
+  useEffect(() => {
+    const handleMobileMenuState = (e) => {
+      if (e && e.detail && typeof e.detail.open === 'boolean') {
+        if (e.detail.open) {
+          // After the mobile menu opens, keep hamburger hidden
+          return;
+        } else {
+          // Fallback: ensure it reappears shortly after close begins
+          setTimeout(() => {
+            try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'flex', 'important'); } catch {}
+            setHideHeroToggle(false);
+            setIsHeroHamburgerOpenAnim(false);
+          }, 340);
+          return;
+        }
+      }
+    };
+    const handleOpenAnimEnd = () => {
+      // Morph finished. Ease the button off to the right but keep it mounted.
+      setHideHeroToggle(true);
+    };
+    const handleCloseAnimEnd = () => {
+      setHideHeroToggle(false);
+      setIsHeroHamburgerOpenAnim(false);
+    };
+    window.addEventListener('mobileMenuState', handleMobileMenuState);
+    window.addEventListener('mobileMenuOpenAnimationEnd', handleOpenAnimEnd);
+    window.addEventListener('mobileMenuCloseAnimationEnd', handleCloseAnimEnd);
+    return () => {
+      window.removeEventListener('mobileMenuState', handleMobileMenuState);
+      window.removeEventListener('mobileMenuOpenAnimationEnd', handleOpenAnimEnd);
+      window.removeEventListener('mobileMenuCloseAnimationEnd', handleCloseAnimEnd);
+    };
+  }, []);
 
   return (
     /* OUTER = full-bleed background only */
@@ -96,68 +191,47 @@ const Hero = () => {
               transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-                <div className="logo-section-hero">
-                <button className="logo-link-hero" onClick={handleLogoClick}>
-                  <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
-                  <h1 className="logo-text-hero">Talent Group</h1>
-                </button>
-              </div>
+            <div className="logo-section-hero">
+              <button className="logo-link-hero" onClick={handleLogoClick}>
+                <img src="/favicon.svg" alt="BDS Accounting Logo" className="logo-image" />
+                <h1 className="logo-text-hero">Talent Group</h1>
+              </button>
+            </div>
             <div className="hero-nav-links-hero">
               <button 
                 className="hero-left-link"
-                onClick={() => {
-                  const targetElement = document.getElementById('services')
-                  if (targetElement) {
-                    const navbarEl = document.querySelector('.navbar')
-                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-                    const styles = window.getComputedStyle(targetElement)
-                    const marginTop = parseFloat(styles.marginTop) || 0
-                    const borderTop = parseFloat(styles.borderTopWidth) || 0
-                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => scrollToSectionWithNavbarCompensation('services')}
               >
                 Services
               </button>
               <button 
                 className="hero-left-link"
-                onClick={() => {
-                  const targetElement = document.getElementById('why-us')
-                  if (targetElement) {
-                    const navbarEl = document.querySelector('.navbar')
-                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-                    const styles = window.getComputedStyle(targetElement)
-                    const marginTop = parseFloat(styles.marginTop) || 0
-                    const borderTop = parseFloat(styles.borderTopWidth) || 0
-                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => scrollToSectionWithNavbarCompensation('why-us')}
               >
                 Why Us
               </button>
               <button 
                 className="hero-left-link"
-                onClick={() => {
-                  const targetElement = document.getElementById('contact')
-                  if (targetElement) {
-                    const navbarEl = document.querySelector('.navbar')
-                    const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-                    const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-                    const styles = window.getComputedStyle(targetElement)
-                    const marginTop = parseFloat(styles.marginTop) || 0
-                    const borderTop = parseFloat(styles.borderTopWidth) || 0
-                    const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-                  }
-                }}
+                onClick={() => scrollToSectionWithNavbarCompensation('contact')}
               >
                 Contact Us
               </button>
             </div>
+            <button ref={heroHamburgerRef} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''} ${hideHeroToggle ? 'offstage' : ''}`} onClick={() => {
+               try {
+                 console.log('[Hero] hamburger clicked → dispatch toggleMobileMenu');
+                 // Animate hamburger → X
+                 setIsHeroHamburgerOpenAnim(true);
+                 // Dispatch immediately so navbar opens without delay
+                const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
+                window.dispatchEvent(evtWin);
+               } catch (err) {
+                 console.error('[Hero] error dispatching toggleMobileMenu', err);
+               }
+            }}>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+            </button>
           </nav>
 
           <h1
@@ -217,11 +291,67 @@ const Hero = () => {
             <Link to="/signin" className="hero-nav-btn">Sign In</Link>
             <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
           </div>
-
+          
+          {/* Mobile Social Proof - Left of image under 680px */}
+          <div
+            ref={socialProofMobileRef}
+            data-animate="socialProof"
+            className="social-proof-mobile"
+          >
+            <motion.div
+              className="proof-item-mobile"
+              initial={{ opacity: 0, y: 12 }}
+              animate={animationsTriggered.socialProof ? { opacity: 1, y: 0, boxShadow: '0 10px 24px rgba(0,0,0,0.18)' } : {}}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.05 }}
+            >
+              {/* Clock icon for on-time filings */}
+              <svg className="proof-icon-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 3" />
+              </svg>
+              <div className="proof-content-mobile">
+                <span className="proof-number-mobile">100%</span>
+                <span className="proof-label-mobile">on-time filings</span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="proof-item-mobile"
+              initial={{ opacity: 0, y: 12 }}
+              animate={animationsTriggered.socialProof ? { opacity: 1, y: 0, boxShadow: '0 10px 24px rgba(0,0,0,0.18)' } : {}}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.15 }}
+            >
+              <HeartHandshake className="proof-icon-mobile" aria-hidden="true" />
+              <div className="proof-content-mobile">
+                <span className="proof-number-mobile">200+</span>
+                <span className="proof-label-mobile">happy clients</span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="proof-item-mobile"
+              initial={{ opacity: 0, y: 12 }}
+              animate={animationsTriggered.socialProof ? { opacity: 1, y: 0, boxShadow: '0 10px 24px rgba(0,0,0,0.18)' } : {}}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.25 }}
+            >
+              {/* Trophy/Award icon for years of experience */}
+              <svg className="proof-icon-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M8 4h8v4a4 4 0 01-4 4 4 4 0 01-4-4V4z" />
+                <path d="M6 4H4a3 3 0 003 3" />
+                <path d="M18 4h2a3 3 0 01-3 3" />
+                <path d="M12 17v4" />
+                <path d="M8 21h8" />
+              </svg>
+              <div className="proof-content-mobile">
+                <span className="proof-number-mobile">14+</span>
+                <span className="proof-label-mobile">years experience</span>
+              </div>
+            </motion.div>
+          </div>
+          
           <div className="hero-media">
             <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
           </div>
 
+          {/* Desktop Social Proof - Hidden under 680px */}
           <div
             ref={socialProofRef}
             data-animate="socialProof"
@@ -261,27 +391,31 @@ const Hero = () => {
           }}
         >
           <div className="ticker-track">
-            {tickerItems.map((label, i) => (
-              <motion.div
-                key={`${label}-${i}`}
-                className="ticker-item"
-                onClick={handleTickerClick}
-                style={{ cursor: 'pointer' }}
-                animate={{
-                  color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
-                  scale: highlightedIndex === i ? 1.1 : 1
-                }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                whileHover={{ scale: 1.15, color: 'var(--color-hunter-green)' }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {label}
-              </motion.div>
+            {currentTickerItems.map((label, i) => (
+              <React.Fragment key={`${label}-${i}`}>
+                <motion.div
+                  className="ticker-item"
+                  onClick={handleTickerClick}
+                  style={{ cursor: 'pointer' }}
+                  animate={{
+                    color: highlightedIndex === i ? 'var(--color-accent)' : '#19231A',
+                    scale: highlightedIndex === i ? 1.1 : 1
+                  }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  whileHover={{ scale: 1.15, color: 'var(--color-hunter-green)' }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {label}
+                </motion.div>
+                {i < (currentTickerItems.length - 1) && (
+                  <span className="ticker-separator">•</span>
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>
 
-      </div>
+        </div>
     </section>
   );
 };

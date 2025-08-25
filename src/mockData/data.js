@@ -16,12 +16,17 @@ export const NavbarMenu = [
     },
     {
         id: 4,
-        name: 'Contact Us',
-        path: '#contact',
+        name: 'Testimonials',
+        path: '#social-proof',
     },
     {
         id: 5,
         name: 'FAQ',
         path: '#faq',
+    },
+    {
+        id: 6,
+        name: 'Contact Us',
+        path: '#contact',
     },
 ]

@@ -122,8 +122,8 @@ const Services = () => {
             {/* Current Service Type Note */}
             <div className={`service-type-note ${animationsTriggered.note ? 'animate-note' : ''}`} ref={noteRef} data-animate="note">
               {serviceType === 'business' 
-                ? "*You are currently viewing our business services*"
-                : "*You are currently viewing our individual services*"
+                ? "*Switch the toggle to view our individual services*"
+                : "*Switch the toggle to view our business services*"
               }
             </div>
           </div>
@@ -149,7 +149,7 @@ const Services = () => {
       <MeetTheOwner />
       
       {/* Entity Selector Widget */}
-      <section className="widget-section">
+      <section id="entity-selector" className="widget-section">
         <EntitySelectorWidget />
       </section>
       

@@ -226,6 +226,9 @@
 .servicespage-toggle {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  justify-items: center;
   gap: 1rem;
   margin: 2rem 0;
   flex-wrap: wrap;
@@ -244,8 +247,9 @@
 }
 
 .servicespage-toggle-btn:hover {
-  background: var(--color-hunter-green);
+  background: var(--color-sinopia);
   color: white;
+  border: 2px solid var(--color-sinopia);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(51, 103, 59, 0.3);
 }
@@ -267,6 +271,10 @@
   font-style: italic;
   margin-top: 1rem;
   opacity: 0.8;
+  text-align: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ServicesPage Content */
@@ -909,3 +917,11 @@
     transform: translateY(-5px);
   }
 }
+
+/* On-load header fade-in */
+.sp-fade-in-up { animation: spFadeInUp .7s ease both; }
+@keyframes spFadeInUp { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: translateY(0);} }
+
+/* Scroll-trigger base state */
+.sp-animate { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.sp-in-view { opacity: 1; transform: translateY(0); }

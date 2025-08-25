@@ -367,12 +367,13 @@ const AppointmentScheduler = () => {
 
   return (
     <div 
+      id="appointment-scheduler"
       ref={schedulerRef}
       className={`appointment-scheduler ${animationsTriggered ? 'animate-in' : ''}`}
     >
       <div className={`scheduler-header ${animationsTriggered ? 'animate-in' : ''}`}>
-        <h3>Schedule Your Appointment</h3>
-        <p>Choose a convenient time for your consultation</p>
+        <h3>Schedule Your Consultation</h3>
+        <p>Choose a time that fits your schedule to discuss your needs</p>
       </div>
 
       <form onSubmit={handleSubmit} className="scheduler-form">

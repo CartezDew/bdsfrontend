@@ -30,6 +30,7 @@ const businessServicePriceText = {
       id: 1,
       icon: "📊",
       title: "Tax Returns",
+      serviceId: "tax-returns",
       longDescription: "Complete 1065/1120/1120-S prep—apportionment, depreciation, K-1s—plus entity-specific deductions, credits, and elections. Audit-ready.",
       whatsIncluded: [
         "Federal and state business returns (1065, 1120, 1120-S) with e-file",
@@ -59,6 +60,7 @@ const businessServicePriceText = {
       id: 2,
       icon: "💸",
       title: "Payroll Services",
+      serviceId: "payroll-services",
       longDescription: "On-time payroll for employees & contractors—automated taxes, filings, multi-state, year-end handled.",
       whatsIncluded: [
         "Payroll setup (direct deposit, withholdings, benefits/garnishments)",
@@ -88,6 +90,7 @@ const businessServicePriceText = {
       id: 3,
       icon: "📈",
       title: "Bookkeeping",
+      serviceId: "bookkeeping",
       longDescription:
         "Clean, timely books—monthly close, reconciliations, GAAP categories. Investor/tax-ready with clear spend, margins, cash.",
       whatsIncluded: [
@@ -98,106 +101,118 @@ const businessServicePriceText = {
       ],
       idealFor: [
         "Startups and growing SMBs needing reliable monthly financials",
-        "Cash-basis companies transitioning to accrual",
-        "Businesses preparing for financing, grants, or taxes"
+        "Businesses preparing for funding or sale",
+        "Owners wanting clear visibility into performance"
       ],
       process: [
-        "Onboarding & chart-of-accounts tune-up",
-        "Monthly close & management reports",
-        "Quarterly review and optimization"
+        "Setup & historical cleanup",
+        "Monthly processing & close",
+        "Quarterly reviews & year-end package"
       ],
       deliverables: [
-        "Monthly P&L, Balance Sheet, Cash Flow, and Trial Balance",
-        "Account reconciliations and tie-outs",
-        "Year-end tax package and GL detail export"
+        "Monthly financial statements",
+        "Quarterly performance reviews",
+        "Year-end tax package"
       ],
       pricingNote:
-        "Tiered by transaction volume, number of accounts, and complexity."
+        "Monthly subscription based on transaction volume and complexity."
     },
     {
       id: 4,
       icon: "⚖️",
       title: "Compliance",
-      longDescription:
-        "Proactive compliance management to prevent penalties and surprises.",
+      serviceId: "compliance",
+      longDescription: "Stay compliant with business tax laws and regulations through proactive management and documentation.",
       whatsIncluded: [
-        "Sales/use tax registrations and filings",
-        "1099 preparation/e-file and W-9 collection process"
+        "Business tax obligation assessment and planning",
+        "Regulatory compliance monitoring",
+        "Documentation requirements and record keeping",
+        "Penalty avoidance strategies"
       ],
       idealFor: [
-        "E-commerce and multi-location businesses",
-        "New entities that need guardrails from day one"
+        "Businesses with complex tax situations",
+        "Those wanting to avoid penalties",
+        "Companies needing help with documentation"
       ],
       process: [
-        "Registrations and remediation",
-        "Ongoing monitoring & filings"
+        "Compliance review",
+        "Documentation setup",
+        "Ongoing monitoring"
       ],
       deliverables: [
-        "Filed confirmations and receipts",
-        "SOPs and document retention guidelines"
+        "Compliance checklist",
+        "Documentation templates",
+        "Regular compliance updates"
       ],
       pricingNote:
-        "Per-filing or monthly retainer depending on scope and jurisdictions."
+        "Monthly subscription with setup fee."
     },
     {
       id: 5,
       icon: "📋",
       title: "Reporting",
-      longDescription:
-        "Tailored reporting: KPIs, Budget vs Actuals, variance analysis, runway—backed by concise, actionable narrative.",
+      serviceId: "reporting",
+      longDescription: "Comprehensive business financial reporting and analysis to help you make informed decisions.",
       whatsIncluded: [
-        "Custom management pack (P&L by class/location, margins, trends)",
-        "Budgeting/forecasting and variance analysis",
-        "Cash flow projections and scenario planning"
+        "Financial statement preparation",
+        "Trend analysis and insights",
+        "Custom report creation",
+        "Performance metrics and KPIs"
       ],
       idealFor: [
-        "Businesses that want clear, visual insights each month",
-        "Teams preparing for board or lender updates"
+        "Businesses wanting financial clarity",
+        "Those planning major investments",
+        "Companies tracking financial goals"
       ],
       process: [
-        "Metrics workshop & data mapping",
-        "Monthly cadence with insights & actions"
+        "Data collection",
+        "Analysis and reporting",
+        "Insights and recommendations"
       ],
       deliverables: [
-        "Monthly PDF decks",
-        "Budget & forecast models",
-        "Executive commentary with recommended actions"
+        "Financial reports",
+        "Analysis insights",
+        "Actionable recommendations"
       ],
       pricingNote:
-        "Depends on data sources, integrations, and dashboard complexity."
+        "Per report or monthly subscription."
     },
     {
       id: 6,
       icon: "🔍",
       title: "Audits",
-      longDescription: "Experienced End-to-end audit representation—IRS/state, payroll, and sales tax. Evidence, correspondence, resolution handled.",
+      serviceId: "audits",
+      longDescription: "Professional representation during IRS audits and reviews with expert guidance.",
       whatsIncluded: [
-        "Notice review, risk assessment",
-        "Customized document request list and evidence compilation",
-        "Penalty abatement and payment plan support when applicable"
+        "Audit preparation and documentation review",
+        "IRS communication and representation",
+        "Response preparation and filing",
+        "Settlement negotiation if needed"
       ],
       idealFor: [
-        "IRS/state correspondence or field audits",
-        "Payroll tax and sales/use tax examinations",
-        "Businesses responding to unexpected notices"
+        "Businesses facing IRS audits",
+        "Those needing audit representation",
+        "Companies with complex tax situations"
       ],
       process: [
-        "Intake & POA filing",
-        "Evidence gathering & position memo",
-        "Agency response, follow-ups, and resolution"
+        "Audit notification review",
+        "Documentation preparation",
+        "IRS representation",
+        "Resolution"
       ],
       deliverables: [
-        "Filed responses and status updates",
-        "Closing agreements/NOAs retained for your records",
-        "Post-audit recommendations to prevent recurrences"
+        "Audit response package",
+        "Representation services",
+        "Resolution documentation"
       ],
       pricingNote:
-        "Hourly with an initial retainer; flat fees available for discrete notices."
+        "Hourly rate for representation services."
     },
     {
       id: 7,
       icon: "⏰",
       title: "Tax Extensions",
+      serviceId: "tax-extensions",
       longDescription:
         "Fast, accurate federal and state extensions (Form 7004 and equivalents) with estimated payments to minimize interest and penalties.",
       whatsIncluded: [
@@ -227,6 +242,7 @@ const businessServicePriceText = {
       id: 8,
       icon: "💡",
       title: "Advisory",
+      serviceId: "advisory",
       longDescription:
         "Practical, CFO-level advice for structure, strategy, and taxes. We help you improve margins, manage cash, and plan for growth, funding, or exit—with clear, actionable steps.",
       whatsIncluded: [
@@ -261,6 +277,7 @@ const businessServicePriceText = {
       id: 1,
       icon: "📊",
       title: "Tax Returns",
+      serviceId: "tax-returns",
       longDescription: "Personalized returns for W-2, 1099, investments, and rentals—maximize deductions, audit-ready.",
       whatsIncluded: [
         "Full intake review (income sources, life events, deductions/credits)",
@@ -286,6 +303,7 @@ const businessServicePriceText = {
       id: 2,
       icon: "📈",
       title: "Bookkeeping",
+      serviceId: "bookkeeping",
       longDescription: "Monthly categorizations & reconciliations—clean, tax-ready books with clear cash-flow insight.",
       whatsIncluded: [
         "Secure bank/credit card feed connections",
@@ -299,117 +317,118 @@ const businessServicePriceText = {
         "Side-hustlers who need clean records for taxes",
         "Households tracking budgets against goals"
       ],
-      process: ["Onboarding & connections", "Monthly close & report pack", "Quarterly review & optimization"],
+      process: ["Initial setup & account connections", "Monthly processing & categorization", "Quarterly reviews & year-end package"],
       deliverables: [
-        "Monthly PDF report pack (cash flow, category trends)",
-        "CSV exports for budgeting apps",
-        "Year-end tax package (all statements & category summaries)"
+        "Monthly financial statements",
+        "Year-end tax package",
+        "Ongoing support and quarterly check-ins"
       ],
       pricingNote:
-        "Monthly rate depends on account volume and transaction count."
+        "Monthly subscription with setup fee."
     },
     {
       id: 3,
       icon: "⚖️",
       title: "Compliance",
-      longDescription: "Deadlines handled: reminders, estimates, and filings to help you avoid penalties.",
+      serviceId: "compliance",
+      longDescription: "Stay compliant with tax laws and regulations through proactive management and documentation.",
       whatsIncluded: [
-        "Estimated tax planning & quarterly reminders",
-        "State/local filings (where applicable)",
-        "Guidance for 1099-K/marketplace reporting",
-        "Record-keeping checklists and retention timelines"
+        "Tax obligation assessment and planning",
+        "Documentation requirements and record keeping",
+        "Compliance monitoring and updates",
+        "Penalty avoidance strategies"
       ],
       idealFor: [
-        "Taxpayers with quarterly estimates",
-        "People with income in multiple states",
-        "Anyone who's received a notice and wants ongoing guardrails"
+        "Individuals with complex tax situations",
+        "Those who want to avoid penalties",
+        "People needing help with documentation"
       ],
-      process: ["Compliance review & calendar setup", "Quarterly monitoring", "Year-end wrap-up & next-year plan"],
+      process: ["Compliance review", "Documentation setup", "Ongoing monitoring"],
       deliverables: [
-        "Personal compliance calendar with reminders",
-        "Documentation checklists",
-        "Notice response templates (as needed)"
+        "Compliance checklist",
+        "Documentation templates",
+        "Regular compliance updates"
       ],
       pricingNote:
-        "Hourly or fixed-fee depending on scope (multi-state, notices, special filings)."
+        "Hourly rate for consultation and setup."
     },
     {
       id: 4,
       icon: "📋",
       title: "Reporting",
-      longDescription: "Custom dashboards & reports—track KPIs, budget vs. actuals, and cash flow you can act on.",
+      serviceId: "reporting",
+      longDescription: "Comprehensive financial reporting and analysis to help you make informed decisions.",
       whatsIncluded: [
-        "Custom financial reports and dashboards",
-        "Key performance indicators (KPIs) tracking",
-        "Budget vs. actual analysis",
-        "Cash flow forecasting and projections",
-        "Regular financial health check-ins"
+        "Financial statement preparation",
+        "Trend analysis and insights",
+        "Custom report creation",
+        "Performance metrics and KPIs"
       ],
       idealFor: [
-        "Business owners needing financial insights",
-        "Managers tracking department performance",
-        "Investors monitoring portfolio companies"
+        "Individuals wanting financial clarity",
+        "Those planning major purchases",
+        "People tracking financial goals"
       ],
-      process: ["Data analysis & report design", "Dashboard creation & setup", "Ongoing monitoring & updates"],
+      process: ["Data collection", "Analysis and reporting", "Insights and recommendations"],
       deliverables: [
-        "Custom financial dashboards",
-        "Monthly/quarterly report packages",
-        "KPI tracking spreadsheets",
-        "Financial health scorecards"
+        "Financial reports",
+        "Analysis insights",
+        "Actionable recommendations"
       ],
       pricingNote:
-        "Fixed monthly rate with custom report development included."
+        "Per report or monthly subscription."
     },
     {
       id: 5,
       icon: "🔍",
-      title: "Audit Support",
-      longDescription: "Audit support from notice to close—docs, responses, and representation.",
+      title: "Audits",
+      serviceId: "audits",
+      longDescription: "Professional representation during IRS audits and reviews with expert guidance.",
       whatsIncluded: [
-        "Audit notice review and response preparation",
-        "Documentation gathering and organization",
-        "Communication with IRS agents",
+        "Audit preparation and documentation review",
+        "IRS communication and representation",
+        "Response preparation and filing",
+        "Settlement negotiation if needed"
       ],
       idealFor: [
-        "Taxpayers receiving audit notices",
-        "Businesses facing IRS examinations",
-        "Anyone needing audit preparation help"
+        "Individuals facing IRS audits",
+        "Those needing audit representation",
+        "People with complex tax situations"
       ],
-      process: ["Notice review & assessment", "Documentation preparation", "Resolution & follow-up"],
+      process: ["Audit notification review", "Documentation preparation", "IRS representation", "Resolution"],
       deliverables: [
-        "Audit response packages",
-        "Documentation checklists",
-        "Audit resolution summaries"
+        "Audit response package",
+        "Representation services",
+        "Resolution documentation"
       ],
       pricingNote:
-        "Hourly rate for audit support services."
+        "Hourly rate for representation services."
     },
     {
       id: 6,
-      icon: "📚",
-      title: "Tax Planning",
-      longDescription: "Tailored tax strategies—reduce taxes now and later with clear next steps.",
+      icon: "⏰",
+      title: "Tax Extensions",
+      serviceId: "tax-extensions",
+      longDescription: "File extensions and ensure timely tax compliance with proper documentation.",
       whatsIncluded: [
-        "Comprehensive tax situation analysis",
-        "Tax-saving strategy recommendations",
-        "Quarterly tax planning sessions",
-        "Year-end tax optimization",
-        "Multi-year tax planning roadmap"
+        "Extension preparation and filing",
+        "Estimated payment calculations",
+        "Deadline management",
+        "Final filing coordination"
       ],
       idealFor: [
-        "High-income earners",
-        "Business owners and investors",
-        "Anyone with complex tax situations"
+        "Individuals needing more time",
+        "Those with complex tax situations",
+        "People awaiting documentation"
       ],
-      process: ["Initial tax analysis", "Strategy development", "Implementation guidance", "Ongoing optimization"],
+      process: ["Extension preparation", "Filing and confirmation", "Final filing coordination"],
       deliverables: [
-        "Tax planning reports",
-        "Strategy implementation guides",
-        "Quarterly planning summaries",
-        "Tax optimization checklists"
+        "Extension confirmation",
+        "Estimated payment vouchers",
+        "Final filing timeline"
       ],
       pricingNote:
-        "Hourly rate for planning services with quarterly retainer options."
+        "Flat fee for extension filing."
     }
   ];
 
@@ -418,7 +437,7 @@ const businessServicePriceText = {
     return (
       <section 
         className="servicesdetailed-service-section" 
-        id={`service-${detail.id}`}
+        id={detail.serviceId}
       >
         <div className="servicesdetailed-content-col">
           <div className="servicesdetailed-section-header">

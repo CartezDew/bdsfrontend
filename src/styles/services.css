@@ -3,8 +3,6 @@
   padding: 1rem 2rem 4rem 2rem;
   /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); */
   background-color: var(--color-timberwolf);
-  min-height: calc(100vh - 80px);
-  margin-top: 0;
   transition: padding-top 0.3s ease;
 }
 
@@ -59,7 +57,7 @@
 }
 
 .services-title {
-  font-size: 2.5rem;
+  font-size: clamp(2.2rem, 3.7vw, 3rem);
   font-weight: 900;
   color: var(--color-hunter-green);
   margin-bottom: 1rem;
@@ -67,12 +65,13 @@
 }
 
 .services-subtitle {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
   color: var(--color-errie-black);
-  max-width: 600px;
+  max-width: auto;
   margin: 0 auto;
   line-height: 1.6;
-  opacity: 0.9;
+  opacity: 0.8;
+
 }
 
 /* Services Grid Layout */
@@ -80,9 +79,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+  justify-items: center;
+  justify-content: center;
 }
 
 /* Hide border when navbar is visible */
@@ -94,7 +95,7 @@
 .service-card {
   position: relative;
   isolation: isolate; /* Creates new stacking context */
-  margin-left: 30px;
+  margin-left: 0;
   height: 100%; /* Take full height of grid row */
   display: flex;
   flex-direction: column;
@@ -143,7 +144,7 @@
 
 .service-title {
   color: white;
-  font-size: 1.5rem;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
   font-weight: 700;
   margin-bottom: 0.75rem;
   text-align: left;
@@ -167,7 +168,7 @@
 
 .service-description {
   color: white;
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   text-align: left;
@@ -201,7 +202,7 @@
   gap: 0.5rem;
   position: absolute;
   z-index: 2; /* Above the card */
-  left: 6px; /* Moved left to overlap the strap */
+  left: -14px; /* Moved left to overlap the strap */
   bottom: 15px; /* Moved higher up */
   min-width: 140px;
   box-shadow: 0 6px 16px rgba(227, 89, 3, 0.50);
@@ -209,8 +210,8 @@
 }
 
 .learn-more-btn:hover {
-  background: var(--color-golden-brown);
-  transform: translateY(-1px);
+  /* background: var(--color-golden-brown); */
+  transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 176, 80, 0.45);
 }
 
@@ -224,13 +225,16 @@
 }
 
 .learn-more-btn:hover .arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 /* Service Type Toggle */
 .service-type-toggle {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  justify-items: center;
   gap: 1rem;
   margin: 2rem 0;
 }
@@ -240,7 +244,7 @@
   border: 2px solid var(--color-hunter-green);
   background: transparent;
   color: var(--color-hunter-green);
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -303,19 +307,22 @@
 /* Service Type Note */
 .service-type-note {
   text-align: center;
-  color: var(--color-errie-black);
-  font-size: 0.9rem;
+  color: var(--color-hunter-green);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
   font-style: italic;
   opacity: 0.8;
   margin-top: 0.5rem;
   font-family: 'Playfair Display', serif;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Service Price Display */
 .service-price {
   position: absolute;
   bottom: 15px;
-  right: 2rem;
+  right: 1rem;
   font-size: 0.9rem;
   color: white;
   opacity: 0.6;
@@ -324,38 +331,53 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1150px) {
   .services-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2.5rem;
+    max-width: 900px;
   }
   .service-card {
-    margin-left: 25px;
+    margin-left: 0;
   }
-  .service-card::before {
-    left: -15px; /* Adjusted for smaller screens */
-    width: 110px;
-    height: 48px;
-    bottom: 30px; /* Adjusted for smaller screens */
-    clip-path: polygon(18px 0, 100% 0, 100% 100%, 0 100%);
-  }
+
   .learn-more-btn {
-    left: -15px; /* Adjusted for smaller screens */
+    left: -14px; /* Adjusted for smaller screens */
     bottom: 15px;
   }
 }
+
+@media (max-width: 850px) {
+
+  .services-section {
+    padding: 1rem 0rem 2rem 0rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  
+  }
+
+  .service-type-note {
+    font-size: clamp(0.9rem, 1.7vw, 1.3rem);
+   }
+}
+
+
 
 @media (max-width: 768px) {
   .services-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2.5rem;
-    padding: 0 1rem;
-  }
-  .service-card {
-    margin-left: 25px;
+    padding: 0rem 2rem 2rem 2rem;
   }
   .service-card-content {
-    padding: 1.5rem 1.5rem 3.5rem 1.5rem;
+    padding: 1.5rem 1.5rem 4rem 1.5rem;
   }
   .service-title {
     font-size: 1.3rem;
@@ -363,46 +385,95 @@
   .service-description {
     font-size: 0.95rem;
   }
-  .service-card::before {
-    left: -12px;
-    width: 100px;
-    height: 44px;
-    bottom: 28px; /* Adjusted for tablet screens */
-    clip-path: polygon(16px 0, 100% 0, 100% 100%, 0 100%);
-  }
-  .learn-more-btn {
-    left: 28px;
-    bottom: 8px;
-    padding: 12px 18px;
-    font-size: 0.9rem;
-    min-width: 120px;
-  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 725px) {
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-items: stretch;
+    max-width: 500px;
+  }
+ 
+}
+
+@media (max-width: 710px) {
   .services-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+    justify-items: stretch;
+  }
+}
+
+@media (max-width: 650px) {
+  .services-section {
+    padding: 2rem 1.5rem 2rem 1.5rem;
+  }
+  .services-title {
+    font-size: clamp(1.8rem, 4.6vw, 2.5rem);
+  }
+  .services-subtitle {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+  .service-type-note {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+  .service-type-toggle {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+  .service-type-toggle .toggle-btn {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+  .service-type-toggle .toggle-btn.active {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+  .service-type-toggle .toggle-btn:hover {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+}
+
+@media (max-width: 440px) {
+  .services-title {
+    font-size: clamp(1.7rem, 5.5vw, 2.5rem);
+  }
+  .services-subtitle {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  }
+  .service-type-note {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+  }
+  .service-type-toggle {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+  }
+  .service-type-toggle .toggle-btn {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+  }
+  .service-type-toggle .toggle-btn.active {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+  }
+  .service-type-toggle .toggle-btn:hover {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
   }
   .service-card {
-    margin-left: 20px;
+    min-width: 250px;
+    min-height: 280px;
   }
-  .service-card-content {
-    padding: 1.25rem 1.25rem 3rem 1.25rem;
+  .service-price {
+    font-size: clamp(0.8rem, 3.2vw, 1.2rem);
   }
-  .service-card::before {
-    left: -10px;
-    width: 90px;
-    height: 40px;
-    bottom: 25px; /* Adjusted for mobile screens */
-    clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+
+}
+
+@media (max-width: 400px) {
+  .services-section {
+    padding: 2rem 0rem 2rem 0rem;
   }
-  .learn-more-btn {
-    left: 24px;
-    bottom: 6px;
-    padding: 10px 16px;
-    font-size: 0.85rem;
-    min-width: 110px;
+}
+
+@media (max-width: 360px) {
+  .service-price {
+    font-size: clamp(0.7rem, 3.2vw, 1.2rem);
+    margin-right: -.5rem;
   }
 }
 
