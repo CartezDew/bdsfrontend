@@ -11,12 +11,12 @@
 
 .faq-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   position: relative;
 }
 
 .faq-header h2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 3.7vw, 2.5rem);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -41,7 +41,7 @@
 
 .faq-header p {
   color: rgba(25, 35, 26, 0.9);
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.7vw, 1.3rem);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -49,6 +49,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   letter-spacing: 0.01em;
   color: var(--color-timberwolf);
+  padding-top: 1rem;
 }
 
 /* Container & rows */
@@ -131,7 +132,7 @@
 /* Question text styling */
 .fact-trigger span:not(.chev) {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.7vw, 1.3rem);
   font-weight: 600;
   color: var(--color-eerie-black);
   line-height: 1.4;
@@ -155,14 +156,13 @@
 
 .fact-panel > div {
   color: rgba(25, 35, 26, 0.8);
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
   line-height: 1.5;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   padding-top: 0.125rem;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
 }
 
 /* Scroll Animations */
@@ -211,7 +211,7 @@
 
 
 /* Responsive Design for FAQ */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .faq-section {
     padding: 3rem 1rem;
   }
@@ -225,20 +225,23 @@
     font-size: 1.1rem;
     max-width: 600px;
   }
-}
+} */
 
 @media (max-width: 480px) {
   .faq-section {
     padding: 2rem 1rem;
   }
-  
-  .faq-header h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+
+  .faq-header {
+    margin-bottom: 2rem;
   }
-  
+
+  .fact-trigger span {
+    font-size: clamp(1.05rem, 2.7vw, 1.5rem);
+  }
+
   .faq-header p {
-    font-size: 1rem;
+    font-size: clamp(1.05rem, 2.7vw, 1.5rem);
     max-width: 100%;
   }
 }
