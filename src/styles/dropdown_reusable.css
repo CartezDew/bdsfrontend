@@ -1,0 +1,87 @@
+/* Reusable dropdown styles for CustomSelect */
+
+.custom-select {
+  position: relative;
+  user-select: none;
+}
+
+.custom-select .cs-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 2px solid rgba(51, 103, 59, 0.2);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffffff, #fafafa);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.05s ease;
+  cursor: pointer;
+}
+
+.custom-select:focus .cs-control,
+.custom-select.open .cs-control {
+  border-color: var(--color-hunter-green);
+  box-shadow: 0 0 0 3px rgba(51, 103, 59, 0.1);
+}
+
+.custom-select .cs-control.has-value {
+  border-color: var(--color-sinopia);
+  background: rgba(204, 63, 12, 0.05);
+}
+
+.custom-select .cs-value {
+  color: var(--color-eerie-black);
+}
+
+.custom-select .cs-arrow {
+  font-size: 1rem;
+  color: var(--color-sinopia);
+}
+
+.custom-select .cs-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.12);
+  z-index: 40;
+  max-height: 280px;
+  overflow: auto;
+  padding: 0.25rem; /* tighter menu padding */
+}
+
+.custom-select .cs-group {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-hunter-green);
+  padding: 0.35rem 0.6rem 0.2rem; /* reduce group block spacing */
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.custom-select .cs-option {
+  padding: 0.35rem 0.6rem; /* tighter option padding */
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.05s ease;
+  color: var(--color-eerie-black);
+  cursor: pointer;
+  font-size: .95rem;
+  padding-left: 2.2rem;
+  line-height: 1.25; /* reduce line height to tighten */
+}
+
+.custom-select .cs-option:hover,
+.custom-select .cs-option.active {
+  background: #f1f5f9;
+}
+
+.custom-select .cs-option.selected {
+  background: var(--color-hunter-green);
+  color: #fff;
+}
+
+

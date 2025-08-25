@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/appointment_scheduler.css';
+import CustomSelect from './CustomSelect';
 
 const AppointmentScheduler = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -407,50 +408,40 @@ const AppointmentScheduler = () => {
             <h4>Select Your Service</h4>
             <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
               <label htmlFor="service">Service Type *</label>
-              <select
+              <CustomSelect
                 id="service"
+                placeholder="Select a service"
                 value={selectedService}
-                onChange={(e) => {
-                  setSelectedService(e.target.value);
-                }}
-                className={selectedService ? 'selected' : ''}
+                onChange={(val) => setSelectedService(val)}
                 required
-              >
-                <option value="">Select a service</option>
-                <optgroup label="Individual Services">
-                  {serviceOptions.individual.map((service, index) => (
-                    <option key={`ind-${index}`} value={service}>{service}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Business Services">
-                  {serviceOptions.business.map((service, index) => (
-                    <option key={`bus-${index}`} value={service}>{service}</option>
-                  ))}
-                </optgroup>
-              </select>
+                options={[
+                  { label: 'Individual Services', options: serviceOptions.individual },
+                  { label: 'Business Services', options: serviceOptions.business },
+                ]}
+              />
             </div>
             
             <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
               <label htmlFor="referralSource">How did you find us? *</label>
-              <select
+              <CustomSelect
                 id="referralSource"
+                placeholder="Select how you found us"
                 value={referralSource}
-                onChange={(e) => setReferralSource(e.target.value)}
-                className={referralSource ? 'selected' : ''}
+                onChange={(val) => setReferralSource(val)}
                 required
-              >
-                <option value="">Select how you found us</option>
-                <option value="Returning Client">Returning Client</option>
-                <option value="Walk-in">Walk-in</option>
-                <option value="Referral">Referral</option>
-                <option value="Word-of-mouth">Word-of-mouth</option>
-                <option value="Google Search">Google Search</option>
-                <option value="Facebook">Facebook</option>
-                <option value="LinkedIn">LinkedIn</option>
-                <option value="Instagram">Instagram</option>
-                <option value="Networking Event">Networking Event</option>
-                <option value="Other">Other</option>
-              </select>
+                options={[
+                  'Returning Client',
+                  'Walk-in',
+                  'Referral',
+                  'Word-of-mouth',
+                  'Google Search',
+                  'Facebook',
+                  'LinkedIn',
+                  'Instagram',
+                  'Networking Event',
+                  'Other',
+                ]}
+              />
             </div>
             
             <div className="form-actions">
