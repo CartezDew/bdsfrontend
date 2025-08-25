@@ -56,7 +56,9 @@ export default function Why_Us() {
           </div>
           <div className={`whyus__grid-image ${animationsTriggered ? 'whyus__grid-image-animated' : ''}`}>
             <img 
-              src={require('../assets/Images/multi-ethnic-group-three-young-people-studying-together.png').default} 
+              src={require('../assets/Images/multi-ethnic-group-three-young-people-studying-together.png').default}
+              srcSet={`${require('../assets/Images/multi-ethnic-group-three-young-people-studying-together.png').default} 1x`}
+              sizes="(max-width: 680px) 100vw, 50vw"
               alt="Business professionals shaking hands in partnership" 
               className={`whyus__business-image ${animationsTriggered ? 'whyus__business-image-animated' : ''}`}
             />

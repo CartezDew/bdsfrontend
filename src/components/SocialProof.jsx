@@ -411,14 +411,10 @@ export default function SocialProof() {
                 <div className="image-year-container">
                   <OptimizedTestimonialImage
                     src={testimonial.image}
+                    srcSet={`${testimonial.image} 1x`}
+                    sizes="(max-width: 600px) 33vw, (max-width: 800px) 33vw, 300px"
                     alt={`${testimonial.author} testimonial`}
                     className="testimonial-image"
-                    onLoad={() => {
-                      console.log(`Successfully loaded image for ${testimonial.author}`);
-                    }}
-                    onError={() => {
-                      console.error(`Failed to load image for ${testimonial.author}`);
-                    }}
                   />
                   <div className="year-badge">{testimonial.yearOfService}</div>
                 </div>
