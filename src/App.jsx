@@ -394,10 +394,11 @@ function App() {
       <div className={`App ${showNavbar ? '' : 'navbar-hidden'}`}>
         {/* Hide public Navbar on admin routes */}
         {location.pathname.startsWith('/admin') ? null : <Navbar />}
+        {/* Set document.title based on current route */}
+        <PageTitle />
         <Routes>
         <Route path="/" element={
           <>
-            <PageTitle />
             <Hero />
             <AvoidConfusion />
             <Services />

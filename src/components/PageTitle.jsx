@@ -15,6 +15,8 @@ const PageTitle = () => {
           return 'Contact Us'
         case '/get-started':
           return 'Get Started'
+        case '/sign-in':
+          return 'Sign In'
         default:
           return 'Home'
       }
