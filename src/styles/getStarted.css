@@ -6,7 +6,7 @@
 }
 
 .get-started-container {
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -17,7 +17,7 @@
 
 .get-started-header h1 {
   color: var(--color-timberwolf);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-size: clamp(2.1rem, 3.7vw, 3.2rem);
   font-weight: 800;
   margin-bottom: 1.5rem;
   font-family: 'Playfair Display', serif;
@@ -126,7 +126,7 @@
 }
 
 .getstarted-header h3 {
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 2.5vw, 2rem);
   color: var(--color-hunter-green);
   font-weight: 700;
   font-family: 'Playfair Display', serif;
@@ -462,7 +462,7 @@
   /* Question text styling */
   .getstarted-fact-trigger span:not(.getstarted-chev) {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: clamp(1.1rem, 1.7vw, 1.4rem);
     font-weight: 600;
     color: var(--color-eerie-black);
     line-height: 1.4;
@@ -486,7 +486,7 @@
 
   .getstarted-fact-panel > div {
     color: rgba(25, 35, 26, 0.8);
-    font-size: 1rem;
+    font-size: clamp(1rem, 1.2vw, 1rem);
     line-height: 1.5;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     padding-top: 0.125rem;
@@ -933,16 +933,16 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .get-started-page {
+  /* .get-started-page {
     padding: 1rem;
   }
   
   .get-started-header {
     margin-bottom: 2rem;
     padding: 2rem 0;
-  }
+  } */
   
-  .get-started-content {
+  /* .get-started-content {
     gap: 2rem;
   }
   
@@ -953,7 +953,7 @@
   
   .getstarted-form-row {
     grid-template-columns: 1fr;
-  }
+  } */
   
   .getstarted-calendar-nav-btn {
     width: 2rem;
@@ -970,7 +970,7 @@
     margin: 1rem;
   }
 
-  .getstarted-faq-section {
+  /* .getstarted-faq-section {
     padding: 3rem 1rem;
   }
   
@@ -978,49 +978,38 @@
     font-size: 2.5rem;
     margin-bottom: 1.25rem;
   }
-  
-  .getstarted-faq-header p {
+   */
+  /* .getstarted-faq-header p {
     font-size: 1.1rem;
     max-width: 600px;
-  }
+  } */
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 750px) {
+  .getstarted-consultation-btn {
+    font-size: clamp(.9rem, 1.2vw, 1rem) !important;
+    padding: .75rem 1.25rem;
+  }
+} */
+
+@media (max-width: 610px) {
+  .get-started-page {
+    padding: 3rem 0rem;
+  }
   .get-started-header h1 {
-    font-size: 2rem;
+    font-size: clamp(1.9rem, 3.1vw, 2.3rem);
   }
-  
+  /* .get-started-header h3 {
+    font-size: clamp(1.5rem, 2.2vw, 1.7rem);
+  } */
   .get-started-header p {
-    font-size: 1rem;
+    padding: 0rem 1rem 0rem 1rem;
   }
-  
-  .getstarted-scheduler {
-    padding: 1rem;
-  }
-  
-  .getstarted-form-section {
-    padding: 1.5rem;
-  }
-  
-  .getstarted-calendar-container,
-  .getstarted-time-slots {
-    padding: 1rem;
-  }
-
   .getstarted-faq-section {
-    padding: 2rem 1rem;
-  }
-  
-  .getstarted-faq-header h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .getstarted-faq-header p {
-    font-size: 1rem;
-    max-width: 100%;
+    padding: 1rem 1rem;
   }
 }
+
 
 /* Scroll Mouse Indicator */
 .scroll-mouse-indicator {
@@ -1171,9 +1160,9 @@
 .getstarted-consultation-btn {
   /* max-width: 200px; */
   display: inline-block;
-  padding: 1rem 1.5rem;
+  padding: clamp(1rem, 1.2vw, 1.5rem);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.2vw, 1rem);
   text-decoration: none;
   font-weight: 700;
   cursor: pointer;
@@ -1197,43 +1186,144 @@
   transform: translateY(0);
 }
 
+@media (max-width: 730px) {
+  .getstarted-header h3 {
+    font-size: clamp(1.5rem, 2.2vw, 1.8rem);
+  }
+}
+
+@media (max-width: 715px) {
+  .getstarted-consultation-btn {
+    font-size: clamp(.9rem, 1.2vw, 1rem);
+    padding: .75rem 1rem;
+  }
+}
+
 /* Responsive adjustments for Still Not Sure section */
-@media (max-width: 768px) {
-  .getstarted-still-unsure-section {
+@media (max-width: 700px) {
+  /* .getstarted-still-unsure-section {
     padding: 2rem 1.5rem;
     margin: 1.5rem 1.5rem 0rem 1.5rem;
-  }
-  
+  } */
+/*   
   .getstarted-still-unsure-bento {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     height: auto;
     gap: 1.5rem;
-  }
+  } */
   
   .getstarted-still-unsure-content-box {
-    text-align: center;
-    padding: 1.5rem;
+    padding: 1rem;
   }
+
   
-  .getstarted-still-unsure-button-box {
-    padding: 1.5rem;
-  }
-  
+  /*  
   .getstarted-still-unsure-content-box h3 {
     font-size: 1.5rem;
   }
   
   .getstarted-still-unsure-content-box p {
     font-size: 1rem;
-  }
+  } */
   
-  .getstarted-consultation-btn {
+  /* .getstarted-consultation-btn {
     padding: 0.875rem 1.75rem;
     font-size: 0.9rem;
     max-width: 250px;
+  } */
+}
+
+@media (max-width: 570px) {
+  .getstarted-header h3 {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
   }
 }
+
+@media (max-width: 505px) {
+  .get-started-header h1{
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    padding: 0rem .5rem 0rem .5rem;
+  }
+
+  .getstarted-faq-section {
+    padding: 0rem 0rem 1rem 0rem;
+  }
+
+  .getstarted-still-unsure-section {
+    margin: 2rem 1rem 0rem 1rem;
+  }
+}
+
+@media (max-width: 470px) {
+  .get-started-header h1{
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    padding: 0rem .5rem 0rem .5rem;
+  }
+  /* Make Still-Unsure bento content smaller */
+  .getstarted-still-unsure-bento {
+    grid-template-rows: 120px 80px;
+    gap: 0.75rem;
+    max-height: 210px;
+  }
+  .getstarted-still-unsure-content-box {
+    padding: 0.75rem;
+  }
+  .getstarted-still-unsure-content-box h3 {
+    font-size: clamp(1.1rem, 4.2vw, 1.25rem);
+  }
+  .getstarted-still-unsure-content-box p {
+    font-size: clamp(0.85rem, 3.6vw, 0.95rem);
+    line-height: 1.5;
+  }
+  .getstarted-still-unsure-button-box {
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .getstarted-consultation-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    margin: 0 auto;
+  }
+  .getstarted-still-unsure-image-box img {
+    border-width: 1px;
+  }
+}
+
+@media (max-width: 440px) {
+  .getstarted-still-unsure-bento {
+    grid-template-rows: 150px 100px;
+    gap: 0.75rem;
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 380px) {
+  .getstarted-still-unsure-bento {
+    grid-template-rows: 150px 100px;
+    gap: 0.5rem;
+    max-height: 250px;
+  }
+  /* Swap columns: place image where the question was, and vice versa */
+  .getstarted-still-unsure-image-box {
+    grid-column: 2;
+    grid-row: 1 / -1;
+  }
+  .getstarted-still-unsure-content-box {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .getstarted-still-unsure-button-box {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
 
 /* Reveal-on-scroll base state */
 .gs-animate { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
