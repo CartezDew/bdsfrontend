@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import path from 'path'
 import react from '@vitejs/plugin-react'
 import viteImagemin from 'vite-plugin-imagemin'
 
@@ -9,17 +10,22 @@ export default defineConfig(({ mode }) => ({
       ? [
           viteImagemin({
             mozjpeg: {
-              quality: 90,
+              quality: 96,
               progressive: true
             },
             pngquant: {
-              quality: [0.85, 0.95],
-              speed: 3
+              quality: [0.95, 1.0],
+              speed: 1
             }
           })
         ]
       : [])
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   css: {
     postcss: './postcss.config.js'
   },
