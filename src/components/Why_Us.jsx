@@ -56,7 +56,7 @@ export default function Why_Us() {
           </div>
           <div className={`whyus__grid-image ${animationsTriggered ? 'whyus__grid-image-animated' : ''}`}>
             <img 
-              src="/multi-ethnic-group-three-young-people-studying-together.png" 
+              src={new URL('../assets/Images/multi-ethnic-group-three-young-people-studying-together.png', import.meta.url).href} 
               alt="Business professionals shaking hands in partnership" 
               className={`whyus__business-image ${animationsTriggered ? 'whyus__business-image-animated' : ''}`}
             />

@@ -7,15 +7,15 @@ const image_2 = new URL("../assets/Images/Frame_2.png", import.meta.url).href;
 import OptimizedTestimonialImage from "./OptimizedTestimonialImage.jsx";
 
 // Import testimonial images (optimized thumbnails)
-import T_1 from "../assets/Testimonials/thumbnails/thumb_T_1.jpeg";
-import T_2 from "../assets/Testimonials/thumbnails/thumb_T_2.jpg";
-import T_3 from "../assets/Testimonials/thumbnails/thumb_T_3.jpg";
-import T_4 from "../assets/Testimonials/thumbnails/thumb_T_4.jpg";
-import T_5 from "../assets/Testimonials/thumbnails/thumb_T_5.jpg";
-import T_6 from "../assets/Testimonials/thumbnails/thumb_T_6.jpg";
-import T_8 from "../assets/Testimonials/thumbnails/thumb_T_8.jpg";
-import T_9 from "../assets/Testimonials/thumbnails/thumb_T_9.jpg";
-import girlCafe from "../assets/Testimonials/thumbnails/thumb_girl-cafe.jpg";
+const T_1 = new URL("../assets/Testimonials/thumbnails/thumb_T_1.jpeg", import.meta.url).href;
+const T_2 = new URL("../assets/Testimonials/thumbnails/thumb_T_2.jpg", import.meta.url).href;
+const T_3 = new URL("../assets/Testimonials/thumbnails/thumb_T_3.jpg", import.meta.url).href;
+const T_4 = new URL("../assets/Testimonials/thumbnails/thumb_T_4.jpg", import.meta.url).href;
+const T_5 = new URL("../assets/Testimonials/thumbnails/thumb_T_5.jpg", import.meta.url).href;
+const T_6 = new URL("../assets/Testimonials/thumbnails/thumb_T_6.jpg", import.meta.url).href;
+const T_8 = new URL("../assets/Testimonials/thumbnails/thumb_T_8.jpg", import.meta.url).href;
+const T_9 = new URL("../assets/Testimonials/thumbnails/thumb_T_9.jpg", import.meta.url).href;
+const girlCafe = new URL("../assets/Testimonials/thumbnails/thumb_girl-cafe.jpg", import.meta.url).href;
 
 
 const testimonials = [
