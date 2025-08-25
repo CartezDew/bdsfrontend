@@ -25,6 +25,14 @@ const Footer = () => {
     }
   };
 
+  const goToServicesTop = () => {
+    if (location.pathname === '/services') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/services', { state: { scrollToTop: true } });
+    }
+  };
+
   return (
     <footer className="footer">
       {/* Desktop Navigation - Hidden below 680px */}
@@ -38,7 +46,7 @@ const Footer = () => {
         <span className="footer-separator">|</span>
         
         <button 
-          onClick={() => scrollToSection('services')}
+          onClick={goToServicesTop}
           className="footer-nav-btn"
         >
           All Services

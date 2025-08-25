@@ -360,6 +360,18 @@ function App() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     })
   }, [location.pathname])
+
+  // After navigation to /services with state.scrollToTop, scroll to absolute top
+  useEffect(() => {
+    if (location.pathname !== '/services') return;
+    const shouldTop = !!(location.state && location.state.scrollToTop);
+    if (!shouldTop) return;
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+    // Clear state to avoid sticky behavior
+    navigate(location.pathname, { replace: true })
+  }, [location.pathname, location.state])
   
   return (
     <ServiceProvider>
