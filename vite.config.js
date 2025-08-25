@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import viteImagemin from 'vite-plugin-imagemin'
 
 export default defineConfig(({ mode }) => ({
+  base: '/',
   plugins: [
     react(),
     ...(mode === 'production'
@@ -24,6 +25,18 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')
+    }
+  },
+  build: {
+    assetsInlineLimit: 4096,
+    assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js'
+      }
     }
   },
   css: {

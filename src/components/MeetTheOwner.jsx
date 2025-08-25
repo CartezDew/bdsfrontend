@@ -36,7 +36,7 @@ export default function MeetTheOwner() {
         <div className={`meet-owner ${animationsTriggered ? 'meet-owner-animated' : ''}`}>
           <div className={`meet-owner__media ${animationsTriggered ? 'meet-owner__media-animated' : ''}`}>
             <img 
-              src={new URL('../assets/Images/CEO_Adjusted.png', import.meta.url).href} 
+              src={require('../assets/Images/CEO_Adjusted.png').default} 
               alt="Brandon Davis, CEO of BDS Talent Group" 
               className={`meet-owner__img ${animationsTriggered ? 'meet-owner__img-animated' : ''}`}
             />
