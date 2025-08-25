@@ -3,7 +3,9 @@ import Footer from './Footer';
 import '../styles/getStarted.css';
 import '../styles/dropdown_reusable.css';
 import CustomSelect from './CustomSelect';
-import imageStillUnsure from '../assets/Detailed_Services_Images/Image_2.jpg';
+// Use require default export to avoid CI resolution edge-cases
+// eslint-disable-next-line import/no-commonjs
+const imageStillUnsure = require('../assets/Detailed_Services_Images/Image_2.jpg').default;
 
 const GetStarted = () => {
   const [selectedDate, setSelectedDate] = useState(null);
