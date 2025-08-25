@@ -8,7 +8,7 @@ import Why_Us from './Why_Us';
 import MeetTheOwner from './MeetTheOwner';
 import Facts from './facts';
 
-const Services = () => {
+const Services = ({ includeExtras = true }) => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
   const [animationsTriggered, setAnimationsTriggered] = useState({
@@ -139,30 +139,34 @@ const Services = () => {
         </div>
       </section>
       
-      {/* Social Proof Section */}
-      <SocialProof />
-      
-      {/* Why Us Section */}
-      <Why_Us />
-      
-      {/* Meet The Owner Section */}
-      <MeetTheOwner />
-      
-      {/* Entity Selector Widget */}
-      <section id="entity-selector" className="widget-section">
-        <EntitySelectorWidget />
-      </section>
-      
-      {/* FAQ Section */}
-      <section id="faq" className="faq-section">
-        <div className="container">
-          <div className="faq-header">
-            <h2>Frequently Asked Questions</h2>
-            <p>Essential information to help you navigate tax deadlines, deductions, and requirements.</p>
-          </div>
-          <Facts />
-        </div>
-      </section>
+      {includeExtras && (
+        <>
+          {/* Social Proof Section */}
+          <SocialProof />
+          
+          {/* Why Us Section */}
+          <Why_Us />
+          
+          {/* Meet The Owner Section */}
+          <MeetTheOwner />
+          
+          {/* Entity Selector Widget */}
+          <section id="entity-selector" className="widget-section">
+            <EntitySelectorWidget />
+          </section>
+          
+          {/* FAQ Section */}
+          <section id="faq" className="faq-section">
+            <div className="container">
+              <div className="faq-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Essential information to help you navigate tax deadlines, deductions, and requirements.</p>
+              </div>
+              <Facts />
+            </div>
+          </section>
+        </>
+      )}
     </>
   );
 };

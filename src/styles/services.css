@@ -782,6 +782,11 @@
   transform: translateY(0);
 }
 
-
-
-
+@media (max-width: 400px) {
+  .service-type-toggle {
+    gap: 0.3rem;
+  }
+  .service-type-toggle .toggle-btn {
+    font-size: 0.7rem;
+  }
+}

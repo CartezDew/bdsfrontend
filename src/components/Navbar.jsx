@@ -24,7 +24,13 @@ const Navbar = (props) => {
     }, [])
 
     useEffect(() => {
-        // Mobile rule: show everywhere except while hero is visible (on home) or footer is visible
+        // Special case: on Services and Get Started routes under 680px, always show
+        const alwaysShow = isMobile && (location.pathname === '/services' || location.pathname === '/get-started')
+        if (alwaysShow) {
+            setShowBackToTop(true)
+            return
+        }
+        // Mobile rule (default): show everywhere except while hero is visible (on home) or footer is visible
         let observers = []
         let retryTimer = null
         let heroInView = false
@@ -91,7 +97,13 @@ const Navbar = (props) => {
         setShowBackToTop(false)
         autoScrollingRef.current = true
         window.scrollTo({ top: 0, behavior: 'smooth' })
-        setTimeout(() => { autoScrollingRef.current = false }, 900)
+        setTimeout(() => {
+            autoScrollingRef.current = false
+            // Restore visibility on routes where it should always show on mobile
+            if (isMobile && (location.pathname === '/services' || location.pathname === '/get-started')) {
+                setShowBackToTop(true)
+            }
+        }, 900)
     }
 
     return (

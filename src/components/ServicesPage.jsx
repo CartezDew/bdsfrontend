@@ -1,31 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useServiceContext } from '../context/ServiceContext';
-import { motion } from 'framer-motion';
-import IndividualServices from './IndividualServices';
-import BusinessServices from './BusinessServices';
+import Services from './Services';
 import ServicesDetailed from './ServicesDetailed';
 import Footer from './Footer';
 import '../styles/servicesPage.css';
 
 const ServicesPage = () => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
-  const [isNavbarSticky, setIsNavbarSticky] = useState(false);
   const [searchParams] = useSearchParams();
-  
-  const [animationsTriggered, setAnimationsTriggered] = useState({
-    header: false, title: false, subtitle: false, toggle: false, note: false, services: false
-  });
-  
-  const [cardsVisible, setCardsVisible] = useState(false);
-
-  const servicesRef = useRef(null);
-  const headerRef = useRef(null);
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const toggleRef = useRef(null);
-  const noteRef = useRef(null);
-  const servicesRef2 = useRef(null);
 
   // Handle URL parameters for automatic service type and section navigation
   useEffect(() => {
@@ -52,115 +35,12 @@ const ServicesPage = () => {
     }
   }, [searchParams, serviceType, handleServiceTypeChange]);
 
-  // Intersection Observer for animations
-  useEffect(() => {
-    const observerOptions = { 
-      threshold: 0.05, // 5% visibility - triggers when 5% of element is visible
-      rootMargin: '0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const elementId = entry.target.dataset.animate;
-          
-          if (elementId === 'services') {
-            setAnimationsTriggered(prev => ({ ...prev, services: true }));
-            setCardsVisible(true); // Trigger card animations
-          } else {
-            setAnimationsTriggered(prev => ({ ...prev, [elementId]: true }));
-          }
-        }
-      });
-    }, observerOptions);
-
-    // Observe elements
-    if (headerRef.current) observer.observe(headerRef.current);
-    if (titleRef.current) observer.observe(titleRef.current);
-    if (subtitleRef.current) observer.observe(subtitleRef.current);
-    if (toggleRef.current) observer.observe(toggleRef.current);
-    if (noteRef.current) observer.observe(noteRef.current);
-    if (servicesRef2.current) observer.observe(servicesRef2.current);
-    
-    return () => observer.disconnect();
-  }, []);
-
-  // Reset card animations when service type changes
-  useEffect(() => {
-    setCardsVisible(false);
-    // Small delay to ensure reset is complete, then trigger animations
-    setTimeout(() => {
-      setCardsVisible(true);
-    }, 100);
-  }, [serviceType]);
-
-  const handleToggleService = (serviceId) => {
-    // This function is now handled by the context
-  };
-
-  // Scroll detection for sticky navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show navbar when scrolled down from top
-      const shouldBeSticky = window.scrollY > 100;
-      setIsNavbarSticky(shouldBeSticky);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // No local animations or sticky navbar logic; reuse Services component's behavior
 
   return (
-    <>
-      <section className={`servicespage-section ${isNavbarSticky ? 'navbar-visible' : ''}`} ref={servicesRef}>
-        <div className="servicespage-container">
-          <div className={`servicespage-header ${animationsTriggered.header ? 'servicespage-animate-header' : ''}`} ref={headerRef} data-animate="header">
-            <h2 className={`servicespage-title ${animationsTriggered.title ? 'servicespage-animate-title' : ''}`} ref={titleRef} data-animate="title">Our Services</h2>
-            <p className={`servicespage-subtitle ${animationsTriggered.subtitle ? 'servicespage-animate-subtitle' : ''}`} ref={subtitleRef} data-animate="subtitle">
-              Comprehensive accounting and tax services to support your financial success
-            </p>
-            
-            {/* Service Type Toggle */}
-            <div className={`servicespage-toggle ${animationsTriggered.toggle ? 'servicespage-animate-toggle' : ''}`} ref={toggleRef} data-animate="toggle">
-              <button
-                className={`servicespage-toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
-                onClick={() => handleServiceTypeChange('individual')}
-                data-tooltip="View personal tax and individual services"
-              >
-                Individual Services
-              </button>
-              <button
-                className={`servicespage-toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
-                onClick={() => handleServiceTypeChange('business')}
-                data-tooltip="View business accounting services"
-              >
-                Business Services
-              </button>
-            </div>
-            
-            {/* Current Service Type Note */}
-            <div className={`servicespage-note ${animationsTriggered.note ? 'servicespage-animate-note' : ''}`} ref={noteRef} data-animate="note">
-              {serviceType === 'business' 
-                ? "*Switch the toggle to view our individual services*"
-                : "*Switch the toggle to view our business services*"
-              }
-            </div>
-          </div>
-          
-          {/* Render appropriate services based on toggle */}
-          <div className={`servicespage-content ${animationsTriggered.services ? 'servicespage-animate-services' : ''}`} ref={servicesRef2} data-animate="services">
-            {serviceType === 'business' ? (
-              <BusinessServices />
-            ) : (
-              <IndividualServices />
-            )}
-          </div>
-
-
-        </div>
-      </section>
+    <div className="servicespage-wrapper">
+      {/* Reuse the existing Services component without the extra sections */}
+      <Services includeExtras={false} />
       
       {/* Detailed Services Section - Same level as other components */}
       {serviceType === 'individual' && <ServicesDetailed serviceType="individual" />}
@@ -190,7 +70,7 @@ const ServicesPage = () => {
       
       {/* Footer */}
       <Footer />
-    </>
+    </div>
   );
 };
 

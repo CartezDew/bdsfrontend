@@ -8,7 +8,7 @@
 }
 
 .servicesdetailed-container {
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
@@ -105,6 +105,39 @@
   border-color: var(--color-golden-brown);
   transform: translate3d(0, -2px, 0) !important;
   box-shadow: 0 6px 20px rgba(154, 109, 56, 0.4);
+}
+
+/* Mobile layout: move price chip below title and scale text */
+@media (max-width: 600px) {
+  .servicesdetailed-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .servicesdetailed-container {
+    padding: 0 0.3rem;
+  }
+
+  .servicesdetailed-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .servicesdetailed-header-main {
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .servicesdetailed-service-title {
+    font-size: clamp(1.35rem, 4.5vw, 1.9rem);
+    line-height: 1.2;
+  }
+
+  .detailed-price-chip {
+    order: 2; /* ensure it comes after the header-main row */
+    margin-top: 0.25rem;
+    font-size: clamp(0.85rem, 3.6vw, 0.95rem);
+  }
 }
 
 .servicesdetailed-description-section {
@@ -322,6 +355,16 @@
   font-family: 'Playfair Display', serif;
 }
 
+@media (max-width: 420px) {
+  .servicesdetailed-service-section {
+    padding: 1rem;
+  }
+}
 
-
-
+@media (max-width: 350px) {
+  .servicesdetailed-step-number {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+  }
+}
