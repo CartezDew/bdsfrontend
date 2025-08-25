@@ -1,0 +1,55 @@
+.admin-page { padding: 2rem 1rem; max-width: 1100px; margin: 0 auto; color: var(--color-eerie-black); }
+.admin-navbar { display: flex; align-items: center; justify-content: space-between; padding: .75rem 1rem; border-bottom: 1px solid rgba(0,0,0,.08); background: var(--color-hunter-green); position: sticky; top: 0; z-index: 50; }
+.admin-nav-left { display: inline-flex; align-items: center; gap: .5rem; }
+.admin-logo { width: 28px; height: 28px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.15)); }
+.admin-logo-text { font-weight: 800; color: var(--color-timberwolf); letter-spacing: .3px; }
+.admin-nav-right { display: inline-flex; align-items: center; }
+.admin-signout-btn { padding: .45rem .8rem; background: var(--color-sinopia); color: #fff; border: none; cursor: pointer; font-weight: 700; box-shadow: 0 2px 8px rgba(204,63,12,.25); }
+.admin-signout-btn:hover { background: var(--color-golden-brown); transform: translateY(-1px); }
+.admin-header h1 { margin: 0 0 .25rem 0; color: var(--color-hunter-green); font-family: 'Playfair Display', serif; }
+.admin-header p { margin: 0 0 1rem 0; opacity: .8; }
+.admin-tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.admin-tabs button { padding: .5rem .8rem; border: 2px solid rgba(51,103,59,.15); background: #fff; cursor: pointer; color: var(--color-hunter-green); font-weight: 700; }
+.admin-tabs button.active { background: var(--color-hunter-green); color: #fff; border-color: var(--color-hunter-green); box-shadow: 0 6px 16px rgba(25,35,26,.15); }
+.admin-tabs button.danger { background: #fff0f0; border-color: #ffcccc; color: #b00000; }
+
+.admin-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.admin-card { background: #fff; border: 1px solid rgba(51,103,59,.12); padding: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,.06); border-radius: 8px; }
+.admin-card h3 { margin: 0 0 .5rem 0; }
+.admin-metric { font-size: 2rem; font-weight: 800; color: var(--color-sinopia); text-shadow: 0 1px 0 rgba(0,0,0,.05); }
+
+.admin-workflow { display: block; }
+.workflow-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.workflow-card { background: #fff; border: 1px solid rgba(51,103,59,.12); padding: 1rem; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,.06); }
+.workflow-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+.workflow-card-header h3 { margin: 0; color: var(--color-hunter-green); }
+.workflow-link { background: transparent; border: none; color: var(--color-sinopia); font-weight: 700; cursor: pointer; }
+.workflow-link:hover { color: var(--color-golden-brown); text-decoration: underline; }
+.workflow-table { width: 100%; border-collapse: collapse; }
+.workflow-table th, .workflow-table td { text-align: left; padding: .6rem .65rem; border-bottom: 1px solid rgba(51,103,59,.08); font-size: .95rem; }
+.workflow-table thead th { background: rgba(51,103,59,.07); color: var(--color-hunter-green); font-weight: 800; }
+
+.admin-table h2 { margin: .25rem 0 .5rem 0; color: var(--color-hunter-green); }
+.admin-table table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid rgba(51,103,59,.12); border-radius: 8px; overflow: hidden; }
+.admin-table th, .admin-table td { text-align: left; padding: .7rem .8rem; border-bottom: 1px solid rgba(51,103,59,.08); font-size: .95rem; }
+.admin-table thead th { background: rgba(51,103,59,.07); color: var(--color-hunter-green); font-weight: 800; }
+.admin-table tbody tr:hover { background: rgba(204,63,12,.035); }
+
+.admin-appts .admin-week-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; }
+.admin-appts .admin-day { background: #fff; border: 1px solid rgba(51,103,59,.12); padding: .75rem; border-radius: 8px; }
+.admin-appts .admin-day-title { font-weight: 800; color: var(--color-hunter-green); margin-bottom: .5rem; }
+.admin-appts .admin-day-row { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: .5rem; margin-bottom: .35rem; }
+.admin-appts .admin-day-row label { color: rgba(25,35,26,.8); font-weight: 600; font-size: .9rem; }
+.admin-appts input[type="time"], .admin-appts input[type="date"] { padding: .35rem .45rem; border: 1px solid rgba(0,0,0,.15); }
+.admin-appts .admin-blocker { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.admin-appts .admin-blocked-list { display: flex; gap: .4rem; flex-wrap: wrap; }
+.admin-appts .pill { background: rgba(51,103,59,.1); border: 1px solid rgba(51,103,59,.2); padding: .2rem .4rem; }
+
+@media (max-width: 680px){
+  .admin-tabs { gap: .35rem; }
+  .admin-tabs button { padding: .45rem .6rem; font-size: .9rem; }
+  .admin-metric { font-size: 1.6rem; }
+  .admin-table th, .admin-table td { font-size: .85rem; }
+}
+
+

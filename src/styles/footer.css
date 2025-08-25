@@ -118,7 +118,7 @@
 /* Mobile Responsiveness - Show social media, hide navigation */
 @media (max-width: 680px) {
   .footer {
-    padding: 0rem 0rem 1rem 0rem;
+    padding: 1rem 0rem 1rem 0rem;
   }
   .footer-nav.desktop-only {
     display: none;

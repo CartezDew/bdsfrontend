@@ -10,6 +10,7 @@ import OfficeHoursLocations from './components/OfficeHoursLocations'
 import GetStarted from './components/GetStarted'
 import ServicesPage from './components/ServicesPage'
 import SignIn from './components/SignIn'
+import AdminDashboard from './components/AdminDashboard'
 
 function App() {
   const location = useLocation()
@@ -391,8 +392,8 @@ function App() {
   return (
     <ServiceProvider>
       <div className={`App ${showNavbar ? '' : 'navbar-hidden'}`}>
-        {/* Navbar is always mounted; visibility controlled by wrapper class */}
-        <Navbar />
+        {/* Hide public Navbar on admin routes */}
+        {location.pathname.startsWith('/admin') ? null : <Navbar />}
         <Routes>
         <Route path="/" element={
           <>
@@ -408,6 +409,7 @@ function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/signin" element={<Navigate to="/sign-in" replace />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </div>
     </ServiceProvider>

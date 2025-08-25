@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Footer from './Footer';
 import '../styles/getStarted.css';
+import '../styles/dropdown_reusable.css';
+import CustomSelect from './CustomSelect';
 import Image2 from '../assets/Detailed_Services_Images/Image_2.jpg';
 
 const GetStarted = () => {
@@ -36,6 +38,32 @@ const GetStarted = () => {
 
   const fileInputRef = useRef(null);
   const schedulerRef = useRef(null);
+
+  // Basic SEO meta for this route
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = 'Get Started | Schedule Consultation or Upload Documents | BDS Talent Group';
+    const ensureMeta = (name, content) => {
+      let tag = document.querySelector(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('name', name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', content);
+    };
+    ensureMeta('description', 'Get started with BDS Talent Group: securely upload tax documents or schedule a free consultation for bookkeeping, payroll, and advisory services.');
+    ensureMeta('robots', 'index,follow');
+    // canonical
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', window.location.origin + '/get-started');
+    return () => { document.title = prevTitle; };
+  }, []);
 
   // Hide mouse indicator when scheduler comes into view
   useEffect(() => {
@@ -552,7 +580,14 @@ const GetStarted = () => {
           <div className="getstarted-still-unsure-section">
             <div className="getstarted-still-unsure-bento">
               <div className="getstarted-still-unsure-image-box">
-                <img src={Image2} alt="Professional consultation" />
+                <img 
+                  src={Image2} 
+                  alt="Professional consultation scheduling with calendar and team" 
+                  loading="lazy" 
+                  decoding="async" 
+                  sizes="(max-width: 680px) 100vw, 50vw" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
               <div className="getstarted-still-unsure-content-box">
                 <h3>Still unsure?</h3>
@@ -600,52 +635,42 @@ const GetStarted = () => {
                 {currentStep === 1 && (
                   <div className="getstarted-form-section">
                     <h4>Select Your Service</h4>
-                    <div className="getstarted-form-group">
+                    <div className="getstarted-form-group" style={{ isolation: 'isolate', zIndex: 1 }}>
                       <label htmlFor="service">Service Type *</label>
-                      <select
+                      <CustomSelect
                         id="service"
+                        placeholder="Select a service"
                         value={selectedService}
-                        onChange={(e) => {
-                          setSelectedService(e.target.value);
-                        }}
-                        className={selectedService ? 'getstarted-selected' : ''}
+                        onChange={(val) => setSelectedService(val)}
                         required
-                      >
-                        <option value="">Select a service</option>
-                        <optgroup label="Individual Services">
-                          {serviceOptions.individual.map((service, index) => (
-                            <option key={`ind-${index}`} value={service}>{service}</option>
-                          ))}
-                        </optgroup>
-                        <optgroup label="Business Services">
-                          {serviceOptions.business.map((service, index) => (
-                            <option key={`bus-${index}`} value={service}>{service}</option>
-                          ))}
-                        </optgroup>
-                      </select>
+                        options={[
+                          { label: 'Individual Services', options: serviceOptions.individual },
+                          { label: 'Business Services', options: serviceOptions.business },
+                        ]}
+                      />
                     </div>
                     
                     <div className="getstarted-form-group">
                       <label htmlFor="referralSource">How did you find us? *</label>
-                      <select
+                      <CustomSelect
                         id="referralSource"
+                        placeholder="Select how you found us"
                         value={referralSource}
-                        onChange={(e) => setReferralSource(e.target.value)}
-                        className={referralSource ? 'getstarted-selected' : ''}
+                        onChange={(val) => setReferralSource(val)}
                         required
-                      >
-                        <option value="">Select how you found us</option>
-                        <option value="Returning Client">Returning Client</option>
-                        <option value="Walk-in">Walk-in</option>
-                        <option value="Referral">Referral</option>
-                        <option value="Word-of-mouth">Word-of-mouth</option>
-                        <option value="Google Search">Google Search</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Networking Event">Networking Event</option>
-                        <option value="Other">Other</option>
-                      </select>
+                        options={[
+                          'Returning Client',
+                          'Walk-in',
+                          'Referral',
+                          'Word-of-mouth',
+                          'Google Search',
+                          'Facebook',
+                          'LinkedIn',
+                          'Instagram',
+                          'Networking Event',
+                          'Other',
+                        ]}
+                      />
                     </div>
                     
                     <div className="getstarted-form-actions">
@@ -819,26 +844,27 @@ const GetStarted = () => {
                     <div className="getstarted-form-row">
                       <div className="getstarted-form-group">
                         <label htmlFor="country">Country</label>
-                        <select
+                        <CustomSelect
                           id="country"
+                          placeholder="Country"
                           value={contactInfo.country}
-                          onChange={(e) => handleContactChange('country', e.target.value)}
+                          onChange={(val) => handleContactChange('country', val)}
                           className={errors.country ? 'getstarted-error' : ''}
-                        >
-                          <option value="">Country</option>
-                          <option value="US">United States</option>
-                          <option value="CA">Canada</option>
-                          <option value="MX">Mexico</option>
-                          <option value="UK">United Kingdom</option>
-                          <option value="DE">Germany</option>
-                          <option value="FR">France</option>
-                          <option value="AU">Australia</option>
-                          <option value="JP">Japan</option>
-                          <option value="CN">China</option>
-                          <option value="IN">India</option>
-                          <option value="BR">Brazil</option>
-                          <option value="other">Other</option>
-                        </select>
+                          options={[
+                            { label: 'United States', value: 'US' },
+                            { label: 'Canada', value: 'CA' },
+                            { label: 'Mexico', value: 'MX' },
+                            { label: 'United Kingdom', value: 'UK' },
+                            { label: 'Germany', value: 'DE' },
+                            { label: 'France', value: 'FR' },
+                            { label: 'Australia', value: 'AU' },
+                            { label: 'Japan', value: 'JP' },
+                            { label: 'China', value: 'CN' },
+                            { label: 'India', value: 'IN' },
+                            { label: 'Brazil', value: 'BR' },
+                            { label: 'Other', value: 'other' },
+                          ]}
+                        />
                       </div>
 
                       <div className="getstarted-form-group">
