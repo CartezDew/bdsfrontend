@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/socialProof.css";
-import businessHandshake from "../assets/Images/business-people-shaking-hands-together.png";
-import image_1 from "../assets/Images/Frame_1.png";
-import image_2 from "../assets/Images/Frame_2.png";
+// Resolve images via ESM URL to avoid CI path issues
+const image_1 = new URL("../assets/Images/Frame_1.png", import.meta.url).href;
+const image_2 = new URL("../assets/Images/Frame_2.png", import.meta.url).href;
+// const businessHandshake = new URL("../assets/Images/business-people-shaking-hands-together.png", import.meta.url).href; // reserved for future use
 import OptimizedTestimonialImage from "./OptimizedTestimonialImage.jsx";
 
 // Import testimonial images (optimized thumbnails)
