@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Award, CheckCircle, Users, Shield, Rocket, Heart } from 'lucide-react';
-import multiEthnicGroupImage from '../assets/Images/multi-ethnic-group-three-young-people-studying-together.png';
+import multiEthnicGroupImage from '../Assets/Images/multi-ethnic-group-three-young-people-studying-together.png';
 
 export default function Why_Us() {
   const [animationsTriggered, setAnimationsTriggered] = useState(false);

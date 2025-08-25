@@ -3,7 +3,7 @@ import Footer from './Footer';
 import '../styles/getStarted.css';
 import '../styles/dropdown_reusable.css';
 import CustomSelect from './CustomSelect';
-import Image2 from '../assets/Detailed_Services_Images/Image_2.jpg';
+import Image2 from '../Assets/Detailed_Services_Images/Image_2.jpg';
 
 const GetStarted = () => {
   const [selectedDate, setSelectedDate] = useState(null);

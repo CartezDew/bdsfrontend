@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/socialProof.css";
-import image_1 from "../assets/Images/Frame_1.png";
-import image_2 from "../assets/Images/Frame_2.png";
-// import businessHandshake from "../assets/Images/business-people-shaking-hands-together.png"; // reserved for future use
+import image_1 from "../Assets/Images/Frame_1.png";
+import image_2 from "../Assets/Images/Frame_2.png";
+// import businessHandshake from "../Assets/Images/business-people-shaking-hands-together.png"; // reserved for future use
 import OptimizedTestimonialImage from "./OptimizedTestimonialImage.jsx";
 
 // Import testimonial images (optimized thumbnails)
-import T_1 from "../assets/Testimonials/thumbnails/thumb_T_1.jpeg";
-import T_2 from "../assets/Testimonials/thumbnails/thumb_T_2.jpg";
-import T_3 from "../assets/Testimonials/thumbnails/thumb_T_3.jpg";
-import T_4 from "../assets/Testimonials/thumbnails/thumb_T_4.jpg";
-import T_5 from "../assets/Testimonials/thumbnails/thumb_T_5.jpg";
-import T_6 from "../assets/Testimonials/thumbnails/thumb_T_6.jpg";
-import T_8 from "../assets/Testimonials/thumbnails/thumb_T_8.jpg";
-import T_9 from "../assets/Testimonials/thumbnails/thumb_T_9.jpg";
-import girlCafe from "../assets/Testimonials/thumbnails/thumb_girl-cafe.jpg";
+import T_1 from "../Assets/Testimonials/thumbnails/thumb_T_1.jpeg";
+import T_2 from "../Assets/Testimonials/thumbnails/thumb_T_2.jpg";
+import T_3 from "../Assets/Testimonials/thumbnails/thumb_T_3.jpg";
+import T_4 from "../Assets/Testimonials/thumbnails/thumb_T_4.jpg";
+import T_5 from "../Assets/Testimonials/thumbnails/thumb_T_5.jpg";
+import T_6 from "../Assets/Testimonials/thumbnails/thumb_T_6.jpg";
+import T_8 from "../Assets/Testimonials/thumbnails/thumb_T_8.jpg";
+import T_9 from "../Assets/Testimonials/thumbnails/thumb_T_9.jpg";
+import girlCafe from "../Assets/Testimonials/thumbnails/thumb_girl-cafe.jpg";
 
 
 const testimonials = [
