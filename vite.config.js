@@ -29,6 +29,10 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  optimizeDeps: {
+    exclude: ['**/*.jpg', '**/*.jpeg', '**/*.png', '**/*.gif', '**/*.webp']
+  },
+  publicDir: 'public', // Ensure public directory is served as-is
   css: {
     postcss: './postcss.config.js'
   },
