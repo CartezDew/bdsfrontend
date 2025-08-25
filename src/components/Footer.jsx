@@ -14,8 +14,17 @@ const Footer = () => {
       if (element) {
         const navbar = document.querySelector('.navbar-container');
         const navbarHeight = navbar ? navbar.offsetHeight : 0;
-        const elementTop = element.offsetTop;
-        const scrollPosition = elementTop - navbarHeight;
+        let scrollPosition;
+        
+        // Special case: scroll to bottom of meet-the-owner section
+        if (sectionId === 'meet-the-owner') {
+          const elementBottom = element.offsetTop + element.offsetHeight;
+          scrollPosition = elementBottom - navbarHeight;
+        } else {
+          // Default: scroll to top of section
+          const elementTop = element.offsetTop;
+          scrollPosition = elementTop - navbarHeight;
+        }
         
         window.scrollTo({
           top: scrollPosition,

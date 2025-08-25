@@ -106,14 +106,12 @@ const Services = ({ includeExtras = true }) => {
               <button
                 className={`toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('individual')}
-                data-tooltip="View personal tax and individual services"
               >
                 Individual Services
               </button>
               <button
                 className={`toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
                 onClick={() => handleServiceTypeChange('business')}
-                data-tooltip="View business accounting services"
               >
                 Business Services
               </button>
