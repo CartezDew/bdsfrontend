@@ -13,9 +13,21 @@ export default defineConfig(({ mode }) => ({
     }
   },
   build: {
-    assetsInlineLimit: 4096,
+    assetsInlineLimit: 0, // Don't inline any assets
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
-    chunkSizeWarningLimit: 600
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.')
+          const ext = info[info.length - 1]
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/images/[name]-[hash][extname]`
+          }
+          return `assets/[name]-[hash][extname]`
+        }
+      }
+    }
   },
   css: {
     postcss: './postcss.config.js'

@@ -3,8 +3,7 @@ import Footer from './Footer';
 import '../styles/getStarted.css';
 import '../styles/dropdown_reusable.css';
 import CustomSelect from './CustomSelect';
-// Use public image path (place file at public/images/Image_2.jpg)
-const imageStillUnsure = '/images/Image_2.jpg';
+import Image2 from '../assets/Detailed_Services_Images/Image_2.jpg';
 
 const GetStarted = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -582,12 +581,11 @@ const GetStarted = () => {
             <div className="getstarted-still-unsure-bento">
               <div className="getstarted-still-unsure-image-box">
                 <img 
-                  src={imageStillUnsure} 
-                  alt="Professional consultation scheduling with calendar and team" 
-                  loading="lazy" 
-                  decoding="async" 
-                  sizes="(max-width: 680px) 100vw, 50vw" 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  src={Image2}
+                  alt="Professional consultation scheduling with calendar and team"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 680px) 100vw, 50vw"
                 />
               </div>
               <div className="getstarted-still-unsure-content-box">
