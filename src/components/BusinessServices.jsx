@@ -16,7 +16,7 @@ const businessServicePriceText = {
 const businessServicesData = [
   {
     id: 1,
-    icon: "📊",
+    icon: "🧾",
     title: "Tax Returns",
     description: "Complete business tax return preparation and filing services.",
     serviceId: "tax-returns"
@@ -30,7 +30,7 @@ const businessServicesData = [
   },
   {
     id: 3,
-    icon: "📈",
+    icon: "📚",
     title: "Bookkeeping",
     description: "Monthly bookkeeping and financial record maintenance.",
     serviceId: "bookkeeping"

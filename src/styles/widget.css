@@ -23,7 +23,7 @@
 }
 
 .widget-header h3 {
-  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-size: clamp(2rem, 3.7vw, 2.5rem);
   color: var(--color-hunter-green);
   margin-bottom: 1rem;
   font-family: 'Playfair Display', serif;
@@ -31,7 +31,7 @@
 
 .widget-header p {
   color: var(--color-errie-black);
-  font-size: clamp(.9rem, 1.3vw, 1.3rem);
+  font-size: clamp(1.1rem, 1.9vw, 1.7rem);
   margin-bottom: 1.5rem;
   opacity: 0.8;
 }
@@ -53,7 +53,7 @@
 }
 
 .progress-text {
-  font-size: clamp(.8rem, 1.2vw, 1.3rem);
+  font-size: clamp(.85rem, 1.6vw, 1.4rem);
   color: var(--color-errie-black);
   opacity: 0.7;
 }
@@ -81,7 +81,7 @@
   border: 2px solid var(--color-hunter-green);
   background: transparent;
   color: var(--color-hunter-green);
-  font-size: clamp(.9rem, 1.3vw, 1.3rem);
+  font-size: clamp(1rem, 1.9vw, 1.5rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -102,7 +102,7 @@
 }
 
 .disclaimer {
-  font-size: clamp(.8rem, 1.2vw, 1.3rem);
+  font-size: clamp(.85rem, 1.8vw, 1.5rem);
   color: var(--color-errie-black);
   opacity: 0.6;
   font-style: italic;
@@ -321,7 +321,8 @@
   }
   
   .widget-header h3 {
-    font-size: clamp(1.4rem, 3.5vw, 1.7rem);
+    font-size: clamp(2rem, 3.7vw, 2.5rem);
+    padding-bottom: 0.3rem;
   }
   
   .question-section h4 {

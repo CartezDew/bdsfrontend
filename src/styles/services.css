@@ -297,7 +297,7 @@
   position: absolute;
   bottom: 15px;
   right: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: white;
   opacity: 0.6;
   font-weight: 500;
@@ -357,7 +357,7 @@
     font-size: 1.3rem;
   }
   .service-description {
-    font-size: 0.95rem;
+    font-size: clamp(1rem, 2vw, 1.4rem);
   }
 }
 
@@ -384,37 +384,39 @@
     padding: 2rem 1.5rem 2rem 1.5rem;
   }
   .services-title {
-    font-size: clamp(1.8rem, 4.6vw, 2.5rem);
+    font-size: clamp(1.9rem, 5vw, 2.5rem);
   }
   .services-subtitle {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
   .service-type-note {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
   .service-type-toggle {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
   .service-type-toggle .toggle-btn {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
   .service-type-toggle .toggle-btn.active {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
   .service-type-toggle .toggle-btn:hover {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
 }
 
 @media (max-width: 440px) {
   .services-title {
-    font-size: clamp(1.7rem, 5.5vw, 2.5rem);
+    font-size: clamp(1.9rem, 5.5vw, 2.5rem);
   }
   .services-subtitle {
-    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-size: 1rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
   }
   .service-type-note {
-    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   }
   .service-type-toggle {
     font-size: clamp(0.8rem, 1.5vw, 1rem);

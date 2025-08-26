@@ -294,6 +294,21 @@
   }
 }
 
+@media (max-width: 680px) {
+  .office-hours-locations {
+    padding: 2rem 1rem;
+  }
+  .social-media-section {
+    display: none;
+  }
+}
+
+@media (max-width: 615px) {
+  .appointment-scheduler {
+    margin-bottom: 2rem;
+  }
+}
+
 @media (max-width: 540px) {
   .location-item-combined {
     align-items: flex-start;
@@ -331,9 +346,21 @@
   }
 }
 
+@media (max-width: 450px) {
+  .hours-grid {
+    grid-template-columns: 1fr;
+    max-width: 90%;
+  }
+}
+
+
 @media (max-width: 380px) {
   .main-email {
     font-size: clamp(.9rem, 1.7vw, 1.3rem);
+  }
+  .hours-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
 
@@ -463,9 +490,9 @@
 .social-media-section {
   text-align: center;
   margin: 2rem 0 2rem 0;
-  padding: 1.5rem;
+  padding: 1rem;
   /* background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); */
-  border-radius: 12px;
+  /* border-radius: 12px; */
   /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); */
 }
 
@@ -485,7 +512,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: .5rem;
+  margin-bottom: -1rem;
 }
 
 .social-icon {
@@ -495,12 +523,11 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
- 
-  background: var(--color-sinopia);
   color: white;
+  color: var(--color-golden-brown);
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
+
   animation: bounce 4s ease-in-out infinite;
 }
 
@@ -516,14 +543,23 @@
   animation-delay: 1s;
 }
 
-.social-icon:hover {
+.social-icon.facebook:hover {
   transform: translateY(-3px) scale(1.1);
-  box-shadow: 0 4px 15px rgba(204, 63, 12, 0.5);
+  background: #1877f2;
+  box-shadow: 0 4px 15px rgba(24, 119, 242, 0.5);
+  color: white;
 }
 
 .social-icon svg {
   width: 30px;
   height: 30px;
+}
+
+.social-icon.instagram:hover {
+  background-color: #e4405f;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(204, 63, 12, 0.5);
+  color: white;
 }
 
 
@@ -536,31 +572,26 @@
 .social-icon.linkedin:hover {
   background: #006097;
   box-shadow: 0 4px 15px rgba(0, 119, 181, 0.5);
+  color: white;
 }
 
-/* Responsive Design for Social Media */
-@media (max-width: 768px) {
-  .social-media-section {
-    margin: 1.5rem 0 2rem 0;
-    padding: 1rem;
+.social-icon {
+  width: 50px;
+  height: 50px;
+}
+
+
+
+
+/* Subtle Pulse Animation Keyframes */
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
   }
-  
-  .social-icons {
-    gap: 1rem;
-  }
-  
-  .social-icon {
-    width: 45px;
-    height: 45px;
-  }
-  
-  .social-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .follow-us-text {
-    font-size: 1rem;
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(204, 63, 12, 0.4);
   }
 }
 
@@ -574,17 +605,5 @@
   }
   60% {
     transform: translateY(-5px);
-  }
-}
-
-/* Subtle Pulse Animation Keyframes */
-@keyframes subtle-pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 2px 8px rgba(204, 63, 12, 0.3);
-  }
-  50% {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(204, 63, 12, 0.4);
   }
 }

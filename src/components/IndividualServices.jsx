@@ -14,14 +14,14 @@ const individualServicePriceText = {
 const individualServicesData = [
   {
     id: 1,
-    icon: "📊",
+    icon: "🧾",
     title: "Tax Returns",
     description: "Complete personal tax return preparation and filing services.",
     serviceId: "tax-returns"
   },
   {
     id: 2,
-    icon: "📈",
+    icon: "📚",
     title: "Bookkeeping",
     description: "Monthly bookkeeping and financial record maintenance.",
     serviceId: "bookkeeping"

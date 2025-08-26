@@ -547,4 +547,16 @@ body.mobile-menu-opened .App.navbar-hidden .navbar {
     pointer-events: none;
   }
 }
-  
+
+@media (max-width: 500px) {
+  .mobile-nav-menu {
+    width: 200px;
+  }
+  .mobile-nav-item {
+    font-size: 0.95rem;
+  }
+  .mobile-nav-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}

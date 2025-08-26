@@ -217,7 +217,7 @@
   background: transparent;
   color: #fff;
   font-weight: 600;
-  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  font-size: clamp(0.7rem, 1.2vw, 1.1rem);
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
@@ -341,7 +341,7 @@
 .cta-button-secondary {
   padding: clamp(0.5rem, 1vw, 1rem) clamp(0.7rem, 1.5vw, 1.5rem);
   font-weight: 700;
-  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-size: clamp(.8rem, 1.7vw, 1.3rem);
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease;
   border: none;
@@ -404,7 +404,7 @@
     display: flex;               /* simpler than grid for this */
     justify-content: space-around;     /* center the whole strip */
     align-items: center;         /* vertical centering */
-    gap: clamp(1.5rem, 2.5vw, 3rem);                   /* space between items */
+    gap: 1rem;                   /* space between items */
     padding-top: .75rem;
     border-top: 1px solid rgba(216,203,199,0.3);
 }
@@ -433,7 +433,7 @@
   
   /* Text styles (left-aligned) */
   .proof-number-right{
-    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
     font-weight: 800;
     color: #D8CBC7;
     line-height: 1;
@@ -441,7 +441,7 @@
   }
   
   .proof-label-right{
-    font-size: clamp(0.6rem, 0.9vw, 0.9rem);
+    font-size: clamp(0.75rem, 1.2vw, 1.1rem);
     font-weight: 500;
     color: #D8CBC7;
     opacity: .8;
@@ -457,7 +457,7 @@
     display: flex;
     align-items: center;
     min-height: 60px;
-    padding: 2px 2px 2px 2px;
+    /* padding: 2px 2px 2px 2px; */
     backdrop-filter: blur(2px);
     box-sizing: border-box;
   }
@@ -470,7 +470,7 @@
 
 .ticker-item {
   font-weight: 700;
-  font-size: clamp(.9rem, 1.7vw, 1.3rem);
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
   color: #19231A;
   opacity: 0.8;
   text-align: center;
@@ -500,9 +500,35 @@
 }
 
 /* === RESPONSIVE === */
-@media (min-width: 1300px) {
+@media (min-width: 1400px) {
   .hero-content p {
     padding-right: 6rem;
+  }
+}
+
+
+
+@media (max-width: 1000px) {
+  .hero-content p {
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  }
+}
+
+@media (max-width: 996px) {
+  .proof-label-right {
+    font-size: clamp(0.7rem, 1.2vw, 1.1rem);
+  }
+}
+
+@media (max-width: 895px) {
+  .proof-label-right {
+    font-size: .65rem;
+  }
+  .proof-number-right {
+    font-size: 1rem;
+  }
+  .social-proof-right {
+    gap: 1rem;
   }
 }
 
@@ -523,7 +549,7 @@
   }
   
   .social-proof-right {
-    gap: clamp(1rem, 1.5vw, 1.5rem);
+    gap: 1rem;
     padding-top: 1rem;
     min-height: auto;
     margin-left: -.5rem !important;
@@ -531,11 +557,11 @@
   }
   
   .proof-number-right {
-    font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
   }
   
   .proof-label-right {
-    font-size: clamp(0.5rem, 0.7vw, 0.7rem);
+    font-size: clamp(0.6rem, 0.7vw, 0.7rem);
   }
   
   .hero-nav-buttons {
@@ -544,11 +570,44 @@
   }
 }
 
-@media (max-width: 750px){
+@media (max-width: 820px) {
   .ticker-item {
-    font-size: clamp(.9rem, 1vw, 1.3rem);
+    font-size: .9rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .proof-number-right {
+    font-size: 1rem;
   }
   
+  .proof-label-right {
+    font-size: clamp(0.5rem, 1.2vw, 0.7rem);
+  }
+ }
+
+@media (max-width: 770px) {
+  .proof-number-right {
+    font-size: 1rem;
+  }
+  .proof-label-right {
+    font-size: 0.55rem;
+  }
+  .social-proof-right {
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 714px){
+  .proof-number-right  {
+    font-size: .95rem;
+  }
+  .proof-label-right {
+    font-size: .54rem;
+  }
+  .social-proof-right {
+    gap: 0.5rem;
+  }
 }
 
 @media (max-width: 680px){
@@ -725,7 +784,17 @@
   .social-proof-right {
     display: none;
   }
+
+  .ticker-item {
+    font-size: 1rem;
+  }
   
+}
+
+@media (max-width: 550px) { 
+  .ticker-item {
+    font-size: .92rem;
+  }
 }
 
 @media (max-width: 520px) {
@@ -801,7 +870,7 @@
 
 @media (max-width: 409px) {
   .ticker-item {
-    font-size: clamp(.7rem, 1.5vw, 1.2rem);
+    font-size: .7rem;
   }
 
   .ticker-separator {
