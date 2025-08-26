@@ -28,7 +28,7 @@ const businessServicePriceText = {
   const businessServicesDetails = [
     {
       id: 1,
-      icon: "📊",
+      icon: "🧾",
       title: "Tax Returns",
       serviceId: "tax-returns",
       longDescription: "Complete 1065/1120/1120-S prep—apportionment, depreciation, K-1s—plus entity-specific deductions, credits, and elections. Audit-ready.",
@@ -88,7 +88,7 @@ const businessServicePriceText = {
     },
     {
       id: 3,
-      icon: "📈",
+      icon: "📚",
       title: "Bookkeeping",
       serviceId: "bookkeeping",
       longDescription:
@@ -275,7 +275,7 @@ const businessServicePriceText = {
   const individualServiceDetails = [
     {
       id: 1,
-      icon: "📊",
+      icon: "🧾",
       title: "Tax Returns",
       serviceId: "tax-returns",
       longDescription: "Personalized returns for W-2, 1099, investments, and rentals—maximize deductions, audit-ready.",
@@ -301,7 +301,7 @@ const businessServicePriceText = {
     },
     {
       id: 2,
-      icon: "📈",
+      icon: "📚",
       title: "Bookkeeping",
       serviceId: "bookkeeping",
       longDescription: "Monthly categorizations & reconciliations—clean, tax-ready books with clear cash-flow insight.",

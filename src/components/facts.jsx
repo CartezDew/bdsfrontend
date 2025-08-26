@@ -151,7 +151,7 @@ const sampleFacts = [
   {
     id: 1,
     q: "When are individual taxes due? Can I get an extension?",
-    a: <>Most calendar-year filers are due around <strong>April 15</strong>. You can file Form 4868 for an <strong>automatic 6-month extension</strong> to file (usually to Oct 15), but any taxes owed are still due by April the original deadline.</>,
+    a: <>Most calendar-year filers are due around <strong>April 15</strong>. You can file Form 4868 for an <strong>automatic 6-month extension</strong> (usually to Oct 15), but any taxes owed are still due by April the original deadline.</>,
   },
   {
     id: 2,

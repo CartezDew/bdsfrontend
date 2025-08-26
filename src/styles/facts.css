@@ -16,7 +16,7 @@
 }
 
 .faq-header h2 {
-  font-size: clamp(1.8rem, 3.7vw, 2.5rem);
+  font-size: clamp(1.9rem, 3.7vw, 2.5rem);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.02em;
