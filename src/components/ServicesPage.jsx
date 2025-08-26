@@ -14,13 +14,13 @@ const ServicesPage = () => {
   useEffect(() => {
     const urlServiceType = searchParams.get('type');
     const urlServiceId = searchParams.get('service');
-    
-    // Set service type if specified in URL
-    if (urlServiceType && urlServiceType !== serviceType) {
+
+    // Set service type from URL (idempotent)
+    if (urlServiceType) {
       handleServiceTypeChange(urlServiceType);
     }
-    
-    // Scroll to specific service section after a delay to ensure the page is loaded
+
+    // Scroll to specific service section after a short delay to ensure layout is ready
     if (urlServiceId) {
       setTimeout(() => {
         const targetElement = document.getElementById(urlServiceId);
@@ -31,9 +31,9 @@ const ServicesPage = () => {
           const scrollPosition = rectTop - navbarHeight;
           window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
         }
-      }, 500); // Delay to ensure page is fully loaded
+      }, 300);
     }
-  }, [searchParams, serviceType, handleServiceTypeChange]);
+  }, [searchParams, handleServiceTypeChange]);
 
   // No local animations or sticky navbar logic; reuse Services component's behavior
 
@@ -43,8 +43,7 @@ const ServicesPage = () => {
       <Services includeExtras={false} />
       
       {/* Detailed Services Section - Same level as other components */}
-      {serviceType === 'individual' && <ServicesDetailed serviceType="individual" />}
-      {serviceType === 'business' && <ServicesDetailed serviceType="business" />}
+      <ServicesDetailed serviceType={serviceType} />
       
       {/* Social Media Section */}
       <div className="service-social-media-section">

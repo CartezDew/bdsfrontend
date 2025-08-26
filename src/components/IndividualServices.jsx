@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const individualServicePriceText = {
@@ -7,7 +7,7 @@ const individualServicePriceText = {
   2: "Starting at $99 (mo)",
   3: "Starting at $175 (hr)",
   4: "Starting at $300",
-  5: "Starting at $35",
+  5: "Starting at $150 (hr)",
   6: "Starting at $150 (hr)"
 };
 
@@ -17,42 +17,42 @@ const individualServicesData = [
     icon: "🧾",
     title: "Tax Returns",
     description: "Complete personal tax return preparation and filing services.",
-    serviceId: "tax-returns"
+    serviceId: "individual-tax-returns"
   },
   {
     id: 2,
     icon: "📚",
     title: "Bookkeeping",
     description: "Monthly bookkeeping and financial record maintenance.",
-    serviceId: "bookkeeping"
+    serviceId: "individual-bookkeeping"
   },
   {
     id: 3,
     icon: "⚖️",
     title: "Compliance",
     description: "Ensure your personal finances meet all regulatory requirements.",
-    serviceId: "compliance"
+    serviceId: "individual-compliance"
   },
   {
     id: 4,
     icon: "📋",
     title: "Reporting",
     description: "Comprehensive financial reporting and analysis.",
-    serviceId: "reporting"
+    serviceId: "individual-reporting"
   },
   {
     id: 5,
-    icon: "🔍",
-    title: "Audits",
-    description: "Professional representation during IRS audits and reviews.",
-    serviceId: "audits"
-  },
-  {
-    id: 6,
     title: "Tax Extensions",
     icon: "⏰",
     description: "File extensions and ensure timely tax compliance.",
-    serviceId: "tax-extensions"
+    serviceId: "individual-tax-extensions"
+  },
+  {
+    id: 6,
+    icon: "🛡️",
+    title: "Tax Notices",
+    description: "Tax letter? We review, respond, and resolve.",
+    serviceId: "individual-notice-resolution"
   }
 ];
 
@@ -60,6 +60,7 @@ const IndividualServiceCard = ({ service, cardIndex }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +84,14 @@ const IndividualServiceCard = ({ service, cardIndex }) => {
   }, [cardIndex]);
 
   const handleLearnMore = () => {
-    navigate(`/services?type=individual&service=${service.serviceId}`);
+    if (location.pathname === '/services') {
+      const params = new URLSearchParams(location.search);
+      params.set('type', 'individual');
+      params.set('service', service.serviceId);
+      navigate({ pathname: '/services', search: `?${params.toString()}` });
+    } else {
+      navigate(`/services?type=individual&service=${service.serviceId}`);
+    }
   };
 
   return (

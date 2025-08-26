@@ -144,18 +144,20 @@ const GetStarted = () => {
   const serviceOptions = {
     individual: [
       'Personal Tax Return',
-      'Tax Extension',
-      'Tax Planning',
-      'Tax Audit Support',
-      'Prior Year Returns'
+      'Bookkeeping',
+      'Compliance',
+      'Reporting',
+      'Tax Extensions',
+      'Tax Notices',
     ],
     business: [
       'Business Tax Return',
       'Bookkeeping',
-      'Financial Statements',
       'Compliance',
-      'Business Advisory',
-      'Audit Support'
+      'Reporting',
+      'Tax Extensions',
+      'Advisory',
+      'Tax Notices',
     ]
   };
 
@@ -642,10 +644,7 @@ const GetStarted = () => {
                         value={selectedService}
                         onChange={(val) => setSelectedService(val)}
                         required
-                        options={[
-                          { label: 'Individual Services', options: serviceOptions.individual },
-                          { label: 'Business Services', options: serviceOptions.business },
-                        ]}
+                        options={serviceOptions.map(option => ({ label: option, value: option }))}
                       />
                     </div>
                     

@@ -59,18 +59,21 @@ const AppointmentScheduler = () => {
   const serviceOptions = {
     individual: [
       'Personal Tax Return',
-      'Tax Extension',
-      'Tax Planning',
-      'Tax Audit Support',
-      'Prior Year Returns'
+      'Bookkeeping',
+      'Compliance',
+      'Reporting',
+      'Tax Extensions',
+      'Tax Notices',
     ],
     business: [
       'Business Tax Return',
+      'Payroll Services',
       'Bookkeeping',
-      'Financial Statements',
       'Compliance',
-      'Business Advisory',
-      'Audit Support'
+      'Reporting',
+      'Tax Extensions',
+      'Advisory',
+      'Tax Notices',
     ]
   };
 

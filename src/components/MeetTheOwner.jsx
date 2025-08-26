@@ -1,7 +1,7 @@
 // src/components/MeetTheOwner.jsx
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/meet_the_owner.css";
-import ceoImage from '../Assets/Images/CEO_Adjusted.png';
+import ceoImage from '../Assets/Images/CEO.jpeg';
 
 export default function MeetTheOwner() {
   const [animationsTriggered, setAnimationsTriggered] = useState(false);

@@ -7,6 +7,7 @@ import SocialProof from './SocialProof';
 import Why_Us from './Why_Us';
 import MeetTheOwner from './MeetTheOwner';
 import Facts from './facts';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Services = ({ includeExtras = true }) => {
   const { serviceType, handleServiceTypeChange } = useServiceContext();
@@ -24,6 +25,20 @@ const Services = ({ includeExtras = true }) => {
   const toggleRef = useRef(null);
   const noteRef = useRef(null);
   const servicesRef2 = useRef(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const onServicesRoute = location.pathname === '/services';
+
+  const setTypeAndSyncUrl = (type) => {
+    handleServiceTypeChange(type);
+    if (onServicesRoute) {
+      const params = new URLSearchParams(location.search);
+      params.set('type', type);
+      params.delete('service'); // clear deep-link to prevent auto-scroll overriding
+      navigate({ pathname: '/services', search: `?${params.toString()}` }, { replace: true });
+    }
+  };
 
   // Intersection Observer for animations
   useEffect(() => {
@@ -105,13 +120,13 @@ const Services = ({ includeExtras = true }) => {
             <div className={`service-type-toggle ${animationsTriggered.toggle ? 'animate-toggle' : ''}`} ref={toggleRef} data-animate="toggle">
               <button
                 className={`toggle-btn ${serviceType === 'individual' ? 'active' : ''}`}
-                onClick={() => handleServiceTypeChange('individual')}
+                onClick={() => setTypeAndSyncUrl('individual')}
               >
                 Individual Services
               </button>
               <button
                 className={`toggle-btn ${serviceType === 'business' ? 'active' : ''}`}
-                onClick={() => handleServiceTypeChange('business')}
+                onClick={() => setTypeAndSyncUrl('business')}
               >
                 Business Services
               </button>

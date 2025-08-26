@@ -8,7 +8,7 @@ const ServicesDetailed = ({ serviceType = 'individual' }) => {
     2: "Starting at $99 (mo)",
     3: "Starting at $175 (hr)",
     4: "Starting at $300",
-    5: "Starting at $35",
+    5: "Starting at $150 (hr)",
     6: "Starting at $150 (hr)"
   };
 
@@ -19,9 +19,9 @@ const businessServicePriceText = {
   3: "Starting at $129 (mo)",       // Bookkeeping 
   4: "Starting at $149 (mo)",       // Compliance 
   5: "Starting at $400",            // Reporting 
-  6: "Starting at $400",            // Audits 
-  7: "Starting at $50",             // Tax Extensions 
-  8: "Starting at $175 (hr)"        // Advisory 
+  6: "Starting at $50",             // Tax Extensions   
+  7: "Starting at $175 (hr)",       // Advisory
+  8: "Starting at $175 (hr)"        // Tax Notice Resolution
 };
 
   // Business services details
@@ -30,7 +30,7 @@ const businessServicePriceText = {
       id: 1,
       icon: "🧾",
       title: "Tax Returns",
-      serviceId: "tax-returns",
+      serviceId: "business-tax-returns",
       longDescription: "Complete 1065/1120/1120-S prep—apportionment, depreciation, K-1s—plus entity-specific deductions, credits, and elections. Audit-ready.",
       whatsIncluded: [
         "Federal and state business returns (1065, 1120, 1120-S) with e-file",
@@ -90,7 +90,7 @@ const businessServicePriceText = {
       id: 3,
       icon: "📚",
       title: "Bookkeeping",
-      serviceId: "bookkeeping",
+      serviceId: "business-bookkeeping",
       longDescription:
         "Clean, timely books—monthly close, reconciliations, GAAP categories. Investor/tax-ready with clear spend, margins, cash.",
       whatsIncluded: [
@@ -121,7 +121,7 @@ const businessServicePriceText = {
       id: 4,
       icon: "⚖️",
       title: "Compliance",
-      serviceId: "compliance",
+      serviceId: "business-compliance",
       longDescription: "Stay compliant with business tax laws and regulations through proactive management and documentation.",
       whatsIncluded: [
         "Business tax obligation assessment and planning",
@@ -151,7 +151,7 @@ const businessServicePriceText = {
       id: 5,
       icon: "📋",
       title: "Reporting",
-      serviceId: "reporting",
+      serviceId: "business-reporting",
       longDescription: "Comprehensive business financial reporting and analysis to help you make informed decisions.",
       whatsIncluded: [
         "Financial statement preparation",
@@ -177,42 +177,12 @@ const businessServicePriceText = {
       pricingNote:
         "Per report or monthly subscription."
     },
+
     {
       id: 6,
-      icon: "🔍",
-      title: "Audits",
-      serviceId: "audits",
-      longDescription: "Professional representation during IRS audits and reviews with expert guidance.",
-      whatsIncluded: [
-        "Audit preparation and documentation review",
-        "IRS communication and representation",
-        "Response preparation and filing",
-        "Settlement negotiation if needed"
-      ],
-      idealFor: [
-        "Businesses facing IRS audits",
-        "Those needing audit representation",
-        "Companies with complex tax situations"
-      ],
-      process: [
-        "Audit notification review",
-        "Documentation preparation",
-        "IRS representation",
-        "Resolution"
-      ],
-      deliverables: [
-        "Audit response package",
-        "Representation services",
-        "Resolution documentation"
-      ],
-      pricingNote:
-        "Hourly rate for representation services."
-    },
-    {
-      id: 7,
       icon: "⏰",
       title: "Tax Extensions",
-      serviceId: "tax-extensions",
+      serviceId: "business-tax-extensions",
       longDescription:
         "Fast, accurate federal and state extensions (Form 7004 and equivalents) with estimated payments to minimize interest and penalties.",
       whatsIncluded: [
@@ -239,7 +209,7 @@ const businessServicePriceText = {
         "Flat per entity; additional states billed separately."
     },
     {
-      id: 8,
+      id: 7,
       icon: "💡",
       title: "Advisory",
       serviceId: "advisory",
@@ -268,6 +238,41 @@ const businessServicePriceText = {
       ],
       pricingNote:
         "Hourly or retainer; project pricing available for one-time initiatives."
+    },
+    {
+      id: 8,
+      icon: "🛡️",
+      title: "Tax Notices",
+      serviceId: "biz-notice-resolution",
+      longDescription:
+        "We tackle tax notices—investigation, agency contact, and filings—to resolve quickly and safeguard cash flow.",
+      whatsIncluded: [
+        "Notice review & risk assessment with prioritized action plan",
+        "Account research & transcript pull for business entities",
+        "Prepared responses with supporting schedules & reconciliations",
+        "Corrections: amended 941/940, sales & use tax, corporate/LLC returns",
+        "Resolution options: installment agreements, penalty relief, holds",
+      ],
+      idealFor: [
+        "Payroll tax notices (941/940, late/underpayment penalties)",
+        "Sales & use tax assessments or nexus inquiries",
+        "1099/backup withholding notices",
+        "EIN/SSN mismatches, CP259F (missing filings)",
+        "Levy or garnishment warnings impacting operations"
+      ],
+      process: [
+        "Notice review & risk assessment",
+        "Account research & transcript pull",
+        "Response preparation & filing",
+        "Resolution & follow-up"
+      ],
+      deliverables: [
+        "Written action plan & timeline",
+        "Filed response packet with workpapers",
+        "Agency confirmation & post-resolution guidance"
+      ],
+      pricingNote:
+        "Flat fee for notice review and response."
     }
   ];
 
@@ -277,7 +282,7 @@ const businessServicePriceText = {
       id: 1,
       icon: "🧾",
       title: "Tax Returns",
-      serviceId: "tax-returns",
+      serviceId: "individual-tax-returns",
       longDescription: "Personalized returns for W-2, 1099, investments, and rentals—maximize deductions, audit-ready.",
       whatsIncluded: [
         "Full intake review (income sources, life events, deductions/credits)",
@@ -303,7 +308,7 @@ const businessServicePriceText = {
       id: 2,
       icon: "📚",
       title: "Bookkeeping",
-      serviceId: "bookkeeping",
+      serviceId: "individual-bookkeeping",
       longDescription: "Monthly categorizations & reconciliations—clean, tax-ready books with clear cash-flow insight.",
       whatsIncluded: [
         "Secure bank/credit card feed connections",
@@ -330,7 +335,7 @@ const businessServicePriceText = {
       id: 3,
       icon: "⚖️",
       title: "Compliance",
-      serviceId: "compliance",
+      serviceId: "individual-compliance",
       longDescription: "Stay compliant with tax laws and regulations through proactive management and documentation.",
       whatsIncluded: [
         "Tax obligation assessment and planning",
@@ -356,7 +361,7 @@ const businessServicePriceText = {
       id: 4,
       icon: "📋",
       title: "Reporting",
-      serviceId: "reporting",
+      serviceId: "individual-reporting",
       longDescription: "Comprehensive financial reporting and analysis to help you make informed decisions.",
       whatsIncluded: [
         "Financial statement preparation",
@@ -378,37 +383,12 @@ const businessServicePriceText = {
       pricingNote:
         "Per report or monthly subscription."
     },
+
     {
       id: 5,
-      icon: "🔍",
-      title: "Audits",
-      serviceId: "audits",
-      longDescription: "Professional representation during IRS audits and reviews with expert guidance.",
-      whatsIncluded: [
-        "Audit preparation and documentation review",
-        "IRS communication and representation",
-        "Response preparation and filing",
-        "Settlement negotiation if needed"
-      ],
-      idealFor: [
-        "Individuals facing IRS audits",
-        "Those needing audit representation",
-        "People with complex tax situations"
-      ],
-      process: ["Audit notification review", "Documentation preparation", "IRS representation", "Resolution"],
-      deliverables: [
-        "Audit response package",
-        "Representation services",
-        "Resolution documentation"
-      ],
-      pricingNote:
-        "Hourly rate for representation services."
-    },
-    {
-      id: 6,
       icon: "⏰",
       title: "Tax Extensions",
-      serviceId: "tax-extensions",
+      serviceId: "individual-tax-extensions",
       longDescription: "File extensions and ensure timely tax compliance with proper documentation.",
       whatsIncluded: [
         "Extension preparation and filing",
@@ -429,6 +409,40 @@ const businessServicePriceText = {
       ],
       pricingNote:
         "Flat fee for extension filing."
+    },
+    {
+      id: 6,
+      icon: "🛡️",
+      title: "Tax Notices",
+      serviceId: "individual-notice-resolution",
+      longDescription:
+        "End the stress of tax letters. We review your notice, pull transcripts, represent you with the IRS or state, and pursue the fastest path to resolution—whether that’s a corrected filing, payment plan, or penalty relief.",
+      whatsIncluded: [
+        "Plain-English notice review & action plan",
+        "IRS/state account research & transcript pull",
+        "Draft & file formal responses with support docs",
+        "Amended/corrected returns if needed",
+        "Negotiate options: payment plans, holds, or penalty abatement",
+        "Status updates until the case is closed"
+      ],
+      idealFor: [
+        "Balance due, penalty, or math-error notices",
+        "Missing return notices",
+        "Levy/garnishment warnings"
+      ],
+      process: [
+        "Initial review",
+        "Action plan",
+        "Response packet",
+        "Confirmation of agency receipt & next steps"
+      ],
+      deliverables: [
+        "Written action plan",
+        "Filed response packet",
+        "Confirmation of agency receipt & next steps"
+      ],
+      pricingNote:
+        "Flat fee for notice review and response."
     }
   ];
 
@@ -588,7 +602,7 @@ const businessServicePriceText = {
   // Determine which services to render based on serviceType
   const servicesToRender = serviceType === 'business' ? businessServicesDetails : individualServiceDetails;
   const priceTextToUse = serviceType === 'business' ? businessServicePriceText : individualServicePriceText;
-
+  
   return (
     <div className="servicesdetailed-section">
       <div className="servicesdetailed-container">
