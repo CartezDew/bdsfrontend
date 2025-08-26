@@ -7,6 +7,7 @@ import '../styles/navbar.css'
 
 const NavbarMobile = ({ customConfig }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
     const isOpenRef = useRef(false)
     const navigate = useNavigate()
     const location = useLocation()
@@ -14,12 +15,36 @@ const NavbarMobile = ({ customConfig }) => {
     const menuRef = useRef(null)
     const openAtRef = useRef(0)
 
+    // Check screen size and update mobile state
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsMobile(window.innerWidth <= 680)
+        }
+        
+        // Check on mount
+        checkScreenSize()
+        
+        // Add resize listener
+        window.addEventListener('resize', checkScreenSize)
+        
+        return () => window.removeEventListener('resize', checkScreenSize)
+    }, [])
+
     const handleLogoClick = (e) => {
         e.preventDefault()
-        if (location.pathname === '/') {
-            window.scrollTo({ top: 0, behavior: 'smooth' })
+        
+        // Use the isMobile state instead of checking window.innerWidth directly
+        if (isMobile) {
+            // On mobile, toggle the mobile navbar dropdown
+            // If already open, close it; if closed, open it
+            setIsOpen(!isOpen)
         } else {
-            navigate('/')
+            // On larger screens, use the original navigation behavior
+            if (location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            } else {
+                navigate('/')
+            }
         }
     }
 

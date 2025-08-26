@@ -53,13 +53,21 @@ const Hero = () => {
   };
 
   const [currentTickerItems, setCurrentTickerItems] = useState(() => getTickerItemsForWidth(typeof window !== 'undefined' ? window.innerWidth : 9999));
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
       console.log('Resize event fired, width:', currentWidth);
       setCurrentTickerItems(getTickerItemsForWidth(currentWidth));
+      
+      // Update mobile state for logo behavior
+      setIsMobile(currentWidth <= 680);
     };
+    
+    // Set initial mobile state
+    setIsMobile(window.innerWidth <= 680);
+    
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -70,15 +78,30 @@ const Hero = () => {
     navigate('/services');
   };
 
-  // Handle logo click - navigate to home and scroll to top
+  // Handle logo click - toggle mobile navbar on mobile, navigate on desktop
   const handleLogoClick = (e) => {
     e.preventDefault();
-    if (location.pathname === '/') {
-      // If already on home page, just scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    if (isMobile) {
+      // On mobile, toggle the mobile navbar dropdown
+      // If already open, close it; if closed, open it
+      try {
+        console.log('[Hero] logo clicked → dispatch toggleMobileMenu');
+        // Dispatch toggle event to open/close mobile navbar
+        const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-logo', ts: Date.now() } });
+        window.dispatchEvent(evtWin);
+      } catch (err) {
+        console.error('[Hero] error dispatching toggleMobileMenu', err);
+      }
     } else {
-      // Navigate to home page
-      navigate('/');
+      // On desktop, use the original navigation behavior
+      if (location.pathname === '/') {
+        // If already on home page, just scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Navigate to home page
+        navigate('/');
+      }
     }
   };
 
