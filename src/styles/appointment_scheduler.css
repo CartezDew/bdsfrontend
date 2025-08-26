@@ -1084,3 +1084,95 @@
     padding-right: 0.2rem;
   }
 }
+
+/* Calendar Actions */
+.calendar-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(51, 103, 59, 0.1);
+}
+
+/* Go Back Button */
+.go-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 2px solid var(--color-hunter-green);
+  color: var(--color-hunter-green);
+  padding: 0.5rem .5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  align-self: flex-start;
+}
+
+/* Contact Go Back Button - Smaller size */
+.go-back-btn.contact-go-back {
+  font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+  padding: 0.5rem 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.go-back-btn.contact-go-back .back-arrow {
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+}
+
+.go-back-btn.contact-go-back .back-text {
+  font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+}
+
+/* Contact Actions */
+.contact-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(51, 103, 59, 0.1);
+}
+
+.go-back-btn:hover {
+  background: var(--color-hunter-green);
+  color: white;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 12px rgba(51, 103, 59, 0.3);
+}
+
+.go-back-btn:active {
+  transform: translateX(-1px);
+}
+
+.back-arrow {
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.go-back-btn:hover .back-arrow {
+  transform: translateX(-2px);
+}
+
+.back-text {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Time Actions */
+.time-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(51, 103, 59, 0.1);
+}
+
+/* Calendar Actions */

@@ -523,6 +523,19 @@ const AppointmentScheduler = () => {
                   ))}
                 </div>
               </div>
+              
+              {/* Go Back Button */}
+              <div className="calendar-actions">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(1)}
+                  className="go-back-btn"
+                  aria-label="Go back to service selection"
+                >
+                  <span className="back-arrow">←</span>
+                  <span className="back-text">Go Back</span>
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -546,6 +559,19 @@ const AppointmentScheduler = () => {
                     {formatTime(slot)}
                   </button>
                 ))}
+              </div>
+              
+              {/* Go Back Button */}
+              <div className="time-actions">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(2)}
+                  className="go-back-btn time-go-back"
+                  aria-label="Go back to date selection"
+                >
+                  <span className="back-arrow">←</span>
+                  <span className="back-text">Go Back</span>
+                </button>
               </div>
             </div>
           </div>
@@ -629,6 +655,7 @@ const AppointmentScheduler = () => {
                   })()}
                 </div>
               )}
+              
               <button
                 type="button"
                 onClick={() => {
@@ -646,6 +673,19 @@ const AppointmentScheduler = () => {
               >
                 Continue to File Upload
               </button>
+              
+              {/* Go Back Button - Below Continue button */}
+              <div className="contact-actions">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(3)}
+                  className="go-back-btn contact-go-back"
+                  aria-label="Go back to time selection"
+                >
+                  <span className="back-arrow">←</span>
+                  <span className="back-text">Go Back</span>
+                </button>
+              </div>
             </div>
           </div>
         )}
