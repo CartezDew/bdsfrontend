@@ -23,16 +23,17 @@ const NavbarMobile = ({ customConfig }) => {
         }
     }
 
-    useLayoutEffect(() => {
-        const setVar = () => {
-            const nav = document.querySelector('.navbar-container') || document.querySelector('.navbar')
-            const h = nav ? Math.round(nav.getBoundingClientRect().height) : 48
-            document.documentElement.style.setProperty('--navbar-height', `${h}px`)
-        }
-        setVar()
-        window.addEventListener('resize', setVar)
-        return () => window.removeEventListener('resize', setVar)
-    }, [])
+    // Removed height calculation logic - not needed for mobile navbar
+    // useLayoutEffect(() => {
+    //     const setVar = () => {
+    //         const nav = document.querySelector('.navbar-container') || document.querySelector('.navbar')
+    //         const h = nav ? Math.round(nav.getBoundingClientRect().height) : 48
+    //         document.documentElement.style.setProperty('--navbar-height', `${h}px`)
+    //     }
+    //     setVar()
+    //     window.addEventListener('resize', setVar)
+    //     return () => window.removeEventListener('resize', setVar)
+    // }, [])
 
     // Mount / unmount logs
     useEffect(() => {
@@ -96,13 +97,14 @@ const NavbarMobile = ({ customConfig }) => {
         if (location.pathname !== '/') { navigate(`/#${targetId}`); setIsOpen(false); try { console.log('[NavbarMobile] closing reason: nav hash link') } catch {}; return }
         const targetElement = document.getElementById(targetId)
         if (targetElement) {
-            const navbarEl = document.querySelector('.navbar')
-            const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+            // Removed navbar height calculation - not needed for mobile navbar
+            // const navbarEl = document.querySelector('.navbar')
+            // const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
             const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
             const styles = window.getComputedStyle(targetElement)
             const marginTop = parseFloat(styles.marginTop) || 0
             const borderTop = parseFloat(styles.borderTopWidth) || 0
-            const scrollPosition = rectTop - navbarHeight - marginTop - borderTop
+            const scrollPosition = rectTop - marginTop - borderTop
             window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
         }
         try { console.log('[NavbarMobile] closing reason: nav hash link (same page)') } catch {}
