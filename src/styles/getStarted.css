@@ -833,6 +833,7 @@
   z-index: 1000;
   padding: 1rem;
   cursor: pointer;
+  max-width: 100%;
 }
 
 .getstarted-success-modal {
@@ -886,6 +887,9 @@
   color: white;
   padding: 1.5rem;
   text-align: center;
+  /* margin-left: -5rem;
+  margin-right: -5rem;
+  margin-top: -2rem; */
 }
 
 .getstarted-success-modal-header h3 {
@@ -947,27 +951,6 @@
 }
 
 @media (max-width: 768px) {
-  /* .get-started-page {
-    padding: 1rem;
-  }
-  
-  .get-started-header {
-    margin-bottom: 2rem;
-    padding: 2rem 0;
-  } */
-  
-  /* .get-started-content {
-    gap: 2rem;
-  }
-  
-  .getstarted-scheduler {
-    padding: 1.5rem;
-    margin-top: 2rem;
-  }
-  
-  .getstarted-form-row {
-    grid-template-columns: 1fr;
-  } */
   
   .getstarted-calendar-nav-btn {
     width: 2rem;
@@ -978,33 +961,10 @@
   .getstarted-time-grid {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
-  
-  .getstarted-success-modal {
-    padding: 1.5rem;
-    margin: 1rem;
-  }
 
-  /* .getstarted-faq-section {
-    padding: 3rem 1rem;
-  }
-  
-  .getstarted-faq-header h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.25rem;
-  }
-   */
-  /* .getstarted-faq-header p {
-    font-size: 1.1rem;
-    max-width: 600px;
-  } */
 }
 
-/* @media (max-width: 750px) {
-  .getstarted-consultation-btn {
-    font-size: clamp(.9rem, 1.2vw, 1rem) !important;
-    padding: .75rem 1.25rem;
-  }
-} */
+
 
 @media (max-width: 610px) {
   .get-started-page {

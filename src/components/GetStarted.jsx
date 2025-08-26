@@ -1043,36 +1043,37 @@ const GetStarted = () => {
 
               </form>
 
-              {/* Success Modal */}
-              {showSuccessModal && (
-                <div className="getstarted-success-modal-overlay" onClick={() => setShowSuccessModal(false)}>
-                  <div className="getstarted-success-modal" onClick={(e) => e.stopPropagation()}>
-                    <button
-                      className="getstarted-modal-close-btn"
-                      onClick={() => setShowSuccessModal(false)}
-                      aria-label="Close modal"
-                    >
-                      ×
-                    </button>
-                    <div className="getstarted-success-modal-header">
-                      <h3>Thank You!</h3>
-                    </div>
-                    <div className="getstarted-success-modal-content">
-                      <div className="getstarted-success-icon">✓</div>
-                      <p className="getstarted-confirmation-message">
-                        We will begin working on your project shortly.
-                      </p>
-                      <p className="getstarted-closing-message">
-                        Thank you and have a great day!
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
                   </div>
       </div>
     </section>
+    
+    {/* Success Modal - Moved outside parent container for full viewport coverage */}
+    {showSuccessModal && (
+      <div className="getstarted-success-modal-overlay" onClick={() => setShowSuccessModal(false)}>
+        <div className="getstarted-success-modal" onClick={(e) => e.stopPropagation()}>
+          <button
+            className="getstarted-modal-close-btn"
+            onClick={() => setShowSuccessModal(false)}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+          <div className="getstarted-success-modal-header">
+            <h3>Thank You!</h3>
+          </div>
+          <div className="getstarted-success-modal-content">
+            <div className="getstarted-success-icon">✓</div>
+            <p className="getstarted-confirmation-message">
+              We will begin working on your project shortly.
+            </p>
+            <p className="getstarted-closing-message">
+              Thank you and have a great day!
+            </p>
+          </div>
+        </div>
+      </div>
+    )}
     
     {/* Scroll Down Mouse Indicator */}
     {showMouseIndicator && (
