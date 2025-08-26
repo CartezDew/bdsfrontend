@@ -136,7 +136,7 @@ export default function CustomSelect({
             const active = idx === activeIndex
             return (
               <div
-                key={`o-${item.value}`}
+                key={`o-${idx}-${String(item.value)}`}
                 role="option"
                 aria-selected={selected}
                 className={`cs-option ${selected ? 'selected' : ''} ${active ? 'active' : ''}`}

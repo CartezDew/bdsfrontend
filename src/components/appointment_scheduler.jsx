@@ -24,9 +24,12 @@ const AppointmentScheduler = () => {
   const [consentChecked, setConsentChecked] = useState(false);
   const [animationsTriggered, setAnimationsTriggered] = useState(false);
   const [showDisabledButtonNote, setShowDisabledButtonNote] = useState(false);
+  const [contactErrorShown, setContactErrorShown] = useState(false);
+  const [consentErrorShown, setConsentErrorShown] = useState(false);
 
   const fileInputRef = useRef(null);
   const schedulerRef = useRef(null);
+  const formRef = useRef(null);
 
   // Scroll animation effect
   useEffect(() => {
@@ -369,6 +372,29 @@ const AppointmentScheduler = () => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
+  // Compute the first contact error without mutating state
+  const getFirstContactError = () => {
+    if (!contactInfo.firstName.trim()) {
+      return { field: 'firstName', message: 'First name is required' };
+    }
+    if (!contactInfo.lastName.trim()) {
+      return { field: 'lastName', message: 'Last name is required' };
+    }
+    if (!contactInfo.email.trim()) {
+      return { field: 'email', message: 'Email is required' };
+    }
+    if (!validateEmail(contactInfo.email)) {
+      return { field: 'email', message: 'Please enter a valid email address' };
+    }
+    if (!contactInfo.phone.trim()) {
+      return { field: 'phone', message: 'Phone number is required' };
+    }
+    if (!validatePhone(contactInfo.phone)) {
+      return { field: 'phone', message: 'Please enter a valid phone number' };
+    }
+    return null;
+  };
+
   return (
     <div 
       id="appointment-scheduler"
@@ -380,7 +406,7 @@ const AppointmentScheduler = () => {
         <p>Choose a time that fits your schedule to discuss your needs</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="scheduler-form">
+      <form ref={formRef} onSubmit={handleSubmit} className="scheduler-form">
         {/* Progress Indicator */}
         <div className={`progress-indicator ${animationsTriggered ? 'animate-in' : ''}`}>
           <div className={`progress-step ${currentStep >= 1 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
@@ -641,42 +667,39 @@ const AppointmentScheduler = () => {
             </div>
 
             <div className="form-actions">
-              {showDisabledButtonNote && Object.keys(errors).length > 0 && (
-                <div className="disabled-button-note">
-                  Please complete all required fields to continue
-                </div>
-              )}
-              {Object.keys(errors).length > 0 && (
-                <div className="single-error-message">
-                  {(() => {
-                    const firstError = Object.entries(errors)[0];
-                    if (firstError) {
-                      const [field, message] = firstError;
-                      return message;
-                    }
-                    return '';
-                  })()}
-                </div>
-              )}
-              
+              {contactErrorShown && (() => {
+                const firstErr = getFirstContactError();
+                return firstErr ? (
+                  <div className="single-error-message" style={{ marginBottom: '0.75rem' }}>
+                    {firstErr.message}
+                  </div>
+                ) : null;
+              })()}
+
               <button
                 type="button"
                 onClick={() => {
                   console.log('Button clicked!');
                   console.log('Current contact info:', contactInfo);
-                  const isValid = validateContactInfo();
+                  setContactErrorShown(true);
+                  const firstErr = getFirstContactError();
+                  const isValid = !firstErr;
                   console.log('Validation result:', isValid);
                   if (isValid) {
+                    setErrors({});
+                    setContactErrorShown(false);
                     setCurrentStep(5);
                   } else {
+                    setErrors({ [firstErr.field]: firstErr.message });
                     handleDisabledButtonClick();
                   }
                 }}
-                className={`next-btn ${Object.keys(errors).length > 0 ? 'disabled' : ''}`}
+                aria-disabled={!!getFirstContactError()}
+                className={`next-btn ${getFirstContactError() ? 'disabled' : ''}`}
               >
                 Continue to File Upload
               </button>
-              
+
               {/* Go Back Button - Below Continue button */}
               <div className="contact-actions">
                 <button
@@ -775,7 +798,7 @@ const AppointmentScheduler = () => {
                   I authorize BDS Talent Group to collect, use, and process my personal and tax information for the purpose of performing the services requested. I certify that all information supplied is accurate and complete to the best of my knowledge.
                 </label>
               </div>
-              {!consentChecked && currentStep === 5 && (
+              {!consentChecked && consentErrorShown && (
                 <div className="consent-error">
                   You must agree to the consent terms before proceeding.
                 </div>
@@ -783,12 +806,29 @@ const AppointmentScheduler = () => {
             </div>
 
             <div className="form-actions">
+              {/* Quick hint if submit is disabled */}
+              {consentErrorShown && (!selectedService || !selectedDate || !selectedTime || !consentChecked) && (
+                <div className="disabled-button-note" style={{ marginBottom: '0.75rem' }}>
+                  {`To submit, complete: ${[
+                    !selectedService ? 'Service' : null,
+                    !selectedDate ? 'Date' : null,
+                    !selectedTime ? 'Time' : null,
+                    !consentChecked ? 'Consent' : null,
+                  ].filter(Boolean).join(', ')}`}
+                </div>
+              )}
+            </div>
+
+            {/* Go Back Button - Below form actions */}
+            <div className="contact-actions">
               <button
                 type="button"
                 onClick={() => setCurrentStep(4)}
-                className="back-btn"
+                className="go-back-btn contact-go-back"
+                aria-label="Go back to contact information"
               >
-                Back to Contact Info
+                <span className="back-arrow">←</span>
+                <span className="back-text">Go Back</span>
               </button>
             </div>
           </div>
@@ -798,10 +838,17 @@ const AppointmentScheduler = () => {
         {currentStep === 5 && (
           <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <button
-              type="submit"
-              className={`submit-btn ${animationsTriggered ? 'animate-in' : ''}`}
-              disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService || !consentChecked}
-              onClick={() => console.log('Submit button clicked!')}
+              type="button"
+              className={`submit-btn ${animationsTriggered ? 'animate-in' : ''} ${!selectedDate || !selectedTime || !selectedService || !consentChecked ? 'disabled' : ''}`}
+              aria-disabled={!selectedDate || !selectedTime || !selectedService || !consentChecked ? 'true' : 'false'}
+              title={!selectedService || !selectedDate || !selectedTime || !consentChecked ? 'Complete all required fields (Service, Date, Time, Consent)' : ''}
+              onClick={() => {
+                if (!selectedDate || !selectedTime || !selectedService || !consentChecked) {
+                  setConsentErrorShown(true);
+                  return;
+                }
+                formRef.current && formRef.current.requestSubmit();
+              }}
             >
               {isSubmitting ? 'Scheduling...' : 'Schedule Appointment'}
             </button>

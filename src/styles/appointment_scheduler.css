@@ -769,7 +769,7 @@
   display: block;
 }
 
-.submit-btn:hover:not(:disabled) {
+.submit-btn:hover:not(.disabled):not(:disabled) {
   background: var(--color-golden-brown);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(51, 103, 59, 0.3);
@@ -782,6 +782,20 @@
     box-shadow: none;
   }
 
+/* Disabled state when using a class (keeps button clickable for error messaging) */
+.submit-btn.disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submit-btn.disabled:hover {
+  background: #94a3b8;
+  transform: none;
+  box-shadow: none;
+}
+
 /* Success Modal */
 .success-modal-overlay {
   position: fixed;
@@ -789,13 +803,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   opacity: 0;
   animation: modalOverlayAppear 0.3s ease-out forwards;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 @keyframes modalOverlayAppear {
@@ -805,11 +821,10 @@
 }
 
 .success-modal {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
+  background: var(--color-timberwolf);
   max-width: 500px;
-  width: 90%;
+  width: 100%;
+  max-height: 80vh;
   text-align: center;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   opacity: 0;
@@ -902,14 +917,16 @@
     color: var(--color-hunter-green);
     font-weight: 600;
     margin-bottom: 1rem;
-    font-family: 'Playfair Display', serif;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    padding: 1rem;
+    border-radius: 8px;
   }
 
   .confirmation-message {
     font-size: 1.1rem;
     color: var(--color-eerie-black);
     margin-bottom: 1rem;
-    font-family: 'Playfair Display', serif;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-weight: 400;
     line-height: 1.5;
   }

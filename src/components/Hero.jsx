@@ -38,7 +38,7 @@ const Hero = () => {
   ];
 
   const mobileTickerItems = [
-    'Tax Returns', 'Payroll', 'Bookkeeping', 'Reporting', 'Advisory'
+    'Tax Returns', 'Payroll', 'Bookkeeping', 'Reporting', 'Advisory', 
   ];
 
   const smallMobileTickerItems = [

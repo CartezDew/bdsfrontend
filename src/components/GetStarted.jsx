@@ -644,7 +644,10 @@ const GetStarted = () => {
                         value={selectedService}
                         onChange={(val) => setSelectedService(val)}
                         required
-                        options={serviceOptions.map(option => ({ label: option, value: option }))}
+                        options={[
+                          { label: 'Individual Services', options: serviceOptions.individual },
+                          { label: 'Business Services', options: serviceOptions.business },
+                        ]}
                       />
                     </div>
                     
@@ -904,6 +907,19 @@ const GetStarted = () => {
                         Continue to File Upload
                       </button>
                     </div>
+
+                    {/* Go Back Button - Below Continue button */}
+                    <div className="contact-actions">
+                      <button
+                        type="button"
+                        onClick={() => setCurrentStep(1)}
+                        className="go-back-btn contact-go-back"
+                        aria-label="Go back to service selection"
+                      >
+                        <span className="back-arrow">←</span>
+                        <span className="back-text">Go Back</span>
+                      </button>
+                    </div>
                   </div>
                 )}
 
@@ -913,7 +929,7 @@ const GetStarted = () => {
                     <h4>Upload Required Documents</h4>
                     <p>Please upload the following documents to help us prepare your tax documents</p>
                     <p className="getstarted-upload-note"> <strong>To keep your project on schedule:</strong> Upload all requested documents. 
-                    If you’re missing something, upload what you have and <strong>add a note—we’ll follow up.</strong>  </p>
+                    If you're missing something, upload what you have and <strong>add a note—we'll follow up.</strong>  </p>
                     <div className="getstarted-file-upload-area">
                       <input
                         type="file"
@@ -1010,13 +1026,16 @@ const GetStarted = () => {
                       )}
                     </div>
 
-                    <div className="getstarted-form-actions">
+                    {/* Go Back Button - Below Continue button */}
+                    <div className="contact-actions">
                       <button
                         type="button"
                         onClick={() => setCurrentStep(2)}
-                        className="getstarted-back-btn"
+                        className="go-back-btn contact-go-back"
+                        aria-label="Go back to contact information"
                       >
-                        Back to Contact Info
+                        <span className="back-arrow">←</span>
+                        <span className="back-text">Go Back</span>
                       </button>
                     </div>
                   </div>
