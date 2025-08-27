@@ -119,6 +119,39 @@ export default function CustomSelect({
     }
   }, [open])
 
+  // MOBILE TOUCH SCROLLING: Ensure the dropdown menu is scrollable on touch devices
+  useEffect(() => {
+    if (!open) return
+    
+    // Add touch event listeners to the menu for better mobile scrolling
+    const handleTouchStart = (e) => {
+      // Prevent default only if we're not at the scroll boundaries
+      const target = e.target.closest('.cs-menu, .cs-portal')
+      if (!target) return
+      
+      // Allow touch scrolling within the menu
+      e.stopPropagation()
+    }
+    
+    const handleTouchMove = (e) => {
+      // Allow touch scrolling within the menu
+      const target = e.target.closest('.cs-menu, .cs-portal')
+      if (!target) return
+      
+      // Don't prevent default - allow natural touch scrolling
+      e.stopPropagation()
+    }
+    
+    // Add touch event listeners to the document for the portaled menu
+    document.addEventListener('touchstart', handleTouchStart, { passive: false })
+    document.addEventListener('touchmove', handleTouchMove, { passive: true })
+    
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart)
+      document.removeEventListener('touchmove', handleTouchMove)
+    }
+  }, [open])
+
   const onKeyDown = (e) => {
     if (!open) {
       if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
@@ -197,7 +230,12 @@ export default function CustomSelect({
           {flatOptions.map((item, idx) => {
             if (item.type === 'group') {
               return (
-                <div className="cs-group" key={`g-${idx}`}>{item.label}</div>
+                <div 
+                  className={`cs-group ${item.label === 'Business Services' ? 'business-services-group' : 'individual-services-group'}`} 
+                  key={`g-${idx}`}
+                >
+                  {item.label}
+                </div>
               )
             }
             const selected = item.value === value

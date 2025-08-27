@@ -46,6 +46,32 @@
  * - Maintained accessibility: hover states, focus indicators, visual feedback
  * - High but sane z-index (10000) for portal menu
  * - Responsive design: menu adapts to trigger width and positioning
+ * 
+ * MOBILE SCROLLING IMPLEMENTATION NOTES:
+ * =====================================
+ * WHY MOBILE SCROLLING CODE WAS ADDED:
+ * - Mobile devices don't show scrollbars by default, making it unclear that content is scrollable
+ * - Touch scrolling wasn't working properly within the dropdown menu on mobile devices
+ * - Users couldn't access all service options (like "Business Services" list) on mobile
+ * - The dropdown appeared to have no scroll functionality on touch devices
+ * 
+ * WHAT WAS IMPLEMENTED:
+ * - Custom scrollbar styling that's visible on mobile devices
+ * - Touch event handling for smooth mobile scrolling
+ * - Mobile-specific CSS rules for better touch UX
+ * - Proper overflow handling and scrollbar visibility across all devices
+ * 
+ * BENEFITS:
+ * - Users can now see and use scrollbars on mobile devices
+ * - Touch scrolling works smoothly within dropdown menus
+ * - All service options are accessible on mobile devices
+ * - Consistent scrolling experience across desktop and mobile
+ * 
+ * TECHNICAL DETAILS:
+ * - Added -webkit-overflow-scrolling: touch for iOS smooth scrolling
+ * - Custom scrollbar styling for webkit browsers (Chrome, Safari, Edge)
+ * - Mobile-specific media queries for touch-friendly sizing
+ * - Touch event handling in JavaScript for better mobile UX
  */
 
 .custom-select {
@@ -97,12 +123,69 @@
   right: 0;
   background: #fff;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
   box-shadow: 0 12px 40px rgba(2, 6, 23, 0.12);
   z-index: 40 !important;
   max-height: 280px;
   overflow: auto;
   padding: 0.25rem; /* tighter menu padding */
+  
+  /* Mobile scroll improvements */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+  scrollbar-width: thin; /* Thin scrollbar on Firefox */
+  scrollbar-color: rgba(51, 103, 59, 0.3) transparent; /* Custom scrollbar colors */
+}
+
+/* Custom scrollbar styling for webkit browsers (Chrome, Safari, Edge) */
+.custom-select .cs-menu::-webkit-scrollbar,
+.cs-portal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-select .cs-menu::-webkit-scrollbar-track,
+.cs-portal::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.custom-select .cs-menu::-webkit-scrollbar-thumb,
+.cs-portal::-webkit-scrollbar-thumb {
+  background: rgba(51, 103, 59, 0.3);
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-select .cs-menu::-webkit-scrollbar-thumb:hover,
+.cs-portal::-webkit-scrollbar-thumb:hover {
+  background: rgba(51, 103, 59, 0.5);
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .custom-select .cs-menu, .cs-portal {
+    max-height: 200px; /* Smaller height on mobile for better UX */
+    -webkit-overflow-scrolling: touch; /* Ensure smooth touch scrolling */
+    overscroll-behavior: contain; /* Prevent scroll chaining */
+  }
+  
+  /* Ensure touch scrolling works properly on mobile */
+  .custom-select .cs-menu *,
+  .cs-portal * {
+    -webkit-touch-callout: none; /* Disable callout on long press */
+    -webkit-user-select: none; /* Disable text selection */
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Improve touch targets on mobile */
+  .custom-select .cs-option, .cs-portal .cs-option {
+    min-height: 44px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.6rem 0.5rem 2.2rem;
+  }
 }
 
 /* GROUP HEADER STYLING: Applies to both traditional and portal rendering */
@@ -113,12 +196,36 @@
   padding: 0.35rem 0.6rem 0.2rem; /* reduce group block spacing */
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  background: #f0f9eb; /* Default background for group headers */
+  border-bottom: 1px solid rgba(51, 103, 59, 0.2); /* Subtle border for separation */
+  margin-bottom: 0.25rem; /* Space below group header */
+  border-radius: 0px 0px 0 0; /* Rounded top corners */
+  position: sticky; /* Keep group headers visible while scrolling */
+  top: 0; /* Stick to top of scrollable area */
+  z-index: 1; /* Ensure group headers appear above options */
+}
+
+/* DIFFERENT BACKGROUNDS FOR SERVICE GROUPS */
+/* Business Services - Red/Corporate theme */
+.custom-select .business-services-group,
+.cs-portal .business-services-group {
+  background: #f9e3e0e5; /* Light red background for Business Services */
+  border-bottom: 1px solid rgba(244, 67, 54, 0.2); /* Red border */
+  color: var(--color-eerie-black); /* Darker red text for better contrast */
+}
+
+/* Individual Services - Green/Personal theme */
+.custom-select .individual-services-group,
+.cs-portal .individual-services-group {
+  background: #f0f9eb !important; /* Light green background for Individual Services */
+  border-bottom: 1px solid rgba(51, 103, 59, 0.2); /* Green border */
+  color: var(--color-hunter-green); /* Keep original green text */
 }
 
 /* OPTION STYLING: Applies to both traditional and portal rendering */
 .custom-select .cs-option, .cs-portal .cs-option {
   padding: 0.35rem 0.6rem; /* tighter option padding */
-  border-radius: 6px;
+ 
   transition: background 0.15s ease, color 0.15s ease, transform 0.05s ease;
   color: var(--color-eerie-black);
   cursor: pointer;
@@ -141,4 +248,20 @@
   color: #fff;
 }
 
+@media (max-width: 400px) {
+.custom-select .individual-services-group,
+.cs-portal .individual-services-group {
+  font-size: .85rem;
+}
+.custom-select .business-services-group,
+.cs-portal .business-services-group {
+  font-size: .85rem;
+}
+}
 
+@media (max-width: 345px) {
+  .custom-select .cs-group, .cs-portal .cs-group {
+    position: relative; /* Keep group headers visible while scrolling */
+  }
+}
+  
