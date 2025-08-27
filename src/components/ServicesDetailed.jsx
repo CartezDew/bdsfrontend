@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/servicesDetailed.css';
 
 const ServicesDetailed = ({ serviceType = 'individual' }) => {
+  const navigate = useNavigate();
   // Service pricing text
   const individualServicePriceText = {
     1: "Starting at $175",
@@ -462,6 +464,7 @@ const businessServicePriceText = {
             <div 
               className="servicesdetailed-price-chip detailed-price-chip" 
               id={`price-chip-${detail.id}`}
+              title="Click to get started with this service"
               style={{
                 background: '#CC3F0C',
                 color: 'white',
@@ -483,6 +486,15 @@ const businessServicePriceText = {
                 e.target.style.background = '#CC3F0C';
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = '0 4px 12px rgba(204, 63, 12, 0.3)';
+              }}
+              onClick={(e) => {
+                try { sessionStorage.setItem('forceGetStartedTop', '1') } catch {}
+                if (window.location.pathname === '/get-started') {
+                  e.preventDefault();
+                  window.scrollTo(0, 0);
+                } else {
+                  navigate('/get-started');
+                }
               }}
             >
               {priceText[detail.id]}

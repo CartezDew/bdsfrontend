@@ -41,6 +41,17 @@ const GetStarted = () => {
   const fileInputRef = useRef(null);
   const schedulerRef = useRef(null);
 
+  // If navigated with a flag to force top, do an immediate jump
+  useEffect(() => {
+    try {
+      const flag = sessionStorage.getItem('forceGetStartedTop')
+      if (flag) {
+        sessionStorage.removeItem('forceGetStartedTop')
+        window.scrollTo(0, 0)
+      }
+    } catch {}
+  }, [])
+
   // Basic SEO meta for this route
   useEffect(() => {
     const prevTitle = document.title;
