@@ -224,9 +224,8 @@ export default function CustomSelect({
       aria-haspopup="listbox"
       tabIndex={0}
       onKeyDown={onKeyDown}
-      onClick={() => setOpen((v) => !v)}
     >
-      <div className={`cs-control ${value ? 'has-value' : ''}`}>
+      <div className={`cs-control ${value ? 'has-value' : ''}`} onClick={() => setOpen((v) => !v)}>
         <span className="cs-value">{value ? currentLabel : placeholder}</span>
         <span className="cs-arrow" aria-hidden="true">▾</span>
       </div>
@@ -239,6 +238,8 @@ export default function CustomSelect({
           className="cs-menu"
           role="listbox"
           style={{ position: 'absolute', left: 0, top: '100%', width: '100%', zIndex: 10000 }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
         >
           {flatOptions.map((item, idx) => {
             if (item.type === 'group') {
@@ -260,6 +261,7 @@ export default function CustomSelect({
                 aria-selected={selected}
                 className={`cs-option ${selected ? 'selected' : ''} ${active ? 'active' : ''}`}
                 onMouseEnter={() => setActiveIndex(idx)}
+                onMouseDown={(e) => e.stopPropagation()}
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
