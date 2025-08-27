@@ -39,7 +39,7 @@
   color: var(--color-sinopia);
 }
 
-.custom-select .cs-menu {
+.custom-select .cs-menu, .cs-portal {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
@@ -48,13 +48,13 @@
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   box-shadow: 0 12px 40px rgba(2, 6, 23, 0.12);
-  z-index: 40;
+  z-index: 40 !important;
   max-height: 280px;
   overflow: auto;
   padding: 0.25rem; /* tighter menu padding */
 }
 
-.custom-select .cs-group {
+.custom-select .cs-group, .cs-portal .cs-group {
   font-size: 1rem;
   font-weight: 800;
   color: var(--color-hunter-green);
@@ -63,7 +63,7 @@
   letter-spacing: 0.02em;
 }
 
-.custom-select .cs-option {
+.custom-select .cs-option, .cs-portal .cs-option {
   padding: 0.35rem 0.6rem; /* tighter option padding */
   border-radius: 6px;
   transition: background 0.15s ease, color 0.15s ease, transform 0.05s ease;
@@ -75,11 +75,13 @@
 }
 
 .custom-select .cs-option:hover,
-.custom-select .cs-option.active {
+.custom-select .cs-option.active,
+.cs-portal .cs-option:hover,
+.cs-portal .cs-option.active {
   background: #f1f5f9;
 }
 
-.custom-select .cs-option.selected {
+.custom-select .cs-option.selected, .cs-portal .cs-option.selected {
   background: var(--color-hunter-green);
   color: #fff;
 }

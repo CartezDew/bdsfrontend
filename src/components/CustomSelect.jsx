@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 /**
  * A lightweight accessible custom select that replaces the native <select>.
@@ -18,6 +19,7 @@ export default function CustomSelect({
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const rootRef = useRef(null)
+  const [menuRect, setMenuRect] = useState({ left: 0, top: 0, width: 0 })
 
   // Normalize options to a flat list with group headers
   const flatOptions = useMemo(() => {
@@ -57,6 +59,23 @@ export default function CustomSelect({
       document.removeEventListener('touchstart', onDocClick)
     }
   }, [])
+
+  // Position portal menu relative to the control
+  useEffect(() => {
+    const update = () => {
+      if (!open || !rootRef.current) return
+      const rect = rootRef.current.getBoundingClientRect()
+      setMenuRect({ left: rect.left, top: rect.bottom + 6, width: rect.width })
+    }
+    update()
+    if (!open) return
+    window.addEventListener('scroll', update, true)
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update, true)
+      window.removeEventListener('resize', update)
+    }
+  }, [open])
 
   const onKeyDown = (e) => {
     if (!open) {
@@ -124,8 +143,12 @@ export default function CustomSelect({
         <span className="cs-value">{value ? currentLabel : placeholder}</span>
         <span className="cs-arrow" aria-hidden="true">▾</span>
       </div>
-      {open && (
-        <div className="cs-menu" role="listbox">
+      {open && typeof document !== 'undefined' && createPortal(
+        <div
+          className="cs-portal cs-menu"
+          role="listbox"
+          style={{ position: 'fixed', left: menuRect.left, top: menuRect.top, width: menuRect.width, zIndex: 10000 }}
+        >
           {flatOptions.map((item, idx) => {
             if (item.type === 'group') {
               return (
@@ -151,7 +174,8 @@ export default function CustomSelect({
               </div>
             )
           })}
-        </div>
+        </div>,
+        document.body
       )}
       {required && !value && (
         <input tabIndex={-1} aria-hidden="true" required style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />

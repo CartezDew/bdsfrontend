@@ -73,6 +73,7 @@
   transition: all 0.3s ease;
   min-width: 60px;
   min-height: 60px;
+  z-index: 1 !important;
 }
 
 .footer-social-btn:hover {
@@ -101,6 +102,7 @@
 .footer-social-icon {
   width: 2rem;
   height: 2rem;
+  z-index: 1 !important;
 }
 
 /* Copyright Section */
@@ -152,6 +154,7 @@
   .footer-social-icon {
     width: 1.5rem;
     height: 1.5rem;
+
   }
 }
 
