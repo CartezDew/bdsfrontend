@@ -68,20 +68,32 @@ export default function CustomSelect({
     if (!Array.isArray(options)) return out
     options.forEach((item) => {
       if (item && Array.isArray(item.options)) {
-        out.push({ type: 'group', label: item.label || '' })
+        const groupLabel = item.label || ''
+        out.push({ type: 'group', label: groupLabel })
         item.options.forEach((opt) => {
           const label = typeof opt === 'string' ? opt : opt.label
           const val = typeof opt === 'string' ? opt : opt.value
-          out.push({ type: 'option', label, value: val })
+          out.push({ type: 'option', label, value: val, group: groupLabel })
         })
       } else {
         const label = typeof item === 'string' ? item : item.label
         const val = typeof item === 'string' ? item : item.value
-        out.push({ type: 'option', label, value: val })
+        out.push({ type: 'option', label, value: val, group: '' })
       }
     })
     return out
   }, [options])
+
+  // Identify duplicate labels across options so we can disambiguate visually
+  const duplicateLabelMap = useMemo(() => {
+    const counts = new Map()
+    flatOptions.forEach((o) => {
+      if (o.type === 'option') {
+        counts.set(o.label, (counts.get(o.label) || 0) + 1)
+      }
+    })
+    return counts
+  }, [flatOptions])
 
   const currentLabel = useMemo(() => {
     const match = flatOptions.find((o) => o.type === 'option' && o.value === value)
@@ -221,11 +233,12 @@ export default function CustomSelect({
       
       {/* PORTAL RENDER: Menu is rendered at document.body level to escape stacking contexts */}
       {/* This ensures the dropdown appears above footers, modals, and other page elements */}
-      {open && typeof document !== 'undefined' && createPortal(
+      {/* TEMPORARILY DISABLED PORTAL FOR TESTING */}
+      {open && (
         <div
-          className="cs-portal cs-menu"
+          className="cs-menu"
           role="listbox"
-          style={{ position: 'fixed', left: menuRect.left, top: menuRect.top, width: menuRect.width, zIndex: 10000 }}
+          style={{ position: 'absolute', left: 0, top: '100%', width: '100%', zIndex: 10000 }}
         >
           {flatOptions.map((item, idx) => {
             if (item.type === 'group') {
@@ -248,8 +261,11 @@ export default function CustomSelect({
                 className={`cs-option ${selected ? 'selected' : ''} ${active ? 'active' : ''}`}
                 onMouseEnter={() => setActiveIndex(idx)}
                 onClick={(e) => {
+                  e.preventDefault()
                   e.stopPropagation()
-                  onChange && onChange(item.value)
+                  if (onChange) {
+                    onChange(item.value)
+                  }
                   setOpen(false)
                 }}
               >
@@ -257,8 +273,7 @@ export default function CustomSelect({
               </div>
             )
           })}
-        </div>,
-        document.body
+        </div>
       )}
       {required && !value && (
         <input tabIndex={-1} aria-hidden="true" required style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />

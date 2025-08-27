@@ -31,8 +31,10 @@ const GetStarted = () => {
     occupation: ''
   });
   const [errors, setErrors] = useState({});
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
+  const [contactErrorsShown, setContactErrorsShown] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [step1ErrorsShown, setStep1ErrorsShown] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [showMouseIndicator, setShowMouseIndicator] = useState(true);
 
@@ -143,21 +145,21 @@ const GetStarted = () => {
   // Service options
   const serviceOptions = {
     individual: [
-      'Personal Tax Return',
-      'Bookkeeping',
-      'Compliance',
-      'Reporting',
-      'Tax Extensions',
-      'Tax Notices',
+      { label: 'Personal Tax Return', value: 'individual-tax-returns' },
+      { label: 'Bookkeeping', value: 'individual-bookkeeping' },
+      { label: 'Compliance', value: 'individual-compliance' },
+      { label: 'Reporting', value: 'individual-reporting' },
+      { label: 'Tax Extensions', value: 'individual-tax-extensions' },
+      { label: 'Tax Notices', value: 'individual-tax-notices' },
     ],
     business: [
-      'Business Tax Return',
-      'Bookkeeping',
-      'Compliance',
-      'Reporting',
-      'Tax Extensions',
-      'Advisory',
-      'Tax Notices',
+      { label: 'Business Tax Return', value: 'business-tax-returns' },
+      { label: 'Bookkeeping', value: 'business-bookkeeping' },
+      { label: 'Compliance', value: 'business-compliance' },
+      { label: 'Reporting', value: 'business-reporting' },
+      { label: 'Tax Extensions', value: 'business-tax-extensions' },
+      { label: 'Advisory', value: 'business-advisory' },
+      { label: 'Tax Notices', value: 'business-tax-notices' },
     ]
   };
 
@@ -337,6 +339,22 @@ const GetStarted = () => {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
+  };
+
+  // Check if all required contact fields are completed
+  const isContactInfoComplete = () => {
+    return (
+      contactInfo.firstName?.trim() &&
+      contactInfo.lastName?.trim() &&
+      contactInfo.einOrSsn?.trim() &&
+      contactInfo.dateOfBirth &&
+      contactInfo.phone?.trim() && contactInfo.phone !== '___-___-____' &&
+      validatePhone(contactInfo.phone) &&
+      contactInfo.email?.trim() &&
+      validateEmail(contactInfo.email) &&
+      contactInfo.occupation?.trim() &&
+      contactInfo.streetAddress?.trim()
+    );
   };
 
   // Validate contact information
@@ -675,15 +693,22 @@ const GetStarted = () => {
                     </div>
                     
                     <div className="getstarted-form-actions">
+                      {step1ErrorsShown && (!selectedService || !referralSource) && (
+                        <div className="getstarted-single-error-message">
+                          { !selectedService ? 'Please select a service' : 'Please select how you found us' }
+                        </div>
+                      )}
                       <button
                         type="button"
-                        className="getstarted-next-btn"
+                        className={`getstarted-next-btn ${(!selectedService || !referralSource) ? 'disabled' : ''}`}
                         onClick={() => {
                           if (selectedService && referralSource) {
+                            setStep1ErrorsShown(false);
                             setCurrentStep(2);
+                          } else {
+                            setStep1ErrorsShown(true);
                           }
                         }}
-                        disabled={!selectedService || !referralSource}
                       >
                         Continue to Contact Information
                       </button>
@@ -705,10 +730,10 @@ const GetStarted = () => {
                           placeholder="First Name"
                           value={contactInfo.firstName}
                           onChange={(e) => handleContactChange('firstName', e.target.value)}
-                          className={errors.firstName ? 'getstarted-error' : ''}
+                          className={errors.firstName && contactErrorsShown ? 'getstarted-error' : ''}
                           required
                         />
-                        {errors.firstName && <div className="getstarted-field-error">{errors.firstName}</div>}
+                        {errors.firstName && contactErrorsShown && <div className="getstarted-field-error">{errors.firstName}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -719,10 +744,10 @@ const GetStarted = () => {
                           placeholder="Last Name"
                           value={contactInfo.lastName}
                           onChange={(e) => handleContactChange('lastName', e.target.value)}
-                          className={errors.lastName ? 'getstarted-error' : ''}
+                          className={errors.lastName && contactErrorsShown ? 'getstarted-error' : ''}
                           required
                         />
-                        {errors.lastName && <div className="getstarted-field-error">{errors.lastName}</div>}
+                        {errors.lastName && contactErrorsShown && <div className="getstarted-field-error">{errors.lastName}</div>}
                       </div>
                     </div>
 
@@ -734,11 +759,11 @@ const GetStarted = () => {
                           id="einOrSsn"
                           value={contactInfo.einOrSsn}
                           onChange={(e) => handleContactChange('einOrSsn', e.target.value)}
-                          className={errors.einOrSsn ? 'getstarted-error' : ''}
+                          className={errors.einOrSsn && contactErrorsShown ? 'getstarted-error' : ''}
                           required
                           placeholder="must be 9 digits"
                         />
-                        {errors.einOrSsn && <div className="getstarted-field-error">{errors.einOrSsn}</div>}
+                        {errors.einOrSsn && contactErrorsShown && <div className="getstarted-field-error">{errors.einOrSsn}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -748,10 +773,10 @@ const GetStarted = () => {
                           id="dateOfBirth"
                           value={contactInfo.dateOfBirth}
                           onChange={(e) => handleContactChange('dateOfBirth', e.target.value)}
-                          className={errors.dateOfBirth ? 'getstarted-error' : ''}
+                          className={errors.dateOfBirth && contactErrorsShown ? 'getstarted-error' : ''}
                           required
                         />
-                        {errors.dateOfBirth && <div className="getstarted-field-error">{errors.dateOfBirth}</div>}
+                        {errors.dateOfBirth && contactErrorsShown && <div className="getstarted-field-error">{errors.dateOfBirth}</div>}
                       </div>
                     </div>
 
@@ -763,12 +788,12 @@ const GetStarted = () => {
                           id="phone"
                           value={contactInfo.phone}
                           onChange={(e) => handleContactChange('phone', e.target.value)}
-                          className={errors.phone ? 'getstarted-error' : ''}
+                          className={errors.phone && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="___-___-____"
                           maxLength="12"
                           required
                         />
-                        {errors.phone && <div className="getstarted-field-error">{errors.phone}</div>}
+                        {errors.phone && contactErrorsShown && <div className="getstarted-field-error">{errors.phone}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -779,10 +804,10 @@ const GetStarted = () => {
                           placeholder="Occupation"
                           value={contactInfo.occupation}
                           onChange={(e) => handleContactChange('occupation', e.target.value)}
-                          className={errors.occupation ? 'getstarted-error' : ''}
+                          className={errors.occupation && contactErrorsShown ? 'getstarted-error' : ''}
                           required
                         />
-                        {errors.occupation && <div className="getstarted-field-error">{errors.occupation}</div>}
+                        {errors.occupation && contactErrorsShown && <div className="getstarted-field-error">{errors.occupation}</div>}
                       </div>
                     </div>
 
@@ -795,10 +820,10 @@ const GetStarted = () => {
                           placeholder="Email Address"
                           value={contactInfo.email}
                           onChange={(e) => handleContactChange('email', e.target.value)}
-                          className={errors.email ? 'getstarted-error' : ''}
+                          className={errors.email && contactErrorsShown ? 'getstarted-error' : ''}
                           required
                         />
-                        {errors.email && <div className="getstarted-field-error">{errors.email}</div>}
+                        {errors.email && contactErrorsShown && <div className="getstarted-field-error">{errors.email}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
@@ -808,11 +833,11 @@ const GetStarted = () => {
                           id="streetAddress"
                           value={contactInfo.streetAddress}
                           onChange={(e) => handleContactChange('streetAddress', e.target.value)}
-                          className={errors.streetAddress ? 'getstarted-error' : ''}
+                          className={errors.streetAddress && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="Address"
                           required
                         />
-                        {errors.streetAddress && <div className="getstarted-field-error">{errors.streetAddress}</div>}
+                        {errors.streetAddress && contactErrorsShown && <div className="getstarted-field-error">{errors.streetAddress}</div>}
                       </div>
                     </div>
 
@@ -824,7 +849,7 @@ const GetStarted = () => {
                           id="city"
                           value={contactInfo.city}
                           onChange={(e) => handleContactChange('city', e.target.value)}
-                          className={errors.city ? 'getstarted-error' : ''}
+                          className={errors.city && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="City"
                         />
                       </div>
@@ -836,7 +861,7 @@ const GetStarted = () => {
                           id="state"
                           value={contactInfo.state}
                           onChange={(e) => handleContactChange('state', e.target.value)}
-                          className={errors.state ? 'getstarted-error' : ''}
+                          className={errors.state && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="State"
                         />
                       </div>
@@ -850,7 +875,7 @@ const GetStarted = () => {
                           placeholder="Country"
                           value={contactInfo.country}
                           onChange={(val) => handleContactChange('country', val)}
-                          className={errors.country ? 'getstarted-error' : ''}
+                          className={errors.country && contactErrorsShown ? 'getstarted-error' : ''}
                           options={[
                             { label: 'United States', value: 'US' },
                             { label: 'Canada', value: 'CA' },
@@ -875,14 +900,14 @@ const GetStarted = () => {
                           id="postalCode"
                           value={contactInfo.postalCode}
                           onChange={(e) => handleContactChange('postalCode', e.target.value)}
-                          className={errors.postalCode ? 'getstarted-error' : ''}
+                          className={errors.postalCode && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="Postal Code"
                         />
                       </div>
                     </div>
 
                     <div className="getstarted-form-actions">
-                      {Object.keys(errors).length > 0 && (
+                      {contactErrorsShown && Object.keys(errors).length > 0 && (
                         <div className="getstarted-single-error-message">
                           {(() => {
                             const firstError = Object.entries(errors)[0];
@@ -899,20 +924,30 @@ const GetStarted = () => {
                         onClick={() => {
                           const isValid = validateContactInfo();
                           if (isValid) {
+                            setContactErrorsShown(false); // Reset error display
                             setCurrentStep(3);
+                          } else {
+                            setContactErrorsShown(true);
                           }
                         }}
-                        className="getstarted-next-btn"
+                        className={`getstarted-next-btn ${!isContactInfoComplete() ? 'disabled' : ''}`}
+                        disabled={false}
+                        aria-disabled={!isContactInfoComplete() ? 'true' : 'false'}
+                        title={!isContactInfoComplete() ? 'Complete all required fields' : ''}
                       >
                         Continue to File Upload
                       </button>
+                      
                     </div>
 
                     {/* Go Back Button - Below Continue button */}
                     <div className="contact-actions">
                       <button
                         type="button"
-                        onClick={() => setCurrentStep(1)}
+                        onClick={() => {
+                          setContactErrorsShown(false); // Reset error display
+                          setCurrentStep(1);
+                        }}
                         className="go-back-btn contact-go-back"
                         aria-label="Go back to service selection"
                       >

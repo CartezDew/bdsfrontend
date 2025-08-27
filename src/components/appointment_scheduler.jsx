@@ -61,22 +61,22 @@ const AppointmentScheduler = () => {
   // Service options
   const serviceOptions = {
     individual: [
-      'Personal Tax Return',
-      'Bookkeeping',
-      'Compliance',
-      'Reporting',
-      'Tax Extensions',
-      'Tax Notices',
+      { label: 'Personal Tax Return', value: 'individual-tax-returns' },
+      { label: 'Bookkeeping', value: 'individual-bookkeeping' },
+      { label: 'Compliance', value: 'individual-compliance' },
+      { label: 'Reporting', value: 'individual-reporting' },
+      { label: 'Tax Extensions', value: 'individual-tax-extensions' },
+      { label: 'Tax Notices', value: 'individual-tax-notices' },
     ],
     business: [
-      'Business Tax Return',
-      'Payroll Services',
-      'Bookkeeping',
-      'Compliance',
-      'Reporting',
-      'Tax Extensions',
-      'Advisory',
-      'Tax Notices',
+      { label: 'Business Tax Return', value: 'business-tax-returns' },
+      { label: 'Payroll Services', value: 'business-payroll' },
+      { label: 'Bookkeeping', value: 'business-bookkeeping' },
+      { label: 'Compliance', value: 'business-compliance' },
+      { label: 'Reporting', value: 'business-reporting' },
+      { label: 'Tax Extensions', value: 'business-tax-extensions' },
+      { label: 'Advisory', value: 'business-advisory' },
+      { label: 'Tax Notices', value: 'business-tax-notices' },
     ]
   };
 

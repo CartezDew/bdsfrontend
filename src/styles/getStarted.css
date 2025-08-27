@@ -312,10 +312,11 @@
   transform: translateY(-2px);
 }
 
-.getstarted-next-btn:disabled {
+.getstarted-next-btn.disabled {
   background: #94a3b8;
   cursor: not-allowed;
   transform: none;
+  opacity: 0.9;
 }
 
 .getstarted-back-btn {
@@ -335,6 +336,31 @@
   color: #dc2626;
   text-align: center;
   font-weight: 500;
+}
+
+.getstarted-field-requirements {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.getstarted-field-requirements p {
+  margin: 0 0 0.5rem 0;
+  color: #475569;
+  font-weight: 500;
+}
+
+.getstarted-field-requirements ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #64748b;
+}
+
+.getstarted-field-requirements li {
+  margin-bottom: 0.25rem;
 }
 
 /* Calendar Styles */
