@@ -241,7 +241,7 @@ const businessServicePriceText = {
     },
     {
       id: 8,
-      icon: "🛡️",
+      icon: "📬",
       title: "Tax Notices",
       serviceId: "biz-notice-resolution",
       longDescription:
@@ -412,7 +412,7 @@ const businessServicePriceText = {
     },
     {
       id: 6,
-      icon: "🛡️",
+      icon: "📬",
       title: "Tax Notices",
       serviceId: "individual-notice-resolution",
       longDescription:

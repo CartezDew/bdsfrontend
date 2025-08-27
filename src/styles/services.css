@@ -393,7 +393,7 @@
     font-size: clamp(1rem, 1.5vw, 1.2rem);
   }
   .service-type-note {
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-size: clamp(.9rem, 1.5vw, 1.2rem);
   }
   .service-type-toggle {
     font-size: clamp(1rem, 1.5vw, 1.2rem);
@@ -419,7 +419,7 @@
     padding-right: .5rem;
   }
   .service-type-note {
-    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   }
   .service-type-toggle {
     font-size: clamp(0.8rem, 1.5vw, 1rem);

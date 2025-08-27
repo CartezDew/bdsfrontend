@@ -108,7 +108,28 @@
 }
 
 /* Mobile layout: move price chip below title and scale text */
+
+@media (max-width: 680px) {
+  .detailed-price-chip {
+    padding: 0.5rem .7rem !important;
+    font-size: clamp(0.75rem, 2.2vw, 0.95rem) !important;
+  }
+}
+
+
 @media (max-width: 600px) {
+
+  @media (max-width: 600px) {
+
+    .detailed-price-chip {
+      font-size: clamp(0.75rem, 2.2vw, 0.95rem) !important; 
+    }
+
+    .servicesdetailed-service-title {
+      font-size: clamp(1.35rem, 4.5vw, 1.9rem);
+      line-height: 1.2;
+    }
+  }
   .servicesdetailed-section {
     padding: 2.5rem 1rem;
   }

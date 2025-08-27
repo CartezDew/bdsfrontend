@@ -65,7 +65,7 @@ const businessServicesData = [
   },
   {
     id: 8,
-    icon: "🛡️",
+    icon: "📬",
     title: "Tax Notices",
     description: "Tax letter? We review, respond, and resolve.",
     serviceId: "biz-notice-resolution"

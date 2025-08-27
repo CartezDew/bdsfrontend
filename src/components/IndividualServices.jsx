@@ -49,7 +49,7 @@ const individualServicesData = [
   },
   {
     id: 6,
-    icon: "🛡️",
+    icon: "📬",
     title: "Tax Notices",
     description: "Tax letter? We review, respond, and resolve.",
     serviceId: "individual-notice-resolution"
