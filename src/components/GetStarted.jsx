@@ -602,7 +602,7 @@ const GetStarted = () => {
               </div>
               <div className="getstarted-still-unsure-content-box">
                 <h3>Still unsure?</h3>
-                <p>Schedule a free consultation to discuss your specific needs.</p>
+                <p>Schedule a consultation to discuss your specific needs.</p>
               </div>
               <div className="getstarted-still-unsure-button-box">
                 <button 

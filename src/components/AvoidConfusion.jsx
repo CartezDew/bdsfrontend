@@ -60,21 +60,21 @@ const AvoidConfusion = () => {
                 Get Started
               </Link>
               <p className="cta-alternative">
-                Prefer talking first? <Link to="/get-started">Schedule an Appointment</Link>.
+                Prefer talking first? <Link to="/get-started">Schedule Consultation</Link>.
               </p>
             </div>
           </div>
           
           <div className={`cta-option ${animationsTriggered ? 'cta-option-animated' : ''}`}>
             <div className={`cta-content ${animationsTriggered ? 'cta-content-animated' : ''}`}>
-              <h3>Schedule an Appointment</h3>
+              <h3>Schedule a Consultation</h3>
               <p className="cta-description">Best for complex questions or planning</p>
               <ul className="cta-benefits">
                 <li>New clients or special situations</li>
                 <li>Prefer a live walkthrough</li>
               </ul>
               <Link to="/get-started" className="cta-button-secondary-avoid-confusion">
-                Schedule Appointment
+                Schedule Consultation
               </Link>
               <p className="cta-alternative">
                 Ready to skip the calendar? <Link to="/get-started">Get Started</Link>.

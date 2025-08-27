@@ -2,7 +2,7 @@
 /* Get Started Page Styles */
 .get-started-page {
   background: var(--color-hunter-green);
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
 }
 
 .get-started-container {
@@ -1219,13 +1219,13 @@
 
 @media (max-width: 570px) {
   .getstarted-header h3 {
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-size: clamp(1.4rem, 4.5vw, 1.8rem);
   }
 }
 
 @media (max-width: 505px) {
   .get-started-header h1{
-    font-size: clamp(1.6rem, 5vw, 2rem);
+    font-size: clamp(1.5rem, 5.1vw, 2rem);
     padding: 0rem .5rem 0rem .5rem;
   }
 
@@ -1240,7 +1240,7 @@
 
 @media (max-width: 470px) {
   .get-started-header h1{
-    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-size: clamp(1.5rem, 5vw, 2rem);
     padding: 0rem .5rem 0rem .5rem;
   }
   /* Make Still-Unsure bento content smaller */
@@ -1253,10 +1253,10 @@
     padding: 0.75rem;
   }
   .getstarted-still-unsure-content-box h3 {
-    font-size: clamp(1.1rem, 4.2vw, 1.25rem);
+    font-size: clamp(1.2rem, 4.2vw, 1.25rem);
   }
   .getstarted-still-unsure-content-box p {
-    font-size: clamp(0.85rem, 3.6vw, 0.95rem);
+    font-size: clamp(0.9rem, 3.6vw, 0.95rem);
     line-height: 1.5;
   }
   .getstarted-still-unsure-button-box {
