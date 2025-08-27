@@ -834,6 +834,11 @@
   padding: 1rem;
   cursor: pointer;
   max-width: 100%;
+  z-index: 1000;
+  opacity: 0;
+  animation: modalOverlayAppear 0.3s ease-out forwards;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .getstarted-success-modal {
