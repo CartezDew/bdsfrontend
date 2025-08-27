@@ -23,7 +23,7 @@ const PageTitle = () => {
     }
 
     const routeTitle = getRouteTitle(location.pathname)
-    document.title = `BDS Talent Group | ${routeTitle}`
+    document.title = ` Talent Group | ${routeTitle}`
   }, [location.pathname])
 
   return null
