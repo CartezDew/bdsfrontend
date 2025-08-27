@@ -84,7 +84,7 @@
 
 .detailed-price-chip {
   background: var(--color-sinopia);
-  color: white;
+  color: var(--color-timberwolf) !important;
   border: 2px solid var(--color-sinopia);
   padding: 0.75rem 1.25rem;
   border-radius: 2rem;
@@ -113,6 +113,8 @@
   .detailed-price-chip {
     padding: 0.5rem .7rem !important;
     font-size: clamp(0.75rem, 2.2vw, 0.95rem) !important;
+   color: var(--color-timberwolf) !important;
+  
   }
 }
 
