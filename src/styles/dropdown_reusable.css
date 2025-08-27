@@ -77,6 +77,7 @@
 .custom-select {
   position: relative;
   user-select: none;
+  z-index: 10000;
 }
 
 .custom-select .cs-control {
@@ -163,9 +164,10 @@
 /* Mobile-specific improvements */
 @media (max-width: 768px) {
   .custom-select .cs-menu, .cs-portal {
-    max-height: 200px; /* Smaller height on mobile for better UX */
+    max-height: 300px; /* Smaller height on mobile for better UX */
     -webkit-overflow-scrolling: touch; /* Ensure smooth touch scrolling */
     overscroll-behavior: contain; /* Prevent scroll chaining */
+    z-index: 10000;
   }
   
   /* Ensure touch scrolling works properly on mobile */
@@ -181,10 +183,10 @@
   
   /* Improve touch targets on mobile */
   .custom-select .cs-option, .cs-portal .cs-option {
-    min-height: 44px; /* Minimum touch target size */
+  
     display: flex;
     align-items: center;
-    padding: 0.5rem 0.6rem 0.5rem 2.2rem;
+   
   }
 }
 

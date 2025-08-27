@@ -46,7 +46,6 @@ const Hero = () => {
   ];
 
   const getTickerItemsForWidth = (width) => {
-    console.log('Ticker width check:', width, '<= 760?', width <= 760);
     if (width <= 505) return smallMobileTickerItems;
     if (width <= 760) return mobileTickerItems;
     return tickerItems;
@@ -58,7 +57,6 @@ const Hero = () => {
   useEffect(() => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
-      console.log('Resize event fired, width:', currentWidth);
       setCurrentTickerItems(getTickerItemsForWidth(currentWidth));
       
       // Update mobile state for logo behavior
@@ -86,13 +84,8 @@ const Hero = () => {
       // On mobile, toggle the mobile navbar dropdown
       // If already open, close it; if closed, open it
       try {
-        console.log('[Hero] logo clicked → dispatch toggleMobileMenu');
-        // Dispatch toggle event to open/close mobile navbar
-        const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-logo', ts: Date.now() } });
-        window.dispatchEvent(evtWin);
-      } catch (err) {
-        console.error('[Hero] error dispatching toggleMobileMenu', err);
-      }
+        window.dispatchEvent(new CustomEvent('toggleMobileMenu', { detail: { source: 'hero-logo', ts: Date.now() } }));
+      } catch {}
     } else {
       // On desktop, use the original navigation behavior
       if (location.pathname === '/') {
@@ -245,15 +238,8 @@ const Hero = () => {
             </div>
             <button ref={heroHamburgerRef} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''} ${hideHeroToggle ? 'offstage' : ''}`} onClick={() => {
                try {
-                 console.log('[Hero] hamburger clicked → dispatch toggleMobileMenu');
-                 // Animate hamburger → X
-                 setIsHeroHamburgerOpenAnim(true);
-                 // Dispatch immediately so navbar opens without delay
-                const evtWin = new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } });
-                window.dispatchEvent(evtWin);
-               } catch (err) {
-                 console.error('[Hero] error dispatching toggleMobileMenu', err);
-               }
+                 window.dispatchEvent(new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } }));
+               } catch {}
             }}>
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>

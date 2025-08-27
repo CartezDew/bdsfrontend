@@ -62,77 +62,61 @@ const NavbarMobile = ({ customConfig }) => {
 
     // Mount / unmount logs
     useEffect(() => {
-        try { console.log('[NavbarMobile] mounted at', Date.now()) } catch {}
-        return () => { try { console.log('[NavbarMobile] unmounted at', Date.now()) } catch {} }
+        return () => {}
     }, [])
 
     // Listen for global toggleMobileMenu events (from Hero/App)
     useEffect(() => {
         const handleExternalToggle = (e) => {
-            try { console.log('[NavbarMobile] toggle received', e && e.type, e && e.detail) } catch {}
             if (isOpenRef.current) {
-                // Already open; ignore redundant toggles
-                return
+                setIsOpen(false)
+            } else {
+                setIsOpen(true)
             }
-            setIsOpen(true)
         }
-        try { console.log('[NavbarMobile] mounting, attaching toggle listeners') } catch {}
         window.addEventListener('toggleMobileMenu', handleExternalToggle)
-        window.addEventListener('toggleMobileMenuFromHero', handleExternalToggle)
         return () => {
             window.removeEventListener('toggleMobileMenu', handleExternalToggle)
-            window.removeEventListener('toggleMobileMenuFromHero', handleExternalToggle)
         }
     }, [])
 
     // Observe external class changes that might hide things
     useEffect(() => {
-        const bodyObserver = new MutationObserver(() => {
-            try { console.log('[NavbarMobile] body.classList =', document.body.className) } catch {}
-        })
+        const bodyObserver = new MutationObserver(() => {})
         bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] })
-        const appEl = document.querySelector('.App')
+
         let appObserver
+        const appEl = document.querySelector('.App')
         if (appEl) {
-            appObserver = new MutationObserver(() => {
-                try { console.log('[NavbarMobile] .App classList =', appEl.className) } catch {}
-            })
+            appObserver = new MutationObserver(() => {})
             appObserver.observe(appEl, { attributes: true, attributeFilter: ['class'] })
         }
-        return () => { bodyObserver.disconnect(); if (appObserver) appObserver.disconnect() }
+
+        return () => {
+            bodyObserver.disconnect()
+            if (appObserver) appObserver.disconnect()
+        }
     }, [])
 
     // Publish state changes + duration tracking
     useEffect(() => {
-        isOpenRef.current = isOpen
-        try { window.dispatchEvent(new CustomEvent('mobileMenuState', { detail: { open: isOpen, source: 'navbar-mobile', ts: Date.now() } })) } catch {}
+        const now = Date.now()
         if (isOpen) {
-            openAtRef.current = performance.now()
+            openAtRef.current = now
             document.body.classList.add('mobile-menu-opened')
-            try { console.log('[NavbarMobile] open → true at', openAtRef.current) } catch {}
         } else {
-            const dt = openAtRef.current ? (performance.now() - openAtRef.current).toFixed(1) : 'n/a'
-            // Defer body class removal to exit-complete for smooth slide-up
-            try { console.log('[NavbarMobile] open → false, duration ms =', dt) } catch {}
+            const dt = now - (openAtRef.current || now)
         }
     }, [isOpen])
 
     const onHashClick = (hash) => {
         const targetId = hash.substring(1)
-        if (location.pathname !== '/') { navigate(`/#${targetId}`); setIsOpen(false); try { console.log('[NavbarMobile] closing reason: nav hash link') } catch {}; return }
+        if (location.pathname !== '/') { navigate(`/#${targetId}`); setIsOpen(false); return }
         const targetElement = document.getElementById(targetId)
-        if (targetElement) {
-            // Removed navbar height calculation - not needed for mobile navbar
-            // const navbarEl = document.querySelector('.navbar')
-            // const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
-            const rectTop = targetElement.getBoundingClientRect().top + window.scrollY
-            const styles = window.getComputedStyle(targetElement)
-            const marginTop = parseFloat(styles.marginTop) || 0
-            const borderTop = parseFloat(styles.borderTopWidth) || 0
-            const scrollPosition = rectTop - marginTop - borderTop
-            window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
-        }
-        try { console.log('[NavbarMobile] closing reason: nav hash link (same page)') } catch {}
+        if (!targetElement) return
+        const rect = targetElement.getBoundingClientRect()
+        const pos = window.scrollY + rect.top - 64
+        window.scrollTo({ top: pos, behavior: 'smooth' })
         setIsOpen(false)
     }
 
@@ -167,7 +151,6 @@ const NavbarMobile = ({ customConfig }) => {
                     </button>
                 </div>
                 <button className={`mobile-nav-toggle ${isOpen ? 'open' : ''}`} onClick={() => { 
-                    try { console.log('[NavbarMobile] toggle button clicked') } catch {}
                     setIsOpen(v => {
                         // Always allow close when open
                         if (isOpenRef.current && v) return false
@@ -183,7 +166,6 @@ const NavbarMobile = ({ customConfig }) => {
                         to="/get-started" 
                         className="get-started-btn" 
                         onClick={(e) => { 
-                            try { console.log('[NavbarMobile] closing reason: Get Started click') } catch {}; 
                             if (location.pathname === '/get-started') {
                                 e.preventDefault()
                                 window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -208,9 +190,8 @@ const NavbarMobile = ({ customConfig }) => {
                         initial={{ y: '-110%', opacity: 0 }}
                         animate={{ y: 0, opacity: 1, transition: { type: 'spring', stiffness: 180, damping: 22, mass: 0.8 } }}
                         exit={{ y: '-100%', opacity: 0.98, transition: { duration: 0.38, ease: [0.4, 0, 0.2, 1] } }}
-                        onAnimationStart={() => { try { console.log('[NavbarMobile] motion animation start. isOpen=', isOpen) } catch {} }}
+                        onAnimationStart={() => {}}
                         onAnimationComplete={() => { 
-                          try { console.log('[NavbarMobile] motion animation complete. isOpen=', isOpen) } catch {} 
                           if (isOpen) { try { window.dispatchEvent(new CustomEvent('mobileMenuOpenAnimationEnd', { detail: { open: true, ts: Date.now() } })) } catch {} }
                         }}
                         style={{ left: 0, right: 'auto' }}
@@ -229,14 +210,14 @@ const NavbarMobile = ({ customConfig }) => {
                                     )
                                 }
                                 return (
-                                    <Link key={item.id} to={item.path} className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: route link') } catch {}; setIsOpen(false) }}>
+                                    <Link key={item.id} to={item.path} className="mobile-nav-item" onClick={() => { setIsOpen(false) }}>
                                         {icon}
                                         {item.name}
                                     </Link>
                                 )
                             })}
                             {/* Sign In */}
-                            <Link to="/sign-in" className="mobile-nav-item" onClick={() => { try { console.log('[NavbarMobile] closing reason: Sign In link') } catch {}; setIsOpen(false) }}>
+                            <Link to="/sign-in" className="mobile-nav-item" onClick={() => { setIsOpen(false) }}>
                                 {getIconForMenuItem('Sign In')}
                                 Sign In
                             </Link>
@@ -245,7 +226,6 @@ const NavbarMobile = ({ customConfig }) => {
                                 to="/get-started" 
                                 className="mobile-nav-item cta-button-primary" 
                                 onClick={(e) => { 
-                                    try { console.log('[NavbarMobile] closing reason: Schedule Consultation CTA') } catch {}; 
                                     if (location.pathname === '/get-started') {
                                         e.preventDefault()
                                         window.scrollTo({ top: 0, behavior: 'smooth' })

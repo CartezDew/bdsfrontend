@@ -390,28 +390,20 @@ const GetStarted = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    console.log('Form submission started!');
     e.preventDefault();
     
-    console.log('Validating contact info...');
     if (!validateContactInfo()) {
-      console.log('Contact info validation failed');
       return;
     }
 
-    console.log('Checking consent...');
     if (!consentChecked) {
-      console.log('Consent not checked');
       return;
     }
 
-    console.log('Setting submitting state...');
     setIsSubmitting(true);
     
-    console.log('Starting simulated API call...');
     // Simulate API call
     setTimeout(() => {
-      console.log('API call completed, showing success modal');
       setIsSubmitting(false);
       setShowSuccessModal(true);
       // Reset form
@@ -617,8 +609,6 @@ const GetStarted = () => {
                   type="button" 
                   className="getstarted-consultation-btn"
                   onClick={() => {
-                    // TODO: Implement consultation scheduling logic
-                    console.log('Schedule consultation clicked');
                   }}
                 >
                   Schedule Consultation
@@ -1087,7 +1077,6 @@ const GetStarted = () => {
                       type="submit"
                       className="getstarted-submit-btn"
                       disabled={isSubmitting || !selectedService}
-                      onClick={() => console.log('Submit button clicked!')}
                     >
                       {isSubmitting ? 'Submitting...' : 'Submit Documents'}
                     </button>

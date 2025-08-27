@@ -257,16 +257,12 @@ function App() {
   // Bridge hero hamburger → Navbar when navbar is hidden
   useEffect(() => {
     const handleHeroToggle = (e) => {
-      console.log('[App] toggleMobileMenu intercepted; showNavbar?', navbarStateRef.current, 'detail:', e && e.detail)
       if (e?.detail?.rebroadcast) return; // ignore our own rebroadcasts
-      if (!navbarStateRef.current) {
-        // Force mount and mark menu as opening to prevent auto-hide during scroll
-        setShowNavbar(true)
-        setMobileMenuOpen(true)
+      // Re-broadcast to Navbar only if Navbar is mounted and visible
+      if (navbarStateRef.current) {
         setTimeout(() => {
-          console.log('[App] rebroadcasting toggleMobileMenu to Navbar')
           window.dispatchEvent(new CustomEvent('toggleMobileMenu', { detail: { source: 'app-rebroadcast', rebroadcast: true, ts: Date.now() } }));
-        }, 120);
+        }, 0)
       }
     };
     window.addEventListener('toggleMobileMenu', handleHeroToggle);

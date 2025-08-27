@@ -288,22 +288,16 @@ const AppointmentScheduler = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    console.log('Form submission started!');
     e.preventDefault();
     
-    console.log('Validating contact info...');
     if (!validateContactInfo()) {
-      console.log('Contact info validation failed');
       return;
     }
 
-    console.log('Setting submitting state...');
     setIsSubmitting(true);
     
-    console.log('Starting simulated API call...');
     // Simulate API call
     setTimeout(() => {
-      console.log('API call completed, showing success modal');
       setIsSubmitting(false);
       setShowSuccessModal(true);
       // Reset form
@@ -319,12 +313,9 @@ const AppointmentScheduler = () => {
 
   // Handle disabled button click
   const handleDisabledButtonClick = () => {
-    console.log('Disabled button clicked!');
-    console.log('showDisabledButtonNote will be set to true');
     setShowDisabledButtonNote(true);
     // Hide the note after 3 seconds
     setTimeout(() => {
-      console.log('Hiding note after timeout');
       setShowDisabledButtonNote(false);
     }, 3000);
   };
@@ -483,11 +474,6 @@ const AppointmentScheduler = () => {
                 type="button"
                 className={`next-btn ${(!selectedService || !referralSource) ? 'disabled' : ''}`}
                 onClick={() => {
-                  console.log('Button clicked!');
-                  console.log('selectedService:', selectedService);
-                  console.log('referralSource:', referralSource);
-                  console.log('showDisabledButtonNote:', showDisabledButtonNote);
-                  
                   if (selectedService && referralSource) {
                     setCurrentStep(2);
                   } else {
@@ -679,12 +665,9 @@ const AppointmentScheduler = () => {
               <button
                 type="button"
                 onClick={() => {
-                  console.log('Button clicked!');
-                  console.log('Current contact info:', contactInfo);
                   setContactErrorShown(true);
                   const firstErr = getFirstContactError();
                   const isValid = !firstErr;
-                  console.log('Validation result:', isValid);
                   if (isValid) {
                     setErrors({});
                     setContactErrorShown(false);

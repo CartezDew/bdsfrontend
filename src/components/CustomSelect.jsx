@@ -103,7 +103,11 @@ export default function CustomSelect({
   useEffect(() => {
     const onDocClick = (e) => {
       if (!rootRef.current) return
-      if (!rootRef.current.contains(e.target)) setOpen(false)
+      // If click is inside the select control or inside the menu/portal, don't close
+      const isInsideRoot = rootRef.current.contains(e.target)
+      const isInsideMenu = !!(e.target && e.target.closest && e.target.closest('.cs-menu, .cs-portal'))
+      if (isInsideRoot || isInsideMenu) return
+      setOpen(false)
     }
     document.addEventListener('mousedown', onDocClick)
     document.addEventListener('touchstart', onDocClick)
@@ -232,12 +236,11 @@ export default function CustomSelect({
       
       {/* PORTAL RENDER: Menu is rendered at document.body level to escape stacking contexts */}
       {/* This ensures the dropdown appears above footers, modals, and other page elements */}
-      {/* TEMPORARILY DISABLED PORTAL FOR TESTING */}
-      {open && (
+      {open && typeof document !== 'undefined' && createPortal(
         <div
-          className="cs-menu"
+          className="cs-portal cs-menu"
           role="listbox"
-          style={{ position: 'absolute', left: 0, top: '100%', width: '100%', zIndex: 10000 }}
+          style={{ position: 'fixed', left: menuRect.left, top: menuRect.top, width: menuRect.width, zIndex: 10000 }}
           onMouseDown={(e) => e.stopPropagation()}
           onTouchStart={(e) => e.stopPropagation()}
         >
@@ -275,7 +278,8 @@ export default function CustomSelect({
               </div>
             )
           })}
-        </div>
+        </div>,
+        document.body
       )}
       {required && !value && (
         <input tabIndex={-1} aria-hidden="true" required style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
