@@ -1,5 +1,53 @@
 /* Reusable dropdown styles for CustomSelect */
 
+/**
+ * PORTAL STYLING IMPLEMENTATION NOTES:
+ * ====================================
+ * This CSS file supports both traditional dropdown positioning and portal-based rendering.
+ * 
+ * WHY PORTAL STYLING WAS ADDED:
+ * - The dropdown menu was being clipped behind footers and other elements due to
+ *   stacking context issues caused by parent containers with transforms, overflow:hidden,
+ *   or z-index conflicts
+ * - Traditional z-index solutions failed because the dropdown was trapped within
+ *   transformed parent containers that created isolated stacking contexts
+ * - Portal approach renders the menu at document.body level, escaping all stacking contexts
+ * 
+ * IMPLEMENTATION APPROACH:
+ * - Added .cs-portal class selectors alongside existing .custom-select selectors
+ * - This ensures the same visual styling applies whether the menu is rendered:
+ *   a) Traditionally (as a child of the select component)
+ *   b) Via portal (at document.body level)
+ * - All styles (colors, spacing, hover effects, etc.) work identically in both modes
+ * 
+ * CORE BENEFITS OF THIS APPROACH:
+ * - Solves stacking context issues: menu always appears above footers, modals, and other elements
+ * - Predictable layering: single global z-index control instead of juggling many ancestors
+ * - Reusable across pages: consistent behavior regardless of surrounding layout
+ * - Maintains visual consistency: same styling whether traditional or portaled
+ * 
+ * CORE DRAWBACKS ADDRESSED:
+ * - Styling scope: styles that relied on ancestor selectors now work via .cs-portal class
+ * - Positioning complexity: handled in JavaScript with scroll/resize event listeners
+ * - Edge cases: zoom changes, mobile address bar, container scrolling handled in component
+ * 
+ * PERFORMANCE IMPACT:
+ * - Negligible: CSS selectors are lightweight, no additional rendering cost
+ * - No network cost or page-load penalty
+ * - Styles are cached and reused efficiently
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Works on all modern evergreen browsers
+ * - CSS selectors are widely supported
+ * - No vendor prefixes or polyfills required
+ * 
+ * BEST PRACTICES IMPLEMENTED:
+ * - Global CSS classes (.cs-portal) for consistent styling
+ * - Maintained accessibility: hover states, focus indicators, visual feedback
+ * - High but sane z-index (10000) for portal menu
+ * - Responsive design: menu adapts to trigger width and positioning
+ */
+
 .custom-select {
   position: relative;
   user-select: none;
@@ -39,6 +87,9 @@
   color: var(--color-sinopia);
 }
 
+/* DROPDOWN MENU STYLING: Supports both traditional and portal rendering */
+/* Traditional: .custom-select .cs-menu (positioned relative to trigger) */
+/* Portal: .cs-portal (positioned at document.body level with fixed positioning) */
 .custom-select .cs-menu, .cs-portal {
   position: absolute;
   top: calc(100% + 6px);
@@ -54,6 +105,7 @@
   padding: 0.25rem; /* tighter menu padding */
 }
 
+/* GROUP HEADER STYLING: Applies to both traditional and portal rendering */
 .custom-select .cs-group, .cs-portal .cs-group {
   font-size: 1rem;
   font-weight: 800;
@@ -63,6 +115,7 @@
   letter-spacing: 0.02em;
 }
 
+/* OPTION STYLING: Applies to both traditional and portal rendering */
 .custom-select .cs-option, .cs-portal .cs-option {
   padding: 0.35rem 0.6rem; /* tighter option padding */
   border-radius: 6px;
@@ -74,6 +127,7 @@
   line-height: 1.25; /* reduce line height to tighten */
 }
 
+/* HOVER AND ACTIVE STATES: Applies to both traditional and portal rendering */
 .custom-select .cs-option:hover,
 .custom-select .cs-option.active,
 .cs-portal .cs-option:hover,
@@ -81,6 +135,7 @@
   background: #f1f5f9;
 }
 
+/* SELECTED STATE: Applies to both traditional and portal rendering */
 .custom-select .cs-option.selected, .cs-portal .cs-option.selected {
   background: var(--color-hunter-green);
   color: #fff;

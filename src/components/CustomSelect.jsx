@@ -6,6 +6,47 @@ import { createPortal } from 'react-dom'
  * - Supports flat options or grouped options
  * - Keyboard navigation (ArrowUp/Down, Enter, Escape, Home/End)
  * - Click outside to close
+ * 
+ * PORTAL IMPLEMENTATION NOTES:
+ * ===========================
+ * This component uses React portals to render the dropdown menu at document.body level.
+ * 
+ * WHY THIS WAS DONE:
+ * - The dropdown menu was being clipped behind footers and other elements due to
+ *   stacking context issues caused by parent containers with transforms, overflow:hidden,
+ *   or z-index conflicts
+ * - Traditional z-index solutions failed because the dropdown was trapped within
+ *   transformed parent containers that created isolated stacking contexts
+ * - The portal approach ensures the menu always appears above all other page content
+ * 
+ * CORE BENEFITS:
+ * - Solves stacking context issues: escapes parent overflow/transform/z-index conflicts
+ * - Predictable layering: single global z-index control instead of juggling many ancestors
+ * - Reusable across pages: consistent behavior regardless of surrounding layout
+ * - Reliable positioning: menu always appears above footers, modals, and other elements
+ * 
+ * CORE DRAWBACKS:
+ * - Positioning complexity: must manually measure and reposition on scroll/resize
+ * - Edge cases: zoom changes, mobile address bar, container scrolling can affect positioning
+ * - Styling scope: styles that relied on ancestor selectors won't apply (addressed with .cs-portal class)
+ * - Testing complexity: menu is no longer a child in the same DOM subtree
+ * 
+ * PERFORMANCE IMPACT:
+ * - Negligible: menu only mounts when open, minimal scroll/resize listeners
+ * - No network cost or page-load penalty
+ * - Consider throttling scroll/resize callbacks on heavy scroll pages
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Works on all modern evergreen browsers (Chrome, Edge, Firefox, Safari, iOS/Android)
+ * - React portals are widely supported
+ * - SSR-safe with typeof document !== 'undefined' guard
+ * 
+ * BEST PRACTICES IMPLEMENTED:
+ * - useLayoutEffect for initial positioning to avoid flicker
+ * - Scroll and resize event listeners with cleanup
+ * - Global CSS classes (.cs-portal) for consistent styling
+ * - Maintained accessibility: role="listbox", aria-selected, keyboard navigation
+ * - High but sane z-index (10000) for portal menu
  */
 export default function CustomSelect({
   id,
@@ -60,7 +101,8 @@ export default function CustomSelect({
     }
   }, [])
 
-  // Position portal menu relative to the control
+  // PORTAL POSITIONING: Measure and position the menu relative to the trigger control
+  // This ensures the portaled menu appears in the correct location and updates on scroll/resize
   useEffect(() => {
     const update = () => {
       if (!open || !rootRef.current) return
@@ -143,6 +185,9 @@ export default function CustomSelect({
         <span className="cs-value">{value ? currentLabel : placeholder}</span>
         <span className="cs-arrow" aria-hidden="true">▾</span>
       </div>
+      
+      {/* PORTAL RENDER: Menu is rendered at document.body level to escape stacking contexts */}
+      {/* This ensures the dropdown appears above footers, modals, and other page elements */}
       {open && typeof document !== 'undefined' && createPortal(
         <div
           className="cs-portal cs-menu"
