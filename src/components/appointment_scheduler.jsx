@@ -6,13 +6,14 @@ const AppointmentScheduler = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedService, setSelectedService] = useState('');
+  const [consultationDuration, setConsultationDuration] = useState('');
   const [referralSource, setReferralSource] = useState('');
   const [clientMessage, setClientMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [availableSlots, setAvailableSlots] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1); // 1: service, 2: date, 3: time, 4: contact, 5: files
+  const [currentStep, setCurrentStep] = useState(1); // 1: service, 2: date, 3: time, 4: contact, 5: files, 6: finalize
   const [contactInfo, setContactInfo] = useState({
     firstName: '',
     lastName: '',
@@ -26,6 +27,16 @@ const AppointmentScheduler = () => {
   const [showDisabledButtonNote, setShowDisabledButtonNote] = useState(false);
   const [contactErrorShown, setContactErrorShown] = useState(false);
   const [consentErrorShown, setConsentErrorShown] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const stripeCheckoutUrl = 'https://buy.stripe.com/test_1234567890abcdef';
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvc, setCardCvc] = useState('');
+  const [cardFirstName, setCardFirstName] = useState('');
+  const [cardLastName, setCardLastName] = useState('');
+  const [cardZip, setCardZip] = useState('');
+  const [paymentError, setPaymentError] = useState('');
 
   const fileInputRef = useRef(null);
   const schedulerRef = useRef(null);
@@ -79,6 +90,12 @@ const AppointmentScheduler = () => {
       { label: 'Tax Notices', value: 'business-tax-notices' },
     ]
   };
+
+  // Consultation duration options with pricing
+  const consultationDurationOptions = [
+    { label: '(30 Min) Consultation - $75', value: '30min', price: 75 },
+    { label: '(1 Hour) Consultation - $150', value: '1hour', price: 150 }
+  ];
 
   // Validation functions
   const validateEmail = (email) => {
@@ -304,6 +321,8 @@ const AppointmentScheduler = () => {
       setSelectedDate(null);
       setSelectedTime(null);
       setSelectedService('');
+      setConsultationDuration('');
+      setReferralSource('');
       setUploadedFiles([]);
       setContactInfo({ firstName: '', lastName: '', email: '', phone: '___-___-____' });
       setCurrentStep(1);
@@ -357,6 +376,18 @@ const AppointmentScheduler = () => {
     });
   };
 
+  const getStepTitle = (step) => {
+    switch (step) {
+      case 1: return 'Service';
+      case 2: return 'Date';
+      case 3: return 'Time';
+      case 4: return 'Contact';
+      case 5: return 'Files';
+      case 6: return 'Finalize';
+      default: return '';
+    }
+  };
+
   const calendarDays = generateCalendarDays();
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -390,7 +421,7 @@ const AppointmentScheduler = () => {
     <div 
       id="appointment-scheduler"
       ref={schedulerRef}
-      className={`appointment-scheduler ${animationsTriggered ? 'animate-in' : ''}`}
+      className={`appointment-scheduler ${animationsTriggered ? 'animate-in' : ''} ${currentStep === 6 ? 'at-finalize' : ''}`}
     >
       <div className={`scheduler-header ${animationsTriggered ? 'animate-in' : ''}`}>
         <h3>Schedule Your Consultation</h3>
@@ -420,6 +451,23 @@ const AppointmentScheduler = () => {
             <span className="step-number">5</span>
             <span className="step-label">Files</span>
           </div>
+          <div className={`progress-step ${currentStep >= 6 ? 'active' : ''} ${animationsTriggered ? 'animate-in' : ''}`}>
+            <span className="step-number">6</span>
+            <span className="step-label">Finalize</span>
+          </div>
+        </div>
+
+        {/* Compact segmented progress for very small screens (<=450px) */}
+        <div className={`progress-compact ${animationsTriggered ? 'animate-in' : ''}`}>
+          <div className="progress-compact-header">{`Step ${currentStep} of 6 — ${getStepTitle(currentStep)}`}</div>
+          <div className="segmented-progress" aria-hidden="true">
+            {[1,2,3,4,5,6].map((n) => (
+              <div
+                key={n}
+                className={`segment ${currentStep > n ? 'complete' : ''} ${currentStep === n ? 'current' : ''}`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Step 1: Service Selection */}
@@ -442,7 +490,29 @@ const AppointmentScheduler = () => {
             </div>
             
             <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-                                      <label htmlFor="referralSource" className="required-field">How did you find us?</label>
+              <label htmlFor="consultationDuration" className="required-field">Consultation Duration</label>
+              <CustomSelect
+                id="consultationDuration"
+                placeholder="Select a duration"
+                value={consultationDuration}
+                onChange={(val) => setConsultationDuration(val)}
+                required
+                options={consultationDurationOptions}
+              />
+              {consultationDuration && (
+                <div className="consultation-summary">
+                  <span className="consultation-duration">
+                    {consultationDuration === '30min' ? '30 Minute Consultation' : '1 Hour Consultation'}
+                  </span>
+                  <span className="consultation-price">
+                    ${consultationDuration === '30min' ? '75' : '150'}
+                  </span>
+                </div>
+              )}
+            </div>
+            
+            <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
+              <label htmlFor="referralSource" className="required-field">How did you find us?</label>
               <CustomSelect
                 id="referralSource"
                 placeholder="Select how you found us"
@@ -465,16 +535,16 @@ const AppointmentScheduler = () => {
             </div>
             
             <div className="form-actions">
-              {showDisabledButtonNote && (!selectedService || !referralSource) && (
+              {showDisabledButtonNote && (!selectedService || !consultationDuration || !referralSource) && (
                 <div className="disabled-button-note">
                   Please complete all required fields to continue
                 </div>
               )}
               <button
                 type="button"
-                className={`next-btn ${(!selectedService || !referralSource) ? 'disabled' : ''}`}
+                className={`next-btn ${(!selectedService || !consultationDuration || !referralSource) ? 'disabled' : ''}`}
                 onClick={() => {
-                  if (selectedService && referralSource) {
+                  if (selectedService && consultationDuration && referralSource) {
                     setCurrentStep(2);
                   } else {
                     handleDisabledButtonClick();
@@ -774,7 +844,13 @@ const AppointmentScheduler = () => {
                   type="checkbox"
                   id="consent"
                   checked={consentChecked}
-                  onChange={(e) => setConsentChecked(e.target.checked)}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    setConsentChecked(checked);
+                    if (checked) {
+                      setCurrentStep(6);
+                    }
+                  }}
                   required
                 />
                 <label htmlFor="consent" className="consent-label">
@@ -790,16 +866,31 @@ const AppointmentScheduler = () => {
 
             <div className="form-actions">
               {/* Quick hint if submit is disabled */}
-              {consentErrorShown && (!selectedService || !selectedDate || !selectedTime || !consentChecked) && (
+              {consentErrorShown && (!selectedService || !consultationDuration || !selectedDate || !selectedTime || !consentChecked) && (
                 <div className="disabled-button-note" style={{ marginBottom: '0.75rem' }}>
                   {`To submit, complete: ${[
                     !selectedService ? 'Service' : null,
+                    !consultationDuration ? 'Consultation Duration' : null,
                     !selectedDate ? 'Date' : null,
                     !selectedTime ? 'Time' : null,
                     !consentChecked ? 'Consent' : null,
                   ].filter(Boolean).join(', ')}`}
                 </div>
               )}
+              <button
+                type="button"
+                className={`next-btn ${!consentChecked ? 'disabled' : ''}`}
+                aria-disabled={!consentChecked}
+                onClick={() => {
+                  if (!consentChecked) {
+                    setConsentErrorShown(true);
+                    return;
+                  }
+                  setCurrentStep(6);
+                }}
+              >
+                Finalize Payment
+              </button>
             </div>
 
             {/* Go Back Button - Below form actions */}
@@ -818,15 +909,103 @@ const AppointmentScheduler = () => {
         )}
 
         {/* Submit Button - Only show on final step */}
-        {currentStep === 5 && (
+        {currentStep === 6 && (
           <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
+            <h4>Finalize Consultation</h4>
+            <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
+              <label htmlFor="paymentMethod" className="required-field">Payment Method</label>
+              <div className="payment-methods" id="paymentMethod">
+                <label style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginBottom: '.5rem' }}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="stripe"
+                    checked={paymentMethod === 'stripe'}
+                    onChange={() => setPaymentMethod('stripe')}
+                  />
+                  Pay with Stripe
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '.5rem', opacity: .6 }}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="card"
+                    checked={paymentMethod === 'card'}
+                    onChange={() => setPaymentMethod('card')}
+                  />
+                  Enter card details on site (demo only)
+                </label>
+              </div>
+            </div>
+
+            {paymentMethod === 'stripe' && (
+              <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
+                <a
+                  href={stripeCheckoutUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="upload-btn"
+                  onClick={() => setPaymentConfirmed(true)}
+                >
+                  Proceed to Stripe Checkout
+                </a>
+                {paymentConfirmed && (
+                  <div className="disabled-button-note" style={{ marginTop: '.5rem' }}>
+                    Payment confirmed for {consultationDuration === '30min' ? '$75' : '$150'} (simulated)
+                  </div>
+                )}
+              </div>
+            )}
+
+            {paymentMethod === 'card' && (
+              <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
+                <label className="required-field">Name</label>
+                <div className="form-row">
+                  <div className="form-group">
+                    <input id="cardFirstName" type="text" className="message-input" value={cardFirstName} onChange={(e) => { setCardFirstName(e.target.value); setPaymentConfirmed(false); }} placeholder="First Name" aria-label="First Name" />
+                  </div>
+                  <div className="form-group">
+                    <input id="cardLastName" type="text" className="message-input" value={cardLastName} onChange={(e) => { setCardLastName(e.target.value); setPaymentConfirmed(false); }} placeholder="Last Name" aria-label="Last Name" />
+                  </div>
+                </div>
+
+                <label className="required-field" style={{ marginTop: '.75rem' }}>Card Details</label>
+                <input type="text" placeholder="Card Number" className="message-input" value={cardNumber} onChange={(e) => { setCardNumber(e.target.value); setPaymentConfirmed(false); }} style={{ marginTop: '.5rem' }} />
+                <div className="form-row" style={{ marginTop: '.5rem' }}>
+                  <input type="text" placeholder="MM/YY" className="message-input" value={cardExpiry} onChange={(e) => { setCardExpiry(e.target.value); setPaymentConfirmed(false); }} />
+                  <input type="text" placeholder="CVC" className="message-input" value={cardCvc} onChange={(e) => { setCardCvc(e.target.value); setPaymentConfirmed(false); }} />
+                </div>
+                <div className="form-group" style={{ marginTop: '.5rem' }}>
+                  <label htmlFor="cardZip" className="required-field">Postal Code</label>
+                  <input id="cardZip" type="text" className="message-input" value={cardZip} onChange={(e) => { setCardZip(e.target.value); setPaymentConfirmed(false); }} placeholder="Postal Code" />
+                </div>
+                {paymentError && <div className="error-message" style={{ marginTop: '.25rem' }}>{paymentError}</div>}
+                <button type="button" className="next-btn" style={{ marginTop: '.75rem', marginBottom: '1rem' }} onClick={() => {
+                  if (!cardFirstName.trim() || !cardLastName.trim() || !cardZip.trim() || !cardNumber.trim() || !cardExpiry.trim() || !cardCvc.trim()) {
+                    setPaymentError('Please complete all card details');
+                    setPaymentConfirmed(false);
+                    return;
+                  }
+                  setPaymentError('');
+                  setPaymentConfirmed(true);
+                }}>
+                  Save Card (Demo)
+                </button>
+                {paymentConfirmed && (
+                  <div className="disabled-button-note" style={{ marginTop: '.5rem' }}>
+                    Card saved (demo). You can now schedule.
+                  </div>
+                )}
+              </div>
+            )}
+
             <button
               type="button"
-              className={`submit-btn ${animationsTriggered ? 'animate-in' : ''} ${!selectedDate || !selectedTime || !selectedService || !consentChecked ? 'disabled' : ''}`}
-              aria-disabled={!selectedDate || !selectedTime || !selectedService || !consentChecked ? 'true' : 'false'}
-              title={!selectedService || !selectedDate || !selectedTime || !consentChecked ? 'Complete all required fields (Service, Date, Time, Consent)' : ''}
+              className={`submit-btn ${animationsTriggered ? 'animate-in' : ''} ${!selectedDate || !selectedTime || !selectedService || !consultationDuration || !consentChecked || !paymentConfirmed ? 'disabled' : ''}`}
+              aria-disabled={!selectedDate || !selectedTime || !selectedService || !consultationDuration || !consentChecked || !paymentConfirmed ? 'true' : 'false'}
+              title={!selectedService || !consultationDuration || !selectedDate || !selectedTime || !consentChecked || !paymentConfirmed ? 'Complete all required fields (Service, Consultation Duration, Date, Time, Consent, Payment)' : ''}
               onClick={() => {
-                if (!selectedDate || !selectedTime || !selectedService || !consentChecked) {
+                if (!selectedDate || !selectedTime || !selectedService || !consultationDuration || !consentChecked || !paymentConfirmed) {
                   setConsentErrorShown(true);
                   return;
                 }
@@ -835,6 +1014,19 @@ const AppointmentScheduler = () => {
             >
               {isSubmitting ? 'Scheduling...' : 'Schedule Appointment'}
             </button>
+
+            {/* Go Back Button - Below schedule button */}
+            <div className="contact-actions">
+              <button
+                type="button"
+                onClick={() => setCurrentStep(5)}
+                className="go-back-btn contact-go-back"
+                aria-label="Go back to file upload"
+              >
+                <span className="back-arrow">←</span>
+                <span className="back-text">Go Back</span>
+              </button>
+            </div>
           </div>
         )}
 
