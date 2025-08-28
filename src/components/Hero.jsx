@@ -6,6 +6,7 @@ import '../styles/hero.css';
 import HeroImageShowcase from './HeroImageShowcase.jsx';
 import heroImages from './data/heroImages.js';
 import { HeartHandshake } from 'lucide-react';
+import AppLoading from './AppLoading.jsx';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Hero = () => {
     socialProof: false,
     ticker: false
   });
+  const [heroImagesLoaded, setHeroImagesLoaded] = useState(false);
 
   const navRef = useRef(null);
   const headlineRef = useRef(null);
@@ -359,8 +361,10 @@ const Hero = () => {
             </motion.div>
           </div>
           
-          <div className="hero-media">
-            <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
+          <div className="hero-media" style={{ position: 'relative' }}>
+            {/* Loading overlay while hero images prepare */}
+            {!heroImagesLoaded && <AppLoading />}
+            <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} onImagesReady={() => setHeroImagesLoaded(true)} />
           </div>
 
           {/* Desktop Social Proof - Hidden under 680px */}
