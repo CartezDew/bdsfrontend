@@ -364,7 +364,11 @@ const GetStarted = () => {
       contactInfo.email?.trim() &&
       validateEmail(contactInfo.email) &&
       contactInfo.occupation?.trim() &&
-      contactInfo.streetAddress?.trim()
+      contactInfo.streetAddress?.trim() &&
+      contactInfo.city?.trim() &&
+      contactInfo.state?.trim() &&
+      contactInfo.country?.trim() &&
+      contactInfo.postalCode?.trim()
     );
   };
 
@@ -393,6 +397,14 @@ const GetStarted = () => {
       newErrors.occupation = 'Occupation is required';
     } else if (!contactInfo.streetAddress || !contactInfo.streetAddress.trim()) {
       newErrors.streetAddress = 'Street address is required';
+    } else if (!contactInfo.city || !contactInfo.city.trim()) {
+      newErrors.city = 'City is required';
+    } else if (!contactInfo.state || !contactInfo.state.trim()) {
+      newErrors.state = 'State is required';
+    } else if (!contactInfo.country || !contactInfo.country.trim()) {
+      newErrors.country = 'Country is required';
+    } else if (!contactInfo.postalCode || !contactInfo.postalCode.trim()) {
+      newErrors.postalCode = 'Postal code is required';
     }
     
     setErrors(newErrors);
@@ -656,7 +668,7 @@ const GetStarted = () => {
                   <div className="getstarted-form-section">
                     <h4>Select Your Service</h4>
                     <div className="getstarted-form-group" style={{ isolation: 'isolate', zIndex: 1 }}>
-                      <label htmlFor="service">Service Type *</label>
+                                              <label htmlFor="service" className="required-field">Service Type</label>
                       <CustomSelect
                         id="service"
                         placeholder="Select a service"
@@ -671,7 +683,7 @@ const GetStarted = () => {
                     </div>
                     
                     <div className="getstarted-form-group">
-                      <label htmlFor="referralSource">How did you find us? *</label>
+                                              <label htmlFor="referralSource" className="required-field">How did you find us?</label>
                       <CustomSelect
                         id="referralSource"
                         placeholder="Select how you found us"
@@ -844,7 +856,7 @@ const GetStarted = () => {
 
                     <div className="getstarted-form-row">
                       <div className="getstarted-form-group">
-                        <label htmlFor="city">City</label>
+                        <label htmlFor="city" className="required-field">City</label>
                         <input
                           type="text"
                           id="city"
@@ -853,10 +865,11 @@ const GetStarted = () => {
                           className={errors.city && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="City"
                         />
+                        {errors.city && contactErrorsShown && <div className="getstarted-field-error">{errors.city}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
-                        <label htmlFor="state">State</label>
+                        <label htmlFor="state" className="required-field">State</label>
                         <input
                           type="text"
                           id="state"
@@ -865,12 +878,13 @@ const GetStarted = () => {
                           className={errors.state && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="State"
                         />
+                        {errors.state && contactErrorsShown && <div className="getstarted-field-error">{errors.state}</div>}
                       </div>
                     </div>
 
                     <div className="getstarted-form-row">
                       <div className="getstarted-form-group">
-                        <label htmlFor="country">Country</label>
+                        <label htmlFor="country" className="required-field">Country</label>
                         <CustomSelect
                           id="country"
                           placeholder="Country"
@@ -892,10 +906,11 @@ const GetStarted = () => {
                             { label: 'Other', value: 'other' },
                           ]}
                         />
+                        {errors.country && contactErrorsShown && <div className="getstarted-field-error">{errors.country}</div>}
                       </div>
 
                       <div className="getstarted-form-group">
-                        <label htmlFor="postalCode">Postal Code</label>
+                        <label htmlFor="postalCode" className="required-field">Postal Code</label>
                         <input
                           type="text"
                           id="postalCode"
@@ -904,6 +919,7 @@ const GetStarted = () => {
                           className={errors.postalCode && contactErrorsShown ? 'getstarted-error' : ''}
                           placeholder="Postal Code"
                         />
+                        {errors.postalCode && contactErrorsShown && <div className="getstarted-field-error">{errors.postalCode}</div>}
                       </div>
                     </div>
 

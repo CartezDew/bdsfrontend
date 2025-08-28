@@ -427,7 +427,7 @@ const AppointmentScheduler = () => {
           <div className={`form-section ${animationsTriggered ? 'animate-in' : ''}`}>
             <h4>Select Your Service</h4>
             <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-              <label htmlFor="service">Service Type *</label>
+                                      <label htmlFor="service" className="required-field">Service Type</label>
               <CustomSelect
                 id="service"
                 placeholder="Select a service"
@@ -442,7 +442,7 @@ const AppointmentScheduler = () => {
             </div>
             
             <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-              <label htmlFor="referralSource">How did you find us? *</label>
+                                      <label htmlFor="referralSource" className="required-field">How did you find us?</label>
               <CustomSelect
                 id="referralSource"
                 placeholder="Select how you found us"
@@ -600,7 +600,7 @@ const AppointmentScheduler = () => {
             
             <div className={`form-row ${animationsTriggered ? 'animate-in' : ''}`}>
               <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-                <label htmlFor="firstName">First Name *</label>
+                                        <label htmlFor="firstName" className="required-field">First Name</label>
                 <input
                   type="text"
                   id="firstName"
@@ -612,7 +612,7 @@ const AppointmentScheduler = () => {
               </div>
 
               <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-                <label htmlFor="lastName">Last Name *</label>
+                                        <label htmlFor="lastName" className="required-field">Last Name</label>
                 <input
                   type="text"
                   id="lastName"
@@ -626,7 +626,7 @@ const AppointmentScheduler = () => {
 
             <div className={`form-row ${animationsTriggered ? 'animate-in' : ''}`}>
               <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-                <label htmlFor="email">Email Address *</label>
+                                        <label htmlFor="email" className="required-field">Email Address</label>
                 <input
                   type="email"
                   id="email"
@@ -638,7 +638,7 @@ const AppointmentScheduler = () => {
               </div>
 
               <div className={`form-group ${animationsTriggered ? 'animate-in' : ''}`}>
-                <label htmlFor="phone">Phone Number *</label>
+                                        <label htmlFor="phone" className="required-field">Phone Number</label>
                 <input
                   type="tel"
                   id="phone"

@@ -194,6 +194,25 @@
   font-size: 0.95rem;
 }
 
+/* Style asterisks in required field labels */
+.appointment-scheduler .form-group label.required-field::after {
+  content: ' *';
+  color: #CC3F0C;
+  font-weight: 700;
+}
+
+/* Alternative approach - target specific fields */
+.appointment-scheduler .form-group label[for="service"]::after,
+.appointment-scheduler .form-group label[for="referralSource"]::after,
+.appointment-scheduler .form-group label[for="firstName"]::after,
+.appointment-scheduler .form-group label[for="lastName"]::after,
+.appointment-scheduler .form-group label[for="email"]::after,
+.appointment-scheduler .form-group label[for="phone"]::after {
+  content: ' *';
+  color: #CC3F0C;
+  font-weight: 700;
+}
+
 .form-group select {
   padding: 0.75rem;
   border: 2px solid rgba(51, 103, 59, 0.2);
