@@ -114,9 +114,8 @@ const NavbarMobile = ({ customConfig }) => {
         if (location.pathname !== '/') { navigate(`/#${targetId}`); setIsOpen(false); return }
         const targetElement = document.getElementById(targetId)
         if (!targetElement) return
-        const rect = targetElement.getBoundingClientRect()
-        const pos = window.scrollY + rect.top - 64
-        window.scrollTo({ top: pos, behavior: 'smooth' })
+        // Smoothly scroll the exact section into view without manual offsets
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
         setIsOpen(false)
     }
 
