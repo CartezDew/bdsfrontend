@@ -21,23 +21,53 @@ const NavbarDesktop = ({ customConfig }) => {
     // New: hide menu items while scrolling on >=680px, re-appear after idle
     const [scrollingHide, setScrollingHide] = useState(false)
     const scrollTimerRef = useRef(null)
+    const lastScrollYRef = useRef(typeof window !== 'undefined' ? window.scrollY : 0)
+    const cooldownUntilRef = useRef(0)
+    const rafIdRef = useRef(0)
+
+    // Slow initial enter on specific routes
+    const slowEnterRoutes = ['/sign-in', '/get-started']
+    const shouldSlowEnter = slowEnterRoutes.includes(location.pathname)
+    const mountedOnceRef = useRef(false)
+    useEffect(() => { mountedOnceRef.current = true }, [])
 
     useEffect(() => {
         const mq = window.matchMedia('(min-width: 680px)')
         const onScroll = () => {
             if (!mq.matches) return
-            if (!scrollingHide) setScrollingHide(true)
-            if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
-            scrollTimerRef.current = setTimeout(() => {
-                setScrollingHide(false)
-            }, 220) // small debounce for smoother UX
+            const now = Date.now()
+            if (now < cooldownUntilRef.current) return // ignore brief jiggles right after reveal
+            if (rafIdRef.current) return
+            rafIdRef.current = requestAnimationFrame(() => {
+                rafIdRef.current = 0
+                const prevY = lastScrollYRef.current
+                const curY = window.scrollY
+                lastScrollYRef.current = curY
+                const delta = Math.abs(curY - prevY)
+                if (delta < 6) return // ignore micro scroll noise
+
+                if (!scrollingHide) setScrollingHide(true)
+                if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+                scrollTimerRef.current = setTimeout(() => {
+                    setScrollingHide(false)
+                    // small cooldown so minor residual scroll doesn't immediately hide again
+                    cooldownUntilRef.current = Date.now() + 600
+                }, 240)
+            })
         }
         window.addEventListener('scroll', onScroll, { passive: true })
         return () => {
             window.removeEventListener('scroll', onScroll)
             if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+            if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current)
         }
     }, [scrollingHide])
+
+    useEffect(() => {
+        // When route changes, ensure navbar can reveal smoothly and ignore initial layout scrolls
+        cooldownUntilRef.current = Date.now() + 800
+        setScrollingHide(false)
+    }, [location.pathname])
 
     const getIconForMenuItem = (itemName) => {
         switch (itemName) {
@@ -138,14 +168,16 @@ const NavbarDesktop = ({ customConfig }) => {
                         <h1 className="logo-text-nav">Talent Group</h1>
                     </button>
                 </div>
-                <AnimatePresence initial={false}>
-                {shouldShowMenu && (
+                {/* Menu items: keep mounted to avoid flicker; animate between hidden/visible */}
+                {(
                   <motion.div
-                    key="menu-items"
                     className="menu-section"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0, transition: { duration: 3.3, ease: [0.22, 1, 0.36, 1] } }}
-                    exit={{ opacity: 0, y: -4, transition: { duration: 0.22, ease: 'easeOut' } }}
+                    style={{ willChange: 'opacity, transform' }}
+                    initial={ shouldSlowEnter && !mountedOnceRef.current ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 } }
+                    animate={ (suppressLinks || scrollingHide)
+                      ? { opacity: 0, y: -4, pointerEvents: 'none', transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] } }
+                      : { opacity: 1, y: 0, pointerEvents: 'auto', transition: { duration: 2, ease: [0.22, 1, 0.36, 1] } }
+                    }
                   >
                     {menuItems.map((item) => {
                         // Hide Testimonials on desktop navbar
@@ -210,7 +242,6 @@ const NavbarDesktop = ({ customConfig }) => {
                     })}
                   </motion.div>
                 )}
-                </AnimatePresence>
                 <div className="icon-section">
                     <Link 
                         to="/get-started" 
