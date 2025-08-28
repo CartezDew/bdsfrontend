@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { NavbarMenu } from '../mockData/data'
 import { Home, Calculator, Users, Phone, HelpCircle, MessageCircle } from 'lucide-react'
@@ -17,6 +17,27 @@ const NavbarDesktop = ({ customConfig }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const menuItems = customConfig || NavbarMenu
+
+    // New: hide menu items while scrolling on >=680px, re-appear after idle
+    const [scrollingHide, setScrollingHide] = useState(false)
+    const scrollTimerRef = useRef(null)
+
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 680px)')
+        const onScroll = () => {
+            if (!mq.matches) return
+            if (!scrollingHide) setScrollingHide(true)
+            if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+            scrollTimerRef.current = setTimeout(() => {
+                setScrollingHide(false)
+            }, 220) // small debounce for smoother UX
+        }
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+            if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+        }
+    }, [scrollingHide])
 
     const getIconForMenuItem = (itemName) => {
         switch (itemName) {
@@ -106,6 +127,8 @@ const NavbarDesktop = ({ customConfig }) => {
         return () => clearTimeout(t)
     }, [suppressLinks, pendingTarget, inServicesSection, inWhyUsSection, inContactSection, inFaqSection])
 
+    const shouldShowMenu = !suppressLinks && !scrollingHide
+
     return (
         <nav className="navbar navbar-desktop">
             <div className="navbar-container">
@@ -116,7 +139,7 @@ const NavbarDesktop = ({ customConfig }) => {
                     </button>
                 </div>
                 <AnimatePresence initial={false}>
-                {!suppressLinks && (
+                {shouldShowMenu && (
                   <motion.div
                     key="menu-items"
                     className="menu-section"
