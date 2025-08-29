@@ -268,7 +268,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 0.3rem;
+  gap: 0.55rem;
   opacity: 0;
 }
 
@@ -290,7 +290,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: all 0.8s ease-in-out;
+  /* transition: all 0.8s ease-in-out; */
 }
 
 /* Headline/Body */
@@ -615,6 +615,10 @@
   .social-proof-right {
     gap: 0.5rem;
   }
+
+  .hero-grid-overlay { 
+    gap: 0.4rem;
+  }
 }
 
 @media (max-width: 680px){
@@ -933,6 +937,10 @@
 
   .ticker-item {
     font-size: .8rem;
+  }
+
+  .hero-grid-overlay { 
+    gap: 0.28rem;
   }
 }
 
