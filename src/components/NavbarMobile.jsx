@@ -222,12 +222,29 @@ const NavbarMobile = ({ customConfig }) => {
                             </Link>
                             {/* CTA: Schedule Consultation */}
                             <Link 
-                                to="/get-started" 
+                                to="/" 
                                 className="mobile-nav-item cta-button-primary" 
                                 onClick={(e) => { 
-                                    if (location.pathname === '/get-started') {
+                                    if (location.pathname === '/') {
+                                        // Already on home page → scroll to appointment scheduler
                                         e.preventDefault()
-                                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                                        const schedulerEl = document.getElementById('appointment-scheduler') || document.querySelector('.appointment-scheduler')
+                                        if (schedulerEl) {
+                                            const navbarEl = document.querySelector('.navbar')
+                                            const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+                                            const rectTop = schedulerEl.getBoundingClientRect().top + window.scrollY
+                                            const styles = window.getComputedStyle(schedulerEl)
+                                            const marginTop = parseFloat(styles.marginTop) || 0
+                                            const borderTop = parseFloat(styles.borderTopWidth) || 0
+                                            const pos = rectTop - navbarHeight - marginTop - borderTop
+                                            window.scrollTo({ top: pos, behavior: 'smooth' })
+                                        }
+                                    } else if (location.pathname === '/get-started' || location.pathname === '/sign-in') {
+                                        // On get-started or sign-in → navigate to home and scroll to scheduler
+                                        e.preventDefault()
+                                        navigate('/', { state: { scrollTo: 'appointment-scheduler' } })
+                                    } else {
+                                        // Other route: default navigation to home
                                     }
                                     setIsOpen(false) 
                                 }}

@@ -78,6 +78,7 @@ p {
 .cta-button-primary:hover {
   background-color: var(--color-golden-brown);
   transform: scale(1.05);
+  color: white;
 }
 
 /* Global link hover effects for consistent user experience */

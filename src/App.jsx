@@ -222,34 +222,30 @@ function App() {
       const styles = window.getComputedStyle(el)
       const marginTop = parseFloat(styles.marginTop) || 0
       const borderTop = parseFloat(styles.borderTopWidth) || 0
-      // Special case: Meet the Owner → scroll to bottom of section
       if (targetId === 'meet-the-owner') {
         const sectionHeight = el.offsetHeight
-        return rectTop + sectionHeight - navbarHeight
+        const val = rectTop + sectionHeight - navbarHeight
+        return val
       }
-      // Special case: Testimonials (social-proof) → align to bottom of Services so social-proof starts fully visible
       if (targetId === 'social-proof') {
         const servicesEl = document.getElementById('services')
         if (servicesEl) {
           const servicesTop = servicesEl.getBoundingClientRect().top + window.scrollY
           const servicesBottom = servicesTop + servicesEl.offsetHeight
-          return servicesBottom - navbarHeight
+          const val = servicesBottom - navbarHeight
+          return val
         }
       }
-      if (targetId === 'appointment-scheduler') {
-        return rectTop - navbarHeight - marginTop - borderTop
-      }
-      return rectTop - navbarHeight - marginTop - borderTop
+      const val = rectTop - navbarHeight - marginTop - borderTop
+      return val
     }
 
-    // Allow layout/images to settle briefly, then perform a single smooth scroll
     const t = setTimeout(() => {
       const pos = computeScrollTop()
       if (pos == null) return
       window.scrollTo({ top: pos, behavior: 'smooth' })
     }, 220)
 
-    // Clear the state to avoid sticky scrolling on back/forward
     navigate(location.pathname, { replace: true })
     return () => clearTimeout(t)
   }, [isHomePage, location.state])
@@ -414,3 +410,5 @@ function App() {
 }
 
 export default App
+
+

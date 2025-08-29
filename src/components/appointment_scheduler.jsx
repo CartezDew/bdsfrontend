@@ -1,3 +1,42 @@
+/*
+ * APPOINTMENT SCHEDULER COMPONENT
+ * 
+ * TROUBLESHOOTING NOTES - Duplicate ID Issue (Resolved)
+ * ===================================================
+ * 
+ * ISSUE: "Schedule Consultation" buttons were not working - could not find appointment-scheduler element
+ * 
+ * ROOT CAUSE: Duplicate DOM IDs causing element selection conflicts
+ * - OfficeHoursLocations.jsx had: <div id="appointment-scheduler">
+ * - AppointmentScheduler.jsx had: <div id="appointment-scheduler">
+ * - This created invalid HTML (duplicate IDs) and prevented querySelector from working properly
+ * 
+ * SYMPTOMS:
+ * - console.log showed "Scheduler element found: null"
+ * - Buttons appeared to do nothing when clicked
+ * - Both direct scroll and state-based navigation failed
+ * 
+ * SOLUTION: Remove duplicate ID from AppointmentScheduler component
+ * - Keep id="appointment-scheduler" only in OfficeHoursLocations.jsx wrapper
+ * - Remove id="appointment-scheduler" from this component's root div
+ * - Use only className="appointment-scheduler" for styling
+ * 
+ * PREVENTION: 
+ * - Never use the same ID in parent and child components
+ * - IDs must be unique across the entire DOM
+ * - Use classes for styling, IDs only for unique element identification
+ * - When wrapping components, ensure only one element has the target ID
+ * 
+ * RELATED FILES:
+ * - src/components/OfficeHoursLocations.jsx (keeps the ID)
+ * - src/components/appointment_scheduler.jsx (removed duplicate ID)
+ * - src/components/GetStarted.jsx (scrolls to #appointment-scheduler)
+ * - src/components/NavbarMobile.jsx (scrolls to #appointment-scheduler)
+ * - src/App.jsx (handles state-based navigation to appointment-scheduler)
+ * 
+ * Last Updated: [Current Date]
+ */
+
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/appointment_scheduler.css';
 import CustomSelect from './CustomSelect';
