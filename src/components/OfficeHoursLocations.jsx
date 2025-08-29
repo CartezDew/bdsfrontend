@@ -97,7 +97,25 @@ const OfficeHoursLocations = () => {
           <div className={`section-header ${animationsTriggered.header ? 'animate-header' : ''}`} ref={headerRef} data-animate="header">
             <h2 className={`section-title ${animationsTriggered.title ? 'animate-title' : ''}`} ref={titleRef} data-animate="title">Office Hours & Locations</h2>
             <p className={`section-subtitle ${animationsTriggered.subtitle ? 'animate-subtitle' : ''}`} ref={subtitleRef} data-animate="subtitle">We'd love to hear from you! Contact us to schedule your consultation.</p>
-            <button className="schedule-consultation-btn">Schedule Consultation</button>
+            <button 
+              className="schedule-consultation-btn"
+              onClick={() => {
+                // Scroll to appointment scheduler section
+                const schedulerEl = document.getElementById('appointment-scheduler')
+                if (schedulerEl) {
+                  const navbarEl = document.querySelector('.navbar')
+                  const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+                  const rectTop = schedulerEl.getBoundingClientRect().top + window.scrollY
+                  const styles = window.getComputedStyle(schedulerEl)
+                  const marginTop = parseFloat(styles.marginTop) || 0
+                  const borderTop = parseFloat(styles.borderTopWidth) || 0
+                  const pos = rectTop - navbarHeight - marginTop - borderTop
+                  window.scrollTo({ top: pos, behavior: 'smooth' })
+                }
+              }}
+            >
+              Schedule Consultation
+            </button>
           </div>
 
           {/* Social Media Section */}
@@ -182,7 +200,9 @@ const OfficeHoursLocations = () => {
           </div>
 
           {/* Appointment Scheduler */}
-          <AppointmentScheduler />
+          <div id="appointment-scheduler">
+            <AppointmentScheduler />
+          </div>
         </div>
       </section>
       

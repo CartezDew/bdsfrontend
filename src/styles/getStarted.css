@@ -514,6 +514,7 @@
 
   .getstarted-fact.open .getstarted-fact-panel {
     opacity: 1;
+    /* Removed opacity: 1 since framer-motion handles this now */
   }
 
   .getstarted-fact-panel > div {

@@ -311,13 +311,13 @@ function App() {
       const clickable = target.closest && target.closest('a,button');
       if (!clickable) return;
       const text = (clickable.textContent || '').toLowerCase();
-      const classList = (clickable.className || '').toString();
+      const classes = clickable.classList ? Array.from(clickable.classList) : (clickable.className ? String(clickable.className).split(/\s+/) : []);
       // Match Get Started buttons generically
       const isGetStarted = text.includes('get started');
       // Match Schedule Consultation or Schedule Appointment buttons generically
       const isSchedule = text.includes('schedule consultation') || text.includes('schedule appointment')
-        || classList.includes('schedule-consultation-btn')
-        || classList.includes('cta-button-primary');
+        || classes.includes('schedule-consultation-btn')
+        || classes.includes('cta-button-primary');
 
       // If it's a Schedule action, route to home and scroll to the appointment scheduler section
       if (isSchedule) {

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import '../styles/getStarted.css';
 import '../styles/dropdown_reusable.css';
@@ -6,6 +7,7 @@ import CustomSelect from './CustomSelect';
 import Image2 from '../Assets/Detailed_Services_Images/Image_2.jpg';
 
 const GetStarted = () => {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedService, setSelectedService] = useState('');
@@ -630,8 +632,26 @@ const GetStarted = () => {
               <div className="getstarted-still-unsure-button-box">
                 <button 
                   type="button" 
-                  className="getstarted-consultation-btn"
+                  className="getstarted-consultation-btn schedule-consultation-btn"
                   onClick={() => {
+                    // Navigate to home page and scroll to appointment scheduler
+                    if (window.location.pathname === '/') {
+                      // Already on home page, scroll to appointment scheduler
+                      const schedulerEl = document.querySelector('#appointment-scheduler') || document.querySelector('.appointment-scheduler')
+                      if (schedulerEl) {
+                        const navbarEl = document.querySelector('.navbar')
+                        const navbarHeight = navbarEl ? navbarEl.getBoundingClientRect().height : 0
+                        const rectTop = schedulerEl.getBoundingClientRect().top + window.scrollY
+                        const styles = window.getComputedStyle(schedulerEl)
+                        const marginTop = parseFloat(styles.marginTop) || 0
+                        const borderTop = parseFloat(styles.borderTopWidth) || 0
+                        const pos = rectTop - navbarHeight - marginTop - borderTop
+                        window.scrollTo({ top: pos, behavior: 'smooth' })
+                      }
+                    } else {
+                      // Navigate to home page with appointment scheduler scroll
+                      navigate('/', { state: { scrollTo: 'appointment-scheduler' } })
+                    }
                   }}
                 >
                   Schedule Consultation
