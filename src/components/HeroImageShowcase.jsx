@@ -67,8 +67,8 @@ export default function HeroImageShowcase({ base, grid = [], onImagesReady }) {
       }
       return;
     }
-    const visibleReady = baseLoaded || firstGridReady;
-    if (visibleReady) {
+    // Wait for BOTH base and first grid image to be ready before dismissing AppLoading
+    if (baseLoaded && firstGridReady) {
       calledReadyRef.current = true;
       if (typeof onImagesReady === 'function') onImagesReady();
     }
@@ -151,9 +151,12 @@ export default function HeroImageShowcase({ base, grid = [], onImagesReady }) {
         decoding="async"
         fetchPriority="high"
         onLoad={() => setBaseLoaded(true)}
-        initial={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: currentState === 'base' ? 1 : 0 }}
-        transition={{ duration: 3.5, ease: [0.4, 0.0, 0.2, 1] }}
+        transition={{ 
+          duration: 4.5, 
+          ease: [0.4, 0.0, 0.2, 1]
+        }}
       />
 
       <motion.div
