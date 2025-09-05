@@ -22,40 +22,42 @@ export default function HeroImageShowcase({ base, grid = [], onImagesReady }) {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Preload only the first grid image at high priority to ensure instant paint
+  // Preload ALL images in parallel with high priority for faster loading
   useEffect(() => {
     let cancelled = false;
-    const first = grid && grid[0];
-    if (!first) { setFirstGridReady(false); return () => {}; }
-    const img = new Image();
-    try { img.fetchPriority = 'high'; } catch {}
-    img.src = first;
-    const finish = () => { if (!cancelled) setFirstGridReady(true); };
-    if (img.decode) { img.decode().then(finish).catch(finish); }
-    else { img.onload = finish; img.onerror = finish; }
-    return () => { cancelled = true; };
-  }, [grid]);
-
-  // After first grid is ready, prefetch remaining grid images in the background (sequentially)
-  useEffect(() => {
-    if (!firstGridReady || !Array.isArray(grid)) return;
-    const rest = grid.slice(1, 4).filter(Boolean);
-    let cancelled = false;
-    (async () => {
-      for (const src of rest) {
-        if (cancelled) break;
-        await new Promise((resolve) => {
-          const img = new Image();
-          try { img.fetchPriority = 'low'; } catch {}
-          img.src = src;
-          const done = () => resolve();
-          if (img.decode) { img.decode().then(done).catch(done); }
-          else { img.onload = done; img.onerror = done; }
-        });
+    const allImages = [base, ...(grid || [])].filter(Boolean);
+    if (allImages.length === 0) { 
+      setFirstGridReady(false); 
+      setBaseLoaded(false);
+      return () => {}; 
+    }
+    
+    // Load all images in parallel with high priority
+    const loadPromises = allImages.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        try { img.fetchPriority = 'high'; } catch {}
+        img.src = src;
+        const finish = () => { if (!cancelled) resolve(); };
+        if (img.decode) { 
+          img.decode().then(finish).catch(finish); 
+        } else { 
+          img.onload = finish; 
+          img.onerror = finish; 
+        }
+      });
+    });
+    
+    // Wait for all images to load
+    Promise.all(loadPromises).then(() => {
+      if (!cancelled) {
+        setFirstGridReady(true);
+        setBaseLoaded(true);
       }
-    })();
+    });
+    
     return () => { cancelled = true; };
-  }, [firstGridReady, grid]);
+  }, [base, grid]);
 
   // Notify parent once when visible content is ready (either base or grid)
   useEffect(() => {

@@ -25,6 +25,23 @@ const Hero = () => {
   });
   const [heroImagesLoaded, setHeroImagesLoaded] = useState(false);
 
+  // Preload hero images in HTML head for faster loading
+  useEffect(() => {
+    const preloadImages = () => {
+      const allImages = [heroImages.base, ...(heroImages.grid || [])].filter(Boolean);
+      allImages.forEach((src) => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        link.fetchPriority = 'high';
+        document.head.appendChild(link);
+      });
+    };
+    
+    preloadImages();
+  }, []);
+
   const navRef = useRef(null);
   const headlineRef = useRef(null);
   const subtextRef = useRef(null);
