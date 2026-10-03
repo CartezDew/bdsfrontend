@@ -1076,11 +1076,11 @@
 }
 
 /* Hide scroll mouse indicator under 680px */
-@media (max-width: 680px) {
+/* @media (max-width: 680px) {
   .scroll-mouse-indicator {
     display: none !important;
   }
-}
+} */
 
 /* Still Not Sure Section */
 .getstarted-still-unsure-section {

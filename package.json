@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "optimize:hero": "node scripts/optimize-hero-images.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

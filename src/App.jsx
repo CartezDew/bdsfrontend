@@ -1,3 +1,4 @@
+import { MOBILE_MEDIA_QUERY } from './utils/responsive';
 import React, { useState, useEffect, useRef } from 'react'
 import { Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom'
 import { ServiceProvider } from './context/ServiceContext'
@@ -19,17 +20,17 @@ function App() {
   const [showNavbar, setShowNavbar] = useState(!isHomePage)
   const navbarStateRef = useRef(showNavbar)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isMobileWidth, setIsMobileWidth] = useState(typeof window !== 'undefined' ? window.matchMedia('(max-width: 680px)').matches : false)
+  const [isMobileWidth, setIsMobileWidth] = useState(typeof window !== 'undefined' ? window.matchMedia(MOBILE_MEDIA_QUERY).matches : false)
 
   // Update ref when state changes
   useEffect(() => {
     navbarStateRef.current = showNavbar
   }, [showNavbar])
   
-  // Track viewport width for mobile/desktop gating (<= 680px is mobile)
+  // Track viewport width for mobile/desktop gating (<= 650px is mobile)
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const mql = window.matchMedia('(max-width: 680px)')
+    const mql = window.matchMedia(MOBILE_MEDIA_QUERY)
     const onChange = (e) => setIsMobileWidth(e.matches)
     setIsMobileWidth(mql.matches)
     if (mql.addEventListener) mql.addEventListener('change', onChange)

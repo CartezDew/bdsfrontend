@@ -453,13 +453,13 @@ body.mobile-menu-opened::before {
   }
 }
 
-/* Hide hamburger above 680px */
-@media (min-width: 681px) {
+/* Hide hamburger above 650px */
+@media (min-width: 651px) {
   .hamburger-line { display: none !important; }
 }
 
 /* Show toggle on small screens */
-@media (max-width: 680px) {
+@media (max-width: 650px) {
   .mobile-nav-toggle { 
     display: flex; 
   }
@@ -497,7 +497,7 @@ body.mobile-menu-opened::before {
 }
   
 /* Visibility gates */
-/* @media (max-width: 680px) {
+/* @media (max-width: 650px) {
   .navbar-visible-desktop { display: none; }
   .navbar-visible-mobile { display: block; }
 } */
@@ -562,8 +562,8 @@ body.mobile-menu-opened .App.navbar-hidden .navbar {
   }
 }
 
-/* Show back to top button at 680px and below */
-@media (max-width: 680px) {
+/* Show back to top button at 650px and below */
+@media (max-width: 650px) {
   .back-to-top-btn {
     display: flex;
     align-items: center;

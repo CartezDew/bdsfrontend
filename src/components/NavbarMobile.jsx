@@ -1,3 +1,4 @@
+import { MOBILE_BREAKPOINT } from '../utils/responsive';
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -8,7 +9,6 @@ import '../styles/navbar.css'
 const NavbarMobile = ({ customConfig }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
-    const isOpenRef = useRef(false)
     const navigate = useNavigate()
     const location = useLocation()
     const menuItems = customConfig || NavbarMenu
@@ -18,7 +18,7 @@ const NavbarMobile = ({ customConfig }) => {
     // Check screen size and update mobile state
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsMobile(window.innerWidth <= 680)
+            setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT)
         }
         
         // Check on mount
@@ -68,15 +68,16 @@ const NavbarMobile = ({ customConfig }) => {
     // Listen for global toggleMobileMenu events (from Hero/App)
     useEffect(() => {
         const handleExternalToggle = (e) => {
-            if (isOpenRef.current) {
-                setIsOpen(false)
-            } else {
-                setIsOpen(true)
-            }
+            if (e?.detail?.rebroadcast) return
+            setIsOpen(open => !open)
         }
         window.addEventListener('toggleMobileMenu', handleExternalToggle)
         return () => {
             window.removeEventListener('toggleMobileMenu', handleExternalToggle)
+            // Resizing to desktop unmounts this menu; do not leave its backdrop active.
+            document.body.classList.remove('mobile-menu-opened')
+            window.dispatchEvent(new CustomEvent('mobileMenuState', { detail: { open: false } }))
+            window.dispatchEvent(new CustomEvent('mobileMenuCloseAnimationEnd'))
         }
     }, [])
 
@@ -107,6 +108,7 @@ const NavbarMobile = ({ customConfig }) => {
         } else {
             const dt = now - (openAtRef.current || now)
         }
+        window.dispatchEvent(new CustomEvent('mobileMenuState', { detail: { open: isOpen } }))
     }, [isOpen])
 
     const onHashClick = (hash) => {
@@ -149,14 +151,7 @@ const NavbarMobile = ({ customConfig }) => {
                         <h1 className="logo-text-nav">Talent Group</h1>
                     </button>
                 </div>
-                <button className={`mobile-nav-toggle ${isOpen ? 'open' : ''}`} onClick={() => { 
-                    setIsOpen(v => {
-                        // Always allow close when open
-                        if (isOpenRef.current && v) return false
-                        // Opening: if already open (shouldn't happen), keep open; else open
-                        return !v
-                    })
-                }} aria-label="Toggle mobile menu">
+                <button className={`mobile-nav-toggle ${isOpen ? 'open' : ''}`} onClick={() => setIsOpen(open => !open)} aria-label="Toggle mobile menu" aria-expanded={isOpen} aria-controls="mobile-nav-menu">
                     <span className="mobile-nav-line"></span>
                     <span className="mobile-nav-line"></span>
                 </button>
@@ -184,6 +179,7 @@ const NavbarMobile = ({ customConfig }) => {
                 {isOpen && (
                     <motion.div
                         key="mobileMenu"
+                        id="mobile-nav-menu"
                         className="mobile-nav-menu"
                         ref={menuRef}
                         initial={{ y: '-110%', opacity: 0 }}

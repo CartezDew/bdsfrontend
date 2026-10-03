@@ -4,6 +4,7 @@ import { NavbarMenu } from '../mockData/data'
 import { Home, Calculator, Users, Phone, HelpCircle, MessageCircle } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import '../styles/navbar.css'
+import { DESKTOP_MEDIA_QUERY } from '../utils/responsive'
 
 const NavbarDesktop = ({ customConfig }) => {
     const [inServicesSection, setInServicesSection] = useState(false)
@@ -18,7 +19,7 @@ const NavbarDesktop = ({ customConfig }) => {
     const location = useLocation()
     const menuItems = customConfig || NavbarMenu
 
-    // New: hide menu items while scrolling on >=680px, re-appear after idle
+    // New: hide menu items while scrolling on >650px, re-appear after idle
     const [scrollingHide, setScrollingHide] = useState(false)
     const scrollTimerRef = useRef(null)
     const lastScrollYRef = useRef(typeof window !== 'undefined' ? window.scrollY : 0)
@@ -32,7 +33,7 @@ const NavbarDesktop = ({ customConfig }) => {
     useEffect(() => { mountedOnceRef.current = true }, [])
 
     useEffect(() => {
-        const mq = window.matchMedia('(min-width: 680px)')
+        const mq = window.matchMedia(DESKTOP_MEDIA_QUERY)
         const onScroll = () => {
             if (!mq.matches) return
             const now = Date.now()

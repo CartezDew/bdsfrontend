@@ -1,3 +1,4 @@
+import { MOBILE_BREAKPOINT, MOBILE_MEDIA_QUERY } from '../utils/responsive';
 import React, { useEffect, useState, useRef } from 'react'
 import NavbarDesktop from './NavbarDesktop'
 import NavbarMobile from './NavbarMobile'
@@ -5,14 +6,14 @@ import { ChevronUp } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 
 const Navbar = (props) => {
-    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 680 : false)
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= MOBILE_BREAKPOINT : false)
     const [showBackToTop, setShowBackToTop] = useState(false)
     const autoScrollingRef = useRef(false)
     const location = useLocation()
 
     useEffect(() => {
         if (typeof window === 'undefined') return
-        const mql = window.matchMedia('(max-width: 680px)')
+        const mql = window.matchMedia(MOBILE_MEDIA_QUERY)
         const handleChange = (e) => setIsMobile(e.matches)
         setIsMobile(mql.matches)
         if (mql.addEventListener) mql.addEventListener('change', handleChange)
@@ -24,7 +25,7 @@ const Navbar = (props) => {
     }, [])
 
     useEffect(() => {
-        // Special case: on Services and Get Started routes under 680px, always show
+        // Special case: on Services and Get Started routes under 650px, always show
         const alwaysShow = isMobile && (location.pathname === '/services' || location.pathname === '/get-started')
         if (alwaysShow) {
             setShowBackToTop(true)
@@ -97,7 +98,7 @@ const Navbar = (props) => {
             observers = []
             if (retryTimer) clearInterval(retryTimer)
         }
-    }, [location.pathname])
+    }, [location.pathname, isMobile])
 
     const scrollToTop = () => {
         setShowBackToTop(false)

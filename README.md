@@ -21,6 +21,21 @@ npm run build
 npm run preview
 ```
 
+## Hero Image Assets
+
+The homepage uses responsive WebP copies in `src/Assets/Hero`. The original photos
+remain in `public/hero_images` for future edits. After replacing an original, run
+`npm run optimize:hero` and commit the generated assets. Vite adds content hashes
+to the served filenames so updated images can safely use the existing long cache lifetime.
+
+`src/components/data/heroImages.js` defines the responsive sources. Keep its first
+image sources and sizes in sync with the preload in `index.html`. Only the first
+photo is preloaded; the collage downloads after it loads and appears after all
+four photos decode. The main photo and collage retain their soft fades and
+staggered tile transitions. Reduced-motion visitors receive only the first photo.
+The opening fade finishes before the first collage transition. Tiles fade over an
+opaque base photo, with their gutters included in each fade to avoid empty flashes.
+
 ## Routes and Pages
 
 - `/` Home
@@ -39,6 +54,9 @@ Document title updates automatically per route (e.g., “BDS Talent Group | Serv
 
 ## Navigation Behavior
 
+- The hero layout and hamburger navigation switch to mobile at 650px and below.
+  Shared JavaScript breakpoints live in `src/utils/responsive.js`; keep the hero
+  and navbar CSS media queries aligned with them.
 - Desktop navbar is visible across routes except on `/admin`. On the home page it hides while the hero is in view and shows as you scroll.
 - Mobile hamburger interactions are debounced and rebroadcast to ensure one-tap open/close behavior.
 - Global link handling centralizes the following behaviors:

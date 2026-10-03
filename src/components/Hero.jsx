@@ -1,3 +1,4 @@
+import { MOBILE_BREAKPOINT } from '../utils/responsive';
 // src/components/Hero.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -6,7 +7,6 @@ import '../styles/hero.css';
 import HeroImageShowcase from './HeroImageShowcase.jsx';
 import heroImages from './data/heroImages.js';
 import { HeartHandshake } from 'lucide-react';
-import AppLoading from './AppLoading.jsx';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -23,24 +23,6 @@ const Hero = () => {
     socialProof: false,
     ticker: false
   });
-  const [heroImagesLoaded, setHeroImagesLoaded] = useState(false);
-
-  // Preload hero images in HTML head for faster loading
-  useEffect(() => {
-    const preloadImages = () => {
-      const allImages = [heroImages.base, ...(heroImages.grid || [])].filter(Boolean);
-      allImages.forEach((src) => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = src;
-        link.fetchPriority = 'high';
-        document.head.appendChild(link);
-      });
-    };
-    
-    preloadImages();
-  }, []);
 
   const navRef = useRef(null);
   const headlineRef = useRef(null);
@@ -79,11 +61,11 @@ const Hero = () => {
       setCurrentTickerItems(getTickerItemsForWidth(currentWidth));
       
       // Update mobile state for logo behavior
-      setIsMobile(currentWidth <= 680);
+      setIsMobile(currentWidth <= MOBILE_BREAKPOINT);
     };
     
     // Set initial mobile state
-    setIsMobile(window.innerWidth <= 680);
+    setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
     
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -177,15 +159,17 @@ const Hero = () => {
 
   // Sync hero hamburger visibility with global mobile menu state and animation
   useEffect(() => {
+    let closeTimer;
     const handleMobileMenuState = (e) => {
       if (e && e.detail && typeof e.detail.open === 'boolean') {
         if (e.detail.open) {
+          setIsHeroHamburgerOpenAnim(true);
           // After the mobile menu opens, keep hamburger hidden
           return;
         } else {
           // Fallback: ensure it reappears shortly after close begins
-          setTimeout(() => {
-            try { if (heroHamburgerRef.current) heroHamburgerRef.current.style.setProperty('display', 'flex', 'important'); } catch {}
+          clearTimeout(closeTimer);
+          closeTimer = setTimeout(() => {
             setHideHeroToggle(false);
             setIsHeroHamburgerOpenAnim(false);
           }, 340);
@@ -205,6 +189,7 @@ const Hero = () => {
     window.addEventListener('mobileMenuOpenAnimationEnd', handleOpenAnimEnd);
     window.addEventListener('mobileMenuCloseAnimationEnd', handleCloseAnimEnd);
     return () => {
+      clearTimeout(closeTimer);
       window.removeEventListener('mobileMenuState', handleMobileMenuState);
       window.removeEventListener('mobileMenuOpenAnimationEnd', handleOpenAnimEnd);
       window.removeEventListener('mobileMenuCloseAnimationEnd', handleCloseAnimEnd);
@@ -255,7 +240,7 @@ const Hero = () => {
                 Contact Us
               </button>
             </div>
-            <button ref={heroHamburgerRef} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''} ${hideHeroToggle ? 'offstage' : ''}`} onClick={() => {
+            <button ref={heroHamburgerRef} aria-label="Toggle mobile menu" aria-expanded={isHeroHamburgerOpenAnim} className={`hero-hamburger-menu ${isHeroHamburgerOpenAnim ? 'open' : ''} ${hideHeroToggle ? 'offstage' : ''}`} onClick={() => {
                try {
                  window.dispatchEvent(new CustomEvent('toggleMobileMenu', { detail: { source: 'hero', ts: Date.now() } }));
                } catch {}
@@ -323,7 +308,7 @@ const Hero = () => {
             <Link to="/get-started" className="hero-nav-btn primary">Get Started</Link>
           </div>
           
-          {/* Mobile Social Proof - Left of image under 680px */}
+          {/* Mobile Social Proof - Left of image under 650px */}
           <div
             ref={socialProofMobileRef}
             data-animate="socialProof"
@@ -379,12 +364,10 @@ const Hero = () => {
           </div>
           
           <div className="hero-media" style={{ position: 'relative' }}>
-            {/* Loading overlay while hero images prepare */}
-            {!heroImagesLoaded && <AppLoading />}
-            <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} onImagesReady={() => setHeroImagesLoaded(true)} />
+            <HeroImageShowcase base={heroImages.base} grid={heroImages.grid} />
           </div>
 
-          {/* Desktop Social Proof - Hidden under 680px */}
+          {/* Desktop Social Proof - Hidden under 650px */}
           <div
             ref={socialProofRef}
             data-animate="socialProof"

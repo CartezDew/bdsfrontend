@@ -5,6 +5,16 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Discover the first photo before React loads; match heroImages.js to avoid duplicate downloads. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/src/Assets/Hero/1-Young-clients-800.webp"
+      imagesrcset="/src/Assets/Hero/1-Young-clients-480.webp 480w, /src/Assets/Hero/1-Young-clients-800.webp 800w, /src/Assets/Hero/1-Young-clients-1440.webp 1440w"
+      imagesizes="(max-width: 850px) 380px, 500px"
+      fetchpriority="high"
+    />
     <meta name="description" content="BDS Talent Group - Professional accounting and financial services" />
     <meta name="keywords" content="BDS, accounting, financial services, talent group, business consulting" />
     <meta name="author" content="BDS Talent Group" />

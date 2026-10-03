@@ -263,13 +263,14 @@
 
 /* Grid overlay fills wrapper without affecting layout height */
 .hero-grid-overlay { 
+  --hero-grid-gap: 0.55rem;
   position: absolute; 
   inset: 0; 
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 0.55rem;
-  opacity: 0;
+  gap: 0;
+  opacity: 1;
 }
 
 .hero-grid-item {
@@ -277,7 +278,15 @@
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.05);
   transform-origin: center;
+  /* Fade each photo and its half of the gutter together over the base photo. */
+  border: 0 solid var(--color-hunter-green, #2a5a2f);
+  box-sizing: border-box;
 }
+
+.hero-grid-item:nth-child(odd) { border-right-width: calc(var(--hero-grid-gap) / 2); }
+.hero-grid-item:nth-child(even) { border-left-width: calc(var(--hero-grid-gap) / 2); }
+.hero-grid-item:nth-child(-n + 2) { border-bottom-width: calc(var(--hero-grid-gap) / 2); }
+.hero-grid-item:nth-child(n + 3) { border-top-width: calc(var(--hero-grid-gap) / 2); }
 
 .hero-grid-item img {
   width: 100%;
@@ -616,11 +625,11 @@
   }
 
   .hero-grid-overlay { 
-    gap: 0.4rem;
+    --hero-grid-gap: 0.4rem;
   }
 }
 
-@media (max-width: 680px){
+@media (max-width: 650px){
   .hero-inner{
     grid-template-areas:
       "left"
@@ -939,7 +948,7 @@
   }
 
   .hero-grid-overlay { 
-    gap: 0.28rem;
+    --hero-grid-gap: 0.28rem;
   }
 }
 
@@ -977,7 +986,7 @@
 } */
 
 
-/* @media (max-width: 680px){
+/* @media (max-width: 650px){
   .hero-inner{
     grid-template-areas:
       "left"
@@ -1015,7 +1024,7 @@ body.mobile-menu-opened .hero-hamburger-menu {
 }
 
 /* Ensure it is visible again when menu is closed */
-@media (max-width: 680px){
+@media (max-width: 650px){
   body:not(.mobile-menu-opened) .hero-hamburger-menu { display: flex !important; transform: translateY(0) scale(1); opacity: 1; }
 }
 
@@ -1024,6 +1033,5 @@ body.mobile-menu-opened .hero-hamburger-menu {
     font-size: .75rem;
   }
 }
-
 
 

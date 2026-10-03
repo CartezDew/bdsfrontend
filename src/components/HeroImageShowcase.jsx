@@ -1,214 +1,117 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { memo, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
-export default function HeroImageShowcase({ base, grid = [], onImagesReady }) {
-  const [currentState, setCurrentState] = useState('base'); // 'base' or 'grid'
-  const [firstGridReady, setFirstGridReady] = useState(false);
-  const [baseLoaded, setBaseLoaded] = useState(false);
-  const reduced = useRef(false);
-  const animationTimerRef = useRef(null);
-  const calledReadyRef = useRef(false);
+const EMPTY_GRID = [];
+const GRID_DELAYS = [0, 2, 3, 1];
 
-  // Check for reduced motion preference
+function HeroImageShowcase({ base, grid = EMPTY_GRID }) {
+  const [baseStatus, setBaseStatus] = useState('loading');
+  const [baseRevealed, setBaseRevealed] = useState(false);
+  const [readyImages, setReadyImages] = useState(() => new Set());
+  const [showGrid, setShowGrid] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    reduced.current = mediaQuery.matches;
-    
-    const handleChange = (e) => {
-      reduced.current = e.matches;
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (event) => {
+      setReducedMotion(event.matches);
+      setShowGrid(false);
     };
-    
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
   }, []);
 
-  // Preload ALL images in parallel with high priority for faster loading
-  useEffect(() => {
-    let cancelled = false;
-    const allImages = [base, ...(grid || [])].filter(Boolean);
-    if (allImages.length === 0) { 
-      setFirstGridReady(false); 
-      setBaseLoaded(false);
-      return () => {}; 
-    }
-    
-    // Load all images in parallel with high priority
-    const loadPromises = allImages.map((src) => {
-      return new Promise((resolve) => {
-        const img = new Image();
-        try { img.fetchPriority = 'high'; } catch {}
-        img.src = src;
-        const finish = () => { if (!cancelled) resolve(); };
-        if (img.decode) { 
-          img.decode().then(finish).catch(finish); 
-        } else { 
-          img.onload = finish; 
-          img.onerror = finish; 
-        }
-      });
-    });
-    
-    // Wait for all images to load
-    Promise.all(loadPromises).then(() => {
-      if (!cancelled) {
-        setFirstGridReady(true);
-        setBaseLoaded(true);
-      }
-    });
-    
-    return () => { cancelled = true; };
-  }, [base, grid]);
+  // Hidden photos never compete with the first image, or load for reduced motion.
+  const loadGrid = baseStatus !== 'loading' && !reducedMotion;
+  const gridReady = grid.length > 0 && grid.every((image) => readyImages.has(image.src));
+  const gridVisible = !reducedMotion && gridReady && (showGrid || baseStatus === 'error');
 
-  // Notify parent once when visible content is ready (either base or grid)
   useEffect(() => {
-    if (calledReadyRef.current) return;
-    if (reduced.current) {
-      if (baseLoaded) {
-        calledReadyRef.current = true;
-        if (typeof onImagesReady === 'function') onImagesReady();
-      }
+    if (!loadGrid || !gridReady || !baseRevealed || baseStatus === 'error') return;
+
+    let timer;
+    const cycle = (visible) => {
+      setShowGrid(visible);
+      timer = window.setTimeout(() => cycle(!visible), visible ? 14000 : 15000);
+    };
+    // Finish the opening fade, then hold the main photo before revealing the collage.
+    timer = window.setTimeout(() => cycle(true), 3000);
+    return () => window.clearTimeout(timer);
+  }, [baseStatus, baseRevealed, loadGrid, gridReady]);
+
+  const handleGridLoad = async (event, src) => {
+    const image = event.currentTarget;
+    // A decoded collage can crossfade without a flash of empty image tiles.
+    try {
+      await image.decode();
+    } catch {
       return;
     }
-    // Wait for BOTH base and first grid image to be ready before dismissing AppLoading
-    if (baseLoaded && firstGridReady) {
-      calledReadyRef.current = true;
-      if (typeof onImagesReady === 'function') onImagesReady();
-    }
-  }, [baseLoaded, firstGridReady, onImagesReady]);
-
-  // Clean, simple animation sequence
-  useEffect(() => {
-    if (reduced.current) return;
-    if (!base || !Array.isArray(grid) || grid.length < 1) return;
-
-    // Clear any existing timers
-    if (animationTimerRef.current) {
-      clearTimeout(animationTimerRef.current);
-    }
-    
-    // Start with base image
-    setCurrentState('base');
-    
-    // After 3 seconds, switch to grid
-    const initialTimer = setTimeout(() => {
-      setCurrentState('grid');
-      
-      // After grid animation + 6s hold, switch back to base
-      const gridTotalTime = 14000; // 3.0s delay + 3.2s fade + 6s hold
-      const gridTimer = setTimeout(() => {
-        setCurrentState('base');
-        
-        // After 10 seconds, start the regular cycle
-        const baseTimer = setTimeout(() => {
-          startRegularCycle();
-        }, 10000);
-      }, gridTotalTime);
-    }, 3000);
-
-    // Function to start the regular repeating cycle
-    const startRegularCycle = () => {
-      setCurrentState('grid');
-      
-      const gridCycleTimer = setTimeout(() => {
-        setCurrentState('base');
-        
-        const baseCycleTimer = setTimeout(() => {
-          startRegularCycle();
-        }, 15000);
-      }, 14000); // Same grid timing
-    };
-
-    return () => {
-      clearTimeout(initialTimer);
-      if (animationTimerRef.current) {
-        clearTimeout(animationTimerRef.current);
-      }
-    };
-  }, [base, grid, firstGridReady]);
-
-  // If reduced motion, just show base image
-  if (reduced.current) {
-    return (
-      <div className="hero-image-wrapper">
-        <img 
-          src={base} 
-          alt="Hero image" 
-          className="hero-base-image"
-          onLoad={() => setBaseLoaded(true)}
-        />
-      </div>
-    );
-  }
+    setReadyImages((previous) => new Set(previous).add(src));
+  };
 
   return (
     <div className="hero-image-wrapper">
-      {/* Always-mounted layers to prevent glitching - use opacity instead of mounting/unmounting */}
-      <motion.img
-        key="base-layer"
-        src={base}
-        alt="Hero image"
-        className="hero-base-image"
-        style={{ transform: 'scaleX(-1)', position: 'absolute', inset: 0, willChange: 'opacity' }}
-        loading="eager"
-        decoding="async"
-        fetchPriority="high"
-        onLoad={() => setBaseLoaded(true)}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: currentState === 'base' ? 1 : 0 }}
-        transition={{ 
-          duration: 4.5, 
-          ease: [0.4, 0.0, 0.2, 1]
-        }}
-      />
+      {baseStatus === 'error' ? (
+        <div style={{ padding: '1.5rem', color: '#fff', visibility: gridVisible ? 'hidden' : 'visible' }}>
+          Supporting your business at every stage.
+        </div>
+      ) : (
+        <motion.img
+          {...base}
+          className="hero-base-image"
+          style={{ transform: 'scaleX(-1)', position: 'absolute', inset: 0, willChange: 'opacity' }}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          aria-hidden={gridVisible}
+          onLoad={() => setBaseStatus('loaded')}
+          onError={() => setBaseStatus('error')}
+          initial={reducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: baseStatus === 'loaded' ? 1 : 0 }}
+          transition={{ duration: reducedMotion ? 0 : 4.5, ease: [0.4, 0, 0.2, 1] }}
+          onAnimationComplete={() => {
+            if (baseStatus === 'loaded') setBaseRevealed(true);
+          }}
+        />
+      )}
 
-      <motion.div
-        key="grid-layer"
-        className="hero-grid-overlay"
-        style={{ position: 'absolute', inset: 0, willChange: 'opacity' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: currentState === 'grid' ? 1 : 0 }}
-        transition={{ duration: 3.5, ease: [0.4, 0.0, 0.2, 1] }}
-      >
-        <motion.div
-          className="hero-grid-item hero-grid-item-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentState === 'grid' ? 1 : 0 }}
-          transition={{ duration: 3.2, ease: "easeInOut", delay: 0.0 }}
-          style={{ zIndex: 2 }}
+      {loadGrid && (
+        <div
+          className="hero-grid-overlay"
+          aria-hidden={!gridVisible}
         >
-          <img src={grid[0]} alt="Service example 1" className="hero-grid-image" loading="eager" decoding="async" fetchPriority="high" />
-        </motion.div>
-        
-        <motion.div
-          className="hero-grid-item hero-grid-item-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentState === 'grid' ? 1 : 0 }}
-          transition={{ duration: 3.2, ease: "easeInOut", delay: 2.0 }}
-          style={{ zIndex: 1 }}
-        >
-          <img src={grid[1]} alt="Service example 2" className="hero-grid-image" loading="auto" decoding="async" />
-        </motion.div>
-        
-        <motion.div
-          className="hero-grid-item hero-grid-item-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentState === 'grid' ? 1 : 0 }}
-          transition={{ duration: 3.2, ease: "easeInOut", delay: 3.0 }}
-          style={{ zIndex: 1 }}
-        >
-          <img src={grid[2]} alt="Service example 3" className="hero-grid-image" loading="auto" decoding="async" />
-        </motion.div>
-        
-        <motion.div
-          className="hero-grid-item hero-grid-item-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentState === 'grid' ? 1 : 0 }}
-          transition={{ duration: 3.2, ease: "easeInOut", delay: 1.0 }}
-          style={{ zIndex: 1 }}
-        >
-          <img src={grid[3]} alt="Service example 4" className="hero-grid-image" loading="auto" decoding="async" />
-        </motion.div>
-      </motion.div>
+          {grid.map((image, index) => (
+            <motion.div
+              key={image.src}
+              className={`hero-grid-item hero-grid-item-${index + 1}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: gridVisible ? 1 : 0 }}
+              transition={{ duration: 3.2, ease: 'easeInOut', delay: GRID_DELAYS[index] ?? 0 }}
+              style={{ zIndex: index === 0 ? 2 : 1 }}
+            >
+              <img
+                {...image}
+                className="hero-grid-image"
+                loading="eager"
+                decoding="async"
+                fetchPriority="low"
+                onLoad={(event) => handleGridLoad(event, image.src)}
+                onError={() => setReadyImages((previous) => {
+                  const next = new Set(previous);
+                  next.delete(image.src);
+                  return next;
+                })}
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
+// The hero ticker updates frequently; it should not restart image animation work.
+export default memo(HeroImageShowcase);
